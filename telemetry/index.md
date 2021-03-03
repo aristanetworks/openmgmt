@@ -1,20 +1,21 @@
+---
 layout: page
 title: "Device Telemetry"
 date: 2021-03-02 12:17:00 --0600
-categories: 
+categories:
 ---
 
-# overview
+## overview
 
 ## gNMI
 
 ### EOS native streaming (TerminAttr)
 
-### OpenConfig 
+### OpenConfig
 
 ### OpenConfig + TerminAttr (Octa)
 
-##  RPCs
+## RPCs
 
 ## subscription types
 
@@ -24,4 +25,4 @@ categories:
 
 ### POLL
 
-# References / Resources
+## References / Resources

@@ -1,11 +1,13 @@
+---
 layout: page
 title: "Frequently Asked Questions (FAQ)"
 date: 2021-03-02 12:17:00 --0600
-categories: 
+categories:
 ---
 
-# overview
+## overview
 
-## Q: How do I normalize the data across streaming telemetry implementations? 
+- Q: How do I normalize the data across streaming telemetry implementations?
+  A:
 
-# References / Resources
+## References / Resources

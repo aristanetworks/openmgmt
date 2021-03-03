@@ -1,17 +1,18 @@
+---
 layout: page
 title: "Management Protocols"
 date: 2021-03-02 12:17:00 --0600
-categories: 
+categories:
 ---
 
-# overview
+## Overview
 
-# ssh (CLI)
+## ssh (CLI)
 
-# eAPI
+## eAPI
 
-# NETCONF
+## NETCONF
 
 ## RESTCONF
 
-# References / Resources
+## References / Resources

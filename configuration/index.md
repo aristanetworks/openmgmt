@@ -1,10 +1,11 @@
+---
 layout: page
 title: "Device Configuration"
 date: 2021-03-02 12:17:00 --0600
-categories: 
+categories:
 ---
 
-# overview
+## overview
 
 ## CLI
 
@@ -16,4 +17,4 @@ categories:
 
 ### RPCs and role authorization
 
-# References / Resources
+## References / Resources
