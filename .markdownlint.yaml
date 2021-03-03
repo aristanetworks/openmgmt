@@ -1,0 +1,54 @@
+# markdownlint configuration
+# the definitive list of rules for markdownlint can be found:
+# https://github.com/DavidAnson/markdownlint/blob/main/doc/Rules.md
+#
+# only deviations from the defaults are noted here or where there's an opinion
+# being expressed.
+
+# default state for all rules
+default:
+  true
+
+# heading style
+MD003:
+  style: "atx"
+
+# unordered list style
+MD004:
+  style: "dash"
+
+# unorderd list indentation (2-spaces)
+# keep it tight yo!
+MD007:
+  indent: 2
+
+# fenced code  should be surrounded by blank lines default: true
+MD031:
+  true
+
+# lists should be surrounded by blank lines default: true
+MD032:
+  true
+
+# bare URL - bare URLs shoudl be wrapped in angle brackets
+# <https://eos.arista.com>
+MD034:
+  false
+
+# horizontal rule style default: consistent
+MD035:
+  style: "---"
+
+# first line in a file to be a top-level heading
+# since we're using front-matter, this
+MD041:
+  false
+
+# proper-names - proper names to have the correct capitalization
+# probably not entirely helpful in a technical writing environment.
+MD044:
+  false
+
+# block style - default: consistent
+MD046:
+  fenced
