@@ -141,8 +141,12 @@ e.g.:
 ```
 #show management api models
 provider smash
+  path /Smash/bridging
   path /Smash/forwarding/status
+  path /Smash/routing/isis/lsdb
+  path /Smash/routing
   path /Smash/routing/status disabled
+provider sysdb
 ```
 
 #### Certificate based authentication for gNMI
@@ -497,7 +501,6 @@ role oc-read
 A user which is assigned to this role would be allowed to issue a gNMI get or subscribe request, but not a set request.
 
 > Note that this is only available for gNMI.
-
 ## Enable AFT mapping
 
 By default, mapping of the FIB (forwarding information base) to the OpenConfig AFT (abstract forwarding table) model is disabled, as the volume of data can be large.
@@ -509,7 +512,6 @@ management api models
     ipv4-unicast
     ipv6-unicast
 ```
-
 ## Troubleshooting
 The OpenConfig agent handles all transports described above: gNMI, RESTCONF, and NETCONF. The agent log file is present at `/var/log/agents/OpenConfig-{PID}`. Lines that begin with `E` are errors. Debug logging can be enabled with a regular trace command. Here are a couple of examples:
 
