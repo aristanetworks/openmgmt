@@ -4,6 +4,26 @@ title: "Device Configuration"
 date: 2021-03-02 12:17:00 --0600
 categories:
 ---
+- [overview](#overview)
+- [CLI](#cli)
+- [## OpenConfig (configuration)](#-openconfig-configuration)
+  - [Platform compatibility](#platform-compatibility)
+  - [GNMI](#gnmi)
+  - [OCTA](#octa)
+    - [How to enable Octa](#how-to-enable-octa)
+    - [API models](#api-models)
+    - [Certificate based authentication for gNMI](#certificate-based-authentication-for-gnmi)
+    - [Test example](#test-example)
+  - [NETCONF](#netconf)
+  - [RESTCONF](#restconf)
+- [A note on changing ports](#a-note-on-changing-ports)
+- [gRPC](#grpc)
+  - [RPC role authorizations](#rpc-role-authorizations)
+- [Enable AFT mapping](#enable-aft-mapping)
+- [Troubleshooting](#troubleshooting)
+- [Limitations](#limitations)
+- [Supported OpenConfig paths](#supported-openconfig-paths)
+- [References / Resources](#references--resources)
 
 ## overview
 
