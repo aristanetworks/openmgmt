@@ -31,7 +31,7 @@ categories:
 
 ## OpenConfig (configuration)
 
-----
+---
 
 ### Platform compatibility
 
@@ -44,14 +44,14 @@ under `management api gnmi` in the global config mode:
 
 Default VRF
 
-```
+```text
 management api gnmi
   transport grpc openmgmt
 ```
 
 Non-default VRF
 
-```
+```text
 management api gnmi
    transport grpc openmgmt
      vrf management
@@ -59,7 +59,7 @@ management api gnmi
 
 Changing the port:
 
-```
+```text
 management api gnmi
    transport grpc openmgmt
       port 5900
@@ -67,7 +67,7 @@ management api gnmi
 
 Apply ACL
 
-```
+```text
 management api gnmi
    transport grpc openmgmt
       ip access-group ACCESS_GROUP
@@ -77,7 +77,7 @@ management api gnmi
 
 Authenticate the connection with TLS
 
-```
+```text
 management api gnmi
    transport grpc openmgmt
       ssl profile PROFILE
@@ -85,7 +85,7 @@ management api gnmi
 
 Enable authorization of incoming requests
 
-```
+```text
 management api gnmi
    transport grpc openmgmt
       authorization requests
@@ -93,7 +93,7 @@ management api gnmi
 
 Status check
 
-```
+```text
 #show management api gnmi
 Octa:               No
 Enabled:            Yes
@@ -104,7 +104,10 @@ QoS DSCP:           none
 
 ### OCTA
 
-The OpenConfing agent (gNMI API) can leverage the EOS state streaming agent's (TerminAttr) libraries, thus exposing EOS native paths. If Octa (OpenConfig+TerminAttr) is enabled then OpenConfig, in addition to accepting OpenConfig paths in gNMI get/subscribe requests, will also support EOS native paths (e.g. Sysdb/Smash paths). This feature was introduced in `4.22.1F`.
+The OpenConfing agent (gNMI API) can leverage the EOS state streaming agent's (TerminAttr)
+libraries, thus exposing EOS native paths. If Octa (OpenConfig+TerminAttr) is enabled then
+OpenConfig, in addition to accepting OpenConfig paths in gNMI get/subscribe requests, will also
+support EOS native paths (e.g. Sysdb/Smash paths). This feature was introduced in `4.22.1F`.
 
 gNMI requests received by Octa are interpreted as either OpenConfig or TerminAttr requests, as follows.
 
@@ -113,7 +116,8 @@ gNMI requests received by Octa are interpreted as either OpenConfig or TerminAtt
 
 A gNMI client that supports specification of an origin as part of the associated RPC is a requirement.
 
-> Note Support for sending GET/SUBSCRIBE requests to both an openconfig and an eos-native path in the same call is not yet supported.
+> Note Support for sending GET/SUBSCRIBE requests to both an openconfig and an eos-native
+> path in the same call is not yet supported.
 
 #### How to enable Octa
 
@@ -123,7 +127,7 @@ Octa can be enable by adding `provider eos-native` under `management api gnmi`
 
 Status check
 
-```
+```text
 #show management api gnmi
 Octa:               enabled
 Enabled:            Yes
@@ -134,9 +138,11 @@ QoS DSCP:           none
 
 #### API models
 
-Starting in EOS 4.24.0F it is possible to configure the Smash paths that Octa has access to. Under the `management api models` mode, the provider smash submode allows for enabling or disabling a Smash path with the `[no] path <Smash path> [disbaled]` command.
+Starting in EOS 4.24.0F it is possible to configure the Smash paths that Octa has
+access to. Under the `management api models` mode, the provider smash submode allows
+for enabling or disabling a Smash path with the `[no] path <Smash path> [disbaled]` command.
 
-```
+```text
 SW(config)#management api models
 SW(config-mgmt-api-models)#provider smash
 SW(config-provider-smash)#path forwarding/status
@@ -148,7 +154,7 @@ SW(config-provider-smash)#exit
 > Note that every time a new path is added the Octa agent has to be restarted.
 > EOS CLI:
 >
-> ```
+> ```text
 > (config)#management api gnmi
 > (config-mgmt-api-gnmi)#transport grpc <NAME>
 > (config-gnmi-transport-def)#shut
@@ -162,7 +168,7 @@ SW(config-provider-smash)#exit
 
 e.g.:
 
-```
+```text
 #show management api models
 provider smash
   path /Smash/bridging
@@ -175,7 +181,8 @@ provider sysdb
 
 #### Certificate based authentication for gNMI
 
-The following example shows how to create a Root CA cert and key, the server cert and key and the client cert and key.
+The following example shows how to create a Root CA cert and key, the server cert
+and key and the client cert and key.
 
 On the switch side:
 
@@ -211,7 +218,7 @@ On the switch side:
 
 9\. Create the SSL profile
 
-```
+```text
 management security
    ssl profile gnmi
       certificate gnmi_server.crt key gnmi_server.key
@@ -220,7 +227,7 @@ management security
 
 10\. Apply the profile
 
-```
+```text
 management api gnmi
    transport grpc def
       ssl profile gnmi
@@ -246,7 +253,7 @@ On the remote machine which runs the gNMI queries:
 
 #### Test example
 
-```
+```bash
 gnmi -tls -addr 172.28.161.138:6030 -keyfile gnmi_client.key -certfile gnmi_client.crt get '/interfaces/interface[name=*]/state/counters'
 
 
@@ -271,7 +278,10 @@ gnmi -tls -addr 172.28.161.138:6030 -keyfile gnmi_client.key -certfile gnmi_clie
 
 ### NETCONF
 
-[NETCONF](https://tools.ietf.org/html/rfc6241) provides mechanisms to install, manipulate and delete the configuration of network devices. It uses eXtensible Markup Language (XML) based data encoding for the configuration data as well as protocol messages. The NETCONF protocol operations are realized as RPCs over ssh transport.
+[NETCONF](https://tools.ietf.org/html/rfc6241) provides mechanisms to install,
+manipulate and delete the configuration of network devices. It uses eXtensible
+Markup Language (XML) based data encoding for the configuration data as well as
+protocol messages. The NETCONF protocol operations are realized as RPCs over ssh transport.
 
 Currently supported NETCONF operations: get, get-config, get-schema, edit-config, lock, unlock, close-session, kill-session.
 
@@ -279,14 +289,14 @@ To configure NETCONF in default VRF we can enable the ssh transport under `manag
 
 Default VRF
 
-```
+```text
 management api netconf
    transport ssh test
 ```
 
 Non-default VRF
 
-```
+```text
 management api netconf
    transport ssh test
       vrf management
@@ -294,7 +304,7 @@ management api netconf
 
 Changing the port:
 
-```
+```text
 management api netconf
    transport ssh test
       port 830
@@ -302,7 +312,7 @@ management api netconf
 
 Apply ACL
 
-```
+```text
 management api netconf
    transport ssh test
       ip access-group ACCESS_GROUP
@@ -312,7 +322,7 @@ management api netconf
 
 Status check:
 
-```
+```text
 #show management api netconf
 
 Enabled:            Yes
@@ -329,7 +339,7 @@ This Cli command generates a self-signed cert:
 
 Create ssl profile:
 
-```
+```text
 management security
    ssl profile restconf
    certificate restconf.crt key restconf.key
@@ -339,7 +349,7 @@ Configure RESTCONF:
 
 Default VRF:
 
-```
+```text
 management api restconf
    transport https test
    ssl profile restconf
@@ -347,7 +357,7 @@ management api restconf
 
 Non-default VRF
 
-```
+```text
 management api restconf
    transport https test
    ssl profile restconf
@@ -356,7 +366,7 @@ management api restconf
 
 Changing the port:
 
-```
+```text
 management api restconf
    transport https test
       port 5900
@@ -364,7 +374,7 @@ management api restconf
 
 Apply ACL
 
-```
+```text
 management api restconf
    transport https test
       ip access-group ACCESS_GROUP
@@ -374,7 +384,7 @@ management api restconf
 
 Status check
 
-```
+```text
 #show management api restconf
 Enabled:            Yes
 Server:             running on port 6020, in management VRF
@@ -384,13 +394,16 @@ QoS DSCP:           none
 
 ## A note on changing ports
 
-When changing the default ports one has to make sure they are also allowed in the control-plane ACL. The default control-plane ACL cannot be modified, so a new one has to be created and applied under `system control-plane` (EOS 4.23+) or `control-plane` (pre-EOS 4.23). The fastest way to do this is to clone the existing control-plane and add new permit rules.
+When changing the default ports one has to make sure they are also allowed in
+the control-plane ACL. The default control-plane ACL cannot be modified, so a
+new one has to be created and applied under `system control-plane` (EOS 4.23+)
+or `control-plane` (pre-EOS 4.23). The fastest way to do this is to clone the existing control-plane and add new permit rules.
 
 e.g.:
 
 1\. Reading the default CP ACL can be done with `show ip access-lists default-control-plane-acl`
 
-```
+```text
 #show ip access-lists default-control-plane-acl
 IP Access List default-control-plane-acl [readonly]
         counters per-entry
@@ -423,7 +436,8 @@ IP Access List default-control-plane-acl [readonly]
         270 permit tcp any any eq 5542 ttl eq 255
 ```
 
-2\. There are multiple ways to quickly edit and remove the unnecessary match outputs, in this example we'll use `sed` on EOS. Save the file to `/mnt/flash`:
+2\. There are multiple ways to quickly edit and remove the unnecessary match outputs,
+ in this example we'll use `sed` on EOS. Save the file to `/mnt/flash`:
 
 `show ip access-lists  default-control-plane-acl | redirect flash:cpacl.txt`
 
@@ -438,7 +452,7 @@ IP Access List default-control-plane-acl [readonly]
 
 5\. Reading the file now should be clean without all the match outputs like below:
 
-```
+```text
 cat cpacl.txt
 IP Access List default-control-plane-acl
         counters per-entry
@@ -471,9 +485,10 @@ IP Access List default-control-plane-acl
         270 permit tcp any any eq 5542 ttl eq 255
 ```
 
-6\. Now we can just copy that ACLs content into a new ACL, add our new rules and apply it on the control-plane
+6\. Now we can just copy that ACLs content into a new ACL, add our new rules and
+apply it on the control-plane
 
-```
+```text
 $ exit
 logout
 (config)# ip access-list custom-cp
@@ -486,54 +501,65 @@ logout
 
 Default VRF
 
-```
+```text
 sysem control-plane
    ip access-group custom-cp in
 ```
 
 Non-default VRF
 
-```
+```text
 sysem control-plane
    ip access-group custom-cp vrf management in
 ```
 
 ## gRPC
 
-gRPC is a Remote Procedure Call (RPC) framework that OpenConfig utilizes as a transport. Services built with gRPC are defined in `.proto` files. They describe the RPCs supported by the service and the data types exchanged in those RPCs.
+gRPC is a Remote Procedure Call (RPC) framework that OpenConfig utilizes as a transport.
+Services built with gRPC are defined in `.proto` files.
+They describe the RPCs supported by the service and the data types exchanged in those RPCs.
 
-The OpenConfig group originally published [openconfig.proto](https://github.com/openconfig/reference/blob/master/rpc/openconfig/openconfig.proto), but have since deprecated it in favor of [gnmi.proto](https://github.com/openconfig/reference/blob/master/rpc/gnmi). The current EOS versions supports gnmi.proto v0.7 and includes support for Get, Subscribe, Set, and Capabilities RPCs.
+The OpenConfig group originally published [openconfig.proto](https://github.com/openconfig/reference/blob/master/rpc/openconfig/openconfig.proto),
+but have since deprecated it in favor of [gnmi.proto](https://github.com/openconfig/reference/blob/master/rpc/gnmi).
+The current EOS versions supports gnmi.proto v0.7 and includes support for Get, Subscribe, Set, and Capabilities RPCs.
 
 > Note: Support for openconfig.proto was dropped in EOS-4.23.0F+.
 
-A client application is required to communicate with a gRPC service. A sample application can be found on the Arista GitHub account: [gnmi](https://github.com/aristanetworks/goarista/tree/master/cmd/gnmi). gnmi is a simple command-line client for gNMI written in Go that can be used for testing and prototyping.
+A client application is required to communicate with a gRPC service.
+A sample application can be found on the Arista GitHub account: [gnmi](https://github.com/aristanetworks/goarista/tree/master/cmd/gnmi).
+`gnmi` is a simple command-line client for gNMI written in Go that can be used for testing and prototyping.
 
 Another popular gnmi client is [gnmic](https://gnmic.kmrd.dev/).
 
 ### RPC role authorizations
 
-Starting in EOS 4.24.1F it is possible to perform authorization of each RPC (i.e. GET, SET, SUBSCRIBE), if authorization requests is supplied as described above.
+Starting in EOS 4.24.1F it is possible to perform authorization of each RPC (i.e. GET, SET, SUBSCRIBE),
+if authorization requests is supplied as described above.
 
-During authorization, the OpenConfig agent will communicate with the AAA agent, allowing authorization policies or roles to permit or deny the new tokens OpenConfig.Get and OpenConfig.Set.
+During authorization, the OpenConfig agent will communicate with the AAA agent,
+allowing authorization policies or roles to permit or deny the new tokens OpenConfig.Get
+and OpenConfig.Set.
 
 For example, a role may be defined such as:
 
-```
+```text
 role oc-read
    10 permit command OpenConfig.Get
 ```
 
-A user which is assigned to this role would be allowed to issue a gNMI get or subscribe request, but not a set request.
+A user which is assigned to this role would be allowed to issue a gNMI get or
+subscribe request, but not a set request.
 
 > Note that this is only available for gNMI.
 
 ## Enable AFT mapping
 
-By default, mapping of the FIB (forwarding information base) to the OpenConfig AFT (abstract forwarding table) model is disabled, as the volume of data can be large.
+By default, mapping of the FIB (forwarding information base) to the
+OpenConfig AFT (abstract forwarding table) model is disabled, as the volume of data can be large.
 
 Starting in EOS 4.25.1F it is possible to enable these mappings, for IPV4, IPV6, or both, as described below:
 
-```
+```text
 management api models
     ipv4-unicast
     ipv6-unicast
@@ -541,7 +567,9 @@ management api models
 
 ## Troubleshooting
 
-The OpenConfig agent handles all transports described above: gNMI, RESTCONF, and NETCONF. The agent log file is present at `/var/log/agents/OpenConfig-{PID}`. Lines that begin with `E` are errors. Debug logging can be enabled with a regular trace command. Here are a couple of examples:
+The OpenConfig agent handles all transports described above: gNMI, RESTCONF, and NETCONF.
+The agent log file is present at `/var/log/agents/OpenConfig-{PID}`.
+Lines that begin with `E` are errors. Debug logging can be enabled with a regular trace command. Here are a couple of examples:
 
 `(config)#trace OpenConfig setting server/9` # For server (gNMI) traces
 
@@ -557,13 +585,19 @@ similary if Octa is enabled:
 
 - In EOS versions older than 4.24.0F, not all Smash paths were accessible via Octa.
 
-- Starting in EOS 4.24.0F configuring the Smash paths that Octa has access to will also affect OpenConfig. Enabling a Smash path for Octa can result in extra YANG paths being populated in OpenConfig. Disabling a Smash path can result in having some YANG paths missing in OpenConfig.
+- Starting in EOS 4.24.0F configuring the Smash paths that Octa has access to will
+  also affect OpenConfig.
+  Enabling a Smash path for Octa can result in extra YANG paths being populated in OpenConfig.
+  Disabling a Smash path can result in having some YANG paths missing in OpenConfig.
 
 - The `%<zone-id>` optional suffix in YANG `ietf:ipv4-address`, and `ietf:ipv6-address` types are not supported.
-- An OpenConfig client update/merge/replace request can erase config that is not modified by the incoming request. This happens if a config that is part of a certain mountpoint but not supported by OpenConfig is configured via CLI prior to the OpenConfig client update/merge/replace request is processed.
-Below listed commands are the only QoS config commands that are supported
+- An OpenConfig client update/merge/replace request can erase config that is not modified
+  by the incoming request. This happens if a config that is part of a certain mountpoint
+  but not supported by OpenConfig is configured via CLI prior to the
+  OpenConfig client update/merge/replace request is processed.
+- Below listed commands are the only QoS config commands that are supported
 
-    ```
+    ```text
     class-map type qos match-any <cm name>
         match vlan <vlan id>
 
