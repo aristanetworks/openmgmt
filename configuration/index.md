@@ -30,11 +30,13 @@ categories:
 ## CLI
 
 ## OpenConfig (configuration)
+
 ----
 
 ### Platform compatibility
 
 All EOS flavors support OpenConfig (phyiscal, virtual, containerized, cloud).
+
 ### GNMI
 
 To start the gNMI server, which listens by default on TCP/6030 configured the gRPC transport
@@ -117,7 +119,7 @@ A gNMI client that supports specification of an origin as part of the associated
 
 Octa can be enable by adding `provider eos-native` under `management api gnmi`
 
-`SW(config-mgmt-api-gnmi)#provider eos-native `
+`SW(config-mgmt-api-gnmi)#provider eos-native`
 
 Status check
 
@@ -145,12 +147,14 @@ SW(config-provider-smash)#exit
 
 > Note that every time a new path is added the Octa agent has to be restarted.
 > EOS CLI:
+>
 > ```
 > (config)#management api gnmi
 > (config-mgmt-api-gnmi)#transport grpc <NAME>
 > (config-gnmi-transport-def)#shut
 > (config-gnmi-transport-def)#no shut
 > ```
+>
 > Bash:
 > `$ sudo killall Octa`
 
@@ -223,7 +227,6 @@ management api gnmi
    provider eos-native
 
 ```
-
 
 On the remote machine which runs the gNMI queries:
 
@@ -315,6 +318,7 @@ Status check:
 Enabled:            Yes
 Server:             running on port 830, in management VRF
 ```
+
 ### RESTCONF
 
 TLS authentication is required for RESTCONF to operate.
@@ -328,7 +332,7 @@ Create ssl profile:
 ```
 management security
    ssl profile restconf
-  	certificate restconf.crt key restconf.key
+   certificate restconf.crt key restconf.key
 ```
 
 Configure RESTCONF:
@@ -338,7 +342,7 @@ Default VRF:
 ```
 management api restconf
    transport https test
-  	ssl profile restconf
+   ssl profile restconf
 ```
 
 Non-default VRF
@@ -346,8 +350,8 @@ Non-default VRF
 ```
 management api restconf
    transport https test
-  	ssl profile restconf
-  	vrf management
+   ssl profile restconf
+   vrf management
 ```
 
 Changing the port:
@@ -434,7 +438,6 @@ IP Access List default-control-plane-acl [readonly]
 
 5\. Reading the file now should be clean without all the match outputs like below:
 
-
 ```
 cat cpacl.txt
 IP Access List default-control-plane-acl
@@ -467,6 +470,7 @@ IP Access List default-control-plane-acl
         260 permit tcp any any eq 5541 ttl eq 255
         270 permit tcp any any eq 5542 ttl eq 255
 ```
+
 6\. Now we can just copy that ACLs content into a new ACL, add our new rules and apply it on the control-plane
 
 ```
@@ -505,6 +509,7 @@ The OpenConfig group originally published [openconfig.proto](https://github.com/
 A client application is required to communicate with a gRPC service. A sample application can be found on the Arista GitHub account: [gnmi](https://github.com/aristanetworks/goarista/tree/master/cmd/gnmi). gnmi is a simple command-line client for gNMI written in Go that can be used for testing and prototyping.
 
 Another popular gnmi client is [gnmic](https://gnmic.kmrd.dev/).
+
 ### RPC role authorizations
 
 Starting in EOS 4.24.1F it is possible to perform authorization of each RPC (i.e. GET, SET, SUBSCRIBE), if authorization requests is supplied as described above.
@@ -521,6 +526,7 @@ role oc-read
 A user which is assigned to this role would be allowed to issue a gNMI get or subscribe request, but not a set request.
 
 > Note that this is only available for gNMI.
+
 ## Enable AFT mapping
 
 By default, mapping of the FIB (forwarding information base) to the OpenConfig AFT (abstract forwarding table) model is disabled, as the volume of data can be large.
@@ -532,7 +538,9 @@ management api models
     ipv4-unicast
     ipv6-unicast
 ```
+
 ## Troubleshooting
+
 The OpenConfig agent handles all transports described above: gNMI, RESTCONF, and NETCONF. The agent log file is present at `/var/log/agents/OpenConfig-{PID}`. Lines that begin with `E` are errors. Debug logging can be enabled with a regular trace command. Here are a couple of examples:
 
 `(config)#trace OpenConfig setting server/9` # For server (gNMI) traces
@@ -572,7 +580,8 @@ Below listed commands are the only QoS config commands that are supported
 
 Please refer to the TOIs for the EOS releases to see the new list of paths supported per release.
 
-For convenience, supported paths may be found at https://eos.arista.com/path-report.
+For convenience, supported paths may be found at <https://eos.arista.com/path-report>.
+
 ## References / Resources
 
 The OpenConfig working group: [http://openconfig.net/](http://openconfig.net/)
