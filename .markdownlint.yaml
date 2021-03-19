@@ -25,7 +25,7 @@ MD007:
 # line length
 MD013:
   line_length: 120
-  code_block_line_length: 250
+  code_block_line_length: 450
 
 # fenced code  should be surrounded by blank lines default: true
 MD031:
@@ -34,6 +34,10 @@ MD031:
 # lists should be surrounded by blank lines default: true
 MD032:
   true
+
+# MD033/no-inline-html - Inline HTML
+MD033:
+ allowed_elements: [ "details", "p", "summary" ]
 
 # bare URL - bare URLs shoudl be wrapped in angle brackets
 # <https://eos.arista.com>

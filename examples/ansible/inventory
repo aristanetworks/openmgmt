@@ -1,0 +1,11 @@
+[leaf]
+127.0.0.1 ansible_user=admin ansible_password=admin
+
+[all:vars]
+ansible_user=admin
+ansible_password=admin
+ansible_become_pass=admin
+ansible_python_interpreter=/usr/bin/python3
+ansible_port=6030
+ansible_connection=nokia.grpc.gnmi
+ansible_gnmi_encoding=JSON

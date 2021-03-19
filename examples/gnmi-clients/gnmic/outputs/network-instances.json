@@ -1,0 +1,1112 @@
+[
+  {
+    "time": "1969-12-31T19:00:00-05:00",
+    "updates": [
+      {
+        "Path": "network-instances/network-instance[name=default]",
+        "values": {
+          "network-instances/network-instance": {
+            "arista-exp-eos-varp-net-inst:arista-varp": {
+              "config": {
+                "virtual-mac-address": "00:00:00:00:00:00"
+              },
+              "state": {
+                "virtual-mac-address": "00:00:00:00:00:00"
+              }
+            },
+            "openconfig-network-instance:config": {
+              "enabled-address-families": [
+                "openconfig-types:IPV4"
+              ],
+              "name": "default",
+              "type": "openconfig-network-instance-types:DEFAULT_INSTANCE"
+            },
+            "openconfig-network-instance:inter-instance-policies": {
+              "apply-policy": {
+                "config": {
+                  "default-export-policy": "REJECT_ROUTE",
+                  "default-import-policy": "REJECT_ROUTE"
+                },
+                "state": {
+                  "default-export-policy": "REJECT_ROUTE",
+                  "default-import-policy": "REJECT_ROUTE"
+                }
+              }
+            },
+            "openconfig-network-instance:interfaces": {
+              "interface": [
+                {
+                  "config": {
+                    "id": "Loopback1",
+                    "interface": "Loopback1",
+                    "subinterface": 0
+                  },
+                  "id": "Loopback1",
+                  "state": {
+                    "id": "Loopback1",
+                    "interface": "Loopback1",
+                    "subinterface": 0
+                  }
+                },
+                {
+                  "config": {
+                    "id": "Ethernet51/1",
+                    "interface": "Ethernet51/1",
+                    "subinterface": 0
+                  },
+                  "id": "Ethernet51/1",
+                  "state": {
+                    "id": "Ethernet51/1",
+                    "interface": "Ethernet51/1",
+                    "subinterface": 0
+                  }
+                },
+                {
+                  "config": {
+                    "id": "Loopback0",
+                    "interface": "Loopback0",
+                    "subinterface": 0
+                  },
+                  "id": "Loopback0",
+                  "state": {
+                    "id": "Loopback0",
+                    "interface": "Loopback0",
+                    "subinterface": 0
+                  }
+                }
+              ]
+            },
+            "openconfig-network-instance:mpls": {
+              "global": {
+                "config": {
+                  "null-label": "openconfig-mpls-types:IMPLICIT",
+                  "ttl-propagation": true
+                },
+                "reserved-label-blocks": {
+                  "reserved-label-block": [
+                    {
+                      "config": {
+                        "local-id": "srlb",
+                        "lower-bound": 965536,
+                        "upper-bound": 1031071
+                      },
+                      "local-id": "srlb"
+                    },
+                    {
+                      "config": {
+                        "local-id": "l2evpn",
+                        "lower-bound": 1036288,
+                        "upper-bound": 1048575
+                      },
+                      "local-id": "l2evpn"
+                    },
+                    {
+                      "config": {
+                        "local-id": "dynamic",
+                        "lower-bound": 100000,
+                        "upper-bound": 362143
+                      },
+                      "local-id": "dynamic"
+                    },
+                    {
+                      "config": {
+                        "local-id": "static",
+                        "lower-bound": 16,
+                        "upper-bound": 99999
+                      },
+                      "local-id": "static"
+                    },
+                    {
+                      "config": {
+                        "local-id": "isis-sr",
+                        "lower-bound": 900000,
+                        "upper-bound": 965535
+                      },
+                      "local-id": "isis-sr"
+                    },
+                    {
+                      "config": {
+                        "local-id": "bgp-sr",
+                        "lower-bound": 900000,
+                        "upper-bound": 965535
+                      },
+                      "local-id": "bgp-sr"
+                    }
+                  ]
+                },
+                "state": {
+                  "null-label": "openconfig-mpls-types:IMPLICIT",
+                  "ttl-propagation": true
+                }
+              },
+              "signaling-protocols": {
+                "ldp": {
+                  "global": {
+                    "authentication": {
+                      "config": {
+                        "enable": false
+                      },
+                      "state": {
+                        "enable": false
+                      }
+                    },
+                    "graceful-restart": {
+                      "config": {
+                        "enabled": false
+                      },
+                      "state": {
+                        "enabled": false
+                      }
+                    }
+                  }
+                },
+                "rsvp-te": {
+                  "global": {
+                    "graceful-restart": {
+                      "config": {
+                        "enable": false
+                      },
+                      "state": {
+                        "enable": false
+                      }
+                    },
+                    "hellos": {
+                      "config": {
+                        "hello-interval": 9000,
+                        "refresh-reduction": true
+                      },
+                      "state": {
+                        "hello-interval": 9000,
+                        "refresh-reduction": true
+                      }
+                    },
+                    "soft-preemption": {
+                      "config": {
+                        "enable": false,
+                        "soft-preemption-timeout": 30
+                      },
+                      "state": {
+                        "enable": false,
+                        "soft-preemption-timeout": 30
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "openconfig-network-instance:name": "default",
+            "openconfig-network-instance:protocols": {
+              "protocol": [
+                {
+                  "config": {
+                    "identifier": "openconfig-policy-types:DIRECTLY_CONNECTED",
+                    "name": "DIRECTLY_CONNECTED"
+                  },
+                  "identifier": "openconfig-policy-types:DIRECTLY_CONNECTED",
+                  "name": "DIRECTLY_CONNECTED"
+                },
+                {
+                  "bgp": {
+                    "global": {
+                      "afi-safis": {
+                        "afi-safi": [
+                          {
+                            "add-paths": {
+                              "config": {
+                                "receive": false,
+                                "send": false
+                              },
+                              "state": {
+                                "receive": false,
+                                "send": false
+                              }
+                            },
+                            "afi-safi-name": "openconfig-bgp-types:IPV4_UNICAST",
+                            "config": {
+                              "afi-safi-name": "openconfig-bgp-types:IPV4_UNICAST"
+                            },
+                            "graceful-restart": {
+                              "config": {
+                                "enabled": false
+                              },
+                              "state": {
+                                "enabled": false
+                              }
+                            },
+                            "route-selection-options": {
+                              "config": {
+                                "advertise-inactive-routes": false,
+                                "always-compare-med": false,
+                                "enable-aigp": false,
+                                "external-compare-router-id": true,
+                                "ignore-as-path-length": false,
+                                "ignore-next-hop-igp-metric": false
+                              },
+                              "state": {
+                                "advertise-inactive-routes": false,
+                                "always-compare-med": false,
+                                "enable-aigp": false,
+                                "external-compare-router-id": true,
+                                "ignore-as-path-length": false,
+                                "ignore-next-hop-igp-metric": false
+                              }
+                            },
+                            "state": {
+                              "afi-safi-name": "openconfig-bgp-types:IPV4_UNICAST"
+                            }
+                          },
+                          {
+                            "add-paths": {
+                              "config": {
+                                "receive": false,
+                                "send": false
+                              },
+                              "state": {
+                                "receive": false,
+                                "send": false
+                              }
+                            },
+                            "afi-safi-name": "openconfig-bgp-types:IPV6_UNICAST",
+                            "config": {
+                              "afi-safi-name": "openconfig-bgp-types:IPV6_UNICAST"
+                            },
+                            "graceful-restart": {
+                              "config": {
+                                "enabled": false
+                              },
+                              "state": {
+                                "enabled": false
+                              }
+                            },
+                            "route-selection-options": {
+                              "config": {
+                                "advertise-inactive-routes": false,
+                                "always-compare-med": false,
+                                "enable-aigp": false,
+                                "external-compare-router-id": true,
+                                "ignore-as-path-length": false,
+                                "ignore-next-hop-igp-metric": false
+                              },
+                              "state": {
+                                "advertise-inactive-routes": false,
+                                "always-compare-med": false,
+                                "enable-aigp": false,
+                                "external-compare-router-id": true,
+                                "ignore-as-path-length": false,
+                                "ignore-next-hop-igp-metric": false
+                              }
+                            },
+                            "state": {
+                              "afi-safi-name": "openconfig-bgp-types:IPV6_UNICAST"
+                            }
+                          }
+                        ]
+                      },
+                      "confederation": {
+                        "config": {}
+                      },
+                      "config": {},
+                      "default-route-distance": {
+                        "config": {}
+                      },
+                      "graceful-restart": {
+                        "config": {}
+                      },
+                      "route-selection-options": {},
+                      "use-multiple-paths": {
+                        "config": {
+                          "enabled": true
+                        },
+                        "ebgp": {},
+                        "ibgp": {
+                          "state": {
+                            "maximum-paths": 1
+                          }
+                        },
+                        "state": {
+                          "enabled": true
+                        }
+                      }
+                    }
+                  },
+                  "config": {
+                    "identifier": "openconfig-policy-types:BGP",
+                    "name": "BGP"
+                  },
+                  "identifier": "openconfig-policy-types:BGP",
+                  "name": "BGP"
+                },
+                {
+                  "config": {
+                    "identifier": "openconfig-policy-types:PIM",
+                    "name": "PIM"
+                  },
+                  "identifier": "openconfig-policy-types:PIM",
+                  "name": "PIM",
+                  "state": {
+                    "identifier": "openconfig-policy-types:PIM",
+                    "name": "PIM"
+                  }
+                }
+              ]
+            },
+            "openconfig-network-instance:segment-routing": {
+              "srgbs": {
+                "srgb": [
+                  {
+                    "config": {
+                      "dataplane-type": "MPLS",
+                      "local-id": "isis-sr",
+                      "mpls-label-blocks": [
+                        "isis-sr"
+                      ]
+                    },
+                    "local-id": "isis-sr"
+                  }
+                ]
+              },
+              "srlbs": {
+                "srlb": [
+                  {
+                    "config": {
+                      "dataplane-type": "MPLS",
+                      "local-id": "srlb",
+                      "mpls-label-block": "srlb"
+                    },
+                    "local-id": "srlb"
+                  }
+                ]
+              }
+            },
+            "openconfig-network-instance:tables": {
+              "table": [
+                {
+                  "address-family": "openconfig-types:IPV4",
+                  "config": {
+                    "address-family": "openconfig-types:IPV4",
+                    "protocol": "openconfig-policy-types:DIRECTLY_CONNECTED"
+                  },
+                  "protocol": "openconfig-policy-types:DIRECTLY_CONNECTED"
+                },
+                {
+                  "address-family": "openconfig-types:IPV6",
+                  "config": {
+                    "address-family": "openconfig-types:IPV6",
+                    "protocol": "openconfig-policy-types:DIRECTLY_CONNECTED"
+                  },
+                  "protocol": "openconfig-policy-types:DIRECTLY_CONNECTED"
+                }
+              ]
+            },
+            "openconfig-network-instance:vlans": {
+              "vlan": [
+                {
+                  "config": {
+                    "arista-vlan-augments:mac-learning": true,
+                    "name": "default",
+                    "status": "ACTIVE",
+                    "vlan-id": 1
+                  },
+                  "members": {
+                    "member": [
+                      {
+                        "state": {
+                          "interface": "Ethernet49/1"
+                        }
+                      }
+                    ]
+                  },
+                  "state": {
+                    "arista-vlan-augments:mac-learning": true,
+                    "name": "default",
+                    "status": "ACTIVE",
+                    "vlan-id": 1
+                  },
+                  "vlan-id": 1
+                }
+              ]
+            }
+          }
+        }
+      },
+      {
+        "Path": "network-instances/network-instance[name=MGMT]",
+        "values": {
+          "network-instances/network-instance": {
+            "openconfig-network-instance:config": {
+              "enabled-address-families": [
+                "openconfig-types:IPV4"
+              ],
+              "name": "MGMT",
+              "type": "openconfig-network-instance-types:L3VRF"
+            },
+            "openconfig-network-instance:inter-instance-policies": {
+              "apply-policy": {
+                "config": {
+                  "default-export-policy": "REJECT_ROUTE",
+                  "default-import-policy": "REJECT_ROUTE"
+                },
+                "state": {
+                  "default-export-policy": "REJECT_ROUTE",
+                  "default-import-policy": "REJECT_ROUTE"
+                }
+              }
+            },
+            "openconfig-network-instance:interfaces": {
+              "interface": [
+                {
+                  "config": {
+                    "id": "Management1",
+                    "interface": "Management1",
+                    "subinterface": 0
+                  },
+                  "id": "Management1",
+                  "state": {
+                    "id": "Management1",
+                    "interface": "Management1",
+                    "subinterface": 0
+                  }
+                }
+              ]
+            },
+            "openconfig-network-instance:name": "MGMT",
+            "openconfig-network-instance:protocols": {
+              "protocol": [
+                {
+                  "config": {
+                    "identifier": "openconfig-policy-types:DIRECTLY_CONNECTED",
+                    "name": "DIRECTLY_CONNECTED"
+                  },
+                  "identifier": "openconfig-policy-types:DIRECTLY_CONNECTED",
+                  "name": "DIRECTLY_CONNECTED"
+                },
+                {
+                  "config": {
+                    "identifier": "openconfig-policy-types:STATIC",
+                    "name": "STATIC"
+                  },
+                  "identifier": "openconfig-policy-types:STATIC",
+                  "name": "STATIC",
+                  "static-routes": {
+                    "static": [
+                      {
+                        "config": {
+                          "prefix": "0.0.0.0/0"
+                        },
+                        "next-hops": {
+                          "next-hop": [
+                            {
+                              "config": {
+                                "index": "AUTO_1_10-20-30-254",
+                                "metric": 1,
+                                "next-hop": "10.20.30.254"
+                              },
+                              "index": "AUTO_1_10-20-30-254"
+                            }
+                          ]
+                        },
+                        "prefix": "0.0.0.0/0"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "openconfig-network-instance:tables": {
+              "table": [
+                {
+                  "address-family": "openconfig-types:IPV4",
+                  "config": {
+                    "address-family": "openconfig-types:IPV4",
+                    "protocol": "openconfig-policy-types:DIRECTLY_CONNECTED"
+                  },
+                  "protocol": "openconfig-policy-types:DIRECTLY_CONNECTED"
+                },
+                {
+                  "address-family": "openconfig-types:IPV6",
+                  "config": {
+                    "address-family": "openconfig-types:IPV6",
+                    "protocol": "openconfig-policy-types:DIRECTLY_CONNECTED"
+                  },
+                  "protocol": "openconfig-policy-types:DIRECTLY_CONNECTED"
+                },
+                {
+                  "address-family": "openconfig-types:IPV4",
+                  "config": {
+                    "address-family": "openconfig-types:IPV4",
+                    "protocol": "openconfig-policy-types:STATIC"
+                  },
+                  "protocol": "openconfig-policy-types:STATIC"
+                },
+                {
+                  "address-family": "openconfig-types:IPV6",
+                  "config": {
+                    "address-family": "openconfig-types:IPV6",
+                    "protocol": "openconfig-policy-types:STATIC"
+                  },
+                  "protocol": "openconfig-policy-types:STATIC"
+                }
+              ]
+            }
+          }
+        }
+      }
+    ]
+  }
+]
+[
+  {
+    "time": "1969-12-31T19:00:00-05:00",
+    "updates": [
+      {
+        "Path": "network-instances/network-instance[name=default]",
+        "values": {
+          "network-instances/network-instance": {
+            "arista-exp-eos-varp-net-inst:arista-varp": {
+              "config": {
+                "virtual-mac-address": "00:00:00:00:00:00"
+              },
+              "state": {
+                "virtual-mac-address": "00:00:00:00:00:00"
+              }
+            },
+            "openconfig-network-instance:config": {
+              "enabled-address-families": [
+                "openconfig-types:IPV4"
+              ],
+              "name": "default",
+              "type": "openconfig-network-instance-types:DEFAULT_INSTANCE"
+            },
+            "openconfig-network-instance:inter-instance-policies": {
+              "apply-policy": {
+                "config": {
+                  "default-export-policy": "REJECT_ROUTE",
+                  "default-import-policy": "REJECT_ROUTE"
+                },
+                "state": {
+                  "default-export-policy": "REJECT_ROUTE",
+                  "default-import-policy": "REJECT_ROUTE"
+                }
+              }
+            },
+            "openconfig-network-instance:interfaces": {
+              "interface": [
+                {
+                  "config": {
+                    "id": "Loopback1",
+                    "interface": "Loopback1",
+                    "subinterface": 0
+                  },
+                  "id": "Loopback1",
+                  "state": {
+                    "id": "Loopback1",
+                    "interface": "Loopback1",
+                    "subinterface": 0
+                  }
+                },
+                {
+                  "config": {
+                    "id": "Ethernet51/1",
+                    "interface": "Ethernet51/1",
+                    "subinterface": 0
+                  },
+                  "id": "Ethernet51/1",
+                  "state": {
+                    "id": "Ethernet51/1",
+                    "interface": "Ethernet51/1",
+                    "subinterface": 0
+                  }
+                },
+                {
+                  "config": {
+                    "id": "Loopback0",
+                    "interface": "Loopback0",
+                    "subinterface": 0
+                  },
+                  "id": "Loopback0",
+                  "state": {
+                    "id": "Loopback0",
+                    "interface": "Loopback0",
+                    "subinterface": 0
+                  }
+                }
+              ]
+            },
+            "openconfig-network-instance:mpls": {
+              "global": {
+                "config": {
+                  "null-label": "openconfig-mpls-types:IMPLICIT",
+                  "ttl-propagation": true
+                },
+                "reserved-label-blocks": {
+                  "reserved-label-block": [
+                    {
+                      "config": {
+                        "local-id": "srlb",
+                        "lower-bound": 965536,
+                        "upper-bound": 1031071
+                      },
+                      "local-id": "srlb"
+                    },
+                    {
+                      "config": {
+                        "local-id": "l2evpn",
+                        "lower-bound": 1036288,
+                        "upper-bound": 1048575
+                      },
+                      "local-id": "l2evpn"
+                    },
+                    {
+                      "config": {
+                        "local-id": "dynamic",
+                        "lower-bound": 100000,
+                        "upper-bound": 362143
+                      },
+                      "local-id": "dynamic"
+                    },
+                    {
+                      "config": {
+                        "local-id": "static",
+                        "lower-bound": 16,
+                        "upper-bound": 99999
+                      },
+                      "local-id": "static"
+                    },
+                    {
+                      "config": {
+                        "local-id": "isis-sr",
+                        "lower-bound": 900000,
+                        "upper-bound": 965535
+                      },
+                      "local-id": "isis-sr"
+                    },
+                    {
+                      "config": {
+                        "local-id": "bgp-sr",
+                        "lower-bound": 900000,
+                        "upper-bound": 965535
+                      },
+                      "local-id": "bgp-sr"
+                    }
+                  ]
+                },
+                "state": {
+                  "null-label": "openconfig-mpls-types:IMPLICIT",
+                  "ttl-propagation": true
+                }
+              },
+              "signaling-protocols": {
+                "ldp": {
+                  "global": {
+                    "authentication": {
+                      "config": {
+                        "enable": false
+                      },
+                      "state": {
+                        "enable": false
+                      }
+                    },
+                    "graceful-restart": {
+                      "config": {
+                        "enabled": false
+                      },
+                      "state": {
+                        "enabled": false
+                      }
+                    }
+                  }
+                },
+                "rsvp-te": {
+                  "global": {
+                    "graceful-restart": {
+                      "config": {
+                        "enable": false
+                      },
+                      "state": {
+                        "enable": false
+                      }
+                    },
+                    "hellos": {
+                      "config": {
+                        "hello-interval": 9000,
+                        "refresh-reduction": true
+                      },
+                      "state": {
+                        "hello-interval": 9000,
+                        "refresh-reduction": true
+                      }
+                    },
+                    "soft-preemption": {
+                      "config": {
+                        "enable": false,
+                        "soft-preemption-timeout": 30
+                      },
+                      "state": {
+                        "enable": false,
+                        "soft-preemption-timeout": 30
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "openconfig-network-instance:name": "default",
+            "openconfig-network-instance:protocols": {
+              "protocol": [
+                {
+                  "config": {
+                    "identifier": "openconfig-policy-types:DIRECTLY_CONNECTED",
+                    "name": "DIRECTLY_CONNECTED"
+                  },
+                  "identifier": "openconfig-policy-types:DIRECTLY_CONNECTED",
+                  "name": "DIRECTLY_CONNECTED"
+                },
+                {
+                  "bgp": {
+                    "global": {
+                      "afi-safis": {
+                        "afi-safi": [
+                          {
+                            "add-paths": {
+                              "config": {
+                                "receive": false,
+                                "send": false
+                              },
+                              "state": {
+                                "receive": false,
+                                "send": false
+                              }
+                            },
+                            "afi-safi-name": "openconfig-bgp-types:IPV4_UNICAST",
+                            "config": {
+                              "afi-safi-name": "openconfig-bgp-types:IPV4_UNICAST"
+                            },
+                            "graceful-restart": {
+                              "config": {
+                                "enabled": false
+                              },
+                              "state": {
+                                "enabled": false
+                              }
+                            },
+                            "route-selection-options": {
+                              "config": {
+                                "advertise-inactive-routes": false,
+                                "always-compare-med": false,
+                                "enable-aigp": false,
+                                "external-compare-router-id": true,
+                                "ignore-as-path-length": false,
+                                "ignore-next-hop-igp-metric": false
+                              },
+                              "state": {
+                                "advertise-inactive-routes": false,
+                                "always-compare-med": false,
+                                "enable-aigp": false,
+                                "external-compare-router-id": true,
+                                "ignore-as-path-length": false,
+                                "ignore-next-hop-igp-metric": false
+                              }
+                            },
+                            "state": {
+                              "afi-safi-name": "openconfig-bgp-types:IPV4_UNICAST"
+                            }
+                          },
+                          {
+                            "add-paths": {
+                              "config": {
+                                "receive": false,
+                                "send": false
+                              },
+                              "state": {
+                                "receive": false,
+                                "send": false
+                              }
+                            },
+                            "afi-safi-name": "openconfig-bgp-types:IPV6_UNICAST",
+                            "config": {
+                              "afi-safi-name": "openconfig-bgp-types:IPV6_UNICAST"
+                            },
+                            "graceful-restart": {
+                              "config": {
+                                "enabled": false
+                              },
+                              "state": {
+                                "enabled": false
+                              }
+                            },
+                            "route-selection-options": {
+                              "config": {
+                                "advertise-inactive-routes": false,
+                                "always-compare-med": false,
+                                "enable-aigp": false,
+                                "external-compare-router-id": true,
+                                "ignore-as-path-length": false,
+                                "ignore-next-hop-igp-metric": false
+                              },
+                              "state": {
+                                "advertise-inactive-routes": false,
+                                "always-compare-med": false,
+                                "enable-aigp": false,
+                                "external-compare-router-id": true,
+                                "ignore-as-path-length": false,
+                                "ignore-next-hop-igp-metric": false
+                              }
+                            },
+                            "state": {
+                              "afi-safi-name": "openconfig-bgp-types:IPV6_UNICAST"
+                            }
+                          }
+                        ]
+                      },
+                      "confederation": {
+                        "config": {}
+                      },
+                      "config": {},
+                      "default-route-distance": {
+                        "config": {}
+                      },
+                      "graceful-restart": {
+                        "config": {}
+                      },
+                      "route-selection-options": {},
+                      "use-multiple-paths": {
+                        "config": {
+                          "enabled": true
+                        },
+                        "ebgp": {},
+                        "ibgp": {
+                          "state": {
+                            "maximum-paths": 1
+                          }
+                        },
+                        "state": {
+                          "enabled": true
+                        }
+                      }
+                    }
+                  },
+                  "config": {
+                    "identifier": "openconfig-policy-types:BGP",
+                    "name": "BGP"
+                  },
+                  "identifier": "openconfig-policy-types:BGP",
+                  "name": "BGP"
+                },
+                {
+                  "config": {
+                    "identifier": "openconfig-policy-types:PIM",
+                    "name": "PIM"
+                  },
+                  "identifier": "openconfig-policy-types:PIM",
+                  "name": "PIM",
+                  "state": {
+                    "identifier": "openconfig-policy-types:PIM",
+                    "name": "PIM"
+                  }
+                }
+              ]
+            },
+            "openconfig-network-instance:segment-routing": {
+              "srgbs": {
+                "srgb": [
+                  {
+                    "config": {
+                      "dataplane-type": "MPLS",
+                      "local-id": "isis-sr",
+                      "mpls-label-blocks": [
+                        "isis-sr"
+                      ]
+                    },
+                    "local-id": "isis-sr"
+                  }
+                ]
+              },
+              "srlbs": {
+                "srlb": [
+                  {
+                    "config": {
+                      "dataplane-type": "MPLS",
+                      "local-id": "srlb",
+                      "mpls-label-block": "srlb"
+                    },
+                    "local-id": "srlb"
+                  }
+                ]
+              }
+            },
+            "openconfig-network-instance:tables": {
+              "table": [
+                {
+                  "address-family": "openconfig-types:IPV4",
+                  "config": {
+                    "address-family": "openconfig-types:IPV4",
+                    "protocol": "openconfig-policy-types:DIRECTLY_CONNECTED"
+                  },
+                  "protocol": "openconfig-policy-types:DIRECTLY_CONNECTED"
+                },
+                {
+                  "address-family": "openconfig-types:IPV6",
+                  "config": {
+                    "address-family": "openconfig-types:IPV6",
+                    "protocol": "openconfig-policy-types:DIRECTLY_CONNECTED"
+                  },
+                  "protocol": "openconfig-policy-types:DIRECTLY_CONNECTED"
+                }
+              ]
+            },
+            "openconfig-network-instance:vlans": {
+              "vlan": [
+                {
+                  "config": {
+                    "arista-vlan-augments:mac-learning": true,
+                    "name": "default",
+                    "status": "ACTIVE",
+                    "vlan-id": 1
+                  },
+                  "members": {
+                    "member": [
+                      {
+                        "state": {
+                          "interface": "Ethernet49/1"
+                        }
+                      }
+                    ]
+                  },
+                  "state": {
+                    "arista-vlan-augments:mac-learning": true,
+                    "name": "default",
+                    "status": "ACTIVE",
+                    "vlan-id": 1
+                  },
+                  "vlan-id": 1
+                }
+              ]
+            }
+          }
+        }
+      },
+      {
+        "Path": "network-instances/network-instance[name=MGMT]",
+        "values": {
+          "network-instances/network-instance": {
+            "openconfig-network-instance:config": {
+              "enabled-address-families": [
+                "openconfig-types:IPV4"
+              ],
+              "name": "MGMT",
+              "type": "openconfig-network-instance-types:L3VRF"
+            },
+            "openconfig-network-instance:inter-instance-policies": {
+              "apply-policy": {
+                "config": {
+                  "default-export-policy": "REJECT_ROUTE",
+                  "default-import-policy": "REJECT_ROUTE"
+                },
+                "state": {
+                  "default-export-policy": "REJECT_ROUTE",
+                  "default-import-policy": "REJECT_ROUTE"
+                }
+              }
+            },
+            "openconfig-network-instance:interfaces": {
+              "interface": [
+                {
+                  "config": {
+                    "id": "Management1",
+                    "interface": "Management1",
+                    "subinterface": 0
+                  },
+                  "id": "Management1",
+                  "state": {
+                    "id": "Management1",
+                    "interface": "Management1",
+                    "subinterface": 0
+                  }
+                }
+              ]
+            },
+            "openconfig-network-instance:name": "MGMT",
+            "openconfig-network-instance:protocols": {
+              "protocol": [
+                {
+                  "config": {
+                    "identifier": "openconfig-policy-types:DIRECTLY_CONNECTED",
+                    "name": "DIRECTLY_CONNECTED"
+                  },
+                  "identifier": "openconfig-policy-types:DIRECTLY_CONNECTED",
+                  "name": "DIRECTLY_CONNECTED"
+                },
+                {
+                  "config": {
+                    "identifier": "openconfig-policy-types:STATIC",
+                    "name": "STATIC"
+                  },
+                  "identifier": "openconfig-policy-types:STATIC",
+                  "name": "STATIC",
+                  "static-routes": {
+                    "static": [
+                      {
+                        "config": {
+                          "prefix": "0.0.0.0/0"
+                        },
+                        "next-hops": {
+                          "next-hop": [
+                            {
+                              "config": {
+                                "index": "AUTO_1_10-20-30-254",
+                                "metric": 1,
+                                "next-hop": "10.20.30.254"
+                              },
+                              "index": "AUTO_1_10-20-30-254"
+                            }
+                          ]
+                        },
+                        "prefix": "0.0.0.0/0"
+                      }
+                    ]
+                  }
+                }
+              ]
+            },
+            "openconfig-network-instance:tables": {
+              "table": [
+                {
+                  "address-family": "openconfig-types:IPV4",
+                  "config": {
+                    "address-family": "openconfig-types:IPV4",
+                    "protocol": "openconfig-policy-types:DIRECTLY_CONNECTED"
+                  },
+                  "protocol": "openconfig-policy-types:DIRECTLY_CONNECTED"
+                },
+                {
+                  "address-family": "openconfig-types:IPV6",
+                  "config": {
+                    "address-family": "openconfig-types:IPV6",
+                    "protocol": "openconfig-policy-types:DIRECTLY_CONNECTED"
+                  },
+                  "protocol": "openconfig-policy-types:DIRECTLY_CONNECTED"
+                },
+                {
+                  "address-family": "openconfig-types:IPV4",
+                  "config": {
+                    "address-family": "openconfig-types:IPV4",
+                    "protocol": "openconfig-policy-types:STATIC"
+                  },
+                  "protocol": "openconfig-policy-types:STATIC"
+                },
+                {
+                  "address-family": "openconfig-types:IPV6",
+                  "config": {
+                    "address-family": "openconfig-types:IPV6",
+                    "protocol": "openconfig-policy-types:STATIC"
+                  },
+                  "protocol": "openconfig-policy-types:STATIC"
+                }
+              ]
+            }
+          }
+        }
+      }
+    ]
+  }
+]
