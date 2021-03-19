@@ -6,16 +6,16 @@ categories:
 ---
 
 - [Overview](#overview)
-- [Download && install gnmic](#Download && install gnmic)
-- [Device config](#Device config)
+- [Download && install gnmic](#Download-&&-install-gnmic)
+- [Device config](#Device-config)
   - [Capabilities](#capabilities)
-- [open config paths]
-  - [Get](#Get openconfig paths)
-  - [Subscribe](#Subscribe openconfig paths)
-- [Eos Native paths](#eos_native paths)
-- [Cli origin](#Cli origin)
+- [openconfig-paths]
+  - [Get](#Get-openconfig-paths)
+  - [Subscribe](#Subscribe-openconfig-paths)
+- [Eos Native paths](#eos_native-paths)
+- [Cli origin](#Cli-origin)
 - [Misc](#Misc)
-- [Smash paths](#Smash Paths)
+- [Smash paths](#Smash-Paths)
 
 
 ## overview
