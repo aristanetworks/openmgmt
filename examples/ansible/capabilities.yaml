@@ -1,0 +1,16 @@
+---
+- name: Get Configuration using gNMI
+  gather_facts: false
+  hosts: leaf
+
+  collections:
+  - nokia.grpc
+
+  tasks:
+  - name: Get all yang models
+    gnmi_capabilities:
+    register: testout
+
+  - name: dump test output
+    debug:
+      msg: '{{ testout.output }}'
