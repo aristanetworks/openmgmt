@@ -1,4 +1,6 @@
-## gNMI GET RPC Examples
+# gNMI GET RPC Examples
+
+## OpenConfig paths
 
 ### Get all information
 
@@ -631,6 +633,157 @@ UP
 37.0
 /components/component[name=TempSensor14]/state/temperature/instant:
 37.0
+```
+
+</p>
+</details>
+
+## EOS Native paths
+
+To get EOS native paths, OCTA has to be enabled as mentioned in the configuration section.
+Performing GET/SUBSCRIBE actions using EOS native paths require changing the origin to `eos_native`.
+
+### Commonly used paths
+
+MAC table: `/Smash/bridging/status/smashFdbStatus`
+
+ARP table: `/Smash/arp/status/arpEntry`
+
+Neighbor table: `/Smash/arp/status/neighborEntry`
+
+IPv4 RIB: `/Smash/routing/status/route`
+
+IPv6 RIB: `/Smash/routing6/status/route`
+
+IPv4 next-hop table: `/Smash/routing/status/nexthop`
+
+IPv6 next-hop table: `/Smash/routing6/status/nexthop`
+
+CPU info: `/Kernel/proc/cpu`
+
+Process statistics: `/Kernel/proc/stat`
+
+System info: `/Kernel/sysinfo`
+
+EOS version: `/Eos/image`
+
+Interface counters: `/Smash/counters/ethIntf/<agent>/current/counter`
+
+Values for `<agent>` are:
+
+7500-family, 7280-family, 7020-family (Arad/Jericho ASICs): `SandCounters`
+
+7300-family, 7250-family, 7050-family, 7010 products, 720-family (Trident ASICs): `StrataCounters`
+
+For 7060-family, 7260-family (Tomahawk): `Strata-FixedSystem` or `StrataCounters` from 4.22+
+
+7150-family products (Alta ASICs): `FocalPointV2`
+
+7160-family products (Cavium/Xpliant ASICs): `XpCounters`
+
+7170-family products (Barefoot ASIC): `BfnCounters`
+
+### Get CPU utilization
+
+`gnmi -addr 10.83.13.130:6030 -username admin get origin=eos_native '/Kernel/proc/cpu/utilization/total'`
+
+```text
+/Kernel/proc/cpu/utilization/total/nice:
+38446
+/Kernel/proc/cpu/utilization/total/system:
+2347714
+/Kernel/proc/cpu/utilization/total/idle:
+247720286
+/Kernel/proc/cpu/utilization/total/name:
+total
+/Kernel/proc/cpu/utilization/total/util:
+7
+/Kernel/proc/cpu/utilization/total/user:
+16984784
+```
+
+### Get transceiver DOM temperature
+
+`gnmi -addr 10.83.13.130:6030 -username admin  get origin=eos_native 'Sysdb/environment/archer/temperature/status/system/DomTemperatureSensor32'`
+
+<details><summary> Reveal output</summary>
+<p>
+
+```text
+/Sysdb/environment/archer/temperature/status/system/DomTemperatureSensor32/temperature:
+{
+  "value": 32.5
+}
+/Sysdb/environment/archer/temperature/status/system/DomTemperatureSensor32/maxTemperature:
+{
+  "value": 34.88671875
+}
+/Sysdb/environment/archer/temperature/status/system/DomTemperatureSensor32/maxTemperatureTime:
+1564757444.339129
+/Sysdb/environment/archer/temperature/status/system/DomTemperatureSensor32/name:
+DomTemperatureSensor32
+/Sysdb/environment/archer/temperature/status/system/DomTemperatureSensor32/generationId:
+0
+/Sysdb/environment/archer/temperature/status/system/DomTemperatureSensor32/hwStatus:
+ok
+/Sysdb/environment/archer/temperature/status/system/DomTemperatureSensor32/alertRaised:
+false
+/Sysdb/environment/archer/temperature/status/system/DomTemperatureSensor32/alertRaisedCount:
+0
+/Sysdb/environment/archer/temperature/status/system/DomTemperatureSensor32/lastAlertRaisedTime:
+1564194739.259879
+```
+
+</p>
+</details>
+
+### Get connectivity monitor host stats
+
+`gnmi -addr 10.83.13.139:6030 -username admin get origin=eos_native '/Sysdb/connectivityMonitor/status/hostStatus/'`
+
+<details><summary> Reveal output</summary>
+<p>
+
+```text
+/Sysdb/connectivityMonitor/status/hostStatus/wls100_default/key/hostName:
+wls100
+/Sysdb/connectivityMonitor/status/hostStatus/wls100_default/key/vrfName:
+{
+  "value": "default"
+}
+/Sysdb/connectivityMonitor/status/hostStatus/wls100_default/name:
+wls100_default
+/Sysdb/connectivityMonitor/status/hostStatus/wls100_default/defaultStats/packetLoss:
+0
+/Sysdb/connectivityMonitor/status/hostStatus/wls100_default/defaultStats/httpResponseTime:
+0
+/Sysdb/connectivityMonitor/status/hostStatus/wls100_default/defaultStats/interfaceName:
+
+/Sysdb/connectivityMonitor/status/hostStatus/wls100_default/defaultStats/jitter:
+0
+/Sysdb/connectivityMonitor/status/hostStatus/wls100_default/defaultStats/latency:
+0
+/Sysdb/connectivityMonitor/status/hostStatus/wls100_default/ipAddr:
+"10.83.13.140"
+/Sysdb/connectivityMonitor/status/hostStatus/ats323_management/key/hostName:
+ats323
+/Sysdb/connectivityMonitor/status/hostStatus/ats323_management/key/vrfName:
+{
+  "value": "management"
+}
+/Sysdb/connectivityMonitor/status/hostStatus/ats323_management/name:
+ats323_management
+/Sysdb/connectivityMonitor/status/hostStatus/ats323_management/ipAddr:
+"10.83.13.138"
+/Sysdb/connectivityMonitor/status/hostStatus/ats323_management/defaultStats/latency:
+0.127
+/Sysdb/connectivityMonitor/status/hostStatus/ats323_management/defaultStats/jitter:
+0.033
+/Sysdb/connectivityMonitor/status/hostStatus/ats323_management/defaultStats/packetLoss:
+0
+/Sysdb/connectivityMonitor/status/hostStatus/ats323_management/defaultStats/httpResponseTime:
+21.860306
+/Sysdb/connectivityMonitor/status/hostStatus/ats323_management/defaultStats/interfaceName:
 ```
 
 </p>
