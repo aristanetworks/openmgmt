@@ -1,27 +1,24 @@
 ---
 layout: page
 title: "golang"
-date: 2021-03-019 08:17:00 --0600
+date: 2021-03-19 08:17:00 --0600
 categories:
 ---
 
-- [Overview](#overview)
+## Overview
 
+The following example uses the
+[goarista](https://pkg.go.dev/github.com/aristanetworks/goarista) go module for
+gNMI to interact with a device. Within this very simplistic getting started
+example main.go will simply perform a get method to the device for all paths.
 
-
-# Overview
-
-The following example uses the [goarista](https://pkg.go.dev/github.com/aristanetworks/goarista) go module for gNMI to interact with a device.  Within this very simplistic getting started example main.go will simply perform a get method to the device for all paths.
-
-```text
-
+```shell
 go run main.go
-
 ```
 
-# Truncated output
+## Truncated output
 
-```text
+```javascript
 {
   "openconfig-acl:acl": {
     "state": {

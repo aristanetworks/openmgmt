@@ -4,16 +4,21 @@
 
 ### Get all information
 
-`gnmi -addr 10.83.13.139:6030 -username admin -password arista get /`
+```shell
+gnmi -addr 10.83.13.139:6030 -username admin -password arista get /
+```
 
 ### Get the BGP configuration in the default VRF
 
-`gnmi -addr 172.28.160.219:6030 -username admin -password arista get '/network-instances/network-instance[name=default]/protocols/protocol[identifier=BGP][name=BGP]/bgp'`
+```shell
+gnmi -addr 172.28.160.219:6030 -username admin -password arista get \
+  '/network-instances/network-instance[name=default]/protocols/protocol[identifier=BGP][name=BGP]/bgp'`
+```
 
 <details><summary> Reveal output</summary>
 <p>
 
-```text
+```javascript
 /network-instances/network-instance[name=default]/protocols/protocol[identifier=BGP][name=BGP]/bgp:
 {
   "openconfig-network-instance:global": {
@@ -739,7 +744,9 @@ false
 
 ### Get connectivity monitor host stats
 
-`gnmi -addr 10.83.13.139:6030 -username admin get origin=eos_native '/Sysdb/connectivityMonitor/status/hostStatus/'`
+```shell
+gnmi -addr 10.83.13.139:6030 -username admin get origin=eos_native \ /Sysdb/connectivityMonitor/status/hostStatus/'
+```
 
 <details><summary> Reveal output</summary>
 <p>
