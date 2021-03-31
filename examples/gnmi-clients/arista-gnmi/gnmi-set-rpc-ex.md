@@ -6,50 +6,52 @@
 
 #### Configure neighbor address and peer AS
 
-```text
+```shell
 gnmi -addr 10.83.13.139:6030 -username cvpadmin -password arastra update  '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.100.43]' '{"config": {"neighbor-address":"10.10.100.43", "peer-as": 123}}'
 ```
 
 #### Configure neighbor address, peer AS and send-community
 
-```text
-gnmi -addr 10.83.28.203:6030 -username arista -password arista update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.100.43]' '{"config": {"neighbor-address":"10.10.100.43", "peer-as": 123, "enabled": true, "send-community": "EXTENDED"}}'
+```shell
+gnmi -addr 10.83.28.203:6030 -username arista -password arista update \ '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.100.43]' '{"config": {"neighbor-address":"10.10.100.43", "peer-as": 123, "enabled": true, "send-community": "EXTENDED"}}'
 ```
 
 ### Create peer group
 
-```text
+```shell
 gnmi -addr 10.83.28.203 -username arista -password arista update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/peer-groups/peer-group[peer-group-name=XYZ]' '{"config": {"peer-group-name":"XYZ", "local-as": 114}}'
 ```
 
 ### Update the peer AS
 
-```text
+```shell
 gnmi -addr 10.83.28.203:6030 -username arista -password arista update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.10.0]/config/peer-as' '110'
 ```
 
-```text
+```shell
 gnmi -addr 10.83.28.203:6030 -username arista -password arista update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.10.0]' '{"config": {"peer-as": 110}}'
 ```
 
 ### Update the peer group
 
-```text
+```shell
 gnmi -addr 10.83.28.203:6030 -username arista -password arista update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.100.43]/config/peer-group' 'XYZ'
 ```
 
-```text
+```shell
 gnmi -addr 10.83.28.203:6030 -username arista -password arista update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.10.0]' '{"config": {"peer-group": "XYZ","peer-as": 143}}'
 ```
 
 ### Update BGP config using json file
 
-`gnmi -addr 10.83.28.203:6030 -username arista -password arista update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp'`
+```shell
+gnmi -addr 10.83.28.203:6030 -username arista -password arista update \ /network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp'
+```
 
 <details><summary> Reveal output</summary>
 <p>
 
-```text
+```javascript
 {
     "neighbors": {
         "neighbor": [
@@ -90,14 +92,16 @@ gnmi -addr 10.83.28.203:6030 -username arista -password arista update '/network-
 
 ### Create an ACL
 
-`gnmi -addr 10.83.28.203:6030 -username admin -password arista update /acl/acl-sets acl2.json`
-
+```shell
+gnmi -addr 10.83.28.203:6030 -username admin -password arista \
+  update /acl/acl-sets acl2.json`
 cat acl2.json
+```
 
 <details><summary> Reveal output</summary>
 <p>
 
-```text
+```javascript
 {
    "acl-set": [
       {
@@ -145,12 +149,12 @@ ip access-list test
 
 ### Shutdown an interface
 
-```text
-gnmi -addr 10.83.13.139:6030 -username arista -password arista update '/interfaces/interface[name=Ethernet1]/config/enabled' 'false'
+```shell
+gnmi -addr 10.83.13.139:6030 -username arista -password arista update \ '/interfaces/interface[name=Ethernet1]/config/enabled' 'false'
 ```
 
 ### Bring up an interface
 
-```text
+```shell
 gnmi -addr 10.83.13.139:6030 -username arista -password arista update '/interfaces/interface[name=Ethernet1]/config/enabled' 'true'
 ```

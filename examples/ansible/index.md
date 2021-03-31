@@ -1,7 +1,7 @@
 ---
 layout: page
 title: "Ansible playbook example demo"
-date: 2021-03-018 12:17:00 --0600
+date: 2021-03-18 12:17:00 --0600
 categories:
 ---
 
@@ -10,12 +10,13 @@ categories:
 - [Ansible collection for grpc](#gNMI Collection)
 - [Run the playbook](#Run the playbook)
 
-
 ## overview
 
-In this ansible collection we show how to use ansible to find all the available modules within a Arista EOS device using the [capabilities method within gNMI.](https://github.com/openconfig/reference/blob/master/rpc/gnmi/gnmi-specification.md#32-capability-discovery)
+In this ansible collection we show how to use ansible to find all the available
+modules within a Arista EOS device using the [capabilities method within
+gNMI.](https://github.com/openconfig/reference/blob/master/rpc/gnmi/gnmi-specification.md#32-capability-discovery)
 
-##Edit the inventory file to match your environment 
+## Edit the inventory file to match your environment
 
 ```text
 [leaf]
@@ -31,20 +32,19 @@ ansible_connection=nokia.grpc.gnmi
 ansible_gnmi_encoding=JSON
 ```
 
-
-##gNMI collection
+## gNMI collection
 
 ```text
 ansible-galaxy collection install nokia.openconfig
 ```
 
-#Run the playbook
+## Run the playbook
 
 ```text
 ansible-playbook -i inventory capabilities.yaml
 ```
 
-###output of playbook
+### output of playbook
 
 ```text
 ok: [10.20.30.67] => {
