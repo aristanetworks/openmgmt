@@ -11,8 +11,10 @@ categories:
 
 ## Open Network Management Topics
 
-1. [Device Telemetry](/telemetry/)
-1. [Device Models](/models/)
-1. [Device Configuration](/configuration/)
-1. [Frequently Asked Questions - FAQ](/faq/)
-1. [Network Management Protocols](/protocols/)
+1. [Device Telemetry](telemetry/)
+1. [Device Models](models/)
+1. [Device Configuration](configuration/)
+1. [Examples](Examples/)
+1. [Miscellaneous Topics](misc-topics/)
+1. [Frequently Asked Questions - FAQ](faq/)
+1. [Network Management Protocols](protocols/)
