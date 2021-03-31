@@ -1,7 +1,7 @@
 ---
 layout: page
 title: "golang"
-date: 2021-03-019 08:17:00 --0600
+date: 2021-03-19 08:17:00 --0600
 categories:
 ---
 
