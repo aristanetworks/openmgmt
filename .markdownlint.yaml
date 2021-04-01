@@ -27,6 +27,12 @@ MD013:
   line_length: 120
   code_block_line_length: 450
 
+# multiple headings with the same content
+# siblings_only is set here to allow for common header values in structured
+# documents
+MD024:
+  siblings_only: true
+
 # fenced code  should be surrounded by blank lines default: true
 MD031:
   true
@@ -52,6 +58,7 @@ MD035:
 # since we're using front-matter, this
 MD041:
   false
+
 
 # proper-names - proper names to have the correct capitalization
 # probably not entirely helpful in a technical writing environment.
