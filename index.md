@@ -11,10 +11,13 @@ categories:
 
 ## Open Network Management Topics
 
-1. [Device Telemetry](telemetry/)
-1. [Device Models](models/)
-1. [Device Configuration](configuration/)
+1. [Configuration](configuration/)
 1. [Examples](examples/)
-1. [Miscellaneous Topics](misc-topics/)
-1. [Frequently Asked Questions - FAQ](faq/)
-1. [Network Management Protocols](protocols/)
+
+- ansible
+- gnmi clients
+  - [arista gnmi client](examples/gnmi-clients/arista-gnmi)
+  - [gnmic](examples/gnmi-clients/gnmic)
+- [gnmi-gateway](examples/gnmi-gateway)
+- [golang](examples/golang)
+- [python](examples/python)
