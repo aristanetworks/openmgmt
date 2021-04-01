@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: default
 title: "gNMI-Gateway"
 date: 2021-03-19 08:17:00 --0600
 categories:

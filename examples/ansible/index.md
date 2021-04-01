@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: default
 title: "Ansible playbook example demo"
 date: 2021-03-18 12:17:00 --0600
 categories:
