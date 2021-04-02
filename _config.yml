@@ -1,4 +1,3 @@
-remote_theme: poole/lanyon
 baseurl: /openmgmt
 
 theme: jekyll-theme-slate
