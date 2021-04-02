@@ -16,3 +16,7 @@ What are device models and why should I care?
 ## vendor-specific models
 
 ## References / Resources
+
+- YANG RFC: [https://tools.ietf.org/html/rfc6020](https://tools.ietf.org/html/rfc6020)
+- Repository of OpenConfig YANG models: [https://github.com/openconfig/public](https://github.com/openconfig/public)
+- Arista Networks YANG Repository: [https://github.com/aristanetworks/yang](https://github.com/aristanetworks/yang)
