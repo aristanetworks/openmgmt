@@ -4,7 +4,7 @@ title: "Device Configuration"
 date: 2021-03-02 12:17:00 --0600
 categories:
 ---
-- [overview](#overview)
+- [Overview](#Overview)
 - [CLI](#cli)
 - [OpenConfig (configuration)](#-openconfig-configuration)
   - [Platform compatibility](#platform-compatibility)
@@ -25,13 +25,12 @@ categories:
 - [Supported OpenConfig paths](#supported-openconfig-paths)
 - [References / Resources](#references--resources)
 
-## overview
+## Overview
 
-## CLI
+There are a number of options for working with open management protocols with Arista EOS.
+Here are the methods used to configre them on EOS as well as troubleshooting tips.
 
-## OpenConfig (configuration)
-
----
+## OpenConfig
 
 ### Platform compatibility
 
@@ -142,7 +141,7 @@ QoS DSCP:           none
 
 #### API models
 
-Starting in EOS 4.24.0F it is possible to configure the Smash paths that Octa
+Starting in EOS `4.24.0F` it is possible to configure the Smash paths that Octa
 has access to. Under the `management api models` mode, the provider smash
 submode allows for enabling or disabling a Smash path with the `[no] path <Smash
 path> [disbaled]` command.
@@ -292,12 +291,6 @@ gnmi -tls -addr 172.28.161.138:6030 -keyfile gnmi_client.key \
 
 ### NETCONF
 
-[NETCONF](https://tools.ietf.org/html/rfc6241) provides mechanisms to install,
-manipulate and delete the configuration of network devices. It uses eXtensible
-Markup Language (XML) based data encoding for the configuration data as well as
-protocol messages. The NETCONF protocol operations are realized as RPCs over ssh
-transport.
-
 Currently supported NETCONF operations: get, get-config, get-schema,
 edit-config, lock, unlock, close-session, kill-session.
 
@@ -415,8 +408,8 @@ QoS DSCP:           none
 
 When changing the default ports one has to make sure they are also allowed in
 the control-plane ACL. The default control-plane ACL cannot be modified, so a
-new one has to be created and applied under `system control-plane` (EOS 4.23+)
-or `control-plane` (pre-EOS 4.23). The fastest way to do this is to clone the
+new one has to be created and applied under `system control-plane` (EOS `4.23+`)
+or `control-plane` (pre-EOS `4.23`). The fastest way to do this is to clone the
 existing control-plane and add new permit rules.
 
 e.g.:
@@ -537,32 +530,9 @@ e.g.:
        ip access-group custom-cp vrf management in
     ```
 
-## gRPC
+## RPC role authorizations
 
-gRPC is a Remote Procedure Call (RPC) framework that OpenConfig utilizes as a
-transport. Services built with gRPC are defined in `.proto` files. They describe
-the RPCs supported by the service and the data types exchanged in those RPCs.
-
-The OpenConfig group originally published
-[openconfig.proto](https://github.com/openconfig/reference/blob/master/rpc/openconfig/openconfig.proto),
-but have since deprecated it in favor of
-[gnmi.proto](https://github.com/openconfig/reference/blob/master/rpc/gnmi). The
-current EOS versions supports gnmi.proto v0.7 and includes support for Get,
-Subscribe, Set, and Capabilities RPCs.
-
-Note: Support for openconfig.proto was dropped in EOS-4.23.0F+.
-
-A client application is required to communicate with a gRPC service. A sample
-application can be found on the Arista GitHub account:
-[gnmi](https://github.com/aristanetworks/goarista/tree/master/cmd/gnmi). `gnmi`
-is a simple command-line client for gNMI written in Go that can be used for
-testing and prototyping.
-
-Another popular gnmi client is [gnmic](https://gnmic.kmrd.dev/).
-
-### RPC role authorizations
-
-Starting in EOS 4.24.1F it is possible to perform authorization of each RPC
+Starting in EOS `4.24.1F` it is possible to perform authorization of each RPC
 (i.e. GET, SET, SUBSCRIBE), if authorization requests is supplied as described
 above.
 
@@ -588,7 +558,7 @@ By default, mapping of the FIB (forwarding information base) to the OpenConfig
 AFT (abstract forwarding table) model is disabled, as the volume of data can be
 large.
 
-Starting in EOS 4.25.1F it is possible to enable these mappings, for IPV4, IPV6,
+Starting in EOS `4.25.1F` it is possible to enable these mappings, for IPV4, IPV6,
 or both, as described below:
 
 ```text
@@ -616,10 +586,10 @@ similary if Octa is enabled:
 
 ## Limitations
 
-- In EOS versions older than 4.24.0F, not all Smash paths were accessible via
+- In EOS versions older than `4.24.0F`, not all Smash paths were accessible via
   Octa.
 
-- Starting in EOS 4.24.0F configuring the Smash paths that Octa has access to
+- Starting in EOS `4.24.0F` configuring the Smash paths that Octa has access to
   will also affect OpenConfig. Enabling a Smash path for Octa can result in
   extra YANG paths being populated in OpenConfig. Disabling a Smash path can
   result in having some YANG paths missing in OpenConfig.
@@ -656,9 +626,4 @@ For convenience, supported paths may be found at
 ## References / Resources
 
 - The OpenConfig working group: [http://openconfig.net/](http://openconfig.net/)
-- Repository of OpenConfig YANG models: [https://github.com/openconfig/public](https://github.com/openconfig/public)
-- Arista Networks YANG Repository: [https://github.com/aristanetworks/yang](https://github.com/aristanetworks/yang)
 - Repository of gNMI specifications: [https://github.com/openconfig/reference/](https://github.com/openconfig/reference/)
-- YANG RFC: [https://tools.ietf.org/html/rfc6020](https://tools.ietf.org/html/rfc6020)
-- NETCONF RFC: [https://tools.ietf.org/html/rfc6241](https://tools.ietf.org/html/rfc6241)
-- RESTCONF RFC: [https://tools.ietf.org/html/rfc8040](https://tools.ietf.org/html/rfc8040)

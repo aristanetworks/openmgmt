@@ -5,19 +5,19 @@ date: 2021-03-02 12:17:00 --0600
 categories:
 ---
 
-## introduction
+## Introduction
 
 ## Overview
+
+This repository contains examples and documentation for using open network management tools and protocols with Arista EOS.
+
+This includes OpenConfig, NETCONF, and RESTCONF.
 
 ## Open Network Management Topics
 
 1. [Configuration](configuration/)
-1. [Examples](examples/)
-
-- ansible
-- gnmi clients
-  - [arista gnmi client](examples/gnmi-clients/arista-gnmi)
-  - [gnmic](examples/gnmi-clients/gnmic)
-- [gnmi-gateway](examples/gnmi-gateway)
-- [golang](examples/golang)
-- [python](examples/python)
+2. [Protocols](protocols/)
+3. [Tools](tools/)
+4. [Telemetry](telemetry/)
+5. [Models](models/)
+6. [Examples](examples/)
