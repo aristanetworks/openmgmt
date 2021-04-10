@@ -1,0 +1,8 @@
+site_name: Open Management
+theme: mkdocs
+theme:
+  name: material
+  palette:
+    scheme: slate
+    primary: blue
+    accent: orange

@@ -45,3 +45,27 @@ brew install pre-commit
 From the root of the repository execute `pre-commit install` this will add the
 necessary hooks to your local git configuration and setup the necessary tooling
 in order to suport development.
+
+## mkdocs
+
+Install mkdocs via pip:
+
+```shell
+pip install mkdocs
+```
+
+Install material theme
+
+```shell
+pip install mkdocs-material
+```
+
+Build and deploy
+
+```shell
+mkdocks build
+mkdocs gh-deploy
+```
+
+Rendered site will stay in `gh-deploy` branch
+but keep the source code in `main` or working branches
