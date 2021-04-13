@@ -190,77 +190,76 @@ cert and key and the client cert and key.
 
 On the switch side:
 
-1. Generate the private key for the CA:
+1\. Generate the private key for the CA:
 
-    `openssl genrsa -out rootCA.key 2048`
+`openssl genrsa -out rootCA.key 2048`
 
-2. Generate the CA certificate:
+2\. Generate the CA certificate:
 
-    `openssl req -x509 -new -nodes -key rootCA.key -out rootCA.pem`
+`openssl req -x509 -new -nodes -key rootCA.key -out rootCA.pem`
 
-3. Generate the server key:
+3\. Generate the server key:
 
-    `openssl genrsa -out gnmi_server.key 2048`
+`openssl genrsa -out gnmi_server.key 2048`
 
-4. Generate the server's certificate signing request:
+4\. Generate the server's certificate signing request:
 
-    `openssl req -new -key gnmi_server.key -out gnmi_server.csr`
+`openssl req -new -key gnmi_server.key -out gnmi_server.csr`
 
-5. Generate the server's cert:
+5\. Generate the server's cert:
 
-    ```shell
-    openssl x509 -req -in gnmi_server.csr -CA rootCA.pem -CAkey rootCA.key \
-    -CAcreateserial -out gnmi_server.crt`
-    ```
+```shell
+openssl x509 -req -in gnmi_server.csr -CA rootCA.pem -CAkey rootCA.key \
+-CAcreateserial -out gnmi_server.crt`
+```
 
-6. copy `rootCA.key` and `rootCA.pem` to the gNMI collector
+6\. copy `rootCA.key` and `rootCA.pem` to the gNMI collector
 
-7. Exit from bash and copy `rootCA.key` and `gnmi_server.key` to sslkey
+7\. Exit from bash and copy `rootCA.key` and `gnmi_server.key` to sslkey
    directory. e.g.:
 
-    `copy flash:gnmi_server.key sslkey:`)
+`copy flash:gnmi_server.key sslkey:`)
 
-8. copy `rootCA.pem` and  `gnmi_server.crt` to certificate directory, e.g.:
+8\. copy `rootCA.pem` and  `gnmi_server.crt` to certificate directory, e.g.:
 
-    `copy  flash:scripts/rootCA.pem certificate:`
+`copy  flash:scripts/rootCA.pem certificate:`
 
-9. Create the SSL profile
+9\. Create the SSL profile
 
-    ```text
-    management security
-       ssl profile gnmi
-          certificate gnmi_server.crt key gnmi_server.key
-          trust certificate rootCA.pem
-    ```
+```text
+management security
+   ssl profile gnmi
+      certificate gnmi_server.crt key gnmi_server.key
+      trust certificate rootCA.pem
+```
 
-10. Apply the profile
+10\. Apply the profile
 
-    ```text
-    management api gnmi
-       transport grpc def
-          ssl profile gnmi
-       provider eos-native
-
-    ```
+```text
+management api gnmi
+   transport grpc def
+      ssl profile gnmi
+   provider eos-native
+```
 
 On the remote machine which runs the gNMI queries:
 
-1. Generate the client key:
+1\. Generate the client key:
 
-    `openssl genrsa -out gnmi_client.key 2048`
+`openssl genrsa -out gnmi_client.key 2048`
 
-2. Generate the certificate signing request:
+2\. Generate the certificate signing request:
 
-    `openssl req -new -key gnmi_client.key -out gnmi_client.csr`
+`openssl req -new -key gnmi_client.key -out gnmi_client.csr`
 
-3. Sign the cert and generate the .crt file:
+3\. Sign the cert and generate the .crt file:
 
-    ```shell
-    openssl x509 -req -in gnmi_client.csr -CA rootCA.pem -CAkey rootCA.key \
-    -CAcreateserial -out gnmi_client.crt
-    ```
+```shell
+openssl x509 -req -in gnmi_client.csr -CA rootCA.pem -CAkey rootCA.key \
+-CAcreateserial -out gnmi_client.crt
+```
 
-4. Make sure that `rootCA.key` and `rootCA.pem` are in same directory as
+4\. Make sure that `rootCA.key` and `rootCA.pem` are in same directory as
    `gnmi_client.key` and `gnmi_client.crt`
 
 #### Test example
@@ -414,121 +413,118 @@ existing control-plane and add new permit rules.
 
 e.g.:
 
-1. Reading the default CP ACL can be done with `show ip access-lists default-control-plane-acl`
+1\. Reading the default CP ACL can be done with `show ip access-lists default-control-plane-acl`
 
-    ```text
-    #show ip access-lists default-control-plane-acl
-    IP Access List default-control-plane-acl [readonly]
-            counters per-entry
-            10 permit icmp any any [match 7172 packets, 1 day, 20:46:09 ago]
-            20 permit ip any any tracked [match 98544013 packets, 0:00:36 ago]
-            30 permit udp any any eq bfd ttl eq 255
-            40 permit udp any any eq bfd-echo ttl eq 254
-            50 permit udp any any eq multihop-bfd
-            60 permit udp any any eq micro-bfd
-            70 permit udp any any eq sbfd
-            80 permit udp any eq sbfd any eq sbfd-initiator
-            90 permit ospf any any
-            100 permit tcp any any eq ssh telnet www snmp bgp https msdp ldp netconf-ssh gnmi [match 873 packets, 1 day, 20:43:39 ago]
-            110 permit udp any any eq bootps bootpc snmp rip ntp ldp [match 970 packets, 1:43:38 ago]
-            120 permit tcp any any eq mlag ttl eq 255
-            130 permit udp any any eq mlag ttl eq 255
-            140 permit vrrp any any
-            150 permit ahp any any
-            160 permit pim any any
-            170 permit igmp any any
-            180 permit tcp any any range 5900 5910
-            190 permit tcp any any range 50000 50100 [match 1480505 packets, 1 day, 20:43:16 ago]
-            200 permit udp any any range 51000 51100
-            210 permit tcp any any eq 3333
-            220 permit tcp any any eq nat ttl eq 255
-            230 permit tcp any eq bgp any
-            240 permit rsvp any any
-            250 permit tcp any any eq 6040
-            260 permit tcp any any eq 5541 ttl eq 255
-            270 permit tcp any any eq 5542 ttl eq 255
-    ```
+```text
+#show ip access-lists default-control-plane-acl
+IP Access List default-control-plane-acl [readonly]
+        counters per-entry
+        10 permit icmp any any [match 7172 packets, 1 day, 20:46:09 ago]
+        20 permit ip any any tracked [match 98544013 packets, 0:00:36 ago]
+        30 permit udp any any eq bfd ttl eq 255
+        40 permit udp any any eq bfd-echo ttl eq 254
+        50 permit udp any any eq multihop-bfd
+        60 permit udp any any eq micro-bfd
+        70 permit udp any any eq sbfd
+        80 permit udp any eq sbfd any eq sbfd-initiator
+        90 permit ospf any any
+        100 permit tcp any any eq ssh telnet www snmp bgp https msdp ldp netconf-ssh gnmi [match 873 packets, 1 day, 20:43:39 ago]
+        110 permit udp any any eq bootps bootpc snmp rip ntp ldp [match 970 packets, 1:43:38 ago]
+        120 permit tcp any any eq mlag ttl eq 255
+        130 permit udp any any eq mlag ttl eq 255
+        140 permit vrrp any any
+        150 permit ahp any any
+        160 permit pim any any
+        170 permit igmp any any
+        180 permit tcp any any range 5900 5910
+        190 permit tcp any any range 50000 50100 [match 1480505 packets, 1 day, 20:43:16 ago]
+        200 permit udp any any range 51000 51100
+        210 permit tcp any any eq 3333
+        220 permit tcp any any eq nat ttl eq 255
+        230 permit tcp any eq bgp any
+        240 permit rsvp any any
+        250 permit tcp any any eq 6040
+        260 permit tcp any any eq 5541 ttl eq 255
+        270 permit tcp any any eq 5542 ttl eq 255
+```
 
-2. There are multiple ways to quickly edit and remove the unnecessary match
-   outputs, in this example we'll use `sed` on EOS. Save the file to
-   `/mnt/flash`:
+2\. There are multiple ways to quickly edit and remove the unnecessary match
+   outputs, in this example we'll use `sed` on EOS. Save the file to `/mnt/flash`:
 
-    `show ip access-lists  default-control-plane-acl | redirect flash:cpacl.txt`
+`show ip access-lists  default-control-plane-acl | redirect flash:cpacl.txt`
 
-3. Drop down to bash:
+3\. Drop down to bash: `#bash`
 
-    `#bash`
+4\. Go to /mnt/flash and remove the match outputs
 
-4. Go to /mnt/flash and remove the match outputs
+```shell
+cd /mnt/flash
+sudo sed -i  "s/\[.*//g" cpacl.txt
+```
 
-    ```shell
-    cd /mnt/flash
-    sudo sed -i  "s/\[.*//g" cpacl.txt
-    ```
-
-5. Reading the file now should be clean without all the match outputs like
+5\. Reading the file now should be clean without all the match outputs like
    below:
 
-    ```text
-    cat cpacl.txt
-    IP Access List default-control-plane-acl
-            counters per-entry
-            10 permit icmp any any
-            20 permit ip any any tracked
-            30 permit udp any any eq bfd ttl eq 255
-            40 permit udp any any eq bfd-echo ttl eq 254
-            50 permit udp any any eq multihop-bfd
-            60 permit udp any any eq micro-bfd
-            70 permit udp any any eq sbfd
-            80 permit udp any eq sbfd any eq sbfd-initiator
-            90 permit ospf any any
-            100 permit tcp any any eq ssh telnet www snmp bgp https msdp ldp netconf-ssh gnmi
-            110 permit udp any any eq bootps bootpc snmp rip ntp ldp
-            120 permit tcp any any eq mlag ttl eq 255
-            130 permit udp any any eq mlag ttl eq 255
-            140 permit vrrp any any
-            150 permit ahp any any
-            160 permit pim any any
-            170 permit igmp any any
-            180 permit tcp any any range 5900 5910
-            190 permit tcp any any range 50000 50100
-            200 permit udp any any range 51000 51100
-            210 permit tcp any any eq 3333
-            220 permit tcp any any eq nat ttl eq 255
-            230 permit tcp any eq bgp any
-            240 permit rsvp any any
-            250 permit tcp any any eq 6040
-            260 permit tcp any any eq 5541 ttl eq 255
-            270 permit tcp any any eq 5542 ttl eq 255
-    ```
+```text
+cat cpacl.txt
+IP Access List default-control-plane-acl
+        counters per-entry
+        10 permit icmp any any
+        20 permit ip any any tracked
+        30 permit udp any any eq bfd ttl eq 255
+        40 permit udp any any eq bfd-echo ttl eq 254
+        50 permit udp any any eq multihop-bfd
+        60 permit udp any any eq micro-bfd
+        70 permit udp any any eq sbfd
+        80 permit udp any eq sbfd any eq sbfd-initiator
+        90 permit ospf any any
+        100 permit tcp any any eq ssh telnet www snmp bgp https msdp ldp netconf-ssh gnmi
+        110 permit udp any any eq bootps bootpc snmp rip ntp ldp
+        120 permit tcp any any eq mlag ttl eq 255
+        130 permit udp any any eq mlag ttl eq 255
+        140 permit vrrp any any
+        150 permit ahp any any
+        160 permit pim any any
+        170 permit igmp any any
+        180 permit tcp any any range 5900 5910
+        190 permit tcp any any range 50000 50100
+        200 permit udp any any range 51000 51100
+        210 permit tcp any any eq 3333
+        220 permit tcp any any eq nat ttl eq 255
+        230 permit tcp any eq bgp any
+        240 permit rsvp any any
+        250 permit tcp any any eq 6040
+        260 permit tcp any any eq 5541 ttl eq 255
+        270 permit tcp any any eq 5542 ttl eq 255
+```
 
-6. Now we can just copy that ACLs content into a new ACL, add our new rules and
+6\. Now we can just copy that ACLs content into a new ACL, add our new rules and
    apply it on the control-plane
 
-    ```text
-    $ exit
-    logout
-    (config)# ip access-list custom-cp
-    (config)#
-    <paste the content of the default CP from the file created>
-    (config)# 280 permit tcp any any eq 5900
-    ```
+```text
+$ exit
+logout
+(config)# ip access-list custom-cp
+(config)#
+<paste the content of the default CP from the file created>
+(config)# 280 permit tcp any any eq 5900
+```
 
-7. Apply the new ACL
+7\. Apply the new ACL
 
-    Default VRF
+Default VRF
 
-    ```text
-    sysem control-plane
-       ip access-group custom-cp in
-    ```
+```text
+sysem control-plane
+   ip access-group custom-cp in
+```
 
-    Non-default VRF
+Non-default VRF
 
-    ```text
-    sysem control-plane
-       ip access-group custom-cp vrf management in
-    ```
+```text
+sysem control-plane
+   ip access-group custom-cp vrf management in
+```
 
 ## RPC role authorizations
 
@@ -602,18 +598,18 @@ similary if Octa is enabled:
   to the OpenConfig client update/merge/replace request is processed.
 - Below listed commands are the only QoS config commands that are supported
 
-    ```text
-    class-map type qos match-any <cm name>
-        match vlan <vlan id>
+```text
+class-map type qos match-any <cm name>
+    match vlan <vlan id>
 
-    policy-map type qos <pmap name>
-        class <cm name>
-            police cir <cir> bc <burst> kbytes
-        class class-default
+policy-map type qos <pmap name>
+    class <cm name>
+        police cir <cir> bc <burst> kbytes
+    class class-default
 
-    interface Ethernet<xx> | port-channel<yy>
-        service-policy type qos input <pmap name>
-    ```
+interface Ethernet<xx> | port-channel<yy>
+    service-policy type qos input <pmap name>
+```
 
 ## Supported OpenConfig paths
 
