@@ -45,3 +45,48 @@ brew install pre-commit
 From the root of the repository execute `pre-commit install` this will add the
 necessary hooks to your local git configuration and setup the necessary tooling
 in order to suport development.
+
+## mkdocs Operation
+
+### installation
+
+Install mkdocs via pip.
+
+```shell
+pip install mkdocs
+```
+
+### Theme Installation
+
+```shell
+pip install mkdocs-material
+```
+
+### Build Content
+
+```shell
+mkdocs build
+```
+
+### Locally (Re)View Changes
+
+It is possible to see the locally rendered content and it is highly recommended that you validate that your changes do
+not break something in the visual rendering of the site. In order to locally serve the site mkdocs will start a local
+web server, this can be invoked via the following command.
+
+```shell
+mkdocs serve
+```
+
+## Site Deployment
+
+The site should be built and generated from `main`. This will ensure that all of the content is integrated and
+appropriately rendered. **DO NOT deploy directly from a branch other than `main`.** When there are changes to merge
+generate a PR and have it merged into `main`. From main, issue a deployment using the mkdocs deploy function.
+
+```shell
+git pull --all      # make sure you have the latest version of main
+git checkout main   # switch to the main branch (if necessary)
+mkdocs build        # render the site
+mkdocs gh-deploy    # deploy using the mkdocs tool
+```
