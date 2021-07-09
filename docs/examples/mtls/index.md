@@ -1,72 +1,78 @@
-# EOS mTLS configuration
+# EOS mTLS Configuration
 
 ## overview
 
-EOS supports the use of mTLS for gRPC services.  This allows the use of  certificates, signed by a recognized and
-trusted CA, for authentication to gNMI and other gRPC based services.
+EOS supports the use of mutual TLS (mTLS) for gRPC services.  This allows the use of certificates, signed by a
+recognized and trusted CA, for authentication to gNMI and other gRPC based services.
 
 By default only certificates signed with Arista's CA are trusted.  In order to generate and sign certificates for mTLS
-an operator will need to install and configure a certifying authority (CA) that is used for signing certificates that
-are generated on network elements as well as the servers that will be interacting with the gRPC services.  the necessary
-certificates for establishing the chain of trust will need to be imported into the switches and tools interacting with
-the switches.
+authentication, an operator will need to install and configure a certifying authority (CA) that is used for signing
+certificates that are generated on network elements as well as the servers that will be interacting with the gRPC
+services.  The necessary certificates for establishing the chain of trust will need to be imported into the switches and
+tools interacting with the switches.
 
 This document outlines the necessary steps to generate certificate signing requests (CSR) on arista devices, sign the
 certificates and import these into the switches.
 
 ## process overview
 
-- setup a private certificate authority (CA). this document uses easy-rsa
-  - <https://github.com/OpenVPN/easy-rsa>
-- generate CSRs from the switch as well as from a host that will be initiating connections to the switch using mTLS as
+- Setup a private certificate authority (CA). This document uses [easy-rsa](https://github.com/OpenVPN/easy-rsa)
+- Generate CSRs from the switch as well as for the host that will be initiating connections to the switch using mTLS as
   the authentication mechanism.
-- sign the CSRs using the CA tools
-- copy the relevant elements to the switch (signed server certificate and CA certificate)
-- configure the switch to use the certificates and the associated CA certificate to perform mTLS authentication.
+- Sign the CSRs using the CA tools.
+- Copy the relevant elements to the switch (signed server certificate and CA certificate).
+- Configure the switch to use the certificates and the associated CA certificate to perform mTLS authentication.
+- Initiate connections from the clients to the switch to execute gNMI RPCs.
 
-## easy-rsa CA parameters
+## easy-rsa setup
+
+The simple installation of Easy-RSA is well documented in the Easy RSA [quick start
+guide](https://github.com/OpenVPN/easy-rsa/blob/master/README.quickstart.md).  For a more durable installation you're
+encouraged to review the Easy-RSA documentation and customize the settings to your environment.
+
+### Easy-RSA CA parameters
 
 **easy RSA version:** 3.0.8
 
+As of this writing EOS only supports RSA certificates, this differs from the default configuration of Easy-RSA.  The
+following variable in the `vars` file will need to be set in order to generate the appropriate certificate type.
+
 ```bash
-set_var EASYRSA_REQ_COUNTRY  "us"
-set_var EASYRSA_REQ_PROVINCE "mn"
-set_var EASYRSA_REQ_CITY     "minneapolis"
-set_var EASYRSA_REQ_ORG      "arista-lab"
-set_var EASYRSA_REQ_EMAIL    "sulrich@arista.com"
-set_var EASYRSA_REQ_OU       "dork-squad"
-set_var EASYRSA_ALGO         "rsa"
-set_var EASYRSA_DIGEST       "sha256"
+set_var EASYRSA_ALGO "rsa"
 ```
 
-Use the `build-ca` command to create the necessary certificate signing infrastructure.  This will generate a `ca.crt`
-certificate which can be imported into the PKI validation chain of the switches and other hosts in your PKI domain.
+Use the `easyrsa build-ca` command to create the necessary certificate signing infrastructure within easyrsa.  This will
+generate a `ca.crt` certificate which can be imported into the PKI validation chain of the switches and other hosts in
+your PKI domain.  This can also be used in a standalone manner with most gnmi clients.
 
 In our case, this CA certificate resides in: `${HOME}/easy-rsa/pki/ca.crt`
 
-This will need to be imported into the network elements you're using mTLS with.
+This will need to be imported into the network elements where you're using mTLS for authentication.
 
-## generate a local client certificate (u20)
+## generate a local client certificate
 
-This will be used for various grpc actions to the switch.
+This will be used by local clients (gnmi, gnoi, gribi, etc.) connecting to the switches in order to authenticate.
 
-Note the `gnmi-client.cnf` configuration file provided is used to create the Subject Alternate Name IP address entry
-associated with the client certificate.  This is optional and not required for client certificates.
+Note the `gnmi-client.cnf` configuration file provided in the following `openssl` command is used to create the Subject
+Alternate Name IP address entry associated with the client certificate.  This is optional and is not required for
+certificates.
 
-```
+```text
 mkdir ~/gnmi-client-cert
 cd ~/gnmi-client-cert
 openssl req -out gnmi-client.csr -newkey rsa:2048 -nodes -keyout gnmi-client.key -config gnmi-client.cnf
 ```
+
+The above commands will generate a private key as well as the Certificate Signing Request (CSR)
 
 ### sign the local client certificate with easy-rsa
 
 Note, that this is going to be a _client_ certificate.  As our gnmi client will be talking to the gnmi server on the
 switch.
 
-```
+```text
 cd ~/easy-rsa
-./easyrsa import-req ../gnmi-client-cert gnmi-client.csr u20-gnmi
+./easyrsa import-req ../gnmi-client-cert gnmi-client.csr gnmi-client
 ./easyrsa sign-req client gnmi-client
 Using SSL: openssl OpenSSL 1.1.1f  31 Mar 2020
 
@@ -127,27 +133,30 @@ Note that in this case we're generating a _server_ certificate.
 cd ~/easy-rsa
 ./easyrsa import-req ../v1.csr v1
 ./easyrsa sign-req server v1
-
 ```
 
 This will generate the signed certificate and place it into the easy-rsa local store.
 
-`/home/sulrich/easy-rsa/pki/issued/v1.crt`
+`${HOME}/easy-rsa/pki/issued/v1.crt`
 
 - Copy this to the switch and import it into the switch's certificate store.
 
 `copy file:/mnt/flash/v1.crt certificate:v1.crt`
 
+## copy the private CA certificate to the switch
+
+You will need to copy the `CA.crt` (commonly in `<easyrsa_root>/pki/ca.crt`) to the switch and add it to the list of
+certificates.  In the following example the file has been copied to the switch as `demo-ca.crt`.
+
+```
+copy flash:demo-ca.crt certificate:
+```
+
 ## ssl profile configuration
 
-configure the necessary ssl profile and associate it w/grpc and the gnmi service.
+Configure the necessary `ssl profile` and include the `demo-ca.crt` in the list of trusted CAs.
 
 ```text
-management api gnmi
-   transport grpc default
-      ssl profile test-arista
-   provider eos-native
-!
 management security
    ssl profile test-arista
       certificate v1.crt key v1.key
@@ -155,7 +164,60 @@ management security
 !
 ```
 
-## references
+## gnmi configuration
 
-- <https://www.digitalocean.com/community/tutorials/how-to-set-up-and-configure-a-certificate-authority-ca-on-ubuntu-20-04>
-- <https://eos.arista.com/working-with-certificates/>
+The following configuration associates the gnmi service withthe associated ssl profile and enables it for use with mTLS
+for authentication.
+
+```text
+management api gnmi
+   transport grpc default
+      ssl profile test-arista
+   provider eos-native
+!
+```
+
+At this point the switch is configured to accept connections from clients with valid, signed certificates.
+
+## useful troubleshooting commands
+
+`show management api gnmi`
+
+This command enables you to determine the operational state of the gnmi process as well as whether or not the ssl profile
+is considered valid.
+
+`show management security ssl profile`
+
+This command enables you to see the state of the ssl profiles and whether there are issues with the validation chain.
+
+### clocks and certificate lifetime
+
+Certificates should be created with a finite lifetime and rotated within that lifetime.  However, if the clocks on the
+switch are grossly off this may impact certificate operation.  Make sure that the clock on the switch is set correctly
+and synchronized to a reliable time source.
+
+## client operation
+
+### gnmi (arista client)
+
+
+```shell
+gnmi -addr 192.168.1.21:6030                    \
+  -username admin -password arista              \
+  -cafile easy-rsa/pki/ca.crt                   \
+  -certfile easy-rsa/pki/issued/gnmi-client.crt \
+  -keyfile gnmi-client/gnmi-client.key capabilities
+```
+
+### gnmic
+
+```shell
+gnmic -a 192.168.1.21:6030 -u admin -p arista    \
+  --tls-ca easy-rsa/pki/ca.crt                   \
+  --tls-cert easy-rsa/pki/issued/gnmi-client.crt \
+  --tls-key gnmi-client/gnmi-client.key capabilities
+```
+
+## additional references
+
+- [EOS central: Working with Certificates](steps://eos.arista.com/working-with-certificates/)
