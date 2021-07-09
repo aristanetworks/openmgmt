@@ -1,4 +1,5 @@
 site_name: Open Management
+site_url: ""
 theme: mkdocs
 theme:
   name: material
@@ -6,3 +7,20 @@ theme:
     scheme: slate
     primary: blue
     accent: orange
+
+nav:
+  - Home: index.md
+  - Configuration:
+    - OpenConfig: configuration/openconfig.md
+    - NETCONF: configuration/netconf.md
+    - RESTCONF: configuration/restconf.md
+    - Certificate Authentication: configuration/mtls.md
+    - Security Configuration: configuration/security.md
+  - Examples:
+    - Ansible: examples/ansible/index.md
+    - gNMI clients:
+      - gnmi (Arista): examples/gnmi-clients/arista-gnmi/index.md
+      - gnmic: examples/gnmi-clients/gnmic/index.md
+    - gNMI gateway: examples/gnmi-gateway/index.md
+    - Go Lang: examples/golang/index.md
+    - Python: examples/python/index.md

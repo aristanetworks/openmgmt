@@ -2,8 +2,8 @@
 
 ## overview
 
-EOS supports the use of mutual TLS (mTLS) for gRPC services.  This allows the use of certificates, signed by a
-recognized and trusted CA, for authentication to gNMI and other gRPC based services.
+EOS supports the use of mutual TLS (mTLS) for gRPC, RESTCONF and eAPI services.  This allows the use of certificates,
+signed by a recognized and trusted CA, for authentication to gNMI and other gRPC based services.
 
 By default only certificates signed with Arista's CA are trusted.  In order to generate and sign certificates for mTLS
 authentication, an operator will need to install and configure a certifying authority (CA) that is used for signing
@@ -16,7 +16,7 @@ certificates and import these into the switches.
 
 ## process overview
 
-- Setup a private certificate authority (CA). This document uses [easy-rsa](https://github.com/OpenVPN/easy-rsa)
+- Setup a private certificate authority (CA).  This document uses [easy-rsa](https://github.com/OpenVPN/easy-rsa)
 - Generate CSRs from the switch as well as for the host that will be initiating connections to the switch using mTLS as
   the authentication mechanism.
 - Sign the CSRs using the CA tools.
@@ -123,7 +123,7 @@ security pki certificate generate signing-request key v1.key
 
 ```
 
-- Capture the CSR text into a file and copy this to the CA server. (u20)
+- Capture the CSR text into a file and copy this to the CA server.
 
 ## sign the switch CSR with easy-rsa
 
@@ -148,7 +148,7 @@ This will generate the signed certificate and place it into the easy-rsa local s
 You will need to copy the `CA.crt` (commonly in `<easyrsa_root>/pki/ca.crt`) to the switch and add it to the list of
 certificates.  In the following example the file has been copied to the switch as `demo-ca.crt`.
 
-```
+```text
 copy flash:demo-ca.crt certificate:
 ```
 
@@ -199,7 +199,6 @@ and synchronized to a reliable time source.
 ## client operation
 
 ### gnmi (arista client)
-
 
 ```shell
 gnmi -addr 192.168.1.21:6030                    \
