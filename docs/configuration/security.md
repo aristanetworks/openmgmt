@@ -115,13 +115,13 @@ logout
 Default VRF
 
 ```text
-sysem control-plane
+system control-plane
    ip access-group custom-cp in
 ```
 
 Non-default VRF
 
 ```text
-sysem control-plane
+system control-plane
    ip access-group custom-cp vrf management in
 ```
