@@ -1,5 +1,5 @@
 site_name: Open Management
-site_url: ""
+site_url: https://aristanetworks.github.io/openmgmt/
 theme: mkdocs
 theme:
   name: material
@@ -7,7 +7,10 @@ theme:
     scheme: slate
     primary: blue
     accent: orange
-
+extra:
+  analytics:
+    provider: google
+    property: G-4V8W728SS9
 nav:
   - Home: index.md
   - Configuration:
