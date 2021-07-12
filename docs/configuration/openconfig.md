@@ -7,7 +7,7 @@ categories:
 
 ## Overview
 
-EOS supports the OpenConfig gNMI interface for devide management.
+EOS supports the OpenConfig gNMI interface for device management.
 
 ### Platform compatibility
 
@@ -15,7 +15,7 @@ All EOS flavors support OpenConfig (phyiscal, virtual, containerized, cloud).
 
 ### gNMI
 
-To start the gNMI server, which listens by default on TCP/6030 configured the gRPC transport under `management api gnmi`
+To start the gNMI server, which listens by default on TCP/6030 configure the gRPC transport under `management api gnmi`
 in the global config mode:
 
 Default VRF
@@ -49,7 +49,7 @@ management api gnmi
       ip access-group ACCESS_GROUP
 ```
 
-Note The ACL should be a standard ACL allowing hosts or subnets.
+Note, the ACL should be a standard ACL allowing hosts or subnets.
 
 Authenticate the connection with TLS
 
@@ -81,18 +81,18 @@ QoS DSCP:           none
 ### OCTA
 
 The OpenConfing agent (gNMI API) can leverage the EOS state streaming agent's (TerminAttr) libraries, thus exposing EOS
-native paths. If Octa (OpenConfig+TerminAttr) is enabled then OpenConfig, in addition to accepting OpenConfig paths in
+native paths. If Octa (OpenConfig + TerminAttr) is enabled then OpenConfig, in addition to accepting OpenConfig paths in
 gNMI get/subscribe requests, will also support EOS native paths (e.g. Sysdb/Smash paths). This feature was introduced in
 `4.22.1F`.
 
 gNMI requests received by Octa are interpreted as either OpenConfig or TerminAttr requests, as follows.
 
-- gNMI requests containing an origin of `eos_native` are processed as TerminAttr requests.
+- gNMI requests containing an origin of `eos_native` are processed as as native path requests.
 - Requests lacking an origin of `eos_native` are treated as OpenConfig requests.
 
 A gNMI client that supports specification of an origin as part of the associated RPC is a requirement.
 
-Note Support for sending GET/SUBSCRIBE requests to both an openconfig and an eos-native path in the same call is not yet
+Note support for sending GET/SUBSCRIBE requests to both an openconfig and an eos-native path in the same call is not yet
 supported.
 
 #### How to enable Octa
