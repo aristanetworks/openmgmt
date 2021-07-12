@@ -80,7 +80,7 @@ QoS DSCP:           none
 
 ### OCTA
 
-The OpenConfing agent (gNMI API) can leverage the EOS state streaming agent's (TerminAttr) libraries, thus exposing EOS
+The OpenConfig agent (gNMI API) can leverage the EOS state streaming agent's (TerminAttr) libraries, thus exposing EOS
 native paths. If Octa (OpenConfig + TerminAttr) is enabled then OpenConfig, in addition to accepting OpenConfig paths in
 gNMI get/subscribe requests, will also support EOS native paths (e.g. Sysdb/Smash paths). This feature was introduced in
 `4.22.1F`.
