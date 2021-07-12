@@ -5,15 +5,10 @@ date: 2021-03-18 12:17:00 --0600
 categories:
 ---
 
-- [Ansible collections for](#overview)
-- [Edit the inventory file](#Edit the inventory file to match your environment)
-- [Ansible collection for grpc](#gNMI Collection)
-- [Run the playbook](#Run the playbook)
-
 ## overview
 
 In this ansible collection we show how to use ansible to find all the available
-modules within a Arista EOS device using the [capabilities method within
+modules within an Arista EOS device using the [capabilities method within
 gNMI.](https://github.com/openconfig/reference/blob/master/rpc/gnmi/gnmi-specification.md#32-capability-discovery)
 
 ## Edit the inventory file to match your environment
