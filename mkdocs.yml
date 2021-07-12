@@ -11,3 +11,22 @@ extra:
   analytics:
     provider: google
     property: G-4V8W728SS9
+<<<<<<< HEAD
+=======
+nav:
+  - Home: index.md
+  - Configuration:
+    - OpenConfig: configuration/openconfig.md
+    - NETCONF: configuration/netconf.md
+    - RESTCONF: configuration/restconf.md
+    - Certificate Authentication: configuration/mtls.md
+    - Security Configuration: configuration/security.md
+  - Examples:
+    - Ansible: examples/ansible/index.md
+    - gNMI clients:
+      - gnmi (Arista): examples/gnmi-clients/arista-gnmi/index.md
+      - gnmic: examples/gnmi-clients/gnmic/index.md
+    - gNMI gateway: examples/gnmi-gateway/index.md
+    - Go Lang: examples/golang/index.md
+    - Python: examples/python/index.md
+>>>>>>> d9024e1353b9bc0c79551984efe41f89c6a9e28e
