@@ -11,8 +11,6 @@ extra:
   analytics:
     provider: google
     property: G-4V8W728SS9
-<<<<<<< HEAD
-=======
 nav:
   - Home: index.md
   - Configuration:
@@ -29,4 +27,3 @@ nav:
     - gNMI gateway: examples/gnmi-gateway/index.md
     - Go Lang: examples/golang/index.md
     - Python: examples/python/index.md
->>>>>>> d9024e1353b9bc0c79551984efe41f89c6a9e28e
