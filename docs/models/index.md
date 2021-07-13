@@ -2,10 +2,9 @@
 layout: default
 title: "Device Models"
 date: 2021-03-02 12:17:00 --0600
-categories:
 ---
 
-## overview
+## Overview
 
 What are YANG models and why should I care?
 
@@ -44,7 +43,7 @@ protocols as well.
 
 Details regarding the OpenConfig model support within Arista's EOS software can be found online.
 
-## vendor-specific models
+## Vendor-Specific Models
 
 While standard models provide a wide range of feature coverage there is commonly a need to model vendor-specific device
 or feature operation.  Examples of this may include device specific behaviors (hardware configuration details) or
