@@ -52,7 +52,9 @@ IP Access List default-control-plane-acl [readonly]
 2\. There are multiple ways to quickly edit and remove the unnecessary match
    outputs, in this example we'll use `sed` on EOS. Save the file to `/mnt/flash`:
 
-`show ip access-lists  default-control-plane-acl | redirect flash:cpacl.txt`
+```text
+show ip access-lists  default-control-plane-acl | redirect flash:cpacl.txt
+```
 
 3\. Enter bash: `#bash`
 
@@ -63,10 +65,9 @@ cd /mnt/flash
 sudo sed -i  "s/\[.*//g" cpacl.txt
 ```
 
-5\. Reading the file now should be clean without all the match outputs like below:
+5\. Reading the file now should be clean without all the match counter outputs like below:
 
 ```text
-cat cpacl.txt
 IP Access List default-control-plane-acl
         counters per-entry
         10 permit icmp any any
@@ -98,16 +99,14 @@ IP Access List default-control-plane-acl
         270 permit tcp any any eq 5542 ttl eq 255
 ```
 
-6\. Now we can just copy that ACLs content into a new ACL, add our new rules and
-   apply it on the control-plane
+6\. Now we can just copy that ACLs content into a new ACL, add our new rules and apply it on the control-plane.
+
+From **config** mode:
 
 ```text
-$ exit
-logout
-(config)# ip access-list custom-cp
-(config)#
-<paste the content of the default CP from the file created>
-(config)# 280 permit tcp any any eq 5900
+ip access-list custom-cp
+   <paste the content of the default CP from the file created>
+   280 permit tcp any any eq 5900
 ```
 
 7\. Apply the new ACL
