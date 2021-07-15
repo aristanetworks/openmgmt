@@ -16,13 +16,24 @@ with the .json extension so they are easier to view within a text editor.
 
 ## Download && install gnmic
 
+To install run:
+
 ```shell
 curl -sL https://github.com/karimra/gnmic/raw/master/install.sh | sudo bash
+```
 
+To get the version run:
+
+```shell
 gnmi_stuff$ gnmic version
-version : 0.7.0
- commit : dcbe8d3
-   date : 2021-01-28T01:58:29Z
+```
+
+Output:
+
+```shell
+version : 0.17.0
+ commit : 278661e
+   date : 2021-07-14T07:29:14Z
  gitURL : https://github.com/karimra/gnmic
    docs : https://gnmic.kmrd.dev
 ```
@@ -704,6 +715,13 @@ gnmic -a 10.83.13.214:6030 -u cvpadmin -p arastra --insecure --gzip --sample-int
 </p>
 </details>
 
+#### Subscribe to interface counters and save them to a file
+
+```shell
+gnmic -a 127.0.0.1:6030 -u admin -p admin --insecure subscribe --path \
+  "/interfaces/interface/state/counters"  >> outputs/interface_state.json
+```
+
 ## gNMI SET RPC Examples
 
 ### OpenConfig paths
@@ -716,9 +734,11 @@ gnmic -a 10.83.13.214:6030 -u cvpadmin -p arastra --insecure --gzip set \
 --update-file value.json
 ```
 
-`value.json`:
+**value.json**:
 
-`{"config": {"neighbor-address":"10.10.100.43", "peer-as": 123}}`
+```javascript
+{"config": {"neighbor-address":"10.10.100.43", "peer-as": 123}}
+```
 
 Output:
 
@@ -743,9 +763,11 @@ gnmic -a 10.83.13.214:6030 -u cvpadmin -p arastra --insecure --gzip set  \
 --update-file value.json
 ```
 
-`value.json`:
+**value.json**:
 
-`{"config": {"neighbor-address":"10.10.100.43", "peer-as": 123, "enabled": true, "send-community": "EXTENDED"}}`
+```javascript
+{"config": {"neighbor-address":"10.10.100.43", "peer-as": 123, "enabled": true, "send-community": "EXTENDED"}}
+```
 
 Output:
 
@@ -770,9 +792,11 @@ gnmic -a 10.83.13.214:6030 -u cvpadmin -p arastra --insecure --gzip set \
   --update-file value.json
 ```
 
-`value.json`:
+**value.json**:
 
-`{"config": {"peer-group-name":"XYZ", "local-as": 114}}`
+```javascript
+{"config": {"peer-group-name":"XYZ", "local-as": 114}}
+```
 
 #### Update BGP peer AS
 
@@ -781,6 +805,8 @@ gnmic -a 10.83.13.214:6030 -u cvpadmin -p arastra --insecure --gzip set \
 --update-path '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.100.43]/config/peer-as' \
 --update-value '110'
 ```
+
+Output:
 
 ```javascript
 {
@@ -803,6 +829,8 @@ gnmic -a 10.83.13.214:6030 -u cvpadmin -p arastra --insecure --gzip set \
 --update-value 'XYZ'
 ```
 
+Output:
+
 ```javascript
 {
   "timestamp": 1626306067189329813,
@@ -823,6 +851,11 @@ gnmic -a 10.83.13.214:6030 -u cvpadmin -p arastra --insecure --gzip set \
 gnmic -a 10.83.13.108:6030 -u cvpadmin -p arastra --insecure --gzip set \
 --update-path /acl/acl-sets \
 --update-file acl2.json
+```
+
+Output:
+
+```javascript
 {
   "timestamp": 1626307972085688242,
   "time": "2021-07-15T01:12:52.085688242+01:00",
@@ -926,20 +959,13 @@ gnmic -a 10.83.13.108:6030 -u cvpadmin -p arastra --insecure --gzip set \
 }
 ```
 
-## Subscribe openconfig paths
-
-```shell
-gnmic -a 127.0.0.1:6030 -u admin -p admin --insecure subscribe --path \
-  "/interfaces/interface/state/counters"  >> outputs/interface_state.json
-```
-
-### EOS Native paths
+## EOS Native paths
 
 To get EOS native paths, OCTA has to be enabled as mentioned in the
 configuration section. Performing GET/SUBSCRIBE actions using EOS native paths
 require changing the origin to `eos_native`.
 
-#### Commonly used paths
+### Commonly used paths
 
 - MAC table: `/Smash/bridging/status/smashFdbStatus`
 - ARP table: `/Smash/arp/status/arpEntry`
@@ -963,7 +989,7 @@ require changing the origin to `eos_native`.
     - 7160-family products (Cavium/Xpliant ASICs): `XpCounters`
     - 7170-family products (Barefoot ASIC): `BfnCounters`
 
-##### Get CPU utilization
+### Get CPU utilization
 
 ```shell
  gnmic -a 10.83.13.108:6030 -u cvpadmin -p arastra --insecure --gzip get --path  \
@@ -1024,42 +1050,64 @@ require changing the origin to `eos_native`.
 </p>
 </details>
 
-##### Get transceiver DOM temperature
+### Get transceiver DOM temperature
 
 ```shell
 gnmic -a 127.0.0.1:6030 -u admin -p admin --insecure --gzip get --path \
   eos_native:/Sysdb/hardware/archer/xcvr/status >> outputs/doms.json
+```
 
+### Get EOS image version
+
+```shell
 gnmic -a 127.0.0.1:6030 -u admin -p admin --insecure --gzip get \
   --path eos_native:/Eos/image >> outputs/eos_image.json
 ```
 
 ## Cli origin
 
+### Get the running config
+
 ```shell
 
 gnmic -a 127.0.0.1:6030 -u admin -p admin --insecure  get \
   --path "cli:/show running-config" >> outputs/outputs.json
+```
 
+### Get the total route count
+
+```shell
 gnmic -a 127.0.0.1:6030 -u admin -p admin --insecure  get \
   --path "cli:/show ip route summary" \
   | jq '.[0].updates[0].values."show ip route summary".totalRoutes'
-
 ```
 
 ## Misc
 
+### Save all status states to a file
+
 ```shell
 gnmic -a 127.0.0.1:6030 -u admin -p admin --insecure get \
   --path ".../state/..." >> outputs/states.json
+```
+
+### Save all config states to a file
+
+```shell
 gnmic -a 127.0.0.1:6030 -u admin -p admin --insecure get \
   --path ".../config/..." >> outputs/configs.json
 ```
 
+### Save network instance states to a file
+
 ```shell
 gnmic -a 127.0.0.1:6030 -u admin -p admin --insecure get --path \
   /network-instances/network-instance >> outputs/network-instances.json
+```
 
+### Save BGP states to a file
+
+```shell
 gnmic -a 127.0.0.1:6030 -u admin -p admin --insecure get --path \
   /network-instances/network-instance[name=default]/protocols/protocol[name=BGP]\
   >> outputs/bgp.json
