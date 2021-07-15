@@ -38,4 +38,4 @@ jobs:
         run: |
           git pull
           mkdocs build
-          
+          mkdock gh-deploy
