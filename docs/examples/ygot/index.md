@@ -17,7 +17,7 @@ categories:
 - The hostname will be printed out and stored within the system.json file.
 - Using the [Arista gNMI binary](https://github.com/aristanetworks/goarista/tree/master/cmd/gnmi) we will configure a device to use the ceos1 hostname.
 
-## clone this repo 
+## Clone this repo 
 ```
 git clone https://github.com/aristanetworks/openmgmt && cd openmgmt/src/ygot
 ```
@@ -60,7 +60,7 @@ tree -f yang/
 </p>
 </details>
 
-## run ygot 
+## Run ygot 
 ```
 go run $GOPATH/src/github.com/openconfig/ygot/generator/generator.go -path=yang -output_file=pkg/oc.go -package_name=oc -generate_fakeroot -fakeroot_name=device -compress_paths=true  yang/openconfig-system.yang
 ```
