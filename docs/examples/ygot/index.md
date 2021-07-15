@@ -17,7 +17,7 @@ categories:
 - The hostname will be printed out and stored within the system.json file.
 - Using the [Arista gNMI binary](https://github.com/aristanetworks/goarista/tree/master/cmd/gnmi) we will configure a device to use the ceos1 hostname.
 
-## Clone this repo 
+## Clone this repo
 ```
 git clone https://github.com/aristanetworks/openmgmt && cd openmgmt/src/ygot
 ```
