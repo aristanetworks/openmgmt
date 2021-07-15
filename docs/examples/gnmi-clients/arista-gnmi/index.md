@@ -265,7 +265,7 @@ gnmi -addr 172.28.160.219:6030 -username admin -password arista get \
 </p>
 </details>
 
-##### Get BGP neighbors
+#### Get BGP neighbors
 
 ```shell
 gnmi -addr 10.83.13.139 -username admin get \
@@ -517,7 +517,7 @@ gnmi -addr 10.83.13.139:6030 -username cvpadmin -password arastra get \
 
 ```shell
 gnmi -addr 10.83.13.139:6030 -username cvpadmin -password arastra get \
-  "components/component[name=Ethernet24  transceiver]/transceiver/physical-channels/channel/state/"
+  "components/component[name=Ethernet24 transceiver]/transceiver/physical-channels/channel/state/"
 ```
 
 <details><summary> Reveal output</summary>
@@ -776,7 +776,7 @@ false
 ##### Get connectivity monitor host stats
 
 ```shell
-gnmi -addr 10.83.13.139:6030 -username admin get origin=eos_native \ /Sysdb/connectivityMonitor/status/hostStatus/'
+gnmi -addr 10.83.13.139:6030 -username admin get origin=eos_native '/Sysdb/connectivityMonitor/status/hostStatus/'
 ```
 
 <details><summary> Reveal output</summary>
@@ -883,7 +883,7 @@ gnmi -addr 10.83.28.203:6030 -username arista -password arista update \
 
 ```shell
 gnmi -addr 10.83.28.203:6030 -username arista -password arista update \
-  /network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp'
+  /network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp' bgp.json
 ```
 
 <details><summary> Reveal output</summary>
