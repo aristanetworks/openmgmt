@@ -25,6 +25,9 @@ nav:
       - gnmi (Arista): examples/gnmi-clients/arista-gnmi/index.md
       - gnmic: examples/gnmi-clients/gnmic/index.md
     - gNMI gateway: examples/gnmi-gateway/index.md
+    - gNOI:
+      - gNOIc: examples/gnoi/gnoic/index.md
+      - gRPCurl: examples/gnoi/grpcurl/index.md
     - Go Lang: examples/golang/index.md
     - Python: examples/python/index.md
     - ygot: examples/ygot/index.md
