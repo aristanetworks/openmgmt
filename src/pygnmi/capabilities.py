@@ -9,4 +9,5 @@ password ='arista'
 with gNMIclient(target=host, username=username, password=password, insecure=True) as gc:
     result = gc.capabilities()
     pp(result)
-    #print (json.dumps(result, sort_keys=True, indent=2))
+
+    

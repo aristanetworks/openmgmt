@@ -13,7 +13,6 @@ paths=['openconfig-interfaces:interfaces/interface[name=Ethernet1]/config']
 with gNMIclient(target=host, username='arista', password='arista', insecure=True) as gc:
     raw_data = gc.get(path=paths, encoding='json_ietf')
     print(json.dumps(raw_data, sort_keys=True, indent=2))
-    # print(raw_data['notification'][0]['update'][0]['val']['openconfig-interfaces:description'])
 
 print ('\nSET RPC, update, interface Ethernet1')
 
@@ -41,4 +40,3 @@ paths=['openconfig-interfaces:interfaces/interface[name=Ethernet1]/config']
 with gNMIclient(target=host, username='arista', password='arista', insecure=True) as gc:
     raw_data = gc.get(path=paths, encoding='json_ietf')
     print(json.dumps(raw_data, sort_keys=True, indent=2))
-    # print(raw_data['notification'][0]['update'][0]['val']['openconfig-interfaces:description'])
