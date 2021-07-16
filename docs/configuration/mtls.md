@@ -74,6 +74,11 @@ switch.
 cd ~/easy-rsa
 ./easyrsa import-req ../gnmi-client-cert gnmi-client.csr gnmi-client
 ./easyrsa sign-req client gnmi-client
+```
+
+The `sign-req` command generates the following output.
+
+```text
 Using SSL: openssl OpenSSL 1.1.1f  31 Mar 2020
 
 ... snipped ...
@@ -120,7 +125,6 @@ security pki key generate rsa 4096 v1.key
 
 ```text
 security pki certificate generate signing-request key v1.key
-
 ```
 
 - Capture the CSR text into a file and copy this to the CA server.

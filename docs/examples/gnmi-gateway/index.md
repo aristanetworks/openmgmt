@@ -38,15 +38,14 @@ function.
 └── targets.json
 ```
 
-- **gnmi-gateway** - this is the binary to activate gNMI gateway
-
-**server.crt** / server.key - the cert for gNMI gateway
-
-**targets.json** - This is the file where you specify the targets gNMI-gateway
-supports hot reloading of the files. So if changes are made within targets.json
-it will reload automatically with new targets and or new paths.
+- **gnmi-gateway** - The binary to activate gNMI gateway
+- **server.crt** / **server.key** - the certificate and key for gNMI gateway
+- **targets.json** - This file specifies the targets.  gNMI-gateway supports hot reloading of the files. So if changes
+  are made within targets.json it will reload automatically with new targets and or new paths.
 
 ## EOS configuration
+
+The following configuration will add a self signed cert to the device and start the gNMI service with the cert.
 
 ```text
 management api gnmi
@@ -61,18 +60,17 @@ management security
 security pki certificate generate self-signed cvp.crt key cvp.key generate rsa 2048 validity 30000 parameters common-name cvp
 ```
 
-The configuration stated here will add a self signed cert to the device and
-start the gNMI service with the cert.
-
 ## Start gNMI gateway
 
 ```shell
-
-./gnmi-gateway -EnableGNMIServer -ServerTLSCert=server.crt \
+gnmi-gateway -EnableGNMIServer -ServerTLSCert=server.crt \
   -ServerTLSKey=server.key -TargetLoaders=json -TargetJSONFile=targets.json
 
-./gnmi-gateway -EnableGNMIServer -ServerTLSCert=server.crt \
-  -ServerTLSKey=server.key -TargetLoaders=json -TargetJSONFile=targets.json
+```
+
+**Output:**
+
+```text
 {"level":"info","time":"2021-03-19T08:47:35-04:00","message":"Starting GNMI Gateway."}
 {"level":"info","time":"2021-03-19T08:47:35-04:00","message":"Clustering is NOT enabled. No locking or cluster coordination will happen."}
 {"level":"info","time":"2021-03-19T08:47:35-04:00","message":"Starting connection manager."}
@@ -99,15 +97,19 @@ start the gNMI service with the cert.
 
 ```
 
-The output tells us that gNMI-gateway has started and began to serve up gNMI
-requests to the /interfaces/interface path via any gNMI external client.
+The output tells us that gNMI-gateway has started and began to serve up gNMI requests to the /interfaces/interface path
+via any gNMI external client.
 
 ## Requesting a target managed by gNMI gateway
 
 ```shell
 gnmic subscribe -a 127.0.0.1 -u ansible -p ansible --port=9339 \
   --skip-verify --target=DC2-SP02 --path=/interfaces
+```
 
+**Output:**
+
+```javascript
 {
   "source": "127.0.0.1:9339",
   "subscription-name": "default-1616158143",
@@ -126,6 +128,5 @@ gnmic subscribe -a 127.0.0.1 -u ansible -p ansible --port=9339 \
 
 ```
 
-Since the gNMI gateway is running local on my macbook we can then query the
-service on port 9339 passing in the target value of DC2-SP02 and start to stream
-data back to the client.
+Since the gNMI gateway is running locally a query can be issued to the service on port 9339 passing in the target value
+of `DC2-SP02` and telemetry will start to stream data back to the client.
