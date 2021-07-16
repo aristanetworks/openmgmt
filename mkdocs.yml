@@ -30,4 +30,5 @@ nav:
       - gRPCurl: examples/gnoi/grpcurl/index.md
     - Go Lang: examples/golang/index.md
     - Pygnmi: examples/pygnmi/index.md
+    - Pyang: examples/pyang/index.md
     - ygot: examples/ygot/index.md
