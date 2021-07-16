@@ -19,4 +19,4 @@ interfaces(gNMI,gNOI and gRIBI) within Arista EOS.
 - [gnoic](gnoi/gnoic)
 - [grpcurl](gnoi/grpcurl)
 - [golang](golang)
-- [python](python)
+- [pygnmi](pygnmi)
