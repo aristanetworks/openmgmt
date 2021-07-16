@@ -1,7 +1,7 @@
 ---
 layout: default
-title: "python"
-date: 2021-03-19 08:17:00 --0600
+title: "pygnmi"
+date: 2021-07-16 08:17:00 --0600
 categories:
 ---
 
@@ -33,7 +33,7 @@ python3 pygnmi.py
 
 The following will simply run the pygnmi.py file using python3 to get the openconfig interfaces.
 
-## Truncated output
+### Truncated output
 
 ```javascript
 {
@@ -56,4 +56,46 @@ The following will simply run the pygnmi.py file using python3 to get the openco
                                     "type": "iana-if-type:ethernetCsmacd"
                                 },
 
+```
+
+## gNMI Capabilities RPC
+
+The following will simply run the capabilities.py file using python3 to get the gNMI capabilities.
+
+```shell
+python3 capabilities.py
+```
+
+## gNMI Get RPC
+
+The following will simply run the get.py file using python3 to get use the gNMI GET RPC
+
+```shell
+python3 get.py
+```
+
+## gNMI Subscribe RPC
+
+The following will simply run the sub.py file using python3 to get use the gNMI Subscribe RPC
+
+```shell
+python3 sub.py
+```
+
+## gNMI Set RPC
+
+### Update
+
+The following will simply run the update.py file using python3 to get use the gNMI SET RPC (update)
+
+```shell
+python3 update.py
+```
+
+### Delete
+
+The following will simply run the delete.py file using python3 to get use the gNMI SET RPC (delete)
+
+```shell
+python3 delete.py
 ```
