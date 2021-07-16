@@ -17,9 +17,9 @@ gNOI - gRPC Network Operations Interface
 
 gNOI defines a set of gRPC-based microservices for executing operational commands on network devices.
 
-gNOI repository https://github.com/openconfig/gnoi
+gNOI [github repository](https://github.com/openconfig/gnoi)
 
-As example, this gNOI proto file https://github.com/openconfig/gnoi/blob/master/system/system.proto defines the service `System` with the RPC `Traceroute` and `Ping`
+As example, [this gNOI proto file](https://github.com/openconfig/gnoi/blob/master/system/system.proto) defines the service `System` with the RPC `Traceroute` and `Ping`
 
 - Ping executes the ping command on the target and streams back the results
 - Traceroute executes the traceroute command on the target and streams back the results
@@ -27,23 +27,24 @@ As example, this gNOI proto file https://github.com/openconfig/gnoi/blob/master/
 
 ## About gNOI support on EOS
 
-https://eos.arista.com/eos-4-24-2f/gnoi/
+Please refer to this [link](https://eos.arista.com/eos-4-24-2f/gnoi/) for the gNOI support by EOS.
 
 Examples:
-- https://eos.arista.com/eos-4-22-1f/gnoi-ping/
-- https://eos.arista.com/eos-4-22-1f/gnoi-traceroute/
+
+- [gnoi ping](https://eos.arista.com/eos-4-22-1f/gnoi-ping/)
+- [gnoi traceroute](https://eos.arista.com/eos-4-22-1f/gnoi-traceroute/)
 
 
 ## gNOIc overview
 
 gNOIc is a gNOI CLI client:
 
-- https://github.com/karimra/gnoic
-- https://gnoic.kmrd.dev/
+- [source code](https://github.com/karimra/gnoic)
+- [documentation](https://gnoic.kmrd.dev/)
 
 The following examples shows various gNOIc commands with Arista EOS devices.
 
-## Download && install gNOIc
+## Download & install gNOIc
 
 To install run:
 
