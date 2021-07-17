@@ -26,7 +26,7 @@ pip3 freeze | grep pyang
 pip3 freeze | grep pyang
 ```
 
-## we need yang modules
+## We need yang modules
 
 ### Create a directory
 
@@ -34,7 +34,7 @@ pip3 freeze | grep pyang
 mkdir yang_modules
 ```
 
-### Clone the openconfig repository
+### Clone the OpenConfig repository
 
 From the root of this repository:
 
