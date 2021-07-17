@@ -26,7 +26,7 @@ pip3 freeze | grep pyang
 pip3 freeze | grep pyang
 ```
 
-## we need yang modules
+## We need yang modules
 
 ### Create a directory
 
@@ -34,7 +34,7 @@ pip3 freeze | grep pyang
 mkdir yang_modules
 ```
 
-### Clone the openconfig repository
+### Clone the OpenConfig repository
 
 From the root of this repository:
 
@@ -87,6 +87,7 @@ pyang openconfig-interfaces.yang -f tree
 <details>
 <summary> Reveal output</summary>
 <p>
+
 ```shell
 module: openconfig-interfaces
   +--rw interfaces
@@ -187,6 +188,7 @@ pyang openconfig-interfaces.yang -f tree --tree-path=/interfaces/interface/state
 <details>
 <summary> Reveal output</summary>
 <p>
+
 ```shell
 module: openconfig-interfaces
   +--rw interfaces
@@ -234,6 +236,7 @@ pyang openconfig-interfaces.yang -f tree --tree-depth=4
 <details>
 <summary> Reveal output</summary>
 <p>
+
 ```shell
 module: openconfig-interfaces
   +--rw interfaces
@@ -273,12 +276,14 @@ module: openconfig-interfaces
 ```
 </p>
 </details>
+
 ```shell
 pyang openconfig-bgp.yang -f tree --tree-path=/bgp/neighbors --tree-depth=4
 ```
 <details>
 <summary> Reveal output</summary>
 <p>
+
 ```shell
 module: openconfig-bgp
   +--rw bgp
@@ -315,12 +320,14 @@ module: openconfig-bgp
 ```
 </p>
 </details>
+
 ```shell
 pyang openconfig-bgp.yang -f tree --tree-path=/bgp/neighbors/neighbor/config
 ```
 <details>
 <summary> Reveal output</summary>
 <p>
+
 ```shell
 module: openconfig-bgp
   +--rw bgp
@@ -341,12 +348,15 @@ module: openconfig-bgp
 ```
 </p>
 </details>
+
 ```shell
-pyang openconfig-bgp.yang -f tree --tree-path=/bgp/neighbors/neighbor/state --tree-depth=5
+pyang openconfig-bgp.yang -f tree --tree-path=/bgp/neighbors/neighbor/state \
+    --tree-depth=5
 ```
 <details>
 <summary> Reveal output</summary>
 <p>
+
 ```shell
 module: openconfig-bgp
   +--rw bgp
@@ -376,12 +386,15 @@ module: openconfig-bgp
 ```
 </p>
 </details>
+
 ```shell
-pyang openconfig-bgp.yang -f tree --tree-path=/bgp/neighbors/neighbor/afi-safis --tree-depth=6
+pyang openconfig-bgp.yang -f tree --tree-path=/bgp/neighbors/neighbor/afi-safis \
+   --tree-depth=6
 ```
 <details>
 <summary> Reveal output</summary>
 <p>
+
 ```shell
 module: openconfig-bgp
   +--rw bgp
