@@ -21,3 +21,4 @@ interfaces(gNMI,gNOI and gRIBI) within Arista EOS.
 - [golang](golang)
 - [pygnmi](pygnmi)
 - [pyang](pyang)
+- [pyangbind](pyangbind)
