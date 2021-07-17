@@ -132,23 +132,23 @@ True
 
 ### other demos
 
-There are many python scripts using ncclient in this [directory](../../../../src/ncclient/):
+There are many python scripts using ncclient in this [directory](https://github.com/aristanetworks/openmgmt/tree/main/src/ncclient/):
 
-- The script [print_client_capabilities.py](../../../../src/ncclient/print_client_capabilities.py) prints the NETCONF client capabilities.
-- The script [print_server_capabilities.py](../../../../src/ncclient/print_server_capabilities.py) prints the NETCONF server capabilities.
-- The script [get.py](../../../../src/ncclient/get.py) uses the `get` operation to retrieve the configuration and state data. It uses a filter to specify the portion of the configuration and state data to retrieve.
-- The script [get_config.py](../../../../src/ncclient/get_config.py) uses the `get-config` operation with a filter to retrieve part of the configuration.
-- The script [parse_xml_output.py](../../../../src/ncclient/parse_xml_output.py) uses the `get` operation to retrieve data from the device and then parse this data.
-- The script [edit_config_merge.py](../../../../src/ncclient/edit_config_merge.py) uses the `edit-config` operation with the `merge` operation (which is the default operation for `edit-config`)
-- The script [edit_config_replace.py](../../../../src/ncclient/edit_config_replace.py) uses the `edit-config` operation with the `replace` operation
-- The script [edit_config_delete.py](../../../../src/ncclient/edit_config_delete.py)
+- [print_client_capabilities.py](https://github.com/aristanetworks/openmgmt/tree/main/src/ncclient/print_client_capabilities.py) prints the NETCONF client capabilities.
+- [print_server_capabilities.py](https://github.com/aristanetworks/openmgmt/tree/main/src/ncclient/print_server_capabilities.py) prints the NETCONF server capabilities.
+- [get.py](https://github.com/aristanetworks/openmgmt/tree/main/src/ncclient/get.py) uses the `get` operation to retrieve the configuration and state data. It uses a filter to specify the portion of the configuration and state data to retrieve.
+- [get_config.py](https://github.com/aristanetworks/openmgmt/tree/main/src/ncclient/get_config.py) uses the `get-config` operation with a filter to retrieve part of the configuration.
+- [parse_xml_output.py](https://github.com/aristanetworks/openmgmt/tree/main/src/ncclient/parse_xml_output.py) uses the `get` operation to retrieve data from the device and then parse this data.
+- [edit_config_merge.py](https://github.com/aristanetworks/openmgmt/tree/main/src/ncclient/edit_config_merge.py) uses the `edit-config` operation with the `merge` operation (which is the default operation for `edit-config`)
+- [edit_config_replace.py](https://github.com/aristanetworks/openmgmt/tree/main/src/ncclient/edit_config_replace.py) uses the `edit-config` operation with the `replace` operation
+- [edit_config_delete.py](https://github.com/aristanetworks/openmgmt/tree/main/src/ncclient/edit_config_delete.py)
 uses the `edit-config` operation with the `delete` operation
-- The script [EOS_commands_with_NETCONF.py](../../../../src/ncclient/EOS_commands_with_NETCONF.py) configures a device using the `edit-config` operation and EOS data model
-- The script [candidate_configuration_commit.py](../../../../src/ncclient/candidate_configuration_commit.py) uses the `edit-config` operation with the `candidate` configuration datastore. It uses a `lock` operation and `commit` operation.
-- The script [candidate_configuration_discard_changes.py](../../../../src/ncclient/candidate_configuration_discard_changes.py). uses the `edit-config` operation with the `candidate` configuration datastore. It uses a `lock` operation and `discard_change` operation to revert the candidate configuration to the current running configuration (insteaf of commiting the candidate configuration).
-- The script [rpc.py](../../../../src/ncclient/rpc.py) sends RPCs to configure EOS devices.
+- [EOS_commands_with_NETCONF.py](https://github.com/aristanetworks/openmgmt/tree/main/src/ncclient/EOS_commands_with_NETCONF.py) configures a device using the `edit-config` operation and EOS data model
+- [candidate_configuration_commit.py](https://github.com/aristanetworks/openmgmt/tree/main/src/ncclient/candidate_configuration_commit.py) uses the `edit-config` operation with the `candidate` configuration datastore. It uses a `lock` operation and `commit` operation.
+- [candidate_configuration_discard_changes.py](https://github.com/aristanetworks/openmgmt/tree/main/src/ncclient/candidate_configuration_discard_changes.py). uses the `edit-config` operation with the `candidate` configuration datastore. It uses a `lock` operation and `discard_change` operation to revert the candidate configuration to the current running configuration (insteaf of commiting the candidate configuration).
+- [rpc.py](https://github.com/aristanetworks/openmgmt/tree/main/src/ncclient/rpc.py) sends RPCs to configure EOS devices.
 
 To execute one of these scripts, run as example this command:
 ```shell
-python 3 print_server_capabilities.py
+python3 print_server_capabilities.py
 ```
