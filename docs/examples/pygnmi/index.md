@@ -57,6 +57,7 @@ The following will simply run the pygnmi.py file using python3 to get the openco
                                 },
 
 ```
+
 ## gNMI Capabilities RPC
 
 The file [capabilities.py](https://github.com/aristanetworks/openmgmt/blob/main/src/pygnmi/capabilities.py) uses the [pygnmi](https://pypi.org/project/pygnmi/) python module to get the gNMI capabilities.
@@ -64,6 +65,7 @@ The file [capabilities.py](https://github.com/aristanetworks/openmgmt/blob/main/
 ```shell
 python3 capabilities.py
 ```
+
 ## gNMI Get RPC
 
 The file [get.py](https://github.com/aristanetworks/openmgmt/blob/main/src/pygnmi/get.py) uses the [pygnmi](https://pypi.org/project/pygnmi/) python module and uses the gNMI GET RPC
@@ -71,14 +73,15 @@ The file [get.py](https://github.com/aristanetworks/openmgmt/blob/main/src/pygnm
 ```shell
 python3 get.py
 ```
+
 ## gNMI Subscribe RPC
 
 The file [sub.py](https://github.com/aristanetworks/openmgmt/blob/main/src/pygnmi/sub.py) uses the [pygnmi](https://pypi.org/project/pygnmi/) python module and uses the gNMI Subscribe RPC
 
-
 ```shell
 python3 sub.py
 ```
+
 ## gNMI Set RPC
 
 ### Update
@@ -88,6 +91,7 @@ The file [update.py](https://github.com/aristanetworks/openmgmt/blob/main/src/py
 ```shell
 python3 update.py
 ```
+
 ### Delete
 
 The file [delete.py](https://github.com/aristanetworks/openmgmt/blob/main/src/pygnmi/delete.py) uses the [pygnmi](https://pypi.org/project/pygnmi/) python module and uses the gNMI SET RPC (delete)
