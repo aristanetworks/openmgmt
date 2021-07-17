@@ -3,14 +3,7 @@ PyangBind is a pyang plugin.
 
 ## About Pyang
 
-pyang is a python program.
-
-We can use it to:
-
-- Validate YANG modules against YANG RFCs
-- Convert YANG modules into equivalent YIN module (XML)
-- Generate a tree representation of YANG models for quick visualization
-
+Please visit [this link](../pyang/index.md) if you need help about Pyang.
 ## About PyangBind
 
 It generates Python classes from a YANG module.
@@ -28,7 +21,7 @@ pip install pyangbind
 pip3 freeze | grep pyang
 ```
 
-## We need yang modules
+## Get YANG modules
 
 ### Create a directory
 
@@ -42,7 +35,8 @@ mkdir yang_modules
 ```shell
 git clone https://github.com/openconfig/public.git
 ```
-```
+Run this command to verify
+```shell
 ls public
 ```
 
@@ -56,25 +50,27 @@ cp public/third_party/ietf/*.yang yang_modules/.
 
 ### Move to the yang_modules directory
 
-It has all the YANG files published on the OpenConfig repository
-
 ```shell
 cd yang_modules/
-ls
 ```
 
+Verify it has all the YANG files published on the OpenConfig repository
+```shell
+ls
+```
 ## Use Pyangbind to generate a Python module from a YANG module
 
 ```shell
 pyang --plugindir $HOME/.local/lib/python3.6/site-packages/pyangbind/plugin/ -f pybind -o oc_bgp.py openconfig-bgp.yang
 ```
-The above command generated the python module `oc_bgp.py` from the `openconfig-bgp.yang` file
+The above command generated the python module `oc_bgp.py` from the `openconfig-bgp.yang` file.
+Run this command to verify:
 ```shell
 ls oc_bgp.py
 ```
 ## Use the new python module to generate an OpenConfig configuration file
 
-The file [pyangbind_demo.py](../../../src/pyangbind/pyangbind_demo.py) uses the new python module `oc_bgp.py` and generates this OpenConfig configuration file [demo.json](demo.json)
+The file [pyangbind_demo.py](https://github.com/aristanetworks/openmgmt/tree/main/src/pyangbind/pyangbind_demo.py) uses the new python module `oc_bgp.py` and generates this OpenConfig configuration file [demo.json](demo.json)
 
 ```shell
 python3 pyangbind_demo.py
@@ -83,47 +79,15 @@ python3 pyangbind_demo.py
 ## Use gNMI SET RPC to configure a device
 
 This OpenConfig configuration file [demo.json](demo.json) can be loaded on a switch using the gNMI Set RPC
-
 ### Install gNMIc
 
-```shell
-curl -sL https://github.com/karimra/gnmic/raw/master/install.sh | sudo bash
-```
+Please visit [this link](../gnmi-clients/gnmic/index.md) if you need help with gNMIc installation
+### Required device configuration
 
-To get the version run:
-
-```shell
-gnmic version
-```
-
-Output:
-
-```shell
-version : 0.17.0
- commit : 278661e
-   date : 2021-07-14T07:29:14Z
- gitURL : https://github.com/karimra/gnmic
-   docs : https://gnmic.kmrd.dev
-```
-
-### Device config
-
-```shell
-
-management api gnmi
-   transport grpc default
-   provider eos-native
-
-ceos3# show management api gnmi
-Octa:               enabled
-Enabled:            Yes
-Server:             running on port 6030
-SSL Profile:        none
-QoS DSCP:           none
-Authorization Required:No
-```
+Please visit [this link](../gnmi-clients/gnmic/index.md) if you need help to configure EOS for gNMI
 
 ### Use gNMIc to configure the swicth
+#### Check the device configuration before
 
 ```shell
 gnmic -a 10.73.1.117:6030 --insecure -u arista -p arista get   \
@@ -132,10 +96,12 @@ gnmic -a 10.73.1.117:6030 --insecure -u arista -p arista get   \
 ```shell
 show run section bgp
 ```
+#### Use gNMIc to configure the swicth
 ```shell
 gnmic -a 10.73.1.117:6030 --insecure -u arista -p arista set  \
     --replace-path '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp' --replace-file demo.json
 ```
+#### Check the device configuration after
 ```shell
 gnmic -a 10.73.1.117:6030 --insecure -u arista -p arista get  \
     --path '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp'
