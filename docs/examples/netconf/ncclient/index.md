@@ -27,6 +27,7 @@ management api netconf
    transport ssh test
       vrf MGMT
 ```
+
 ```shell
 switch1#sh management api netconf
 Enabled:            Yes
@@ -37,7 +38,7 @@ Server:             running on port 830, in MGMT VRF
 
 ### interactive python session
 
-```
+```python
 >>> from ncclient import manager
 >>> eos=manager.connect(host="10.83.28.221", port="830", timeout=30, username="arista", password="arista", hostkey_verify=False)
 >>>
@@ -84,7 +85,8 @@ False
 >>>
 >>> exit()
 ```
-```
+
+```python
 >>> from lxml import etree
 >>>
 >>> system_e = etree.Element("system")
@@ -149,6 +151,7 @@ uses the `edit-config` operation with the `delete` operation
 - [rpc.py](https://github.com/aristanetworks/openmgmt/tree/main/src/ncclient/rpc.py) sends RPCs to configure EOS devices.
 
 To execute one of these scripts, run as example this command:
+
 ```shell
 python3 print_server_capabilities.py
 ```
