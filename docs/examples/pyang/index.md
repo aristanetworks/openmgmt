@@ -350,7 +350,8 @@ module: openconfig-bgp
 </details>
 
 ```shell
-pyang openconfig-bgp.yang -f tree --tree-path=/bgp/neighbors/neighbor/state --tree-depth=5
+pyang openconfig-bgp.yang -f tree --tree-path=/bgp/neighbors/neighbor/state \
+    --tree-depth=5
 ```
 <details>
 <summary> Reveal output</summary>
@@ -387,7 +388,8 @@ module: openconfig-bgp
 </details>
 
 ```shell
-pyang openconfig-bgp.yang -f tree --tree-path=/bgp/neighbors/neighbor/afi-safis --tree-depth=6
+pyang openconfig-bgp.yang -f tree --tree-path=/bgp/neighbors/neighbor/afi-safis \
+   --tree-depth=6
 ```
 <details>
 <summary> Reveal output</summary>
