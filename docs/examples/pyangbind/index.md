@@ -4,11 +4,13 @@ PyangBind is a pyang plugin.
 ## About Pyang
 
 Please visit [this link](../pyang/index.md) if you need help about Pyang.
+
 ## About PyangBind
 
 It generates Python classes from a YANG module.
 
-It converts YANG module into a Python module, such that Python can be used to generate data which conforms with the data model defined in YANG.
+It converts YANG module into a Python module.
+This Python module can be then used to generate data which conforms with the data model defined in YANG.
 
 ## Install Pyang and Pyangbind
 
@@ -31,11 +33,12 @@ mkdir yang_modules
 
 ### Clone the OpenConfig repository
 
-
 ```shell
 git clone https://github.com/openconfig/public.git
 ```
+
 Run this command to verify
+
 ```shell
 ls public
 ```
@@ -55,19 +58,24 @@ cd yang_modules/
 ```
 
 Verify it has all the YANG files published on the OpenConfig repository
+
 ```shell
 ls
 ```
+
 ## Use Pyangbind to generate a Python module from a YANG module
 
 ```shell
 pyang --plugindir $HOME/.local/lib/python3.6/site-packages/pyangbind/plugin/ -f pybind -o oc_bgp.py openconfig-bgp.yang
 ```
+
 The above command generated the python module `oc_bgp.py` from the `openconfig-bgp.yang` file.
 Run this command to verify:
+
 ```shell
 ls oc_bgp.py
 ```
+
 ## Use the new python module to generate an OpenConfig configuration file
 
 The file [pyangbind_demo.py](https://github.com/aristanetworks/openmgmt/tree/main/src/pyangbind/pyangbind_demo.py) uses the new python module `oc_bgp.py` and generates this OpenConfig configuration file [demo.json](demo.json)
@@ -93,19 +101,25 @@ Please visit [this link](../gnmi-clients/gnmic/index.md) if you need help to con
 gnmic -a 10.73.1.117:6030 --insecure -u arista -p arista get   \
     --path '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp'
 ```
+
 ```shell
 show run section bgp
 ```
+
 #### Use gNMIc to configure the swicth
+
 ```shell
 gnmic -a 10.73.1.117:6030 --insecure -u arista -p arista set  \
     --replace-path '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp' --replace-file demo.json
 ```
+
 #### Check the device configuration after
+
 ```shell
 gnmic -a 10.73.1.117:6030 --insecure -u arista -p arista get  \
     --path '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp'
 ```
+
 ```shell
 show run section bgp
 ```
