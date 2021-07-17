@@ -50,21 +50,24 @@ The following examples shows various gRPCurl commands to interact with Arista EO
 $ go version
 go version go1.16.4 linux/amd64
 ```
+
 ```shell
-$ go env | grep 'GOROOT\|GOPATH'
+go env | grep 'GOROOT\|GOPATH'
 ```
+
 ```shell
-$ export GOROOT=/usr/local/go
-$ export GOPATH=$HOME/go
-$ export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+export GOROOT=/usr/local/go
+export GOPATH=$HOME/go
+export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
 ```
 
 ### Get gNOI repository
 
 ```shell
-$ mkdir -p $GOPATH/src/github.com/openconfig
-$ git clone https://github.com/openconfig/gnoi.git $GOPATH/src/github.com/openconfig/gnoi
+mkdir -p $GOPATH/src/github.com/openconfig
+git clone https://github.com/openconfig/gnoi.git $GOPATH/src/github.com/openconfig/gnoi
 ```
+
 ```shell
 $ ls $GOPATH/src/github.com/openconfig
 gnoi
@@ -73,15 +76,18 @@ gnoi
 ### Install gRPCurl
 
 ```shell
-$ go get github.com/fullstorydev/grpcurl
+go get github.com/fullstorydev/grpcurl
 ```
+
 ```shell
-$ ls $GOPATH/pkg/mod/github.com/fullstorydev/
+ls $GOPATH/pkg/mod/github.com/fullstorydev/
 grpcurl@v1.8.1
 ```
+
 ```shell
-$ go install github.com/fullstorydev/grpcurl/cmd/grpcurl@latest
+go install github.com/fullstorydev/grpcurl/cmd/grpcurl@latest
 ```
+
 ```shell
 ls $GOPATH/bin/
 grpcurl
@@ -101,6 +107,7 @@ management api gnmi
    transport grpc def
       vrf MGMT
 ```
+
 ```shell
 DC1-L2LEAF2A#show management api gnmi
 Enabled:            Yes
@@ -109,8 +116,10 @@ SSL Profile:        none
 QoS DSCP:           none
 DC1-L2LEAF2A#
 ```
+
 Before to use gNOI ping and traceroute, lets run these commands locally:
-```
+
+```shell
 $ ssh arista@10.73.1.118
 Password:
 Last login: Thu Jun  3 12:06:25 2021 from 10.73.1.3
@@ -143,14 +152,31 @@ Connection to 10.73.1.118 closed.
 
 ### Describe from a proto file
 
+#### Describe CancelReboot method
+
 ```shell
-$ grpcurl --plaintext  --import-path ${GOPATH}/src --proto github.com/openconfig/gnoi/system/system.proto  describe  gnoi.system.System.CancelReboot
+grpcurl --plaintext  --import-path ${GOPATH}/src --proto github.com/openconfig/gnoi/system/system.proto  \
+   describe  gnoi.system.System.CancelReboot
+```
+
+Output:
+
+```shell
 gnoi.system.System.CancelReboot is a method:
 // CancelReboot cancels any pending reboot request.
 rpc CancelReboot ( .gnoi.system.CancelRebootRequest ) returns ( .gnoi.system.CancelRebootResponse );
 ```
+
+#### Describe System service
+
 ```shell
-$ grpcurl --plaintext  --import-path ${GOPATH}/src --proto github.com/openconfig/gnoi/system/system.proto  describe  gnoi.system.System
+$ grpcurl --plaintext  --import-path ${GOPATH}/src --proto github.com/openconfig/gnoi/system/system.proto  \
+   describe  gnoi.system.System
+```
+
+Output:
+
+```shell
 gnoi.system.System is a service:
 // The gNOI service is a collection of operational RPC's that allow for the
 // management of a target outside of the configuration and telemetry pipeline.
@@ -202,12 +228,30 @@ service System {
 
 #### List from a proto file
 
+Example 1)
+
 ```shell
-$ grpcurl --plaintext  --import-path ${GOPATH}/src --proto github.com/openconfig/gnoi/system/system.proto list
+grpcurl --plaintext  --import-path ${GOPATH}/src \
+   --proto github.com/openconfig/gnoi/system/system.proto list
+```
+
+Output:
+
+```shell
 gnoi.system.System
 ```
+
+Example 2)
+
 ```shell
-$ grpcurl --plaintext  --import-path ${GOPATH}/src --proto github.com/openconfig/gnoi/system/system.proto list gnoi.system.System
+grpcurl --plaintext  --import-path ${GOPATH}/src \
+   --proto github.com/openconfig/gnoi/system/system.proto \
+   list gnoi.system.System
+```
+
+Output:
+
+```shell
 gnoi.system.System.CancelReboot
 gnoi.system.System.Ping
 gnoi.system.System.Reboot
@@ -217,12 +261,22 @@ gnoi.system.System.SwitchControlProcessor
 gnoi.system.System.Time
 gnoi.system.System.Traceroute
 ```
+
+Example 3)
+
 ```shell
-$ grpcurl --plaintext  --import-path ${GOPATH}/src --proto github.com/openconfig/gnoi/os/os.proto list gnoi.os.OS
+grpcurl --plaintext  --import-path ${GOPATH}/src \
+   --proto github.com/openconfig/gnoi/os/os.proto list gnoi.os.OS
+```
+
+Output:
+
+```shell
 gnoi.os.OS.Activate
 gnoi.os.OS.Install
 gnoi.os.OS.Verify
 ```
+
 #### List from a gRPC server (EOS device)
 
 ```shell
@@ -236,7 +290,15 @@ grpc.reflection.v1alpha.ServerReflection
 ### Execute gNOI RPC with EOS
 
 ```shell
-$ grpcurl -H 'username: arista'  -H 'password: arista' -d '{"destination": "172.31.255.0", "count": 2, "do_not_resolve":true}' -import-path ${GOPATH}/src -proto github.com/openconfig/gnoi/system/system.proto -plaintext 10.73.1.118:6030 gnoi.system.System/Ping
+grpcurl -H 'username: arista'  -H 'password: arista' \
+   -d '{"destination": "172.31.255.0", "count": 2, "do_not_resolve":true}' \
+   -import-path ${GOPATH}/src -proto github.com/openconfig/gnoi/system/system.proto \
+   -plaintext 10.73.1.118:6030 gnoi.system.System/Ping
+```
+
+Output:
+
+```shell
 {
   "source": "172.31.255.0",
   "time": "29800000",
@@ -262,8 +324,17 @@ $ grpcurl -H 'username: arista'  -H 'password: arista' -d '{"destination": "172.
   "stdDev": "2300000"
 }
 ```
+
 ```shell
-$ grpcurl -H 'username: arista'  -H 'password: arista' -d '{"destination": "172.31.255.0", "max_ttl": 50, "do_not_resolve":true}' -import-path ${GOPATH}/src -proto github.com/openconfig/gnoi/system/system.proto -plaintext 10.73.1.118:6030 gnoi.system.System/Traceroute
+grpcurl -H 'username: arista'  -H 'password: arista' \
+    -d '{"destination": "172.31.255.0", "max_ttl": 50, "do_not_resolve":true}' \
+    -import-path ${GOPATH}/src -proto github.com/openconfig/gnoi/system/system.proto \
+    -plaintext 10.73.1.118:6030 gnoi.system.System/Traceroute
+```
+
+Output:
+
+```shell
 {
   "destinationName": "172.31.255.0",
   "destinationAddress": "172.31.255.0",
