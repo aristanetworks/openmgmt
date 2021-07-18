@@ -704,6 +704,10 @@ python3 sub.py
 {'update': {'update': [{'path': 'network-instances/network-instance[name=default]/protocols/protocol[identifier=BGP][name=BGP]/bgp/neighbors/neighbor[neighbor-address=192.168.255.1]/state/send-community', 'val': 'NONE'}], 'timestamp': 1626462768423035498}}
 {'update': {'update': [{'path': 'network-instances/network-instance[name=default]/protocols/protocol[name=BGP][identifier=BGP]/bgp/neighbors/neighbor[neighbor-address=192.168.255.1]/state/session-state', 'val': 'ACTIVE'}], 'timestamp': 1626462768469536321}}
 ```
+
+</p>
+</details>
+
 ## gNMI Set RPC
 
 ### Update
