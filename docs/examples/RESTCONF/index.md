@@ -21,101 +21,7 @@ It is supported for all resources that support the GET method.
 
 ## EOS configuration
 
-The RESTCONF server is in the EOS device.
-
-### Generates a self-signed certificate
-
-```shell
-DC1-LEAF1A#security pki certificate generate self-signed restconf.crt key restconf.key generate rsa 2048 parameters common-name restconf
-certificate:restconf.crt generated
-DC1-LEAF1A#
-```
-
-### Change the default control-plane ACL
-
-The default RESTCONF port on Arista devices is TCP 6020.
-We need to change the default control-plane ACL on EOS in order to allow TCP 6020.
-
-```shell
-DC1-LEAF1A#show ip access-lists default-control-plane-acl
-```
-
-```shell
-DC1-LEAF1A(config)#show ip access-lists def2
-IP Access List def2
-        9 permit tcp any any eq 6020
-        10 permit icmp any any
-        20 permit ip any any tracked [match 147 packets, 0:00:14 ago]
-        30 permit udp any any eq bfd ttl eq 255
-        40 permit udp any any eq bfd-echo ttl eq 254
-        50 permit udp any any eq multihop-bfd
-        60 permit udp any any eq micro-bfd
-        70 permit udp any any eq sbfd
-        80 permit udp any eq sbfd any eq sbfd-initiator
-        90 permit ospf any any [match 1882 packets, 0:00:04 ago]
-        100 permit tcp any any eq ssh telnet www snmp bgp https msdp ldp netconf-ssh gnmi
-        110 permit udp any any eq bootps bootpc ntp snmp rip ldp
-        120 permit tcp any any eq mlag ttl eq 255
-        130 permit udp any any eq mlag ttl eq 255
-        140 permit vrrp any any
-        150 permit ahp any any
-        160 permit pim any any [match 124 packets, 0:00:14 ago]
-        170 permit igmp any any [match 90 packets, 0:01:24 ago]
-        180 permit tcp any any range 5900 5910
-        190 permit tcp any any range 50000 50100
-        200 permit udp any any range 51000 51100
-        210 permit tcp any any eq 3333
-        220 permit tcp any any eq nat ttl eq 255
-        230 permit tcp any eq bgp any
-        240 permit rsvp any any
-        250 permit tcp any any eq 6040
-```
-
-```shell
-DC1-LEAF1A(config)#sh run sec control
-system control-plane
-   ip access-group def2 vrf MGMT in
-```
-
-### Configure RESTCONF
-
-```shell
-DC1-LEAF1A(config)#sh run sec restconf
-management api restconf
-   transport https test
-      ssl profile restconf
-      vrf MGMT
-!
-management security
-   ssl profile restconf
-      certificate restconf.crt key restconf.key
-```
-
-### Verify
-
-```shell
-DC1-LEAF1A(config)#show management api restconf
-Enabled:            Yes
-Server:             running on port 6020, in MGMT VRF
-SSL Profile:        restconf
-QoS DSCP:           none
-```
-
-```shell
-DC1-LEAF1A(config)# show ip interface Management1 brief
-                                                                              Address
-Interface         IP Address           Status       Protocol           MTU    Owner
------------------ -------------------- ------------ -------------- ---------- -------
-Management1       10.73.1.105/24       up           up                1500
-```
-
-```shell
-DC1-LEAF1A(config)#show run interface Management1
-interface Management1
-   description oob_management
-   vrf MGMT
-   ip address 10.73.1.105/24
-```
+Please refer to [this link](../../configuration/restconf.md)
 
 ## Requirement on the RESTCONF client
 
@@ -143,7 +49,7 @@ curl -s GET 'https://10.73.1.105:6020/restconf/data/openconfig-interfaces:interf
 
 output
 
-```shell
+```javascript
 {"openconfig-interfaces:description":"P2P_LINK_TO_DC1-SPINE1_Ethernet1"}
 ```
 
@@ -155,7 +61,7 @@ curl -s GET 'https://10.73.1.105:6020/restconf/data/openconfig-interfaces:interf
 
 output
 
-```shell
+```text
 "48284395"
 ```
 
@@ -167,7 +73,7 @@ curl -s GET 'https://10.73.1.105:6020/restconf/data/openconfig-interfaces:interf
 
 output
 
-```shell
+```text
 "Ethernet1"
 ```
 
@@ -179,7 +85,7 @@ curl -X GET https://10.73.1.105:6020/restconf/data/system \
 
 output
 
-```shell
+```text
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
 100 66151    0 66151    0     0   284k      0 --:--:-- --:--:-- --:--:--  284k
@@ -228,7 +134,7 @@ python3 get.py
 
 output
 
-```shell
+```javascript
 {'arista-intf-augments:inactive': False,
  'openconfig-interfaces:admin-status': 'UP',
  'openconfig-interfaces:counters': {'in-broadcast-pkts': '0',
@@ -306,11 +212,11 @@ curl -s GET 'https://10.73.1.105:6020/restconf/data/openconfig-interfaces:interf
 
 output
 
-```shell
+```javascript
 {"openconfig-interfaces:description":"blabla","openconfig-interfaces:enabled":false,"arista-intf-augments:load-interval":300,"openconfig-interfaces:loopback-mode":false,"openconfig-interfaces:mtu":0,"openconfig-interfaces:name":"Ethernet4","openconfig-vlan:tpid":"openconfig-vlan-types:TPID_0X8100","openconfig-interfaces:type":"iana-if-type:ethernetCsmacd"}
 ```
 
-Let's use the file [interface.json](interface.json)
+Let's use the file [interface.json](https://github.com/aristanetworks/openmgmt/tree/main/src/restconf/interface.json)
 
 ```shell
 more interface.json
@@ -318,7 +224,7 @@ more interface.json
 
 output
 
-```shell
+```javascript
 {"enabled":true,"name":"Ethernet4", "description":"restconf_test"}
 ```
 
@@ -329,7 +235,7 @@ curl -X PUT https://10.73.1.105:6020/restconf/data/openconfig-interfaces:interfa
 
 output
 
-```shell
+```javascript
 {"openconfig-interfaces:description":"restconf_test","openconfig-interfaces:enabled":true,"openconfig-interfaces:name":"Ethernet4"}
 ```
 
@@ -342,7 +248,7 @@ curl -s GET 'https://10.73.1.105:6020/restconf/data/openconfig-interfaces:interf
 
 output
 
-```shell
+```javascript
 {"openconfig-interfaces:description":"restconf_test","openconfig-interfaces:enabled":true,"arista-intf-augments:load-interval":300,"openconfig-interfaces:loopback-mode":false,"openconfig-interfaces:mtu":0,"openconfig-interfaces:name":"Ethernet4","openconfig-vlan:tpid":"openconfig-vlan-types:TPID_0X8100","openconfig-interfaces:type":"iana-if-type:ethernetCsmacd"}
 ```
 
@@ -353,7 +259,7 @@ curl -s GET 'https://10.73.1.105:6020/restconf/data/openconfig-interfaces:interf
 
 output
 
-```shell
+```javascript
 {
   "openconfig-interfaces:description": "restconf_test",
   "openconfig-interfaces:enabled": true,
@@ -377,7 +283,7 @@ curl -X GET https://10.73.1.105:6020/restconf/data/system/config \
 
 output
 
-```shell
+```javascript
 {"openconfig-system:hostname":"DC1-LEAF1A"}
 ```
 
@@ -389,7 +295,7 @@ curl -X GET https://10.73.1.105:6020/restconf/data/system \
 
 output
 
-```shell
+```text
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
 100 74748    0 74748    0     0   300k      0 --:--:-- --:--:-- --:--:--  300k
@@ -404,7 +310,7 @@ curl -X PUT https://10.73.1.105:6020/restconf/data/system/config \
 
 output
 
-```shell
+```javascript
 {"openconfig-system:hostname":"test"}
 ```
 
@@ -417,7 +323,7 @@ curl -X GET https://10.73.1.105:6020/restconf/data/system/config \
 
 output
 
-```shell
+```javascript
 {"openconfig-system:hostname":"test"}
 ```
 
@@ -437,7 +343,7 @@ curl -s GET 'https://10.73.1.105:6020/restconf/data/openconfig-interfaces:interf
 
 output
 
-```shell
+```javascript
 {
   "description": "",
   "enabled": true,
@@ -484,7 +390,7 @@ curl -s GET 'https://10.73.1.105:6020/restconf/data/openconfig-interfaces:interf
 
 output
 
-```shell
+```text
 "restconf_test"
 ```
 
@@ -496,7 +402,7 @@ curl -s GET 'https://10.73.1.105:6020/restconf/data/openconfig-interfaces:interf
 
 output
 
-```shell
+```javascript
 {
   "description": "restconf_test",
   "enabled": false,
@@ -522,7 +428,7 @@ curl -s GET 'https://10.73.1.105:6020/restconf/data/ietf-interfaces:interfaces/i
 
 output
 
-```shell
+```javascript
 {"openconfig-interfaces:config":{"description":"test","enabled":true,"arista-intf-augments:load-interval":300,"loopback-mode":true,"name":"Loopback100","openconfig-vlan:tpid":"openconfig-vlan-types:TPID_0X8100","type":"iana-if-type:softwareLoopback"},"openconfig-interfaces:hold-time":{"config":{"down":0,"up":0},"state":{"down":0,"up":0}},"openconfig-interfaces:name":"Loopback100","openconfig-interfaces:state":{"enabled":true,"loopback-mode":false,"openconfig-vlan:tpid":"openconfig-vlan-types:TPID_0X8100"},"openconfig-interfaces:subinterfaces":{"subinterface":[{"config":{"description":"test","enabled":true,"index":0},"index":0,"openconfig-if-ip:ipv4":{"config":{"dhcp-client":false,"enabled":true,"mtu":1500},"state":{"dhcp-client":false,"enabled":true,"mtu":1500}},"openconfig-if-ip:ipv6":{"config":{"dhcp-client":false,"enabled":false,"mtu":1500},"state":{"dhcp-client":false,"enabled":false,"mtu":1500}},"state":{"enabled":true,"index":0}}]}}
 ```
 
