@@ -30,13 +30,18 @@ In order to open a NETCONF session inside an SSH connection, there are two optio
 
 ## NETCONF over SSH demo
 
-Start a NETCONF over SSH session
+### Start a NETCONF over SSH session
+
 ```shell
 s70515#netconf start-client
 ```
+
+### Advertise the client capabilities
+
 Once the NETCONF session is open, the NETCONF server (EOS device) advertises its capabilities.
 
 You must advertise the client capabilities. Example:
+
 ```shell
 <hello xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
     <capabilities>
@@ -49,7 +54,9 @@ You must advertise the client capabilities. Example:
 </hello>
 ]]>]]>
 ```
-Get all configuration and state data
+
+### Get all configuration and state data
+
 ```shell
 <rpc xmlns="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="1">
   <get>
@@ -57,7 +64,9 @@ Get all configuration and state data
 </rpc>
 ]]>]]>
 ```
-Get the operational status of an Interface
+
+### Get the operational status of an Interface
+
 ```shell
 <rpc xmlns="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="2">
   <get>
@@ -76,7 +85,9 @@ Get the operational status of an Interface
 </rpc>
 ]]>]]>
 ```
-Get the whole running configuration
+
+### Get the whole running configuration
+
 ```shell
 <rpc xmlns="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="3">
   <get-config>
@@ -87,7 +98,9 @@ Get the whole running configuration
 </rpc>
 ]]>]]>
 ```
-Get the running configuration of an interface
+
+### Get the running configuration of an interface
+
 ```shell
 <rpc xmlns="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="4">
   <get-config>
@@ -105,7 +118,9 @@ Get the running configuration of an interface
 </rpc>
 ]]>]]>
 ```
-Get the interface description from the running configuration
+
+### Get the interface description from the running configuration
+
 ```shell
 <rpc xmlns="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="5">
   <get-config>
@@ -127,7 +142,9 @@ Get the interface description from the running configuration
 </rpc>
 ]]>]]>
 ```
-Lock the running configuration
+
+### Lock the running configuration
+
 ```shell
 <rpc xmlns="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="6">
   <lock>
@@ -138,7 +155,9 @@ Lock the running configuration
 </rpc>
 ]]>]]>
 ```
-Edit the running configuration using EOS native data model
+
+### Edit the running configuration using EOS native data model
+
 ```shell
 <rpc xmlns="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="7">
 <edit-config>
@@ -157,7 +176,9 @@ Edit the running configuration using EOS native data model
 </rpc>
 ]]>]]>
 ```
-Edit the running configuration using OpenConfig data model
+
+### Edit the running configuration using OpenConfig data model
+
 ```shell
 <rpc xmlns="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="8">
 <edit-config>
@@ -179,7 +200,9 @@ Edit the running configuration using OpenConfig data model
 </rpc>
 ]]>]]>
 ```
-Edit the running configuration to delete an existing existing data
+
+### Edit the running configuration to delete an existing existing data
+
 ```shell
 <rpc xmlns="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="9">
 <edit-config>
@@ -202,7 +225,9 @@ Edit the running configuration to delete an existing existing data
 </rpc>
 ]]>]]>
 ```
-Unlock the running configuration
+
+### Unlock the running configuration
+
 ```shell
 <rpc xmlns="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="10">
   <unlock>
@@ -213,8 +238,10 @@ Unlock the running configuration
 </rpc>
 ]]>]]>
 ```
-Save running configuration on the flash
-```shel
+
+### Save running configuration on the flash
+
+```shell
 <rpc xmlns="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="11">
   <copy-config>
     <target>
@@ -229,7 +256,9 @@ Save running configuration on the flash
 </rpc>
 ]]>]]>
 ```
-Copy the running configuration datastore to the startup configuration datastore
+
+### Copy the running configuration datastore to the startup configuration datastore
+
 ```shell
 <rpc xmlns="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="12">
     <copy-config>
@@ -243,7 +272,9 @@ Copy the running configuration datastore to the startup configuration datastore
 </rpc>
 ]]>]]>
 ```
-Lock the candidate configuration
+
+### Lock the candidate configuration
+
 ```shell
 <rpc xmlns="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="13">
   <lock>
@@ -254,7 +285,9 @@ Lock the candidate configuration
 </rpc>
 ]]>]]>
 ```
-Edit the candidate configuration
+
+### Edit the candidate configuration
+
 ```shell
 <rpc xmlns="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="14">
 <edit-config>
@@ -276,14 +309,18 @@ Edit the candidate configuration
 </rpc>
 ]]>]]>
 ```
-Commit the configuration change (from the candidate to the running configuration)
+
+### Commit the configuration change (from the candidate to the running configuration)
+
 ```shell
 <rpc xmlns="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="15">
     <commit/>
 </rpc>
 ]]>]]>
 ```
-Unlock the candidate configuration
+
+### Unlock the candidate configuration
+
 ```shell
 <rpc xmlns="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="20">
   <unlock>
@@ -294,7 +331,9 @@ Unlock the candidate configuration
 </rpc>
 ]]>]]>
 ```
-Edit the candidate configuration
+
+### Edit the candidate configuration
+
 ```
 <rpc xmlns="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="21">
 <edit-config>
@@ -313,7 +352,9 @@ Edit the candidate configuration
 </rpc>
 ]]>]]>
 ```
-Get part of the candidate configuration
+
+### Get part of the candidate configuration
+
 ```shell
 <rpc xmlns="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="5">
   <get-config>
@@ -331,14 +372,20 @@ Get part of the candidate configuration
 </rpc>
 ]]>]]>
 ```
+
+### Revert the candidate configuration to the current running configuration
+
 If you decide to not commit the candidate configuration, you can revert the candidate configuration to the current running configuration
+
 ```shell
 <rpc xmlns="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="90">
   <discard-changes/>
 </rpc>
 ]]>]]>
 ```
-Close the session
+
+### Close the session
+
 ```shell
 <rpc xmlns="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="100">
     <close-session>
