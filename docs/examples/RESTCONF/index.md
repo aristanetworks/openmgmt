@@ -149,7 +149,8 @@ output
 
 ```shell
 curl -s GET 'https://10.73.1.105:6020/restconf/data/openconfig-interfaces:interfaces/interface=Ethernet1' \
-      --header 'Accept: application/yang-data+json' -u arista:arista  --insecure | jq .'"openconfig-interfaces:state".counters."in-octets"'
+      --header 'Accept: application/yang-data+json' -u arista:arista  \
+      --insecure | jq .'"openconfig-interfaces:state".counters."in-octets"'
 ```
 
 output
@@ -160,7 +161,8 @@ output
 
 ```shell
 curl -s GET 'https://10.73.1.105:6020/restconf/data/openconfig-interfaces:interfaces' \
-     --header 'Accept: application/yang-data+json' -u arista:arista  --insecure | jq .'"openconfig-interfaces:interface"[2].name'
+     --header 'Accept: application/yang-data+json' -u arista:arista \
+     --insecure | jq .'"openconfig-interfaces:interface"[2].name'
 ```
 
 output
@@ -171,7 +173,8 @@ output
 
 ```shell
 curl -X GET https://10.73.1.105:6020/restconf/data/system \
-    --header 'Accept: application/yang-data+json' -u arista:arista  --insecure | jq .'"openconfig-system:config".hostname'
+    --header 'Accept: application/yang-data+json' -u arista:arista \
+    --insecure | jq .'"openconfig-system:config".hostname'
 ```
 
 output
@@ -186,7 +189,7 @@ output
 ### Using Python
 
 ```python
-ksator@automation_1:~$ python3
+$ python3
 Python 3.6.9 (default, Jan 26 2021, 15:33:00)
 [GCC 8.4.0] on linux
 Type "help", "copyright", "credits" or "license" for more information.
@@ -297,7 +300,13 @@ content is b''
 Let's check before the change
 
 ```shell
-curl -s GET 'https://10.73.1.105:6020/restconf/data/openconfig-interfaces:interfaces/interface=Ethernet4/config' --header 'Accept: application/yang-data+json' -u arista:arista  --insecure
+curl -s GET 'https://10.73.1.105:6020/restconf/data/openconfig-interfaces:interfaces/interface=Ethernet4/config' \
+   --header 'Accept: application/yang-data+json' -u arista:arista  --insecure
+```
+
+output
+
+```shell
 {"openconfig-interfaces:description":"blabla","openconfig-interfaces:enabled":false,"arista-intf-augments:load-interval":300,"openconfig-interfaces:loopback-mode":false,"openconfig-interfaces:mtu":0,"openconfig-interfaces:name":"Ethernet4","openconfig-vlan:tpid":"openconfig-vlan-types:TPID_0X8100","openconfig-interfaces:type":"iana-if-type:ethernetCsmacd"}
 ```
 
@@ -314,19 +323,37 @@ output
 ```
 
 ```shell
-curl -X PUT https://10.73.1.105:6020/restconf/data/openconfig-interfaces:interfaces/interface=Ethernet4/config -H 'Content-Type: application/json' -u arista:arista -d @interface.json  --insecure
+curl -X PUT https://10.73.1.105:6020/restconf/data/openconfig-interfaces:interfaces/interface=Ethernet4/config \
+   -H 'Content-Type: application/json' -u arista:arista -d @interface.json  --insecure
+```
+
+output
+
+```shell
 {"openconfig-interfaces:description":"restconf_test","openconfig-interfaces:enabled":true,"openconfig-interfaces:name":"Ethernet4"}
 ```
 
 Let's verify after the change
 
 ```shell
-curl -s GET 'https://10.73.1.105:6020/restconf/data/openconfig-interfaces:interfaces/interface=Ethernet4/config' --header 'Accept: application/yang-data+json' -u arista:arista  --insecure
+curl -s GET 'https://10.73.1.105:6020/restconf/data/openconfig-interfaces:interfaces/interface=Ethernet4/config' \
+   --header 'Accept: application/yang-data+json' -u arista:arista  --insecure
+```
+
+output
+
+```shell
 {"openconfig-interfaces:description":"restconf_test","openconfig-interfaces:enabled":true,"arista-intf-augments:load-interval":300,"openconfig-interfaces:loopback-mode":false,"openconfig-interfaces:mtu":0,"openconfig-interfaces:name":"Ethernet4","openconfig-vlan:tpid":"openconfig-vlan-types:TPID_0X8100","openconfig-interfaces:type":"iana-if-type:ethernetCsmacd"}
 ```
 
 ```shell
-curl -s GET 'https://10.73.1.105:6020/restconf/data/openconfig-interfaces:interfaces/interface=Ethernet4/config' --header 'Accept: application/yang-data+json' -u arista:arista  --insecure | jq .
+curl -s GET 'https://10.73.1.105:6020/restconf/data/openconfig-interfaces:interfaces/interface=Ethernet4/config' \
+   --header 'Accept: application/yang-data+json' -u arista:arista  --insecure | jq .
+```
+
+output
+
+```shell
 {
   "openconfig-interfaces:description": "restconf_test",
   "openconfig-interfaces:enabled": true,
@@ -344,12 +371,25 @@ curl -s GET 'https://10.73.1.105:6020/restconf/data/openconfig-interfaces:interf
 Let's check before the change
 
 ```shell
-curl -X GET https://10.73.1.105:6020/restconf/data/system/config --header 'Accept: application/yang-data+json' -u arista:arista  --insecure
+curl -X GET https://10.73.1.105:6020/restconf/data/system/config \
+   --header 'Accept: application/yang-data+json' -u arista:arista  --insecure
+```
+
+output
+
+```shell
 {"openconfig-system:hostname":"DC1-LEAF1A"}
 ```
 
 ```shell
-curl -X GET https://10.73.1.105:6020/restconf/data/system --header 'Accept: application/yang-data+json' -u arista:arista  --insecure | jq .'"openconfig-system:config".hostname'
+curl -X GET https://10.73.1.105:6020/restconf/data/system \
+   --header 'Accept: application/yang-data+json' -u arista:arista \
+   --insecure | jq .'"openconfig-system:config".hostname'
+```
+
+output
+
+```shell
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                                  Dload  Upload   Total   Spent    Left  Speed
 100 74748    0 74748    0     0   300k      0 --:--:-- --:--:-- --:--:--  300k
@@ -357,14 +397,27 @@ curl -X GET https://10.73.1.105:6020/restconf/data/system --header 'Accept: appl
 ```
 
 ```shell
-curl -X PUT https://10.73.1.105:6020/restconf/data/system/config -H 'Content-Type: application/json' -u arista:arista -d '{"openconfig-system:hostname":"test"}'  --insecure
+curl -X PUT https://10.73.1.105:6020/restconf/data/system/config \
+      -H 'Content-Type: application/json' -u arista:arista \
+      -d '{"openconfig-system:hostname":"test"}'  --insecure
+```
+
+output
+
+```shell
 {"openconfig-system:hostname":"test"}
 ```
 
 Let's verify after the change
 
 ```shell
-curl -X GET https://10.73.1.105:6020/restconf/data/system/config --header 'Accept: application/yang-data+json' -u arista:arista  --insecure
+curl -X GET https://10.73.1.105:6020/restconf/data/system/config \
+      --header 'Accept: application/yang-data+json' -u arista:arista  --insecure
+```
+
+output
+
+```shell
 {"openconfig-system:hostname":"test"}
 ```
 
@@ -377,7 +430,14 @@ curl -X GET https://10.73.1.105:6020/restconf/data/system/config --header 'Accep
 Let's check before the change
 
 ```shell
-curl -s GET 'https://10.73.1.105:6020/restconf/data/openconfig-interfaces:interfaces/interface=Ethernet4' --header 'Accept: application/yang-data+json' -u arista:arista  --insecure | jq .'"openconfig-interfaces:config"'
+curl -s GET 'https://10.73.1.105:6020/restconf/data/openconfig-interfaces:interfaces/interface=Ethernet4' \
+   --header 'Accept: application/yang-data+json' -u arista:arista \
+   --insecure | jq .'"openconfig-interfaces:config"'
+```
+
+output
+
+```shell
 {
   "description": "",
   "enabled": true,
@@ -391,23 +451,52 @@ curl -s GET 'https://10.73.1.105:6020/restconf/data/openconfig-interfaces:interf
 ```
 
 ```shell
-curl -X POST https://10.73.1.105:6020/restconf/data/openconfig-interfaces:interfaces/interface=Ethernet4/config -H 'Content-Type: application/json' -u arista:arista -d '{"openconfig-interfaces:description":"restconf_test"}'  --insecure
+curl -X POST https://10.73.1.105:6020/restconf/data/openconfig-interfaces:interfaces/interface=Ethernet4/config \
+   -H 'Content-Type: application/json' -u arista:arista \
+   -d '{"openconfig-interfaces:description":"restconf_test"}' --insecure
+```
+
+output
+
+```shell
 {"openconfig-interfaces:description":"restconf_test"}
 ```
 
 ```shell
-curl -X POST https://10.73.1.105:6020/restconf/data/openconfig-interfaces:interfaces/interface=Ethernet4/config -H 'Content-Type: application/json' -u arista:arista -d '{"openconfig-interfaces:enabled":false}'  --insecure {"openconfig-interfaces:enabled":false}
+curl -X POST https://10.73.1.105:6020/restconf/data/openconfig-interfaces:interfaces/interface=Ethernet4/config \
+    -H 'Content-Type: application/json' -u arista:arista \
+    -d '{"openconfig-interfaces:enabled":false}'  --insecure
+```
+
+output
+
+```shell
+{"openconfig-interfaces:enabled":false}
 ```
 
 Let's verify after the change
 
 ```shell
-curl -s GET 'https://10.73.1.105:6020/restconf/data/openconfig-interfaces:interfaces/interface=Ethernet4' --header 'Accept: application/yang-data+json' -u arista:arista  --insecure | jq .'"openconfig-interfaces:config".description'
+curl -s GET 'https://10.73.1.105:6020/restconf/data/openconfig-interfaces:interfaces/interface=Ethernet4' \
+   --header 'Accept: application/yang-data+json' -u arista:arista \
+   --insecure | jq .'"openconfig-interfaces:config".description'
+```
+
+output
+
+```shell
 "restconf_test"
 ```
 
 ```shell
-curl -s GET 'https://10.73.1.105:6020/restconf/data/openconfig-interfaces:interfaces/interface=Ethernet4' --header 'Accept: application/yang-data+json' -u arista:arista  --insecure | jq .'"openconfig-interfaces:config"'
+curl -s GET 'https://10.73.1.105:6020/restconf/data/openconfig-interfaces:interfaces/interface=Ethernet4' \
+   --header 'Accept: application/yang-data+json' \
+   -u arista:arista  --insecure | jq .'"openconfig-interfaces:config"'
+```
+
+output
+
+```shell
 {
   "description": "restconf_test",
   "enabled": false,
@@ -427,12 +516,19 @@ curl -s GET 'https://10.73.1.105:6020/restconf/data/openconfig-interfaces:interf
 Let's check before the change
 
 ```shell
-curl -s GET 'https://10.73.1.105:6020/restconf/data/ietf-interfaces:interfaces/interface=Loopback100' --header 'Accept: application/yang-data+json' -u arista:arista  --insecure
+curl -s GET 'https://10.73.1.105:6020/restconf/data/ietf-interfaces:interfaces/interface=Loopback100' \
+      --header 'Accept: application/yang-data+json' -u arista:arista  --insecure
+```
+
+output
+
+```shell
 {"openconfig-interfaces:config":{"description":"test","enabled":true,"arista-intf-augments:load-interval":300,"loopback-mode":true,"name":"Loopback100","openconfig-vlan:tpid":"openconfig-vlan-types:TPID_0X8100","type":"iana-if-type:softwareLoopback"},"openconfig-interfaces:hold-time":{"config":{"down":0,"up":0},"state":{"down":0,"up":0}},"openconfig-interfaces:name":"Loopback100","openconfig-interfaces:state":{"enabled":true,"loopback-mode":false,"openconfig-vlan:tpid":"openconfig-vlan-types:TPID_0X8100"},"openconfig-interfaces:subinterfaces":{"subinterface":[{"config":{"description":"test","enabled":true,"index":0},"index":0,"openconfig-if-ip:ipv4":{"config":{"dhcp-client":false,"enabled":true,"mtu":1500},"state":{"dhcp-client":false,"enabled":true,"mtu":1500}},"openconfig-if-ip:ipv6":{"config":{"dhcp-client":false,"enabled":false,"mtu":1500},"state":{"dhcp-client":false,"enabled":false,"mtu":1500}},"state":{"enabled":true,"index":0}}]}}
 ```
 
 ```shell
-curl -X DELETE https://10.73.1.105:6020/restconf/data/ietf-interfaces:interfaces/interface=Loopback100 -u arista:arista  --insecure
+curl -X DELETE https://10.73.1.105:6020/restconf/data/ietf-interfaces:interfaces/interface=Loopback100 \
+    -u arista:arista  --insecure
 ```
 
 ### Using Python
