@@ -32,4 +32,5 @@ nav:
     - Pygnmi: examples/pygnmi/index.md
     - Pyang: examples/pyang/index.md
     - Pyangbind: examples/pyangbind/index.md
+    - RESTCONF: examples/restconf/index.md
     - ygot: examples/ygot/index.md
