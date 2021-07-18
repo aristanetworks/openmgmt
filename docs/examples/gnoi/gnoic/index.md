@@ -19,7 +19,8 @@ gNOI defines a set of gRPC-based microservices for executing operational command
 
 gNOI [github repository](https://github.com/openconfig/gnoi)
 
-As example, [this gNOI proto file](https://github.com/openconfig/gnoi/blob/master/system/system.proto) defines the service `System` with the RPC `Traceroute` and `Ping`
+As example, [this gNOI proto file](https://github.com/openconfig/gnoi/blob/master/system/system.proto) defines the
+service `System` with the RPC `Traceroute` and `Ping`
 
 - Ping executes the ping command on the target and streams back the results
 - Traceroute executes the traceroute command on the target and streams back the results

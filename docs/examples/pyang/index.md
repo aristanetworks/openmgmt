@@ -41,7 +41,8 @@ From the root of this repository:
 ```shell
 git clone https://github.com/openconfig/public.git
 ```
-```
+
+```shell
 ls public
 ```
 
@@ -71,7 +72,9 @@ pyang openconfig-interfaces.yang
 
 ### Convert a YANG module into an equivalent YIN module
 
-A YANG module can be translated into an XML syntax called YIN. The translated module is called a YIN module. The YANG and YIN formats contain equivalent information using different notations: YIN is YANG in XML. A YANG module can be translated into YIN syntax without losing any information.
+A YANG module can be translated into an XML syntax called YIN. The translated module is called a YIN module. The YANG
+and YIN formats contain equivalent information using different notations: YIN is YANG in XML. A YANG module can be
+translated into YIN syntax without losing any information.
 
 Example (openconfig-bgp.yin is the YIN equivalent of openconfig-bgp.yang)
 
@@ -79,11 +82,13 @@ Example (openconfig-bgp.yin is the YIN equivalent of openconfig-bgp.yang)
 pyang openconfig-bgp.yang -f yin -o openconfig-bgp.yin
 ls *.yin
 ```
+
 ### Generate a tree representation of YANG modules for quick visualization
 
 ```shell
 pyang openconfig-interfaces.yang -f tree
 ```
+
 <details>
 <summary> Reveal output</summary>
 <p>
@@ -179,12 +184,14 @@ module: openconfig-interfaces
                     +--ro carrier-transitions?   oc-yang:counter64
                     +--ro last-clear?            oc-types:timeticks64
 ```
+
 </p>
 </details>
 
 ```shell
 pyang openconfig-interfaces.yang -f tree --tree-path=/interfaces/interface/state
 ```
+
 <details>
 <summary> Reveal output</summary>
 <p>
@@ -227,12 +234,14 @@ module: openconfig-interfaces
               +--ro carrier-transitions?   oc-yang:counter64
               +--ro last-clear?            oc-types:timeticks64
 ```
+
 </p>
 </details>
 
 ```shell
 pyang openconfig-interfaces.yang -f tree --tree-depth=4
 ```
+
 <details>
 <summary> Reveal output</summary>
 <p>
@@ -274,12 +283,14 @@ module: openconfig-interfaces
            +--rw subinterface* [index]
                  ...
 ```
+
 </p>
 </details>
 
 ```shell
 pyang openconfig-bgp.yang -f tree --tree-path=/bgp/neighbors --tree-depth=4
 ```
+
 <details>
 <summary> Reveal output</summary>
 <p>
@@ -318,12 +329,14 @@ module: openconfig-bgp
            |     ...
            +--rw enable-bfd
 ```
+
 </p>
 </details>
 
 ```shell
 pyang openconfig-bgp.yang -f tree --tree-path=/bgp/neighbors/neighbor/config
 ```
+
 <details>
 <summary> Reveal output</summary>
 <p>
@@ -346,6 +359,7 @@ module: openconfig-bgp
               +--rw send-community?       oc-bgp-types:community-type
               +--rw description?          string
 ```
+
 </p>
 </details>
 
@@ -353,6 +367,7 @@ module: openconfig-bgp
 pyang openconfig-bgp.yang -f tree --tree-path=/bgp/neighbors/neighbor/state \
     --tree-depth=5
 ```
+
 <details>
 <summary> Reveal output</summary>
 <p>
@@ -384,6 +399,7 @@ module: openconfig-bgp
               |     ...
               +--ro dynamically-configured?    boolean
 ```
+
 </p>
 </details>
 
@@ -391,6 +407,7 @@ module: openconfig-bgp
 pyang openconfig-bgp.yang -f tree --tree-path=/bgp/neighbors/neighbor/afi-safis \
    --tree-depth=6
 ```
+
 <details>
 <summary> Reveal output</summary>
 <p>
@@ -439,5 +456,6 @@ module: openconfig-bgp
                  |     ...
                  +--rw use-multiple-paths
 ```
+
 </p>
 </details>
