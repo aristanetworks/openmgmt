@@ -36,8 +36,6 @@ mkdir yang_modules
 
 ### Clone the OpenConfig repository
 
-From the root of this repository:
-
 ```shell
 git clone https://github.com/openconfig/public.git
 ```
