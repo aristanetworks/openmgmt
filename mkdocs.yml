@@ -26,6 +26,7 @@ nav:
       - gnmic: examples/gnmi-clients/gnmic/index.md
     - gNMI gateway: examples/gnmi-gateway/index.md
     - gNOI:
+      - About gNOI: examples/gnoi/index.md
       - gNOIc: examples/gnoi/gnoic/index.md
       - gRPCurl: examples/gnoi/grpcurl/index.md
     - Go Lang: examples/golang/index.md
