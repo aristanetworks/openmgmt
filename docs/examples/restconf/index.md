@@ -134,10 +134,10 @@ b'{"openconfig-interfaces:admin-status":"UP","openconfig-interfaces:counters":{"
 >>> exit()
 ```
 
-Execute the python script [get.py](https://github.com/aristanetworks/openmgmt/tree/main/src/restconf/get.py)
+Execute the python script [get_eth1_status.py](https://github.com/aristanetworks/openmgmt/tree/main/src/restconf/get_eth1_status.py)
 
 ```shell
-python3 get.py
+python3 get_eth1_status.py
 ```
 
 output
@@ -447,10 +447,10 @@ curl -X DELETE https://10.73.1.105:6020/restconf/data/ietf-interfaces:interfaces
 
 ### Using Python
 
-Execute the python script [delete.py](https://github.com/aristanetworks/openmgmt/tree/main/src/restconf/delete.py)
+Execute the python script [delete_lo100.py](https://github.com/aristanetworks/openmgmt/tree/main/src/restconf/delete_lo100.py)
 
 ```shell
-python3 delete.py
+python3 delete_lo100.py
 ```
 
 output
