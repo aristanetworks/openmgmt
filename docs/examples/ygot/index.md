@@ -10,15 +10,15 @@ categories:
 ![#ygot](images/ygot.png?raw=true)
 
 [ygot](https://github.com/openconfig/ygot) is a collection of Go utilities that can generate Go structures based off of
-yang modules.  In the demo we are going to generate go code based off of the [openconfig-system
-model](https://github.com/openconfig/public/blob/master/release/models/system/.openconfig-system.yang) using ygot.
+YANG modules.  In the demo we are going to generate go code based off of the [openconfig-system
+model](https://github.com/openconfig/public/blob/master/release/models/system/openconfig-system.yang) using ygot.
 
 ## Demo Actions
 
-- Leverage necessary yang files for openconfig-system to create a hostname.
+- Import the necessary YANG files for openconfig-system to create a hostname.
 - The hostname will be printed out and stored within the system.json file.
 - Using the [Arista gNMI binary](https://github.com/aristanetworks/goarista/tree/master/cmd/gnmi) we will configure a
-  device to use the ceos1 hostname.
+  device with the **ceos1** hostname.
 
 ## Clone this repo
 
@@ -26,13 +26,13 @@ model](https://github.com/openconfig/public/blob/master/release/models/system/.o
 git clone https://github.com/aristanetworks/openmgmt && cd openmgmt/src/ygot
 ```
 
-## Install ygot on your system
+## Install ygot
 
 ```shell
 go get github.com/openconfig/ygot
 ```
 
-## Check to see if all of the current yang files are accurate
+## Check to see if all of the current YANG files are accurate
 
 ```shell
 tree -f yang/
@@ -42,7 +42,6 @@ tree -f yang/
 <p>
 
 ```text
-
 ├── yang/openconfig-aaa-radius.yang
 ├── yang/openconfig-aaa-tacacs.yang
 ├── yang/openconfig-aaa-types.yang
@@ -82,7 +81,7 @@ pkg
 └── oc.go
 ```
 
-oc.go is the necessary go import / package for openconfig-system.  Looking at the Device struct within pkg/oc.go
+`oc.go` is the necessary go import / package for openconfig-system.  Looking at the Device struct within `pkg/oc.go`
 
 ```go
 type Device struct {
@@ -92,7 +91,7 @@ type Device struct {
 }
 ```
 
-Then looking at the System struct we can see the Hostname field.
+Looking at the `System` struct we can see the `Hostname` field.
 
 ```go
 type System struct {
@@ -102,7 +101,7 @@ type System struct {
 
 We need to fill in the Hostname field and pass it through the [EmitJSON
 function](https://pkg.go.dev/github.com/openconfig/ygot/ygot#EmitJSON) so we can render this model with the correct
-information which can be found in main.go.
+information which can be found in `main.go`.
 
 ### Run the go code
 
@@ -110,10 +109,9 @@ information which can be found in main.go.
 go run main.go
 ```
 
-<details><summary> Reveal output</summary>
+**Output:**
+<details><summary>Reveal output</summary>
 <p>
-
-This is the output
 
 ```javascript
 {
@@ -125,16 +123,15 @@ This is the output
 }
 ```
 
-Adding to config/hostname.json
+The output is also within `config/hostname.json` which is the same as the printed version.
+
 </p>
 </details>
-
-The output is also within `config/hostname.json` which looks the same as the printed version.
 
 ## Change the hostname on a device
 
 ```shell
-gnmi -addr deviceip:6030 -username admin -password admin update '/' config/hostname.json
+gnmi -addr ${DEVICEIP}:6030 -username admin -password admin update '/' config/hostname.json
 ```
 
-The device should now have the "ceos1" hostname.
+The device should now have the **ceos1** hostname.
