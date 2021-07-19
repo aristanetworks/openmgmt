@@ -23,6 +23,14 @@ It is supported for all resources that support the GET method.
 
 Please refer to [this link](../../configuration/restconf.md)
 
+## EOS Control plane ACL
+
+The default RESTCONF port on Arista devices is TCP 6020.
+
+We need to change the default control-plane ACL on EOS in order to allow TCP 6020 (or the configured RESTCONF TCP port).
+
+Please refer to [this link](../../configuration/security.md)
+
 ## Requirement on the RESTCONF client
 
 ```shell
