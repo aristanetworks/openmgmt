@@ -1,5 +1,12 @@
+# Site information
 site_name: Open Management
 site_url: https://aristanetworks.github.io/openmgmt/
+site_author: Arista Networks
+site_description: Arista Open Management repository documentation
+# Repository information
+repo_name: openmgmt on Github
+repo_url: https://github.com/aristanetworks/openmgmt
+# Configuration
 theme: mkdocs
 theme:
   name: material
