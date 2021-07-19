@@ -9,7 +9,11 @@ categories:
 
 EOS provides support for RESTCONF and the necessary transport services to support it.
 
-### RESTCONF
+The RESTCONF server is in the EOS device.
+
+## RESTCONF configuration on EOS
+
+### Certificate
 
 Certificate-based authentication is required for RESTCONF to operate.  You should follow the instructions in the
 [Certificate Authentication](/configuration/mtls.html) section in order to generate and install a certificate to support
@@ -29,6 +33,8 @@ management security
    ssl profile restconf
    certificate restconf.crt key restconf.key
 ```
+
+### RESTCONF API
 
 Configure RESTCONF:
 
@@ -67,7 +73,15 @@ management api restconf
 
 >Note The ACL should be a standard ACL allowing hosts or subnets.
 
-Status check
+### Control-plane ACL
+
+The default RESTCONF port on Arista devices is TCP 6020.
+
+We need to change the default control-plane ACL on EOS in order to allow TCP 6020 (or to allow the configured RESTCONF port).
+
+Please refer to [this link](../configuration/security.md)
+
+### Status check
 
 ```text
 #show management api restconf
