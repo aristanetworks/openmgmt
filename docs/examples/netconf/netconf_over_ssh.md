@@ -1,7 +1,3 @@
-## About NETCONF
-
-NETCONF is a protocol defined in the [RFC 6241](https://tools.ietf.org/html/rfc6241)
-
 ## Requirements on the EOS device
 
 ```shell

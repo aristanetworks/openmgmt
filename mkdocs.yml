@@ -37,8 +37,9 @@ nav:
       - gRPCurl: examples/gnoi/grpcurl/index.md
     - Go Lang: examples/golang/index.md
     - NETCONF:
-      - ncclient: examples/netconf/ncclient/index.md
-      - NETCONF over SSH: examples/netconf/netconf_over_ssh/index.md
+      - About NETCONF: examples/netconf/index.md
+      - ncclient: examples/netconf/ncclient.md
+      - NETCONF over SSH: examples/netconf/netconf_over_ssh.md
     - Pygnmi: examples/pygnmi/index.md
     - Pyang: examples/pyang/index.md
     - Pyangbind: examples/pyangbind/index.md
