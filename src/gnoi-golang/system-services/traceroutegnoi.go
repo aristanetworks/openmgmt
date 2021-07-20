@@ -1,4 +1,3 @@
-//as of 4.26.1F Currently not working but shows up in refraction.
 package main
 
 import (
@@ -48,5 +47,4 @@ func main() {
 		log.Fatalf("Cannot trace path: %v", err)
 	}
 	fmt.Println(response.Recv())
-	//fmt.Println(reflect.TypeOf(response.Recv))
 }

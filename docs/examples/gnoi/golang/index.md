@@ -19,12 +19,12 @@ gNOI defines a set of gRPC-based microservices for executing operational command
 
 gNOI [github repository](https://github.com/openconfig/gnoi)
 
-As example, we use the [system gNOI proto file](https://github.com/openconfig/gnoi/blob/master/system/system.proto) and a example from the [os gNOI proto file](https://github.com/openconfig/gnoi/tree/master/os)
+As example, we use the [system gNOI proto file](https://github.com/openconfig/gnoi/blob/master/system/system.proto).
 
 - Ping executes the ping command on the target and streams back the results
 - Traceroute executes the traceroute command on the target and streams back the results
 - As you can see in the proto file, the field VRF is not defined for these messages
-- OS will quickly tell the operator what version of the OS installed as well as the current supervisor which is active.  cEOS does not have a supervisor. 
+
 
 ## About gNOI support on EOS
 
@@ -55,16 +55,12 @@ cd src/gnoi-golang/
 .
 ├── go.mod
 ├── go.sum
-├── os-services
-│   └── verify.go
 └── system-services
     ├── pinggnoi.go
-    ├── rebootgnoi.go
-    ├── timegnoi.go
-    └── traceroutegnoi.go
+    ├── traceroutegnoi.go
 ```
 
-The os-services contain the [OS proto services](https://github.com/openconfig/gnoi/tree/master/os) and the [system-services](https://github.com/openconfig/gnoi/tree/master/system) contain the system-services protos services.  Time and reboot are not currently supported but provide examples.
+The [system-services](https://github.com/openconfig/gnoi/tree/master/system) contain the system-services protos services.
 
 ## Device config
 
@@ -127,15 +123,4 @@ Output:
 
 ```shell
 destination_name:"1.1.1.1" destination_address:"1.1.1.1" hops:30 packet_size:60 <nil>
-```
-
-OS verify gNOI
-```shell
-go run os-services/verify.go
-```
-
-Output:
-
-```shell
-version:"4.26.1F"  verify_standby:{standby_state:{state:UNSUPORTED}}
 ```
