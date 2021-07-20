@@ -5,62 +5,110 @@ date: 2021-03-19 08:17:00 --0600
 categories:
 ---
 
-- [Overview](#overview)
-- [EOS configuration](#EOS-configuration)
-- [Start gNMI gateway](#Start-gNMI-gateway.)
-- [Query gNMI gateway](#Requesting-a-target-managed-by-gNMI-gateway.)
-
 ## Overview
 
-[gNMI
-gateway](https://netflixtechblog.com/simple-streaming-telemetry-27447416e68f) is
-a opensource project created by netflix. The idea of gNMI gateway is the gateway
-sits as a gateway or a proxy for multiple gNMI targets which it then manages. A
-gNMI client will then speak to the gNMI service(gNMI gateway) and use a gNMI
-target which the client will then request the path.
+[gNMI gateway](https://netflixtechblog.com/simple-streaming-telemetry-27447416e68f) is an opensource project created by
+Netflix. Conceptually, gNMI gateway sits as a proxy for multiple gNMI targets. A gNMI client speaks to a common gNMI
+service endpoint within the network (gNMI gateway) and specifies a gNMI target with an accompanying path.  The gNMI
+gateway will in turn initiate the connection to the target device and stream the contents to the originating proxy.
 
-gNMI gateway documentation can be found [here](https://github.com/openconfig/gnmi-gateway)
+- [gNMI gateway documentation](https://github.com/openconfig/gnmi-gateway)
+- [NANOG demonstration](https://www.youtube.com/watch?v=7QXpqqGTRn8)
 
-NANOG demo can also be found [here](https://www.youtube.com/watch?v=7QXpqqGTRn8)
+This demo will start the gNMI gateway binary and use gNMIC to stream to a target which is managed by the gNMI gateway.
+Please make adjustments to the `targets.json` file to match your environment.
 
-In this demo we will start the gNMI gateway binary and use gNMIC to then stream
-to a target which is managed by gNMI gateway. Please make adjustments to the
-targets.json file to match your own network.
+The demo is dependent on the following files:
 
-The demo is structured in a few different files all which have their own
-function.
-
-```text
-├── gnmi-gateway
-├── index.md
-├── server.crt
-├── server.key
-└── targets.json
-```
-
-- **gnmi-gateway** - The binary to activate gNMI gateway
-- **server.crt** / **server.key** - the certificate and key for gNMI gateway
+- **gnmi-gateway** - The binary to activate gNMI gateway. This must be built for the platform that it will run on.
+  Details regarding generation of the binary for the target platform can be found in the [gNMI gateway
+  documentation](https://github.com/openconfig/gnmi-gateway).
+- **server.crt** / **server.key** - the certificate and key for gNMI gateway.  These can be generated through a CA.
+  Additional details may be found [here](/openmgmt/configuration/mtls/).
 - **targets.json** - This file specifies the targets.  gNMI-gateway supports hot reloading of the files. So if changes
   are made within targets.json it will reload automatically with new targets and or new paths.
 
-## EOS configuration
+<details><summary>sample: targets.json</summary>
+<p>
 
-The following configuration will add a self signed cert to the device and start the gNMI service with the cert.
-
-```text
-management api gnmi
-   transport grpc default
-      ssl profile SELFSIGNED
-   provider eos-native
-!
-management security
-   ssl profile SELFSIGNED
-      certificate cvp.crt key cvp.key
-!
-security pki certificate generate self-signed cvp.crt key cvp.key generate rsa 2048 validity 30000 parameters common-name cvp
+```javascript
+{
+  "request": {
+    "default": {
+      "subscribe": {
+        "prefix": {
+        },
+        "subscription": [
+          {
+            "path": {
+              "elem": [
+                {
+                  "name": "interfaces"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  },
+  "target": {
+    "DC2-SP02": {
+      "addresses": [
+        "10.20.30.22:6030"
+      ],
+      "credentials": {
+        "username": "ansible",
+        "password": "ansible"
+      },
+      "request": "default",
+      "meta": {
+        "NoTLS": "yes"
+      }
+    },
+    "DC2-LEAF1A": {
+      "addresses": [
+        "10.20.30.5:6030"
+      ],
+      "credentials": {
+        "username": "ansible",
+        "password": "ansible"
+      },
+      "request": "default",
+      "meta": {
+        "NoTLS": "yes"
+      }
+    },
+    "DC2-LF70": {
+      "addresses": [
+        "10.20.30.70:6030"
+      ],
+      "credentials": {
+        "username": "ansible",
+        "password": "ansible"
+      },
+      "request": "default",
+      "meta": {
+        "NoTLS": "yes"
+      }
+    }
+  }
+}
 ```
 
+</p>
+</details>
+
+## EOS Configuration
+
+gNMI will need to be enabled on the target which is managed by gNMI gateway and a certificate will need to be installed
+to use TLS-based authentication.  Additional details regarding enabling gnmi on EOS devices can be found
+[here](/openmgmt/configuration/openconfig/).  Additional details regarding certificate management and configuration can
+be found [here](/openmgmt/configuration/mtls/).
+
 ## Start gNMI gateway
+
+Note, the `server.crt` must be signed by a CA that the switch can resolve.
 
 ```shell
 gnmi-gateway -EnableGNMIServer -ServerTLSCert=server.crt \
@@ -69,6 +117,8 @@ gnmi-gateway -EnableGNMIServer -ServerTLSCert=server.crt \
 ```
 
 **Output:**
+<details><summary>Reveal Output</summary>
+<p>
 
 ```text
 {"level":"info","time":"2021-03-19T08:47:35-04:00","message":"Starting GNMI Gateway."}
@@ -97,8 +147,11 @@ gnmi-gateway -EnableGNMIServer -ServerTLSCert=server.crt \
 
 ```
 
-The output tells us that gNMI-gateway has started and began to serve up gNMI requests to the /interfaces/interface path
-via any gNMI external client.
+</p>
+</details>
+
+The output indicates that gNMI-gateway has started and will now serve gNMI requests to the `/interfaces/interface` path
+on behalf of any external gNMI client.
 
 ## Requesting a target managed by gNMI gateway
 
