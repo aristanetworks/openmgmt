@@ -1,4 +1,12 @@
+# Site information
 site_name: Open Management
+site_url: https://aristanetworks.github.io/openmgmt/
+site_author: Arista Networks
+site_description: Arista Open Management repository documentation
+# Repository information
+repo_name: openmgmt on Github
+repo_url: https://github.com/aristanetworks/openmgmt
+# Configuration
 theme: mkdocs
 theme:
   name: material
@@ -6,3 +14,33 @@ theme:
     scheme: slate
     primary: blue
     accent: orange
+extra:
+  analytics:
+    provider: google
+    property: G-4V8W728SS9
+nav:
+  - Home: index.md
+  - Configuration:
+    - OpenConfig: configuration/openconfig.md
+    - NETCONF: configuration/netconf.md
+    - RESTCONF: configuration/restconf.md
+    - Certificate Authentication: configuration/mtls.md
+    - Security Configuration: configuration/security.md
+  - Examples:
+    - Ansible: examples/ansible/index.md
+    - gNMI clients:
+      - gnmi (Arista): examples/gnmi-clients/arista-gnmi/index.md
+      - gnmic: examples/gnmi-clients/gnmic/index.md
+    - gNMI gateway: examples/gnmi-gateway/index.md
+    - gNOI:
+      - gNOIc: examples/gnoi/gnoic/index.md
+      - gRPCurl: examples/gnoi/grpcurl/index.md
+    - Go Lang: examples/golang/index.md
+    - NETCONF:
+      - ncclient: examples/netconf/ncclient/index.md
+      - NETCONF over SSH: examples/netconf/netconf_over_ssh/index.md
+    - Pygnmi: examples/pygnmi/index.md
+    - Pyang: examples/pyang/index.md
+    - Pyangbind: examples/pyangbind/index.md
+    - RESTCONF: examples/restconf/index.md
+    - ygot: examples/ygot/index.md

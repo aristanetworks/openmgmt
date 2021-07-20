@@ -1,0 +1,8 @@
+{
+  "openconfig-system:system": {
+    "config": {
+      "hostname": "ceos1" 
+    }
+  }
+}
+

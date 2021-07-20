@@ -11,10 +11,14 @@ In the examples folder we provide a variety of examples that will show how to us
 tools to interact with one of the GRPC
 interfaces(gNMI,gNOI and gRIBI) within Arista EOS.
 
-## gNMI clients
+## Tools
 
 - [arista gnmi client](gnmi-clients/arista-gnmi)
 - [gnmic](gnmi-clients/gnmic)
 - [gnmi-gateway](gnmi-gateway)
+- [gnoic](gnoi/gnoic)
+- [grpcurl](gnoi/grpcurl)
 - [golang](golang)
-- [python](python)
+- [pygnmi](pygnmi)
+- [pyang](pyang)
+- [pyangbind](pyangbind)
