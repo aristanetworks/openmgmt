@@ -7,15 +7,15 @@ categories:
 
 ## About gRPC
 
-Please refer to [this section]
+Please refer to [this section](../index.md)
 
 ## About gNOI
 
-Please refer to [this section]
+Please refer to [this section](../index.md)
 
 ## About gNOI support on EOS
 
-Please refer to [this section]
+Please refer to [this section](../index.md)
 
 ## gRPCurl overview
 

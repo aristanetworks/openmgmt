@@ -34,8 +34,8 @@ nav:
     - gNMI gateway: examples/gnmi-gateway/index.md
     - gNOI:
       - About gNOI: examples/gnoi/index.md
-      - gNOIc: examples/gnoi/gnoic/index.md
-      - gRPCurl: examples/gnoi/grpcurl/index.md
+      - gNOIc: examples/gnoi/gnoic.md
+      - gRPCurl: examples/gnoi/grpcurl.md
     - Go Lang: examples/golang/index.md
     - NETCONF:
       - About NETCONF: examples/netconf/index.md
