@@ -42,8 +42,10 @@ nav:
     - Pygnmi: examples/pygnmi/index.md
     - Pyang: examples/pyang/index.md
     - Pyangbind: examples/pyangbind/index.md
-    - Python: examples/python/index.md
-    - RESTCONF: examples/restconf/index.md
+    - RESTCONF:
+      - About RESTCONF: examples/restconf/index.md
+      - cURL: examples/restconf/curl.md
+      - Python: examples/restconf/python.md
     - ygot: examples/ygot/index.md
   - Telemetry:
     - gNMIReverse: telemetry/adapters/gnmireverse/index.md
