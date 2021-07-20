@@ -47,3 +47,4 @@ nav:
     - ygot: examples/ygot/index.md
   - Telemetry:
     - gNMIReverse: telemetry/adapters/gnmireverse/index.md
+  - Models: models/index.md
