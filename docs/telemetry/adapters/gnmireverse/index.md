@@ -5,18 +5,6 @@ date: 2021-05-19 20:03:00 --0600
 categories:
 ---
 
-- [Introduction](#introduction)
-- [Prerequisite](#prerequisite)
-- [Installing and configuring gNMIReverse client](#installing-and-configuring-gnmireverse-client)
-    - [Building the client and server binaries](#building-the-client-and-server-binaries)
-- [gNMIReverse client daemon Configuration](#gnmireverse-client-daemon-configuration)
-    - [Non-default VRF](#non-default-vrf)
-    - [Default VRF](#default-vrf)
-- [Running the gNMIReverse Server](#running-the-gnmireverse-server)
-- [Subscribing to eos_native paths](#subscribing-to-eos_native-paths)
-- [Subscribing to Smash paths](#subscribing-to-smash-paths)
-- [References](#references)
-
 ## Introduction
 
 gNMIReverse is a Dial-Out gRPC service (available on our [Github](https://github.com/aristanetworks/goarista/tree/master/gnmireverse)
