@@ -1,5 +1,12 @@
+# Site information
 site_name: Open Management
 site_url: https://aristanetworks.github.io/openmgmt/
+site_author: Arista Networks
+site_description: Arista Open Management repository documentation
+# Repository information
+repo_name: openmgmt on Github
+repo_url: https://github.com/aristanetworks/openmgmt
+# Configuration
 theme: mkdocs
 theme:
   name: material
@@ -31,10 +38,17 @@ nav:
       - gRPCurl: examples/gnoi/grpcurl/index.md
     - Go Lang: examples/golang/index.md
     - NETCONF:
-      - ncclient: examples/netconf/ncclient/index.md
-      - NETCONF over SSH: examples/netconf/netconf_over_ssh/index.md
+      - About NETCONF: examples/netconf/index.md
+      - ncclient: examples/netconf/ncclient.md
+      - NETCONF over SSH: examples/netconf/netconf_over_ssh.md
     - Pygnmi: examples/pygnmi/index.md
     - Pyang: examples/pyang/index.md
     - Pyangbind: examples/pyangbind/index.md
-    - RESTCONF: examples/restconf/index.md
+    - RESTCONF:
+      - About RESTCONF: examples/restconf/index.md
+      - cURL: examples/restconf/curl.md
+      - Python: examples/restconf/python.md
     - ygot: examples/ygot/index.md
+  - Telemetry:
+    - gNMIReverse: telemetry/adapters/gnmireverse/index.md
+  - Models: models/index.md
