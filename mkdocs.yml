@@ -42,5 +42,9 @@ nav:
     - Pygnmi: examples/pygnmi/index.md
     - Pyang: examples/pyang/index.md
     - Pyangbind: examples/pyangbind/index.md
+    - Python: examples/python/index.md
     - RESTCONF: examples/restconf/index.md
     - ygot: examples/ygot/index.md
+  - Telemetry:
+    - gNMIReverse: telemetry/adapters/gnmireverse/index.md
+  - Models: models/index.md
