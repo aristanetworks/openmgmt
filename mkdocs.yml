@@ -28,7 +28,7 @@ nav:
     - gNOI:
       - gNOIc: examples/gnoi/gnoic/index.md
       - gRPCurl: examples/gnoi/grpcurl/index.md
-      - golang: examples/gnoi/golang/index.md
+      - golang: examples/gnoi/golang.md
     - Go Lang: examples/golang/index.md
     - Pygnmi: examples/pygnmi/index.md
     - Pyang: examples/pyang/index.md
