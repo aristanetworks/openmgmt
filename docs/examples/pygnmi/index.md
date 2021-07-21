@@ -31,9 +31,9 @@ Assuming that the `pygnmi` module has been installed, this can be executed via t
 python3 pygnmi.py
 ```
 
-The following will simply run the pygnmi.py file using python3 to get the openconfig interfaces.
+The following will simply run the `pygnmi.py` file using python3 to get the openconfig interfaces.
 
-### Truncated output
+Truncated output
 
 ```javascript
 {
