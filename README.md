@@ -1,4 +1,5 @@
 ![GitHub](https://img.shields.io/github/license/aristanetworks/openmgmt)
+![example workflow](https://github.com/aristanetworks/openmgmt/actions/workflows/main.yml/badge.svg)
 ![Arista](https://img.shields.io/badge/Arista-Open%20Management-blue)
 
 # openmgmt
