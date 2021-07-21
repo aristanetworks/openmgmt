@@ -28,10 +28,10 @@ if __name__ == '__main__':
 Assuming that the `pygnmi` module has been installed, this can be executed via the following command.
 
 ```shell
-python3 pygnmi.py
+python3 gnmi_example.py
 ```
 
-The following will simply run the `pygnmi.py` file using python3 to get the openconfig interfaces.
+The following will simply run the [`gnmi_example.py`](https://github.com/aristanetworks/openmgmt/blob/main/src/pygnmi/gnmi_example.py) file using python3 to get the openconfig interfaces.
 
 Truncated output
 
