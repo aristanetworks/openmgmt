@@ -5,8 +5,6 @@ date: 2021-07-16 08:17:00 --0600
 categories:
 ---
 
-RESTCONF examples with EOS
-
 ## About RESTCONF
 
 RESTCONF is defined in the [RFC 8040](https://datatracker.ietf.org/doc/html/rfc8040)

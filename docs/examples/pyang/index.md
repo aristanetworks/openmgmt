@@ -26,7 +26,9 @@ pip3 freeze | grep pyang
 pip3 freeze | grep pyang
 ```
 
-## We need yang modules
+## Get YANG modules
+
+We need YANG modules so we can use Pyang.  
 
 ### Create a directory
 

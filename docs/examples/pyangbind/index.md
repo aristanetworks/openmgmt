@@ -25,6 +25,8 @@ pip3 freeze | grep pyang
 
 ## Get YANG modules
 
+We need YANG modules so we can use Pyang and Pyangbind. 
+
 ### Create a directory
 
 ```shell
