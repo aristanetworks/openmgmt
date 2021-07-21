@@ -1,4 +1,5 @@
 ![GitHub](https://img.shields.io/github/license/aristanetworks/openmgmt)
+![Arista](https://img.shields.io/badge/Arista-Open%20Management-blue)
 
 # openmgmt
 
