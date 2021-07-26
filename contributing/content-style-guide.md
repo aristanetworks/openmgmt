@@ -11,7 +11,10 @@ for strict formality but avoiding first person references (I, me, we, etc.) and 
 will help the reader.
 
 DRY (Don't Repeat Yourself) reigns supreme.  In the interests of consistency, reference existing documentation.  This
-means examples should refer to a common suite of documentation for frequent operation
+means examples should refer to a common suite of documentation for frequent operations.  i.e.: There's no need to
+replicate the instructions for enabling gnmi on an Arista switch when this is documented in common location.  However,
+if there's an additional configuration requirement or a specific bit of functionality that is associated with your
+topic(s), please be sure to note this accordingly.
 
 ## A Note Regarding Tooling
 
@@ -60,3 +63,36 @@ However, if a specific privilege mode is required it may be useful to hint this 
 here.
 
 JSON output should be fully expanded to convey hierarchy.
+
+Use of continuation slashes to break up long command lines should be used where ever possible.  Keeping within the 80
+column width where possible improves readability.
+
+**example:** hard to read
+
+```shell
+gnmic -a 10.83.13.214:6030 -u cvpadmin -p arastra --insecure --gzip get --path '/network-instances/network-instance[name=default]/protocols/protocol[identifier=BGP][name=BGP]/bgp'`
+```
+
+**example:** easier to read
+
+```shell
+gnmic -a 10.83.13.214:6030 -u cvpadmin -p arastra --insecure --gzip get \
+  --path '/network-instances/network-instance[name=default]/protocols/protocol[identifier=BGP][name=BGP]/bgp'`
+```
+
+In the interests of conveying context particularly for API actions, it's useful to couple the verb (GET, SET, etc.) with
+the noun being acted on in the command.
+
+**example:** verb-noun coupling (good)
+
+```shell
+gnmi -addr 10.83.13.139 -username admin \
+  get '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors'
+```
+
+**example:** verb-noun decoupling (bad)
+
+```shell
+gnmi -addr 10.83.13.139 -username admin get \
+  '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors'
+```
