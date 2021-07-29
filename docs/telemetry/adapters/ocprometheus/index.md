@@ -1042,7 +1042,7 @@ subscriptions:
       no shutdown
 ```
 
-### Cert-based authenticiation with ocprometheus
+### Cert-based authentification with ocprometheus
 
 1\. Follow the steps mentioned in [Certificate Authentification Configuration page](https://aristanetworks.github.io/openmgmt/configuration/mtls/).
 
