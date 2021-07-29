@@ -19,9 +19,8 @@ topic(s), please be sure to note this accordingly.
 ## A Note Regarding Tooling
 
 The small amount of time it takes to incorporate the tooling listed in the README and integrating it into your
-environment will pay dividends for you and your co-authors.  Run your linter frequently. Real text editors (i.e.: emacs
-and vim variants) provide the ability to fully integrate linting into the workflow, such that you can see issues as
-you're writing.
+environment will pay dividends for you and your co-authors.  Run your linter frequently. Text editors commonly provide
+the ability to fully integrate linting into the workflow, such that you can see issues as you're writing.
 
 If your text editor supports it, you are encouraged to enable the [EditorConfig](https://editorconfig.org/) feature to
 make your editor "do the right thing" by default. An editorconfig file has been provided in this repository that is
@@ -48,24 +47,25 @@ this requirement.  As a general rule the following mappings are applicable to do
 - **shell commands and output** - use format `shell`
 - **json output** - use format `javascript`
 
-Commands are to be separated from execution output such that a user who is reading the document can use the "copy" feature
-in a code block and get _only_ the relevant elements for experimentation without a need for cleanup prior to pasting.
-Long command output should be bracketed with the `<detail>` feature to allow the reader to expand/contract content as
-appropriate.
+Commands should be separated from execution output such that a user who is reading the document can use the "copy"
+feature in a code block and get _only_ the relevant elements for experimentation without a need for cleanup prior to
+pasting.  Long command output should be bracketed with the `<detail>` tags to allow the reader to expand/contract
+content as appropriate.
 
 Shell commands should be free of `./` ornamentation and assume that the command under execution is in the users path and
 not specific to the local directory unless this is specific to a series of steps that are associated with the task at
 hand.  (e.g.: If a specific build of software is being outlined and the steps are clearly associated with the current
 working directory.)
 
-Where possible refrain from having unnecessary prompt ornamentation in command output (e.g.: hostname, path, etc.)
-However, if a specific privilege mode is required it may be useful to hint this via the prompt.  Use your judgment
-here.
+Where possible it is useful to refrain from having unnecessary prompt ornamentation in command output (e.g.: hostname,
+path, etc.) However, if a specific privilege mode is required it may be useful to hint this via the prompt.  Use your
+judgment here.
 
-JSON output should be fully expanded to convey hierarchy.
+JSON output should be fully and indented to expanded to convey hierarchy.
 
-Use of continuation slashes to break up long command lines should be used where ever possible.  Keeping within the 80
-column width where possible improves readability.
+Use of continuation backslashes to break up long command lines should be used where ever possible.  Keeping within the
+80 column width for code samples where possible improves readability.  The long nature of OpenConfig paths makes this
+difficult so constraining excessively long lines where possible is useful.
 
 **example:** hard to read
 
