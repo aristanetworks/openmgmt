@@ -15,11 +15,13 @@ configure Arista switches to send telemetry states to Prometheus using TerminAtt
 and one of the OpenConfig connectors that you can find on our official github page.
 
 > Please note, that these apps were written as proof-of-concept and are supported on a best-effort basis.
-> The projects can be forked and modified to suit your needs. Feedbacks are always welcomed and issues can be filed like for any other projects on github.
+> The projects can be forked and modified to suit your needs. Feedbacks are always welcomed and issues can be filed
+> like for any other projects on github.
 
 ## Prerequisites
 
-The following tools will be necessary to be able to install Prometheus and Grafana, clone our project from github and compile ocprometheus.
+The following tools will be necessary to be able to install Prometheus and Grafana, clone our project from github
+and compile ocprometheus.
 
 - [Homebrew](https://brew.sh/) (for macOS users)
 - [Go](https://golang.org/doc/install)
@@ -144,7 +146,8 @@ ls -l prometheus.yml
 -rw-rw-r--  1 root root 1076 May 14 12:25 prometheus.yml
 ```
 
-This will modify the file in your docker VM as well, but the configuration won’t be updated until you restart the service, which you can do with a one-liner:
+This will modify the file in your docker VM as well, but the configuration won’t be updated until you restart the
+service, which you can do with a one-liner:
 
 ```shell
 sudo docker exec -i -t eager_kapitsa kill -HUP 1
@@ -221,11 +224,14 @@ $ docker run \
 - /var/log/grafana
 - /etc/grafana
 
-For more details see what’s new in [Grafana 5.1 and later](https://grafana.com/docs/grafana/latest/installation/docker/#migration-from-a-previous-version-of-the-docker-container-to-5-1-or-later) and recommended steps to migrate from older releases.
+For more details see what’s new in [Grafana 5.1 and later](https://grafana.com/docs/grafana/latest/installation/docker/#migration-from-a-previous-version-of-the-docker-container-to-5-1-or-later)
+ and recommended steps to migrate from older releases.
 
-There’s also a ready-to-go combo of Prometheus/Grafana/docker-stack which you can find at https://github.com/vegasbrianc/prometheus (credit to Brian Christner)
+There’s also a ready-to-go combo of Prometheus/Grafana/docker-stack which you can find at
+https://github.com/vegasbrianc/prometheus (credit to Brian Christner)
 
-Now that we have Prometheus and Grafana running, we’re ready to configure our switches and start drawing nice graphs from the queried data.
+Now that we have Prometheus and Grafana running, we’re ready to configure our switches and start drawing nice graphs from
+ the queried data.
 
 ## Installing and configuring ocprometheus
 
@@ -278,8 +284,9 @@ GOOS=linux GOARCH=386 go build
 scp ocprometheus admin@10.83.13.139://mnt/flash
 ```
 
-Since EOS has a linux kernel, the OS has to be set to linux and the architecture to 32 bit (386) with GOOS and GOARCH variables respectively.
-Starting 4.22.0 we’ve introduced a 64-bit EOS () and you can also compile ocprometheus for 64-bit architecture with the following command:
+Since EOS has a linux kernel, the OS has to be set to linux and the architecture to 32 bit (386) with GOOS and GOARCH
+variables respectively. Starting 4.22.0 we’ve introduced a 64-bit EOS () and you can also compile ocprometheus for
+64-bit architecture with the following command:
 
 ```shell
 GOOS=linux GOARCH=amd64 go build
@@ -302,7 +309,8 @@ the necessary folders and your spec file, etc we can create RPMs with just one l
 
 You can download FPM from the following github page:
 
-https://github.com/jordansissel/fpm ( credit to Jordan and all the people who contributed to this project – you’ve made our lives easier! Thanks!)
+https://github.com/jordansissel/fpm ( credit to Jordan and all the people who contributed to this project – you’ve made
+ our lives easier! Thanks!)
 
 The following was done on a Devuan VM ( which is basically a lightweight Debian without systemd )
 using the following steps:
@@ -313,7 +321,8 @@ using the following steps:
 mkdir fpmbuild
 ```
 
-2\. Copy the compiled `ocprometheus` and the `sampleconfig.yml` (in this example it was renamed to `ocprometheus.yml`) file downloaded from github:
+2\. Copy the compiled `ocprometheus` and the `sampleconfig.yml` (in this example it was renamed to `ocprometheus.yml`)
+downloaded from github:
 
 ```shell
 cp ~/git/goarista/cmd/ocprometheus/ocprometheus /backup/fpmbuild/
@@ -323,7 +332,8 @@ cp ~/git/goarista/cmd/ocprometheus/sampleconfig_above_4.20.yml /backup/fpmbuild/
 
 3\. Compile it with fpm:
 
-This one liner will create the RPM package without the need to create all the folders and specs that you’d need to do with the usual rpmbuild:
+This one liner will create the RPM package without the need to create all the folders and specs that you’d need to do
+with the usual rpmbuild:
 
 ```shell
 sudo fpm -s dir -t rpm -a all -n "ocprometheus-$(date +%m_%d.%H%M)" \
@@ -415,7 +425,8 @@ gem install --no-ri --no-rdoc fpm
 brew install rpm
 ```
 
-> Note: on macOS Catalina you might need to use `–user-install` when installing gem packages, and instead of `–no-rdoc` use `–no-document` .
+> Note: on macOS Catalina you might need to use `–user-install` when installing gem packages, and instead of `–no-rdoc`
+> use `–no-document` .
 
 Xcode might need to be reinstalled if you’ve upgraded from Mojave.
 
@@ -490,7 +501,8 @@ TerminAttr is running a gRPC server locally on TCP `6042`, which you can check b
 bash cat /var/log/agents/TerminAttr-`pidof TerminAttr`
 ```
 
-> NOTE: when installing ocprometheus as a swix file, the binary will be put in `/usr/bin` directory by default (you can change that in the RPM making process).
+> NOTE: when installing ocprometheus as a swix file, the binary will be put in `/usr/bin` directory by default
+> (you can change that in the RPM making process).
 
 If you compile it in go and copy it to flash you can just change that daemon config to refer to that path
 (this way it won’t be installed as a swix).
@@ -660,7 +672,7 @@ The minimum required flags for TerminAttr are:
 - `disableaaa`: Disable AAA checking – all AAA requests pass (in case username/password is not used in ocprometheus)
 - grpcaddr string
      VRF and address to listen on to serve data using the gNMI interface.
-     The expected form is [<vrf-name>/]address:port (default “127.0.0.1:6042”)
+     The expected form is `[<vrf-name>/]address:port` (default `127.0.0.1:6042`)
 
 After configuring our switches we can head over to Grafana and start drawing our graphs!
 
@@ -671,76 +683,83 @@ You can do this by using the following steps:
 
 1\. Go to Configuration (gear icon) / Data Sources
 
-![Grafana1](./res/Grafana1.png)
+![Grafana1](./resources/Grafana1.png)
 
 2\. Add data source and select Prometheus
 
-![Grafana2](./res/Grafana2.png)
+![Grafana2](./resources/Grafana2.png)
 
-![Grafana3](./res/Grafana3.png)
+![Grafana3](./resources/Grafana3.png)
 
 3\. Fill out the form (add the URL for the Prometheus server e.g.: `http://myprometheus.com:9090/`
 
 It should look like this:
 
-![Grafana4](./res/Grafana4.png)
+![Grafana4](./resources/Grafana4.png)
 
 4\. Save & Test
 
 5\. Now we can create our dashboard ( + button on the left)
 
-![Grafana5](./res/Grafana5.png)
+![Grafana5](./resources/Grafana5.png)
 
 6\. Add query
 
-![Grafana6](./res/Grafana6.png)
+![Grafana6](./resources/Grafana6.png)
 
 7\. Make sure you have ‘Prometheus’ selected as Data Source
 
-![Grafana7](./res/Grafana7.png)
+![Grafana7](./resources/Grafana7.png)
 
-After selecting ‘prometheus’ you will be able to add expressions like ‘intfCounter’ , ‘tempSensor’, etc. defined in the ocprometheus config yaml file.
+After selecting ‘prometheus’ you will be able to add expressions like ‘intfCounter’ , ‘tempSensor’, etc. defined in
+the ocprometheus config yaml file.
 
-![Grafana8](./res/Grafana8.png)
+![Grafana8](./resources/Grafana8.png)
 
-8\. After adding ‘intfCounter’ to the query, it’ll start plotting the counters for all the interfaces and all the devices that Prometheus is polling
+8\. After adding ‘intfCounter’ to the query, it’ll start plotting the counters for all the interfaces and all the devices
+ that Prometheus is polling
 
-![Grafana8v2](./res/Grafana8v2.png)
+![Grafana8v2](./resources/Grafana8v2.png)
 
 9\. Save the dashboard
 
-![Grafana9](./res/Grafana9.png)
+![Grafana9](./resources/Grafana9.png)
 
 Finally:
 
 - you can add as many dashboards you want
 - you can add more expression on a single graph
-- you can choose one line on the graph and it will show the graph for only that line (e.g. in interface counters you can choose a specific interface to look at the counters for)
+- you can choose one line on the graph and it will show the graph for only that line (e.g. in interface counters you
+- can choose a specific interface to look at the counters for)
 
 ### How to graph data only for specific interface?
 
-We can add filters to the queries in both Prometheus console or in grafana, e.g. if I want to see data for interface Ethernet24 I’d use the following filter:
+We can add filters to the queries in both Prometheus console or in grafana, e.g. if I want to see data for
+interface Ethernet24 I’d use the following filter:
 
 `intfCounter{intf=”Ethernet24″}`
 
-![Grafana10](./res/Grafana10.png)
+![Grafana10](./resources/Grafana10.png)
 
-![Grafana11](./res/Grafana11.png)
+![Grafana11](./resources/Grafana11.png)
 
 You can filter based on any of the labels defined in the config file (some of them are unnamed,
 but you can add a name to those capturing/non-capturing groups inside the config file on EOS).
 
-Some of the paths contains capturing groups that are not named, and Prometheus will give them a name in the following format: `unnamedLabelX`
+Some of the paths contains capturing groups that are not named, and Prometheus will give them a name in the following
+format: `unnamedLabelX`
 
 For example, for interface counters on a 7160 device I have the following path:
 
 `/Smash/counters/ethIntf/XpCounters/current/(counter)/(?P<intf>.+)/statistics/(?P<direction>(?:in|out))(Octets|Errors|Discards)`
 
-From the above path you can see for example that the direction of the packets is captured in a named capturing group that also contains a non-capturing group: `(?P<direction>(?:in|out))`
+From the above path you can see for example that the direction of the packets is captured in a named capturing group
+that also contains a non-capturing group: `(?P<direction>(?:in|out))`
 
 Named capturing groups can be created with `?P<name>`.
 
-We don’t need to capture a separate group for in|out as we already do it with the named capturing group of direction, so we can use a non-capturing group with ?:
+We don’t need to capture a separate group for in|out as we already do it with the named capturing group of direction,
+so we can use a non-capturing group with ?:
 
 Explanation:
 
@@ -780,7 +799,8 @@ Full match   2-8 Octets
 Group 1.     2-8 Octets
 ```
 
-In this case since we used a capturing group by putting our strings/expression in a parenthesis, Prometheus will know that it needs to treat it as a separate label, so it gives it a name.
+In this case since we used a capturing group by putting our strings/expression in a parenthesis, Prometheus will
+know that it needs to treat it as a separate label, so it gives it a name.
 
 If you don’t want to see unnamedLabels you can add a group name similarly to the direction group.
 
@@ -796,7 +816,8 @@ Group `packetType`  2-8 Octets
 
 ### Pre-defined dashboard
 
-The open-source community is really helpful and thanks to Be Smart Be Open and Vista Technology we have a pre-defined grafana dashboard for Arista devices which you can find here:
+The open-source community is really helpful and thanks to Be Smart Be Open and Vista Technology we have a pre-defined
+grafana dashboard for Arista devices which you can find here:
 
 [https://grafana.com/dashboards/10222](https://grafana.com/dashboards/10222)
 
@@ -811,13 +832,14 @@ Some of the graphs that you’ll find in this dashboard:
 - Voltage levels
 - Interface counters for individual interfaces
 
-![Grafana12](./res/Grafana12.png)
+![Grafana12](./resources/Grafana12.png)
 
 > Beware of [https://github.com/grafana/grafana/issues/6888](https://github.com/grafana/grafana/issues/6888)
 
 In case you have modular devices or multilane interfaces, you cannot use a variable to match those interfaces
 for example with `intf="$interface"` because Grafana will escape special characters, even if they were
-already escaped by Prometheus (it’ll escape it again). So instead of `Ethernet3\\/2` you’ll have `Ethernet3\\\\/2` and no data will be plotted.
+already escaped by Prometheus (it’ll escape it again). So instead of `Ethernet3\\/2` you’ll have `Ethernet3\\\\/2` and
+no data will be plotted.
 
 The workaround is to use regex matching by putting the tilda (`~`) character after the equal sign.
 
@@ -832,9 +854,11 @@ You can also use regex matching like below
 Rule records allow you to precompute frequently needed expressions and save the result as a new set of time series.
 Querying this result will be much faster then executing the original expression and very useful for dashboards,
 which need to query the same expression repeatedly.
-One example would be to use the `/Kernel/proc/stat/<pid>/comm` as a value label and store the metrics in a new time series for the other items under that path.
+One example would be to use the `/Kernel/proc/stat/<pid>/comm` as a value label and store the metrics in a new time
+series for the other items under that path.
 
-For more details on rule records, please visit the best practices and the configuration section on the official Prometheus website.
+For more details on rule records, please visit the best practices and the configuration section on the official
+Prometheus website.
 
 In my example I’ve recorded a rule for the `rss` key under `/Kernel/proc/stat/<pid>/`
 
@@ -974,7 +998,8 @@ groups:
       expr: kernelprocrss * on(pid) group_right kernelproc
 ```
 
-> Note that if you did not mount the kernel_rules.yml file when creating your docker container (as I did) you’ll need to copy the file over to your container with the following command
+> Note that if you did not mount the kernel_rules.yml file when creating your docker container (as I did) you’ll need
+> to copy the file over to your container with the following command
 
 ```shell
 docker cp kernel_rules.yml eager_kapitsa:/etc/prometheus/
@@ -982,20 +1007,21 @@ docker cp kernel_rules.yml eager_kapitsa:/etc/prometheus/
 
 Checking on the GUI, it will give you the following results
 
-![prom13.png](./res/prom13.png)
+![prom13.png](./resources/prom13.png)
 
 You can also use the expression from the `kernel_rules.yml` directly on the GUI
 
-![prom14.png](./res/prom14.png)
+![prom14.png](./resources/prom14.png)
 
-After you create the records and update the yml files on the server, make sure you can see the rule created in the Status – Rules submenu
+After you create the records and update the yml files on the server, make sure you can see the rule created in
+the Status – Rules submenu
 
-![prom15.png](./res/prom15.png)
+![prom15.png](./resources/prom15.png)
 
 ## Using ocprometheus with the OpenConfig/OCTA agent (management api gnmi)
 
-While ocprometheus can subscribe to EOS native paths provided by TerminAttr’s gNMI server on TCP `6042` (default, can be changed),
-it can also subscribe to OpenConfig paths provided by the OpenConfig/OCTA agent’s gnmi server
+While ocprometheus can subscribe to EOS native paths provided by TerminAttr’s gNMI server on TCP `6042`
+(default, can be changed), it can also subscribe to OpenConfig paths provided by the OpenConfig/OCTA agent’s gnmi server
 on TCP `6030` (default, can be changed). For example to subscribe to interface counters the subscription and
 the metric path would look like below:
 
@@ -1072,7 +1098,8 @@ daemon ocprometheus
 
 ### Checking Logs and troubleshooting
 
-As any daemon/agent, logs are saved in /var/log/agents/ so we can either read those in bash with cat/more/less/vi/nano or from the CLI using the show agent <agent_name> logs command.
+As any daemon/agent, logs are saved in /var/log/agents/ so we can either read those in bash with cat/more/less/vi/nano
+or from the CLI using the show agent <agent_name> logs command.
 
 ### Common issues
 
@@ -1084,7 +1111,8 @@ This means connectivity is not established between the switch and the Prometheus
 - TerminAttr and/or ocprometheus is not running
 - TerminAttr and/or prometheus are not configured in the correct namespace/vrf
 - Port 8080, which is used by default is not open on the switch (please check with `netstat -an | grep 8080`
-  or `sudo ip netns exec ns-<vrf_name> netstat -an | grep 8080` if using a vrf; make sure the control plane ACL is updated and applied to vrf default or the specific vrf when using EOS version with CoPP
+  or `sudo ip netns exec ns-<vrf_name> netstat -an | grep 8080` if using a vrf; make sure the control plane ACL is
+  updated and applied to vrf default or the specific vrf when using EOS version with CoPP
 - Make sure TerminAttr is communicating with ocprometheus
 - TerminAttr should have the -disableaaa flag added
 
@@ -1094,8 +1122,10 @@ Check TerminAttr version (After TerminAttr 1.5.1 we replaced the deprecated `gnm
 This was only changed on our OpenConfig connectors (ockafka, ocprometheus, octsdb, ocredis, etc.) after March, 2019, thus
 older ocprometheus versions will ignore the updates.
 
-The version of ocprometheus hat uses TypedValue as well was pushed to [github](https://github.com/aristanetworks/goarista/commit/22b2444f947b7d395b5c227cf0dd881d0100bdb1) on March 19th. A newer commit was done
-in the beginning of June to deal with [coalesced deletes](https://github.com/aristanetworks/goarista/commit/fef20d617fa7e1c7509e958fd3bd49cf4a4af5c0), and it’s recommended to use the latest version.
+The version of ocprometheus hat uses TypedValue as well was pushed to [github](https://github.com/aristanetworks/goarista/commit/22b2444f947b7d395b5c227cf0dd881d0100bdb1)
+on March 19th. A newer commit was done
+in the beginning of June to deal with [coalesced deletes](https://github.com/aristanetworks/goarista/commit/fef20d617fa7e1c7509e958fd3bd49cf4a4af5c0),
+and it’s recommended to use the latest version.
 
 The best way to check if you are hitting any issues is to enable verbosity for ocprometheus with `-v 9`
 
@@ -1143,10 +1173,10 @@ An error has occurred during metrics gathering:
 
 This can happen if the regexp matching is incorrect. The regexp path in question is:
 
-
 `/Sysdb/environment/archer/power/status/voltageSensor/(?:cell/.+|system)/(?P<sensor>.+)/(voltage)`
 
-This would match on `VoltageSensorX`, however if you check the list of voltage sensors using curl, you’ll see that the sensors have the following format: `VoltageSensorX/Y`
+This would match on `VoltageSensorX`, however if you check the list of voltage sensors using curl, you’ll see that the
+sensors have the following format: `VoltageSensorX/Y`
 
 ```shell
 $ curl localhost:6060/rest/Sysdb/environment/archer/power/status/voltageSensor/cell/1/
@@ -1176,7 +1206,7 @@ You can validate your regular expression using a regexp app (e.g [www.regex101.c
 
 As you can see we are only matching `VoltageSensorX`
 
-![regex16](./res/regex16.png)
+![regex16](./resources/regex16.png)
 
 To correct the issue, we can use the following path instead:
 
@@ -1184,12 +1214,13 @@ To correct the issue, we can use the following path instead:
 
 As you can see, we are able to match on both VoltageSensorX and VoltageSensorX/Y .
 
-![regex17](./res/regex17.png)
+![regex17](./resources/regex17.png)
 
 #### Authentication failed
 
 When you see the following message, it means that ocprometheus is not able to connect to the gRPC server that
-TerminAttr/OpenConfig/OCTA is serving, either because the `disableaaa` flag is not specified in the TerminAttr config (in case of using TerminAttr) or the username and password strings are incorrect in the ocprometheus config.
+TerminAttr/OpenConfig/OCTA is serving, either because the `disableaaa` flag is not specified in the TerminAttr
+config (in case of using TerminAttr) or the username and password strings are incorrect in the ocprometheus config.
 
 ```shell
 cat ocprometheus-11069
@@ -1230,17 +1261,14 @@ management api gnmi
   provider eos-native
 ```
 
-
 ## Subscription paths
 
+You can find sample configuration files on our github page in the [sample_configs](https://github.com/aristanetworks/goarista/tree/master/cmd/ocprometheus/sample_configs)
+directory, which contains per-platform EOS-native path examples but also OpenConfig path examples which are standard
+across all platforms in the [ocprometheus_gnmi_4.23.yaml](https://github.com/aristanetworks/goarista/blob/master/cmd/ocprometheus/sample_configs/ocprometheus_gnmi_4.23.yaml)
 
-You can find sample configuration files on our github page in the [sample_configs](https://github.com/aristanetworks/goarista/tree/master/cmd/ocprometheus/sample_configs) directory,
-
-which contains per-platform EOS-native path examples but also OpenConfig path examples which are standard across all
-platforms in the [ocprometheus_gnmi_4.23.yaml](https://github.com/aristanetworks/goarista/blob/master/cmd/ocprometheus/sample_configs/ocprometheus_gnmi_4.23.yaml)
-
-
-In this file, which is referred with the `-config /mnt/flash/ocprometheus.yml` flag and config file in the daemon ocprometheus configuration, you can add your desired Sysdb paths
+In this file, which is referred with the `-config /mnt/flash/ocprometheus.yml` flag and config file in the daemon
+ocprometheus configuration, you can add your desired Sysdb paths
 
 More examples (per platform + gnmi paths) can be found in the sample_configs folder.
 
