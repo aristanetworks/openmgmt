@@ -44,67 +44,34 @@ Example`prometheus.yml`
 
 ```yaml
 # my global config
-
 global:
-
   scrape_interval:     15s # Set the scrape interval to every 15 seconds. Default is every 1 minute.
-
   evaluation_interval: 15s # Evaluate rules every 15 seconds. The default is every 1 minute.
-
   # scrape_timeout is set to the global default (10s).
 
-
-
 # Alertmanager configuration
-
 alerting:
-
   alertmanagers:
-
   - static_configs:
-
     - targets:
-
       # - alertmanager:9093
 
-
-
 # Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
-
 rule_files:
-
   # - "first_rules.yml"
-
   # - "second_rules.yml"
 
-
-
 # A scrape configuration containing exactly one endpoint to scrape:
-
 # Here it's Prometheus itself.
-
 scrape_configs:
-
   # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
-
   - job_name: 'prometheus'
-
-
-
     # metrics_path defaults to '/metrics'
-
     # scheme defaults to 'http'.
-
-
-
     static_configs:
-
       - targets: ['localhost:9090']
-
   - job_name: 'arista'
-
     static_configs:
-
       - targets: ['10.83.13.139:8080']
 ```
 
@@ -161,7 +128,6 @@ root@tac-prometheus-ire:~# docker ps
 CONTAINER ID        IMAGE COMMAND                  CREATED STATUS PORTS                    NAMES
 
 47f52778b492        prom/prometheus "/bin/prometheus --c…"   13 days ago Up 6 minutes 0.0.0.0:9090->9090/tcp   eager_kapitsa
-
 3e880f9a951e        grafana/grafana "/run.sh"                3 weeks ago Up 3 weeks 0.0.0.0:3000->3000/tcp   grafana
 ```
 
@@ -171,19 +137,12 @@ You can always check if the configuration has been updated with the following cu
 root@tac-prometheus-ire:~# curl localhost:9090/config
 
 <ommited>
-
   static_configs:
-
   - targets:
-
     - 10.83.13.132:8080
-
     - 10.83.13.139:8080
-
     - 10.83.12.109:8080
-
     - 10.83.13.138:8080
-
 <ommited>
 ```
 
@@ -964,7 +923,6 @@ alerting:
     - targets:
       # - alertmanager:9093
 
-
 # Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
 
 rule_files:
@@ -1182,23 +1140,14 @@ sensors have the following format: `VoltageSensorX/Y`
 $ curl localhost:6060/rest/Sysdb/environment/archer/power/status/voltageSensor/cell/1/
 
 {
-
     "VoltageSensor1/12": {
-
         "_ptr": "/Sysdb/environment/archer/power/status/voltageSensor/cell/1/VoltageSensor1/12"
-
     },
-
     "VoltageSensor1/13": {
-
         "_ptr": "/Sysdb/environment/archer/power/status/voltageSensor/cell/1/VoltageSensor1/13"
-
     },
-
     "VoltageSensor1/14": {
-
         "_ptr": "/Sysdb/environment/archer/power/status/voltageSensor/cell/1/VoltageSensor1/14"
-
     },
 ```
 
