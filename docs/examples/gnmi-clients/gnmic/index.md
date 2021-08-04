@@ -1160,7 +1160,7 @@ cat intf.json
 }
 ```
 
-#### Using yaml
+#### Using YAML
 
 Changing the maximum-routes for a BGP neighbor:
 

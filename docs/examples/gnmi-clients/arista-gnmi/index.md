@@ -1010,7 +1010,7 @@ gnmi -addr 10.83.13.214:6030 -username arista -password arista \
     neighbor IPv4-UNDERLAY-PEERS maximum-routes 12500"
 ```
 
-> Note the `neighbor` command has to be on a new line, so the previous line should not and in `\`.
+> NOTE the `neighbor` command has to be on a new line, so the previous line should not and in `\`.
 
 ### show version
 
