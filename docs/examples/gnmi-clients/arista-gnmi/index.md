@@ -901,7 +901,10 @@ gnmi -addr 10.83.28.203:6030 -username arista -password arista \
 
 ```shell
 gnmi -addr 10.83.28.203:6030 -username admin -password arista \
-  update /acl/acl-sets acl2.json`
+  update /acl/acl-sets acl2.json
+```
+
+```shell
 cat acl2.json
 ```
 
@@ -996,3 +999,50 @@ gnmi -addr 10.83.13.214:6030 -username admin -password arista \
   subscribe                                                   \
   '/network-instances/network-instance[name=Tenant_A_WEB_Zone]/protocols/protocol[identifier=BGP][name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.255.251.1]/afi-safis/afi-safi[afi-safi-name=openconfig-bgp-types:IPV4_UNICAST]/state/prefixes/received'
 ```
+
+## CLI origin
+
+### Changing the maximum-routes for a BGP neighbor
+
+```shell
+gnmi -addr 10.83.13.214:6030 -username arista -password arista \
+    update origin=cli "" "router bgp 65101
+    neighbor IPv4-UNDERLAY-PEERS maximum-routes 12500"
+```
+
+> Note the `neighbor` command has to be on a new line, so the previous line should not and in `\`.
+
+### show version
+
+```shell
+gnmi -addr 10.83.13.214:6030 -username cvpadmin -password arastra \
+   get  origin=cli "show version"
+```
+
+<details><summary> Reveal output</summary>
+<p>
+
+```javascript
+/show version:
+{
+  "architecture": "i686",
+  "bootupTimestamp": 1626291561.0,
+  "configMacAddress": "00:00:00:00:00:00",
+  "hardwareRevision": "",
+  "hwMacAddress": "00:00:00:00:00:00",
+  "imageFormatVersion": "1.0",
+  "internalBuildId": "ed275a6c-1771-482d-829b-125e9c6ba677",
+  "internalVersion": "4.26.2F-23035564.riorel",
+  "isIntlVersion": false,
+  "memFree": 2422124,
+  "memTotal": 4002356,
+  "mfgName": "Arista",
+  "modelName": "vEOS-lab",
+  "serialNumber": "BAD032986065E8DC14CBB6472EC314A6",
+  "systemMacAddress": "50:08:00:a7:ca:c3",
+  "uptime": 1814877.63,
+  "version": "4.26.2F-23035564.riorel (engineering build)"
+}
+
+</p>
+</details>

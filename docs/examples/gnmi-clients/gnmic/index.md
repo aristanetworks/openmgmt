@@ -1082,6 +1082,168 @@ gnmic -a 127.0.0.1:6030 -u admin -p admin --insecure  get \
   | jq '.[0].updates[0].values."show ip route summary".totalRoutes'
 ```
 
+### Changing the running-config
+
+There are multiple ways to change the configuration using the `cli` origin:
+
+#### Using JSON
+
+Multiple config sections can be change at a time, for instance in the below example vlan 304 is created and
+the description of Ethernet1 is changed:
+
+```shell
+ gnmic -a 10.83.13.214:6030 -u admin -p admin --insecure --gzip set \
+    --request-file intf.json
+```
+
+Output:
+
+<details><summary> Reveal output</summary>
+<p>
+
+```javascript
+{
+  "timestamp": 1628103804792021864,
+  "time": "2021-08-04T20:03:24.792021864+01:00",
+  "results": [
+    {
+      "operation": "UPDATE",
+      "path": "cli:"
+    },
+    {
+      "operation": "UPDATE",
+      "path": "cli:"
+    },
+    {
+      "operation": "UPDATE",
+      "path": "cli:"
+    },
+    {
+      "operation": "UPDATE",
+      "path": "cli:"
+    }
+  ]
+}
+```
+
+</p>
+</details>
+
+```shell
+cat intf.json
+```
+
+```javascript
+{
+  "updates": [
+    {
+      "path": "cli:",
+      "value": "interface Ethernet 1",
+      "encoding": "ascii"
+    },
+    {
+      "path": "cli:",
+      "value": "description arista-openmgmt",
+      "encoding": "ascii"
+    },
+    {
+      "path": "cli:",
+      "value": "vlan 304",
+      "encoding": "ascii"
+    },
+    {
+      "path": "cli:",
+      "value": "name test",
+      "encoding": "ascii"
+    }
+  ]
+}
+```
+
+#### Using yaml
+
+Changing the maximum-routes for a BGP neighbor:
+
+```shell
+gnmic -a 10.83.13.214:6030 -u cvpadmin -p arista --insecure --gzip set \
+   --request-file bgp.yaml
+```
+
+Output:
+
+<details><summary> Reveal output</summary>
+<p>
+
+```javscript
+{
+  "timestamp": 1628091791855672771,
+  "time": "2021-08-04T16:43:11.855672771+01:00",
+  "results": [
+    {
+      "operation": "UPDATE",
+      "path": "cli:"
+    },
+    {
+      "operation": "UPDATE",
+      "path": "cli:"
+    }
+  ]
+}
+```
+
+</p>
+</details>
+
+```shell
+cat bgp.yaml
+```
+
+```yaml
+updates:
+ - path: "cli:"
+   value: router bgp 65101
+   encoding: ascii
+ - path: "cli:"
+   value: neighbor IPv4-UNDERLAY-PEERS maximum-routes 15500
+   encoding: ascii
+```
+
+#### Using imperative commands
+
+```shell
+gnmic -a 10.83.13.214:6030 -u cvpadmin -p arista --insecure --gzip \
+   --encoding ASCII set \
+   --update-path "cli:" \
+   --update-value "router bgp 65101" \
+   --update-path "cli:" \
+   --update-value "neighbor IPv4-UNDERLAY-PEERS maximum-routes 13500"
+```
+
+Output:
+
+<details><summary> Reveal output</summary>
+<p>
+
+```javascript
+{
+  "timestamp": 1628091405938523430,
+  "time": "2021-08-04T16:36:45.93852343+01:00",
+  "results": [
+    {
+      "operation": "UPDATE",
+      "path": "cli:"
+    },
+    {
+      "operation": "UPDATE",
+      "path": "cli:"
+    }
+  ]
+}
+```
+
+</p>
+</details>
+
 ## Misc
 
 ### Save all status states to a file
