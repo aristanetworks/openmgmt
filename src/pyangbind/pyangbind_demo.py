@@ -19,9 +19,5 @@ oc.bgp.neighbors.neighbor["10.10.10.157"].config.neighbor_address="10.10.10.157"
 oc.bgp.neighbors.neighbor["10.10.10.157"].config.peer_group="XYZ"
 oc.bgp.neighbors.neighbor["10.10.10.157"].config.enabled=True
 
-f=open("../../docs/examples/pyangbind/demo.json, "w")
-f.write(pybindJSON.dumps(oc.bgp, mode="ietf"))
-f.close
-
-
-
+with open("../../docs/examples/pyangbind/demo.json", "w") as f:
+    f.write(pybindJSON.dumps(oc.bgp, mode="ietf"))
