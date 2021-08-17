@@ -2,7 +2,7 @@
 ![example workflow](https://github.com/aristanetworks/openmgmt/actions/workflows/main.yml/badge.svg)
 ![Arista](https://img.shields.io/badge/Arista-OpenMGMT-blue)
 
-# openmgmt
+# OpenMgmt
 
 - [Getting Started](#getting-started)
 - [Mkdocs](#mkdocs)
@@ -31,7 +31,7 @@ open a pull request.
 
 For the most part, it's that simple.
 
-## Mkdocs
+## MkDocs
 
 The OpenMgmt site uses the `mkdocs` tool to render the content into what is displayed on the web site.
 
@@ -43,7 +43,7 @@ Installation of mkdocs is handled via pip.
 pip install mkdocs
 ```
 
-### Mkdocs Material Theme Installation
+### MkDocs Material Theme Installation
 
 Since the OpenMgmt site is using the mkdocs-material theme, you will need to install this as well.
 
@@ -95,7 +95,7 @@ a maintainer will review the PR for incorporation into the `main` branch.  There
 streamline the acceptance of your pull request.  Most notable here is conformance to the style guide and aligning with
 the linter.
 
-## tooling setup
+## Tooling Setup
 
 Taking some time to setup the following tooling and confirming alignment with the [style
 guide](contributing/content-style-guide.md) will help to smooth the passage of your pull request.
@@ -113,12 +113,12 @@ brew install markdownlint-cli
 
 Alternately, markdownlint-cli can be installed via NPM, details are available at the link above.
 
-### pre-commit
+### Pre-Commit
 
 In order to automate the process of linting a pre-commit hook is utilized. This requires the installation of
 [pre-commit](https://pre-commit.com). Depending on your environment, the installation process may vary.
 
-#### python PIP installation
+#### Python PIP Installation
 
 If you're using `pyenv` or some other python version manager, pre-commit can be installed via pip. This ensures that
 it's installed to your preferred python environment.
@@ -127,13 +127,13 @@ it's installed to your preferred python environment.
 pip install pre-commit
 ```
 
-#### homebrew installation
+#### Homebrew Installation
 
 ```shell
 brew install pre-commit
 ```
 
-## pre-commit setup
+## Pre-Commit Setup
 
 From the root of the repository execute `pre-commit install` this will add the necessary hooks to your local git
 configuration and setup the necessary tooling in order to suport development.
