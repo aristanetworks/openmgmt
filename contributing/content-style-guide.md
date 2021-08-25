@@ -61,11 +61,11 @@ Where possible it is useful to refrain from having unnecessary prompt ornamentat
 path, etc.) However, if a specific privilege mode is required it may be useful to hint this via the prompt.  Use your
 judgment here.
 
-JSON output should be fully and indented to expanded to convey hierarchy.
+JSON output should be fully expanded and indented to expanded to convey the object hierarchy.
 
 Use of continuation backslashes to break up long command lines should be used where ever possible.  Keeping within the
-80 column width for code samples where possible improves readability.  The long nature of OpenConfig paths makes this
-difficult so constraining excessively long lines where possible is useful.
+80 column width for code samples where possible greatly improves readability.  The long nature of OpenConfig paths makes
+this difficult so constraining excessively long lines wherever possible is useful.
 
 **example:** hard to read
 
@@ -80,17 +80,17 @@ gnmic -a 10.83.13.214:6030 -u cvpadmin -p arastra --insecure --gzip get \
   --path '/network-instances/network-instance[name=default]/protocols/protocol[identifier=BGP][name=BGP]/bgp'`
 ```
 
-In the interests of conveying context particularly for API actions, it's useful to couple the verb (GET, SET, etc.) with
-the noun being acted on in the command.
+In the interests of conveying context, particularly for API actions, it's useful to couple the verb (GET, SET, etc.)
+with the noun being acted on in the command.
 
-**example:** verb-noun coupling (good)
+**example:** verb-noun coupling (preferred)
 
 ```shell
 gnmi -addr 10.83.13.139 -username admin \
   get '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors'
 ```
 
-**example:** verb-noun decoupling (bad)
+**example:** verb-noun decoupling (potentially difficult to read)
 
 ```shell
 gnmi -addr 10.83.13.139 -username admin get \
