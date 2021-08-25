@@ -1,11 +1,10 @@
-# This is a basic workflow to help you get started with Actions
 
-name: CI
+name: Linting
 
 # Controls when the workflow will run
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
-  push:
+  pull_request:
     branches: [ main ]
 
 
@@ -34,17 +33,3 @@ jobs:
         with:
           files: "docs"
           config_file: ".markdownlint.yaml"
-
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install mkdocs-material
-
-      - name: Build
-        run: |
-          git pull
-          mkdocs build
-
-      - name: Deploy
-        run: |
-          mkdocs gh-deploy
