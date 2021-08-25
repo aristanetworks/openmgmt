@@ -31,7 +31,9 @@ Assuming that the `pygnmi` module has been installed, this can be executed via t
 python3 gnmi_example.py
 ```
 
-The following will simply run the [`gnmi_example.py`](https://github.com/aristanetworks/openmgmt/blob/main/src/pygnmi/gnmi_example.py) file using python3 to get the openconfig interfaces.
+The following will simply run the
+[`gnmi_example.py`](https://github.com/aristanetworks/openmgmt/blob/main/src/pygnmi/gnmi_example.py) file using python3
+to get the openconfig interfaces.
 
 Truncated output
 
@@ -60,7 +62,8 @@ Truncated output
 
 ## gNMI Capabilities RPC
 
-The file [capabilities.py](https://github.com/aristanetworks/openmgmt/blob/main/src/pygnmi/capabilities.py) uses the [pygnmi](https://pypi.org/project/pygnmi/) python module to get the gNMI capabilities.
+The file [capabilities.py](https://github.com/aristanetworks/openmgmt/blob/main/src/pygnmi/capabilities.py) uses the
+[pygnmi](https://pypi.org/project/pygnmi/) python module to get the gNMI capabilities.
 
 ```shell
 python3 capabilities.py
@@ -69,7 +72,7 @@ python3 capabilities.py
 <details><summary>Reveal output</summary>
 <p>
 
-```shell
+```json
 {'gnmi_version': '0.7.0',
  'supported_encodings': ['json', 'json_ietf', 'ascii'],
  'supported_models': [{'name': 'arista-exp-eos-varp-net-inst',
@@ -507,7 +510,8 @@ python3 capabilities.py
 
 ## gNMI Get RPC
 
-The file [get.py](https://github.com/aristanetworks/openmgmt/blob/main/src/pygnmi/get.py) uses the [pygnmi](https://pypi.org/project/pygnmi/) python module and uses the gNMI GET RPC
+The file [get.py](https://github.com/aristanetworks/openmgmt/blob/main/src/pygnmi/get.py) uses the
+[pygnmi](https://pypi.org/project/pygnmi/) python module and uses the gNMI GET RPC
 
 ```shell
 python3 get.py
@@ -596,7 +600,8 @@ python3 get.py
 
 ## gNMI Subscribe RPC
 
-The file [sub.py](https://github.com/aristanetworks/openmgmt/blob/main/src/pygnmi/sub.py) uses the [pygnmi](https://pypi.org/project/pygnmi/) python module and uses the gNMI Subscribe RPC
+The file [sub.py](https://github.com/aristanetworks/openmgmt/blob/main/src/pygnmi/sub.py) uses the
+[pygnmi](https://pypi.org/project/pygnmi/) python module and uses the gNMI Subscribe RPC
 
 ```shell
 python3 sub.py
@@ -605,7 +610,7 @@ python3 sub.py
 <details><summary>Reveal output</summary>
 <p>
 
-```shell
+```json
 {'update': {'update': [{'path': 'interfaces/interface[name=Ethernet1]/state/counters/in-broadcast-pkts', 'val': 2}], 'timestamp': 1626462768674581749}}
 {'update': {'update': [{'path': 'interfaces/interface[name=Ethernet1]/state/counters/in-discards', 'val': 0}], 'timestamp': 1626462768674597259}}
 {'update': {'update': [{'path': 'interfaces/interface[name=Ethernet1]/state/counters/in-errors', 'val': 0}], 'timestamp': 1626462768674603747}}
@@ -712,16 +717,18 @@ python3 sub.py
 
 ### Update
 
-The file [update.py](https://github.com/aristanetworks/openmgmt/blob/main/src/pygnmi/update.py) uses the [pygnmi](https://pypi.org/project/pygnmi/) python module and uses the gNMI SET RPC (update)
+The file [update.py](https://github.com/aristanetworks/openmgmt/blob/main/src/pygnmi/update.py) uses the
+[pygnmi](https://pypi.org/project/pygnmi/) python module and uses the gNMI SET RPC (update)
 
 ```shell
 python3 update.py
 ```
 
-output
+### output
 
-```shell
 GET RPC, interface Ethernet1 config, before the update
+
+```json
 {
   "notification": [
     {
@@ -744,8 +751,11 @@ GET RPC, interface Ethernet1 config, before the update
     }
   ]
 }
+```
 
 SET RPC, update, interface Ethernet1
+
+```json
 {'response': [{'path': 'interfaces/interface[name=Ethernet1]', 'op': 'UPDATE'}]}
 
 GET RPC, interface Ethernet1 config, after the update
@@ -778,7 +788,8 @@ GET RPC, interface Ethernet1 config, after the update
 
 ### Delete
 
-The file [delete.py](https://github.com/aristanetworks/openmgmt/blob/main/src/pygnmi/delete.py) uses the [pygnmi](https://pypi.org/project/pygnmi/) python module and uses the gNMI SET RPC (delete)
+The file [delete.py](https://github.com/aristanetworks/openmgmt/blob/main/src/pygnmi/delete.py) uses the
+[pygnmi](https://pypi.org/project/pygnmi/) python module and uses the gNMI SET RPC (delete)
 
 ```shell
 python3 delete.py

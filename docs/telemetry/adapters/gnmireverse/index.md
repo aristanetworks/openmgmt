@@ -7,16 +7,18 @@ categories:
 
 ## Introduction
 
-gNMIReverse is a Dial-Out gRPC service (available on our [Github](https://github.com/aristanetworks/goarista/tree/master/gnmireverse)
-page) that reverses the direction of the dial for gNMI Subscriptions.
-The gNMIReverse client (running along with gNMI target) on the switch sends data to the gNMIReverse Server.
+gNMIReverse is a Dial-Out gRPC service (available on our
+[Github](https://github.com/aristanetworks/goarista/tree/master/gnmireverse) page) that reverses the direction of the
+dial for gNMI Subscriptions.  The gNMIReverse client (running along with gNMI target) on the switch sends data to the
+gNMIReverse Server.
 
-This article contains steps on how to build the gNMIReverse client and server binaries 
-and examples on how to configure, the daemon to run the gNMIReverse client on EOS.
+This article contains steps on how to build the gNMIReverse client and server binaries and examples on how to configure,
+the daemon to run the gNMIReverse client on EOS.
 
 ## Prerequisite
 
-The following tools are required to proceed with this setup including cloning the repository and compiling client binary for EOS.
+The following tools are required to proceed with this setup including cloning the repository and compiling client binary
+for EOS.
 
 - [Go](https://golang.org/doc/install)
 - [Git](https://www.atlassian.com/git/tutorials/install-git)
@@ -90,8 +92,15 @@ Authorization Required:No
 
 gNMIReverse client daemon configuration (non-default VRF):
 
+Note: The `\` elements have been added to aid readability, these should be removed when entering the configuration.
+
 <pre><code>daemon gnmi_reverse_client_1
-   exec /mnt/flash/client -username cvpadmin -password arista <span style="color: red;">-target_addr=management/127.0.0.1:6030 -collector_addr=management/10.85.129.115:6000</span> -collector_tls=false -target_value=gb421 -sample /system/processes/process[pid=*]/state@15s
+   exec /mnt/flash/client -username cvpadmin -password arista         \
+   <span style="color: red;">  -target_addr=management/127.0.0.1:6030                           \
+     -collector_addr=management/10.85.129.115:6000</span>                    \
+     -collector_tls=false                                             \
+     -target_value=gb421                                              \
+     -sample /system/processes/process[pid=*]/state@15s
    no shutdown
 </code></pre>
 
@@ -119,8 +128,13 @@ Authorization Required:No
 
 gNMIReverse client daemon configuration (default VRF):
 
+Note: The `\` elements have been added to aid readability, these should be removed when entering the configuration.
+
 <pre><code>daemon gnmi_reverse_client_1
-   exec /mnt/flash/client -username cvpadmin -password arista <span style="color: red;">-target_addr=127.0.0.1:6030 -collector_addr=10.85.129.115:6000</span> -collector_tls=false -target_value=gb421 -sample /system/processes/process[pid=*]/state@15s
+   exec /mnt/flash/client -username cvpadmin -password arista \
+   <span style="color: red;">  -target_addr=127.0.0.1:6030                              \
+     -collector_addr=10.85.129.115:6000</span> -collector_tls=false  \
+     -target_value=gb421 -sample /system/processes/process[pid=*]/state@15s
    no shutdown
 </code></pre>
 
@@ -168,8 +182,16 @@ management api gnmi
 
 Configure the daemon to subscribe to the eos_native path as in following example:
 
+Note: The `\` elements have been added to aid readability, these should be removed when entering the configuration.
+
 <pre><code>daemon gnmi_reverse_client_1
-   exec /mnt/flash/client -username cvpadmin -password arista -target_addr=management/127.0.0.1:6030 -collector_addr=management/10.85.129.115:6000 -collector_tls=false -target_value=gb421 -sample /system/processes/process[pid=*]/state@30s <span style="color: red;">-origin eos_native -subscribe /Kernel/proc/meminfo/</span>
+   exec /mnt/flash/client -username cvpadmin -password arista \
+     -target_addr=management/127.0.0.1:6030                   \
+     -collector_addr=management/10.85.129.115:6000            \
+     -collector_tls=false -target_value=gb421                 \
+     -sample /system/processes/process[pid=*]/state@30s       \
+     <span style="color: red;">-origin eos_native                                       \
+     -subscribe /Kernel/proc/meminfo/</span>
    no shutdown
 </code></pre>
 
@@ -209,8 +231,17 @@ management api models
 
 Configure the gNMIReverse client daemon:
 
+Note: The `\` elements have been added to aid readability, these should be removed when entering the configuration.
+
 <pre><code>daemon gnmi_reverse_client_1
-   exec /mnt/flash/client -username cvpadmin -password arista -target_addr=management/127.0.0.1:6030 -collector_addr=management/10.85.129.115:6000 -collector_tls=false -target_value=gb421 -sample /system/processes/process[pid=*]/state@30s <span style="color: red;">-origin eos_native</span> -subscribe /Kernel/proc/meminfo/ <span style="color: red;">-subscribe /Smash/routing/status/</span>
+   exec /mnt/flash/client -username cvpadmin -password arista           \
+     -target_addr=management/127.0.0.1:6030                             \
+     -collector_addr=management/10.85.129.115:6000                      \
+     -collector_tls=false -target_value=gb421                           \
+     -sample /system/processes/process[pid=*]/state@30s                 \
+     <span style="color: red;">-origin eos_native</span>                                                 \
+     -subscribe /Kernel/proc/meminfo/                                   \
+     <span style="color: red;">-subscribe /Smash/routing/status/</span>
    no shutdown
 </code></pre>
 

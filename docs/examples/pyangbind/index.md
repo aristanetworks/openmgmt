@@ -25,7 +25,7 @@ pip3 freeze | grep pyang
 
 ## Get YANG modules
 
-We need YANG modules so we can use Pyang and Pyangbind. 
+We need YANG modules so we can use Pyang and Pyangbind.
 
 ### Create a directory
 
@@ -80,7 +80,8 @@ ls oc_bgp.py
 
 ## Use the new python module to generate an OpenConfig configuration file
 
-The file [pyangbind_demo.py](https://github.com/aristanetworks/openmgmt/tree/main/src/pyangbind/pyangbind_demo.py) uses the new python module `oc_bgp.py` and generates this OpenConfig configuration file [demo.json](demo.json)
+The file [pyangbind_demo.py](https://github.com/aristanetworks/openmgmt/tree/main/src/pyangbind/pyangbind_demo.py) uses
+the new python module `oc_bgp.py` and generates this OpenConfig configuration file [demo.json](demo.json)
 
 ```shell
 python3 pyangbind_demo.py
@@ -89,14 +90,17 @@ python3 pyangbind_demo.py
 ## Use gNMI SET RPC to configure a device
 
 This OpenConfig configuration file [demo.json](demo.json) can be loaded on a switch using the gNMI Set RPC
+
 ### Install gNMIc
 
 Please visit [this link](../gnmi-clients/gnmic/index.md) if you need help with gNMIc installation
+
 ### Required device configuration
 
 Please visit [this link](../gnmi-clients/gnmic/index.md) if you need help to configure EOS for gNMI
 
 ### Use gNMIc to configure the swicth
+
 #### Check the device configuration before
 
 ```shell
@@ -112,7 +116,8 @@ show run section bgp
 
 ```shell
 gnmic -a 10.73.1.117:6030 --insecure -u arista -p arista set  \
-    --replace-path '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp' --replace-file demo.json
+    --replace-path '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp' \
+    --replace-file demo.json
 ```
 
 #### Check the device configuration after

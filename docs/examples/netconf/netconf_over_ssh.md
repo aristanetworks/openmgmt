@@ -6,6 +6,7 @@ management api netconf
    transport ssh test
       vrf MGMT
 ```
+
 ```shell
 switch1#sh management api netconf
 Enabled:            Yes
@@ -23,7 +24,6 @@ In order to open a NETCONF session inside an SSH connection, there are two optio
 - we can establish an SSH connection to an EOS device (NETCONF server), and then run the EOS command
       - `netconf start-client`
 
-
 ## NETCONF over SSH demo
 
 ### Start a NETCONF over SSH session
@@ -38,7 +38,7 @@ Once the NETCONF session is open, the NETCONF server (EOS device) advertises its
 
 You must advertise the client capabilities. Example:
 
-```shell
+```xml
 <hello xmlns="urn:ietf:params:xml:ns:netconf:base:1.0">
     <capabilities>
         <capability>urn:ietf:params:netconf:base:1.0</capability>
@@ -53,7 +53,7 @@ You must advertise the client capabilities. Example:
 
 ### Get all configuration and state data
 
-```shell
+```xml
 <rpc xmlns="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="1">
   <get>
   </get>
@@ -63,7 +63,7 @@ You must advertise the client capabilities. Example:
 
 ### Get the operational status of an Interface
 
-```shell
+```xml
 <rpc xmlns="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="2">
   <get>
     <filter type="subtree">
@@ -84,7 +84,7 @@ You must advertise the client capabilities. Example:
 
 ### Get the whole running configuration
 
-```shell
+```xml
 <rpc xmlns="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="3">
   <get-config>
     <source>
@@ -97,7 +97,7 @@ You must advertise the client capabilities. Example:
 
 ### Get the running configuration of an interface
 
-```shell
+```xml
 <rpc xmlns="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="4">
   <get-config>
     <source>
@@ -117,7 +117,7 @@ You must advertise the client capabilities. Example:
 
 ### Get the interface description from the running configuration
 
-```shell
+```xml
 <rpc xmlns="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="5">
   <get-config>
     <source>
@@ -141,7 +141,7 @@ You must advertise the client capabilities. Example:
 
 ### Lock the running configuration
 
-```shell
+```xml
 <rpc xmlns="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="6">
   <lock>
     <target>
@@ -154,7 +154,7 @@ You must advertise the client capabilities. Example:
 
 ### Edit the running configuration using EOS native data model
 
-```shell
+```xml
 <rpc xmlns="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="7">
 <edit-config>
     <target>
@@ -175,7 +175,7 @@ You must advertise the client capabilities. Example:
 
 ### Edit the running configuration using OpenConfig data model
 
-```shell
+```xml
 <rpc xmlns="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="8">
 <edit-config>
     <target>
@@ -199,7 +199,7 @@ You must advertise the client capabilities. Example:
 
 ### Edit the running configuration to delete an existing existing data
 
-```shell
+```xml
 <rpc xmlns="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="9">
 <edit-config>
     <target>
@@ -224,7 +224,7 @@ You must advertise the client capabilities. Example:
 
 ### Unlock the running configuration
 
-```shell
+```xml
 <rpc xmlns="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="10">
   <unlock>
     <target>
@@ -237,7 +237,7 @@ You must advertise the client capabilities. Example:
 
 ### Save running configuration on the flash
 
-```shell
+```xml
 <rpc xmlns="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="11">
   <copy-config>
     <target>
@@ -255,7 +255,7 @@ You must advertise the client capabilities. Example:
 
 ### Copy the running configuration datastore to the startup configuration datastore
 
-```shell
+```xml
 <rpc xmlns="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="12">
     <copy-config>
         <target>
@@ -271,7 +271,7 @@ You must advertise the client capabilities. Example:
 
 ### Lock the candidate configuration
 
-```shell
+```xml
 <rpc xmlns="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="13">
   <lock>
     <target>
@@ -282,9 +282,9 @@ You must advertise the client capabilities. Example:
 ]]>]]>
 ```
 
-### Edit the candidate configuration
+### Edit the candidate configuration - edit interface description
 
-```shell
+```xml
 <rpc xmlns="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="14">
 <edit-config>
     <target>
@@ -308,7 +308,7 @@ You must advertise the client capabilities. Example:
 
 ### Commit the configuration change (from the candidate to the running configuration)
 
-```shell
+```xml
 <rpc xmlns="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="15">
     <commit/>
 </rpc>
@@ -317,7 +317,7 @@ You must advertise the client capabilities. Example:
 
 ### Unlock the candidate configuration
 
-```shell
+```xml
 <rpc xmlns="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="20">
   <unlock>
     <target>
@@ -328,9 +328,9 @@ You must advertise the client capabilities. Example:
 ]]>]]>
 ```
 
-### Edit the candidate configuration
+### Edit the candidate configuration - set hostname
 
-```
+```xml
 <rpc xmlns="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="21">
 <edit-config>
     <target>
@@ -351,7 +351,7 @@ You must advertise the client capabilities. Example:
 
 ### Get part of the candidate configuration
 
-```shell
+```xml
 <rpc xmlns="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="5">
   <get-config>
     <source>
@@ -371,9 +371,10 @@ You must advertise the client capabilities. Example:
 
 ### Revert the candidate configuration to the current running configuration
 
-If you decide to not commit the candidate configuration, you can revert the candidate configuration to the current running configuration
+If you decide to not commit the candidate configuration, you can revert the candidate configuration to the current
+running configuration
 
-```shell
+```xml
 <rpc xmlns="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="90">
   <discard-changes/>
 </rpc>
@@ -382,7 +383,7 @@ If you decide to not commit the candidate configuration, you can revert the cand
 
 ### Close the session
 
-```shell
+```xml
 <rpc xmlns="urn:ietf:params:xml:ns:netconf:base:1.0" message-id="100">
     <close-session>
     </close-session>
