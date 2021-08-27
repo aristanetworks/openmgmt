@@ -26,6 +26,7 @@ MD007:
 MD013:
   line_length: 120
   code_block_line_length: 450
+  tables: false
 
 # multiple headings with the same content
 # siblings_only is set here to allow for common header values in structured
@@ -43,7 +44,7 @@ MD032:
 
 # MD033/no-inline-html - Inline HTML
 MD033:
- allowed_elements: [ "details", "p", "summary" ]
+ allowed_elements: [ "br", "code", "details", "p", "pre", "span", "summary" ]
 
 # bare URL - bare URLs shoudl be wrapped in angle brackets
 # <https://eos.arista.com>
