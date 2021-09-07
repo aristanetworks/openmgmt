@@ -1,10 +1,8 @@
-Get AP 
-
-Command
+# Command
 
 python py_gnmicli.py -m get -t \<AP-IP> -x /provision-aps -user \<username> -pass \<password> -p \<port> -g -o openconfig.mojonetworks.com
 
-Sample Output
+# Sample Output
 
 {
 
