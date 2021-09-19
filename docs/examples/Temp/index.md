@@ -5,11 +5,11 @@ date: 2021-10-10 12:17:00 --0600
 categories:
 ---
 
-## overview
+## Overview
 
 Add overview
 ### OpenConfig WiFi Examples
-Ask Dhruv for infor
+Ask Dhruv for info
 
 #### Get AP
 
