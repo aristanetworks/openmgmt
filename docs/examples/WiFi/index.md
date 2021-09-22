@@ -9,7 +9,7 @@ categories:
 
 Add overview
 ### OpenConfig WiFi Examples
-Ask Dhruv for informationsd
+Ask Dhruv for information
 
 #### Get AP
 
