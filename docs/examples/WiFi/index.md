@@ -1,15 +1,14 @@
 ---
 layout: default
-title: "Arista WiFi examples"
+title: "WiFi"
 date: 2021-10-10 12:17:00 --0600
 categories:
 ---
 
-## Overview
+## Overview 
 
 Add overview
-### OpenConfig WiFi Examples
-Ask Dhruv for information
+
 
 #### Get AP
 
