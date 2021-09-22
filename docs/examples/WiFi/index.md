@@ -9,7 +9,7 @@ categories:
 
 Add overview
 ### OpenConfig WiFi Examples
-Ask Dhruv for info
+Ask Dhruv for informationsd
 
 #### Get AP
 
@@ -168,15 +168,11 @@ python py_gnmicli.py -m get -t <AP-IP>  -user <username> -pass <password> -p <po
   ]
 }
 
-
 ```
-
 </p>
 </details>
 
-
-
-##### Get operating channel of radio
+#### Get operating channel of radio
 
 
 ```shell
