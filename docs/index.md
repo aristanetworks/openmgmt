@@ -9,7 +9,7 @@ categories:
 
 This site is a collection of notes, examples, and documentation regarding the use of various network management protocols
 with Arista EOS devices.  This is not a replacement for the official [Arista EOS
-documentation](https://www.arista.com/en/support/prodocut-documentation/) but should be considered something of a
+documentation](https://www.arista.com/en/support/product-documentation/) but should be considered something of a
 cookbook for getting started with the management technologies available in EOS.
 
 The source for this site is on [github](http://github.com/aristanetworks/openmgmt/). If you see something amiss or
