@@ -233,7 +233,7 @@ python py_gnmicli.py -m get -t <AP-IP>  -user <username> -pass <password> -p <po
 </p>
 </details>
 
-#### Get operating EIRP of radio
+### Get operating EIRP of radio
 
 ```shell
 python py_gnmicli.py -m get -t <AP-IP>  -user <username> -pass <password> -p <port> -g -o openconfig.mojonetworks.com -x access-points/access-point[hostname=<host>]/radios/radio[id=1][operating-frequency=FREQ_5GHZ]/state/transmit-eirp
