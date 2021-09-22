@@ -7,7 +7,7 @@ categories:
 
 ## Overview 
 
-Add overview
+This article lists some examples of how to upgrade Arista APs using gNOI.
 
 
 #### Get AP
