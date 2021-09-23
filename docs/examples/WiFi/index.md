@@ -14,7 +14,8 @@ This page lists a few examples of the AP using gNMI.
 #### Get AP
 
 ```shell
-python py_gnmicli.py -m\ get -t <AP-IP> -x /provision-aps -user <username> -pass <password> -p <port> -g -o openconfig.mojonetworks.com
+python py_gnmicli.py -m 
+get -t <AP-IP> -x /provision-aps -user <username> -pass <password> -p <port> -g -o openconfig.mojonetworks.com
 ```
 
 <details><summary>Reveal output</summary>
