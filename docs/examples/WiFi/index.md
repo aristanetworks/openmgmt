@@ -45,7 +45,8 @@ get -t <AP-IP> -x /provision-aps -user <username> -pass <password> -p <port> -g 
 #### Get operating frequencies (bands) of SSID
 
 ```shell
-python py_gnmicli.py -m get -t <AP-IP>  -user <username> -pass <password> -p <port> -g -o openconfig.mojonetworks.com -x access-points/access-point[hostname=<host>]/ssids/ssid[name=<ssid-name>]/state/operating-frequency
+python py_gnmicli.py -m
+get -t <AP-IP>  -user <username> -pass <password> -p <port> -g -o openconfig.mojonetworks.com -x access-points/access-point[hostname=<host>]/ssids/ssid[name=<ssid-name>]/state/operating-frequency
 ```
 
 <details><summary>Reveal output</summary>
@@ -61,7 +62,8 @@ FREQ_2_5_GHZ
 #### Get SSID Configuration
 
 ```shell
-python py_gnmicli.py -m get -t <AP-IP>  -user <username> -pass <password> -p <port> -g -o openconfig.mojonetworks.com -x access-points/access-point[hostname=<host>]/ssids/ssid[name=<ssid-name>]/config
+python py_gnmicli.py -m 
+get -t <AP-IP>  -user <username> -pass <password> -p <port> -g -o openconfig.mojonetworks.com -x access-points/access-point[hostname=<host>]/ssids/ssid[name=<ssid-name>]/config
 ```
 
 <details><summary>Reveal output</summary>
@@ -121,7 +123,8 @@ python py_gnmicli.py -m get -t <AP-IP>  -user <username> -pass <password> -p <po
 #### Get clients for SSID
 
 ```shell
-python py_gnmicli.py -m get -t <AP-IP>  -user <username> -pass <password> -p <port> -g -o openconfig.mojonetworks.com -x access-points/access-point[hostname=<host>]/ssids/ssid[name=<ssid-name>]/clients
+python py_gnmicli.py -m 
+get -t <AP-IP>  -user <username> -pass <password> -p <port> -g -o openconfig.mojonetworks.com -x access-points/access-point[hostname=<host>]/ssids/ssid[name=<ssid-name>]/clients
 ```
 
 <details><summary>Reveal output</summary>
@@ -177,7 +180,8 @@ python py_gnmicli.py -m get -t <AP-IP>  -user <username> -pass <password> -p <po
 
 
 ```shell
-python py_gnmicli.py -m get -t <AP-IP>  -user <username> -pass <password> -p <port> -g -o openconfig.mojonetworks.com -x access-points/access-point[hostname=<host>]/radios/radio[id=1][operating-frequency=FREQ_5GHZ]/state/channel
+python py_gnmicli.py -m 
+get -t <AP-IP>  -user <username> -pass <password> -p <port> -g -o openconfig.mojonetworks.com -x access-points/access-point[hostname=<host>]/radios/radio[id=1][operating-frequency=FREQ_5GHZ]/state/channel
 ```
 
 <details><summary>Reveal output</summary>
@@ -233,7 +237,8 @@ python py_gnmicli.py -m get -t <AP-IP>  -user <username> -pass <password> -p <po
 #### Get operating EIRP of radio
 
 ```shell
-python py_gnmicli.py -m get -t <AP-IP>  -user <username> -pass <password> -p <port> -g -o openconfig.mojonetworks.com -x access-points/access-point[hostname=<host>]/radios/radio[id=1][operating-frequency=FREQ_5GHZ]/state/transmit-eirp
+python py_gnmicli.py -m 
+get -t <AP-IP>  -user <username> -pass <password> -p <port> -g -o openconfig.mojonetworks.com -x access-points/access-point[hostname=<host>]/radios/radio[id=1][operating-frequency=FREQ_5GHZ]/state/transmit-eirp
 ```
 <details><summary>Reveal output</summary>
 <p>
@@ -287,7 +292,8 @@ python py_gnmicli.py -m get -t <AP-IP>  -user <username> -pass <password> -p <po
 #### Set operating channel of radio
 
 ```shell
-python py_gnmicli.py -m set-replace-t <AP-IP>  -user <username> -pass <password> -p <port> -g -o openconfig.mojonetworks.com -x access-points/access-point[hostname=<host>]/radios/radio[id=1][operating-frequency=FREQ_5GHZ]/config/channel -val 169
+python py_gnmicli.py -m 
+set-replace-t <AP-IP>  -user <username> -pass <password> -p <port> -g -o openconfig.mojonetworks.com -x access-points/access-point[hostname=<host>]/radios/radio[id=1][operating-frequency=FREQ_5GHZ]/config/channel -val 169
 ```
 
 <details><summary>Reveal output</summary>
