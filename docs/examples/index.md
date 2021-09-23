@@ -22,4 +22,4 @@ interfaces(gNMI,gNOI and gRIBI) within Arista EOS.
 - [pygnmi](pygnmi)
 - [pyang](pyang)
 - [pyangbind](pyangbind)
-- [WiFi](WiFi) 
+- [WiFi](WiFi)
