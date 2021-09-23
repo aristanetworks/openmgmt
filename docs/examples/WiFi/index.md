@@ -7,9 +7,7 @@ categories:
 
 ## Overview 
 
-Arista APs include an agent module that implements the OpenConfig interfaces. The agent module interacts 
-with the rest of the AP modules for applying changes, fetching data, etc. For mor information on OpenConfig 
-implementation in Arista WiFi, see [OpenConfig for Arista WiFi.](https://wifihelp.arista.com/post/openconfig-for-arista-wifi?term=openconfig&page=1)
+Arista APs include an agent module (ocagent) that implements the OpenConfig interfaces. The agent module interacts with the rest of the AP modules for applying changes, fetching data, etc. For mor information on OpenConfig implementation in Arista WiFi, see [OpenConfig for Arista WiFi.](https://wifihelp.arista.com/post/openconfig-for-arista-wifi?term=openconfig&page=1)
 
 This page lists a few examples of the AP using gNMI.
 
