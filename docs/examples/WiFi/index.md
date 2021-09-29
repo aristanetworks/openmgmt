@@ -5,16 +5,21 @@ date: 2021-10-10 12:17:00 --0600
 categories:
 ---
 
-## Overview 
+## Overview
 
-Arista APs include an agent module (ocagent) that implements the OpenConfig interfaces. The agent module interacts with the rest of the AP modules for applying changes, fetching data, etc. For mor information on OpenConfig implementation in Arista WiFi, see [OpenConfig for Arista WiFi.](https://wifihelp.arista.com/post/openconfig-for-arista-wifi?term=openconfig&page=1)
+Arista APs include an agent module (ocagent) that implements the OpenConfig
+interfaces. The agent module interacts with the rest of the AP modules for
+applying changes, fetching data, etc. For mor information on OpenConfig
+implementation in Arista WiFi,
+see [OpenConfig for Arista WiFi.](https://wifihelp.arista.com/post/
+openconfig-for-arista-wifi?term=openconfig&page=1)
 
 This page lists a few examples of the AP using gNMI.
 
-#### Get AP
+### Get AP
 
 ```shell
-python py_gnmicli.py -m 
+python py_gnmicli.py -m
 get -t <AP-IP> -x /provision-aps -user <username> -pass <password> -p <port> -g -o openconfig.mojonetworks.com
 ```
 
@@ -25,13 +30,13 @@ get -t <AP-IP> -x /provision-aps -user <username> -pass <password> -p <port> -g 
 {
   "openconfig-ap-manager:provision-ap": [
     {
-      "mac": "30:86:2D:B0:0F:EF", 
+      "mac": "30:86:2D:B0:0F:EF",
       "config": {
-        "country-code": "IN", 
+        "country-code": "IN",
         "hostname": "arista"
-      }, 
+      },
       "state": {
-        "country-code": "IN", 
+        "country-code": "IN",
         "hostname": "arista"
       }
     }
@@ -42,7 +47,7 @@ get -t <AP-IP> -x /provision-aps -user <username> -pass <password> -p <port> -g 
 </p>
 </details>
 
-#### Get operating frequencies (bands) of SSID
+### Get operating frequencies (bands) of SSID
 
 ```shell
 python py_gnmicli.py -m
@@ -59,10 +64,10 @@ FREQ_2_5_GHZ
 </p>
 </details>
 
-#### Get SSID Configuration
+### Get SSID Configuration
 
 ```shell
-python py_gnmicli.py -m 
+python py_gnmicli.py -m
 get -t <AP-IP>  -user <username> -pass <password> -p <port> -g -o openconfig.mojonetworks.com -x access-points/access-point[hostname=<host>]/ssids/ssid[name=<ssid-name>]/config
 ```
 
@@ -71,45 +76,45 @@ get -t <AP-IP>  -user <username> -pass <password> -p <port> -g -o openconfig.moj
 
 ```javascript
 {
-  "openconfig-access-points:dva": true, 
+  "openconfig-access-points:dva": true,
   "openconfig-access-points:supported-data-rates-5g": [
-    "openconfig-wifi-types:RATE_11MB", 
-    "openconfig-wifi-types:RATE_12MB", 
-    "openconfig-wifi-types:RATE_18MB", 
-    "openconfig-wifi-types:RATE_24MB", 
-    "openconfig-wifi-types:RATE_36MB", 
-    "openconfig-wifi-types:RATE_48MB", 
+    "openconfig-wifi-types:RATE_11MB",
+    "openconfig-wifi-types:RATE_12MB",
+    "openconfig-wifi-types:RATE_18MB",
+    "openconfig-wifi-types:RATE_24MB",
+    "openconfig-wifi-types:RATE_36MB",
+    "openconfig-wifi-types:RATE_48MB",
     "openconfig-wifi-types:RATE_54MB"
-  ], 
-  "openconfig-access-points:opmode": "WPA2_PERSONAL", 
-  "openconfig-access-points:okc": true, 
+  ],
+  "openconfig-access-points:opmode": "WPA2_PERSONAL",
+  "openconfig-access-points:okc": true,
   "openconfig-access-points:supported-data-rates-2g": [
-    "openconfig-wifi-types:RATE_11MB", 
-    "openconfig-wifi-types:RATE_12MB", 
-    "openconfig-wifi-types:RATE_18MB", 
-    "openconfig-wifi-types:RATE_24MB", 
-    "openconfig-wifi-types:RATE_36MB", 
-    "openconfig-wifi-types:RATE_48MB", 
+    "openconfig-wifi-types:RATE_11MB",
+    "openconfig-wifi-types:RATE_12MB",
+    "openconfig-wifi-types:RATE_18MB",
+    "openconfig-wifi-types:RATE_24MB",
+    "openconfig-wifi-types:RATE_36MB",
+    "openconfig-wifi-types:RATE_48MB",
     "openconfig-wifi-types:RATE_54MB"
-  ], 
-  "openconfig-access-points:name": "OCWiFi1", 
+  ],
+  "openconfig-access-points:name": "OCWiFi1",
   "openconfig-access-points:basic-data-rates-2g": [
-    "openconfig-wifi-types:RATE_11MB", 
-    "openconfig-wifi-types:RATE_12MB", 
-    "openconfig-wifi-types:RATE_18MB", 
-    "openconfig-wifi-types:RATE_24MB", 
-    "openconfig-wifi-types:RATE_36MB", 
-    "openconfig-wifi-types:RATE_48MB", 
+    "openconfig-wifi-types:RATE_11MB",
+    "openconfig-wifi-types:RATE_12MB",
+    "openconfig-wifi-types:RATE_18MB",
+    "openconfig-wifi-types:RATE_24MB",
+    "openconfig-wifi-types:RATE_36MB",
+    "openconfig-wifi-types:RATE_48MB",
     "openconfig-wifi-types:RATE_54MB"
-  ], 
-  "openconfig-access-points:wpa2-psk": "0123456789", 
+  ],
+  "openconfig-access-points:wpa2-psk": "0123456789",
   "openconfig-access-points:basic-data-rates-5g": [
-    "openconfig-wifi-types:RATE_11MB", 
-    "openconfig-wifi-types:RATE_12MB", 
-    "openconfig-wifi-types:RATE_18MB", 
-    "openconfig-wifi-types:RATE_24MB", 
-    "openconfig-wifi-types:RATE_36MB", 
-    "openconfig-wifi-types:RATE_48MB", 
+    "openconfig-wifi-types:RATE_11MB",
+    "openconfig-wifi-types:RATE_12MB",
+    "openconfig-wifi-types:RATE_18MB",
+    "openconfig-wifi-types:RATE_24MB",
+    "openconfig-wifi-types:RATE_36MB",
+    "openconfig-wifi-types:RATE_48MB",
     "openconfig-wifi-types:RATE_54MB"
   ]
 }
@@ -119,11 +124,10 @@ get -t <AP-IP>  -user <username> -pass <password> -p <port> -g -o openconfig.moj
 </p>
 </details>
 
-
-#### Get clients for SSID
+### Get clients for SSID
 
 ```shell
-python py_gnmicli.py -m 
+python py_gnmicli.py -m
 get -t <AP-IP>  -user <username> -pass <password> -p <port> -g -o openconfig.mojonetworks.com -x access-points/access-point[hostname=<host>]/ssids/ssid[name=<ssid-name>]/clients
 ```
 
@@ -134,37 +138,37 @@ get -t <AP-IP>  -user <username> -pass <password> -p <port> -g -o openconfig.moj
 {
   "openconfig-access-points:client": [
     {
-      "mac": "C2:2F:42:79:CB:BA", 
+      "mac": "C2:2F:42:79:CB:BA",
       "client-rf": {
         "state": {
-          "phy-rate": 0, 
-          "rssi": -52, 
-          "frequency": 0, 
-          "snr": 42, 
+          "phy-rate": 0,
+          "rssi": -52,
+          "frequency": 0,
+          "snr": 42,
           "ss": 0
         }
-      }, 
+      },
       "state": {
-        "mac": "C2:2F:42:79:CB:BA", 
+        "mac": "C2:2F:42:79:CB:BA",
         "counters": {
-          "tx-bytes": "34707", 
-          "tx-retries": "0", 
-          "rx-bytes": "19705", 
+          "tx-bytes": "34707",
+          "tx-retries": "0",
+          "rx-bytes": "19705",
           "rx-retries": "18"
         }
-      }, 
+      },
       "client-connection": {
         "state": {
-          "username": "", 
-          "client-state": "openconfig-wifi-types:AUTHENTICATED", 
-          "hostname": "", 
-          "operating-system": "", 
+          "username": "",
+          "client-state": "openconfig-wifi-types:AUTHENTICATED",
+          "hostname": "",
+          "operating-system": "",
           "ipv6-addresses": [
             "fe80::c02f:42ff:fe79:cbba"
-          ], 
+          ],
           "ipv4-address": [
             "192.168.29.250"
-          ], 
+          ],
           "connection-time": "1628849487411018113"
         }
       }
@@ -173,14 +177,14 @@ get -t <AP-IP>  -user <username> -pass <password> -p <port> -g -o openconfig.moj
 }
 
 ```
+
 </p>
 </details>
 
-#### Get operating channel of radio
-
+### Get operating channel of radio
 
 ```shell
-python py_gnmicli.py -m 
+python py_gnmicli.py -m
 get -t <AP-IP>  -user <username> -pass <password> -p <port> -g -o openconfig.mojonetworks.com -x access-points/access-point[hostname=<host>]/radios/radio[id=1][operating-frequency=FREQ_5GHZ]/state/channel
 ```
 
@@ -234,12 +238,13 @@ get -t <AP-IP>  -user <username> -pass <password> -p <port> -g -o openconfig.moj
 </p>
 </details>
 
-#### Get operating EIRP of radio
+### Get operating EIRP of radio
 
 ```shell
-python py_gnmicli.py -m 
+python py_gnmicli.py -m
 get -t <AP-IP>  -user <username> -pass <password> -p <port> -g -o openconfig.mojonetworks.com -x access-points/access-point[hostname=<host>]/radios/radio[id=1][operating-frequency=FREQ_5GHZ]/state/transmit-eirp
 ```
+
 <details><summary>Reveal output</summary>
 <p>
 
@@ -289,10 +294,10 @@ get -t <AP-IP>  -user <username> -pass <password> -p <port> -g -o openconfig.moj
 </p>
 </details>
 
-#### Set operating channel of radio
+### Set operating channel of radio
 
 ```shell
-python py_gnmicli.py -m 
+python py_gnmicli.py -m
 set-replace-t <AP-IP>  -user <username> -pass <password> -p <port> -g -o openconfig.mojonetworks.com -x access-points/access-point[hostname=<host>]/radios/radio[id=1][operating-frequency=FREQ_5GHZ]/config/channel -val 169
 ```
 
