@@ -49,6 +49,7 @@ nav:
       - cURL: examples/restconf/curl.md
       - Python: examples/restconf/python.md
     - ygot: examples/ygot/index.md
+    - WiFi: examples/WiFi/index.md
   - Telemetry:
     - gNMIReverse: telemetry/adapters/gnmireverse/index.md
     - ocprometheus: telemetry/adapters/ocprometheus/index.md
