@@ -14,7 +14,7 @@ implementation in Arista WiFi,
 see [OpenConfig for Arista WiFi.](https://wifihelp.arista.com/post/
 openconfig-for-arista-wifi?term=openconfig&page=1)
 
-This page lists a few examples of the AP using gNMI.
+This page lists a few examples of the AP using gNMI. For more information on gNxI, refer to [gNxI Tools.](https://github.com/google/gnxi)
 
 ### Get AP
 
