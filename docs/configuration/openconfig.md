@@ -119,22 +119,21 @@ models` mode, the provider smash sub-mode allows for enabling or disabling a Sma
 smash_path_here [disabled]` command.
 
 ```text
-SW(config)#management api models
-SW(config-mgmt-api-models)#provider smash
-SW(config-provider-smash)#path forwarding/status
-SW(config-provider-smash)#path routing/status disabled
-SW(config-provider-smash)#path routing/isis/lsdb
-SW(config-provider-smash)#exit
+management api models
+   provider smash
+      path forwarding/status
+      path routing/status disabled
+      path routing/isis/lsdb
 ```
 
 Note that every time a new path is added the Octa agent has to be restarted.
 EOS CLI:
 
 ```text
-(config)#management api gnmi
-(config-mgmt-api-gnmi)#transport grpc <NAME>
-(config-gnmi-transport-def)#shut
-(config-gnmi-transport-def)#no shut
+management api gnmi
+   transport grpc <NAME>
+   shutdown
+   no shutdown
 ```
 
 Bash:
@@ -183,8 +182,44 @@ Starting in EOS `4.25.1F` it is possible to enable these mappings, for IPV4, IPV
 
 ```text
 management api models
-    ipv4-unicast
-    ipv6-unicast
+   ipv4-unicast
+   ipv6-unicast
+```
+
+## Telemetry Timestamps
+
+Per the GNMI specification, the default timestamp field of a notification message is set to be the time at which the
+value of the underlying data source changes or when the reported event takes place.  In order to facilitate integration
+in environments oriented around polling style operations, an option to support overriding the timestamp field to the
+send-time is available. (as of 4.2x.y)
+
+Overriding the timestamp to `send-time` is applicable to all STREAM and POLL subscriptions.
+
+### Configuration
+
+```text
+management api gnmi
+   transport grpc default
+      notification timestamp send-time
+```
+
+### Validation
+
+```text
+#show management api gnmi
+Octa: enabled
+Set persistence: enabled
+
+Transport: default
+Enabled: yes
+Server: running on port 6030, in default VRF
+SSL profile: none
+QoS DSCP: none
+Authorization required: no
+Accounting requests: no
+Certificate username authentication: no
+Notification timestamp: send time
+Listen addresses: ::
 ```
 
 ## Troubleshooting
