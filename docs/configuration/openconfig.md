@@ -190,8 +190,8 @@ management api models
 
 Per the GNMI specification, the default timestamp field of a notification message is set to be the time at which the
 value of the underlying data source changes or when the reported event takes place.  In order to facilitate integration
-in environments oriented around polling style operations, an option to support overriding the timestamp field to the
-send-time is available. (as of 4.2x.y)
+in legacy environments oriented around polling style operations, an option to support overriding the timestamp field to
+the send-time is available. (as of 4.27.0F)
 
 Overriding the timestamp to `send-time` is applicable to all STREAM and POLL subscriptions.
 
