@@ -195,7 +195,7 @@ send-time is available. (as of 4.2x.y)
 
 Overriding the timestamp to `send-time` is applicable to all STREAM and POLL subscriptions.
 
-### Configuration
+Configuration is outlined below.
 
 ```text
 management api gnmi
@@ -203,7 +203,8 @@ management api gnmi
       notification timestamp send-time
 ```
 
-### Validation
+<details><summary>Validation</summary>
+<p>
 
 ```text
 #show management api gnmi
@@ -221,6 +222,9 @@ Certificate username authentication: no
 Notification timestamp: send time
 Listen addresses: ::
 ```
+
+</p>
+</details>
 
 ## Troubleshooting
 
