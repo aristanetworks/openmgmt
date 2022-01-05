@@ -199,8 +199,17 @@ Configuration is outlined below.
 
 ```text
 management api gnmi
-   transport grpc default
+   transport grpc <NAME>
       notification timestamp send-time
+```
+
+If there's a need to return to the standards-oriented operation, the following mechanisms can be used to reset the
+behavior.
+
+```text
+no notification timestamp send-time
+default notification timestamp
+notification timestamp last-change-time
 ```
 
 <details><summary>Validation</summary>
