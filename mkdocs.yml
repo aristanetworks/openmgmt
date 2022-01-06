@@ -36,6 +36,7 @@ nav:
       - About gNOI: examples/gnoi/index.md
       - gNOIc: examples/gnoi/gnoic.md
       - gRPCurl: examples/gnoi/grpcurl.md
+      - gNOI in Golang: examples/gnoi/gnoicode.md
     - Go Lang: examples/golang/index.md
     - NETCONF:
       - About NETCONF: examples/netconf/index.md
