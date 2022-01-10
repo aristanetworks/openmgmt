@@ -25,7 +25,7 @@ Each one of the examples has the following default flags which can be changed ba
 
 ## Test Device configuration
 
-```shell
+```text
 management api gnmi
    transport grpc default
    provider eos-native
@@ -33,14 +33,14 @@ management api gnmi
 
 ### cd into src/gnoi
 
-```shell
+```text
 cd src/gnoi
 ```
 
 The directory should include the go.mod/go.sum for the correct packages so nothing needs installed on the system at the current time.
 
 
-```shell
+```text
 ls
 go.mod  go.sum  pinggnoi.go  traceroutegnoi.go
 ```
@@ -109,7 +109,7 @@ func main() {
 </details>
 
 Output
-```shell
+```text
 go run ping.go -username admin -password admin -destination 172.20.20.2:6030 -destination 2.2.2.2
 source:"2.2.2.2" time:38000 bytes:64 sequence:1 ttl:64 <nil>
 source:"2.2.2.2" time:44000 bytes:64 sequence:1 ttl:64 <nil>
@@ -186,7 +186,7 @@ func main() {
 <br>
 
 Output
-```shell
+```text
 go run traceroute.go -username admin -password admin -destination 172.20.20.2:6030 -destination 2.2.2.2
 destination_name:"2.2.2.2"  destination_address:"2.2.2.2"  hops:30  packet_size:60 <nil>
 ```
