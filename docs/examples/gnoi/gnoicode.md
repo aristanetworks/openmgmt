@@ -14,20 +14,16 @@ All code can be found within the [src directory under gnoi](https://github.com/a
 
 We will be leveraging the gNOI [godocs]((https://pkg.go.dev/github.com/openconfig/gnoi)) which module can be imported as github.com/openconfig/gnoi
 
-Each one of the examples has the following constants which can be changed based on the environment.
+Each one of the examples has the following default flags which can be changed based on the environment.
 
-```golang
-const (
-	username    = "admin"
-	password    = "admin"
-	target      = "172.20.20.2:6030"
-	destination = "1.1.1.1"
-	timeOut     = 5
-)
+```
+	-username    = "admin"
+	-password    = "admin"
+	-target      = "172.20.20.2:6030"
+	-destination = "1.1.1.1"
 ```
 
 ## Test Device configuration
-<br>
 
 ```shell
 management api gnmi
@@ -36,16 +32,13 @@ management api gnmi
 ```
 
 ### cd into src/gnoi
-<br>
 
 ```shell
 cd src/gnoi
 ```
-<br>
 
 The directory should include the go.mod/go.sum for the correct packages so nothing needs installed on the system at the current time.
-<br>
-<br>
+
 
 ```shell
 ls
@@ -64,6 +57,7 @@ package main
 
 import (
 	"context"
+	"flag"
 	"fmt"
 	"time"
 
@@ -73,16 +67,14 @@ import (
 	"google.golang.org/grpc/metadata"
 )
 
-const (
-	username    = "admin"
-	password    = "admin"
-	target      = "172.20.20.2:6030"
-	destination = "1.1.1.1"
-	timeOut     = 5
-)
-
 func main() {
-	conn, err := grpc.Dial(target, grpc.WithInsecure())
+	// Add input parameters
+	username := flag.String("username", "admin", "username for connection to gNOI")
+	password := flag.String("password", "admin", "password for connection to gNOI")
+	target := flag.String("target", "172.20.20.2:6030", "Target ip or hostname of the device running gNOI")
+	destination := flag.String("destination", "2.2.2.2", "Destination of the address to ping to")
+	flag.Parse()
+	conn, err := grpc.Dial(*target, grpc.WithInsecure())
 	if err != nil {
 		log.Exitf("Failed to %s Error: %v", target, err)
 	}
@@ -97,15 +89,15 @@ func main() {
 	// Since Metadata needs a map to pass into the header of gRPC request create a map for it.
 	metamap := make(map[string]string)
 	// Set the username and password
-	metamap["username"] = username
-	metamap["password"] = password
+	metamap["username"] = *username
+	metamap["password"] = *password
 	// Set the metadata needed in the metadata package
 	md := metadata.New(metamap)
 	// set the ctx to use the metadata in every update.
 	ctx = metadata.NewOutgoingContext(ctx, md)
-
+	// Try to ping 10 times with a loop
 	for i := 0; i < 10; i++ {
-		response, err := Sys.Ping(ctx, &system.PingRequest{Destination: destination})
+		response, err := Sys.Ping(ctx, &system.PingRequest{Destination: *destination})
 		if err != nil {
 			log.Fatalf("Error trying to ping: %v", err)
 		}
@@ -118,17 +110,17 @@ func main() {
 
 Output
 ```shell
-go run ping.go
-source:"1.1.1.1"  time:16000  bytes:64  sequence:1  ttl:64 <nil>
-source:"1.1.1.1"  time:18000  bytes:64  sequence:1  ttl:64 <nil>
-source:"1.1.1.1"  time:18000  bytes:64  sequence:1  ttl:64 <nil>
-source:"1.1.1.1"  time:22000  bytes:64  sequence:1  ttl:64 <nil>
-source:"1.1.1.1"  time:22000  bytes:64  sequence:1  ttl:64 <nil>
-source:"1.1.1.1"  time:20000  bytes:64  sequence:1  ttl:64 <nil>
-source:"1.1.1.1"  time:22000  bytes:64  sequence:1  ttl:64 <nil>
-source:"1.1.1.1"  time:19000  bytes:64  sequence:1  ttl:64 <nil>
-source:"1.1.1.1"  time:22000  bytes:64  sequence:1  ttl:64 <nil>
-source:"1.1.1.1"  time:22000  bytes:64  sequence:1  ttl:64 <nil>
+go run ping.go -username admin -password admin -destination 172.20.20.2:6030 -destination 2.2.2.2
+source:"2.2.2.2" time:38000 bytes:64 sequence:1 ttl:64 <nil>
+source:"2.2.2.2" time:44000 bytes:64 sequence:1 ttl:64 <nil>
+source:"2.2.2.2" time:37000 bytes:64 sequence:1 ttl:64 <nil>
+source:"2.2.2.2" time:41000 bytes:64 sequence:1 ttl:64 <nil>
+source:"2.2.2.2" time:40000 bytes:64 sequence:1 ttl:64 <nil>
+source:"2.2.2.2" time:38000 bytes:64 sequence:1 ttl:64 <nil>
+source:"2.2.2.2" time:40000 bytes:64 sequence:1 ttl:64 <nil>
+source:"2.2.2.2" time:36000 bytes:64 sequence:1 ttl:64 <nil>
+source:"2.2.2.2" time:44000 bytes:64 sequence:1 ttl:64 <nil>
+source:"2.2.2.2" time:66000 bytes:64 sequence:1 ttl:64 <nil>
 ```
 
 ### Run traceroute.go
@@ -137,14 +129,13 @@ source:"1.1.1.1"  time:22000  bytes:64  sequence:1  ttl:64 <nil>
 #### src/gnoi/traceroute.go
 <details><summary>Reveal output</summary>
 <p>
-<br>
-
 
 ```golang
 package main
 
 import (
 	"context"
+	"flag"
 	"fmt"
 	"time"
 
@@ -154,16 +145,13 @@ import (
 	"google.golang.org/grpc/metadata"
 )
 
-const (
-	username    = "admin"
-	password    = "admin"
-	target      = "172.20.20.2:6030"
-	destination = "2.2.2.2"
-	timeOut     = 5
-)
-
 func main() {
-	conn, err := grpc.Dial(target, grpc.WithInsecure())
+	// Add input parameters
+	username := flag.String("username", "admin", "username for connection to gNOI")
+	password := flag.String("password", "admin", "password for connection to gNOI")
+	target := flag.String("target", "172.20.20.2:6030", "Target ip or hostname of the device running gNOI")
+	destination := flag.String("destination", "2.2.2.2", "Destination of the address to traceroute to")
+	conn, err := grpc.Dial(*target, grpc.WithInsecure())
 	if err != nil {
 		log.Exitf("Failed to %s Error: %v", target, err)
 	}
@@ -178,19 +166,20 @@ func main() {
 	// Since Metadata needs a map to pass into the header of gRPC request create a map for it.
 	metamap := make(map[string]string)
 	// Set the username and password
-	metamap["username"] = username
-	metamap["password"] = password
+	metamap["username"] = *username
+	metamap["password"] = *password
 	// Set the metadata needed in the metadata package
 	md := metadata.New(metamap)
 	// set the ctx to use the metadata in every update.
 	ctx = metadata.NewOutgoingContext(ctx, md)
 
-	response, err := Sys.Traceroute(ctx, &system.TracerouteRequest{Destination: destination})
+	response, err := Sys.Traceroute(ctx, &system.TracerouteRequest{Destination: *destination})
 	if err != nil {
 		log.Fatalf("Cannot trace path: %v", err)
 	}
 	fmt.Println(response.Recv())
 }
+
 ```
 </p>
 </details>
@@ -198,6 +187,6 @@ func main() {
 
 Output
 ```shell
-go run traceroute.go
+go run traceroute.go -username admin -password admin -destination 172.20.20.2:6030 -destination 2.2.2.2
 destination_name:"2.2.2.2"  destination_address:"2.2.2.2"  hops:30  packet_size:60 <nil>
 ```
