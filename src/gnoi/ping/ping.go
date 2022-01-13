@@ -4,6 +4,7 @@ import (
 	"context"
 	"flag"
 	"fmt"
+	"os"
 	"time"
 
 	log "github.com/golang/glog"
@@ -12,12 +13,25 @@ import (
 	"google.golang.org/grpc/metadata"
 )
 
+func checkflags(flag ...string) {
+	for _, f := range flag {
+		if f == "" {
+			fmt.Printf("You have an empty flag please fix.")
+			os.Exit(1)
+		}
+	}
+}
+
 func main() {
 	// Add input parameters
 	username := flag.String("username", "admin", "username for connection to gNOI")
 	password := flag.String("password", "admin", "password for connection to gNOI")
-	target := flag.String("target", "172.20.20.2:6030", "Target ip or hostname of the device running gNOI")
-	destination := flag.String("destination", "2.2.2.2", "Destination of the address to traceroute to")
+	target := flag.String("target", "", "Target ip or hostname of the device running gNOI")
+	destination := flag.String("destination", "", "Destination of the address to ping to")
+	flag.Parse()
+	// Check for empty flags.
+	checkflags(*username, *password, *target, *destination)
+
 	conn, err := grpc.Dial(*target, grpc.WithInsecure())
 	if err != nil {
 		log.Exitf("Failed to %s Error: %v", target, err)
@@ -39,10 +53,12 @@ func main() {
 	md := metadata.New(metamap)
 	// set the ctx to use the metadata in every update.
 	ctx = metadata.NewOutgoingContext(ctx, md)
-
-	response, err := Sys.Traceroute(ctx, &system.TracerouteRequest{Destination: *destination})
-	if err != nil {
-		log.Fatalf("Cannot trace path: %v", err)
+	// Try to ping 10 times with a loop
+	for i := 0; i < 10; i++ {
+		response, err := Sys.Ping(ctx, &system.PingRequest{Destination: *destination})
+		if err != nil {
+			log.Fatalf("Error trying to ping: %v", err)
+		}
+		fmt.Println(response.Recv())
 	}
-	fmt.Println(response.Recv())
 }

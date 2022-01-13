@@ -59,6 +59,7 @@ import (
 	"context"
 	"flag"
 	"fmt"
+	"os"
 	"time"
 
 	log "github.com/golang/glog"
@@ -67,13 +68,25 @@ import (
 	"google.golang.org/grpc/metadata"
 )
 
+func checkflags(flag ...string) {
+	for _, f := range flag {
+		if f == "" {
+			fmt.Printf("You have an empty flag please fix.")
+			os.Exit(1)
+		}
+	}
+}
+
 func main() {
 	// Add input parameters
 	username := flag.String("username", "admin", "username for connection to gNOI")
 	password := flag.String("password", "admin", "password for connection to gNOI")
-	target := flag.String("target", "172.20.20.2:6030", "Target ip or hostname of the device running gNOI")
-	destination := flag.String("destination", "2.2.2.2", "Destination of the address to ping to")
+	target := flag.String("target", "", "Target ip or hostname of the device running gNOI")
+	destination := flag.String("destination", "", "Destination of the address to ping to")
 	flag.Parse()
+	// Check for empty flags.
+	checkflags(*username, *password, *target, *destination)
+
 	conn, err := grpc.Dial(*target, grpc.WithInsecure())
 	if err != nil {
 		log.Exitf("Failed to %s Error: %v", target, err)
@@ -110,7 +123,7 @@ func main() {
 
 Output
 ```text
-go run ping.go -username admin -password admin -destination 172.20.20.2:6030 -destination 2.2.2.2
+go run ping/ping.go -username admin -password admin -target 172.20.20.2:6030 -destination 2.2.2.2
 source:"2.2.2.2" time:38000 bytes:64 sequence:1 ttl:64 <nil>
 source:"2.2.2.2" time:44000 bytes:64 sequence:1 ttl:64 <nil>
 source:"2.2.2.2" time:37000 bytes:64 sequence:1 ttl:64 <nil>
@@ -137,6 +150,7 @@ import (
 	"context"
 	"flag"
 	"fmt"
+	"os"
 	"time"
 
 	log "github.com/golang/glog"
@@ -145,18 +159,29 @@ import (
 	"google.golang.org/grpc/metadata"
 )
 
+func checkflags(flag ...string) {
+	for _, f := range flag {
+		if f == "" {
+			fmt.Printf("You have an empty flag please fix.")
+			os.Exit(1)
+		}
+	}
+}
+
 func main() {
 	// Add input parameters
 	username := flag.String("username", "admin", "username for connection to gNOI")
 	password := flag.String("password", "admin", "password for connection to gNOI")
-	target := flag.String("target", "172.20.20.2:6030", "Target ip or hostname of the device running gNOI")
-	destination := flag.String("destination", "2.2.2.2", "Destination of the address to traceroute to")
+	target := flag.String("target", "", "Target ip or hostname of the device running gNOI")
+	destination := flag.String("destination", "", "Destination of the address to traceroute to")
+	flag.Parse()
 	conn, err := grpc.Dial(*target, grpc.WithInsecure())
 	if err != nil {
 		log.Exitf("Failed to %s Error: %v", target, err)
 	}
 	defer conn.Close()
-
+	// Check for empty flags.
+	checkflags(*username, *password, *target, *destination)
 	// Create the new grpc service connection
 	Sys := system.NewSystemClient(conn)
 	// pass in context blank information with the timeout.
@@ -187,6 +212,6 @@ func main() {
 
 Output
 ```text
-go run traceroute.go -username admin -password admin -destination 172.20.20.2:6030 -destination 2.2.2.2
+go run traceroute/traceroute.go -username admin -password admin -target 172.20.20.2:6030 -destination 2.2.2.2
 destination_name:"2.2.2.2"  destination_address:"2.2.2.2"  hops:30  packet_size:60 <nil>
 ```
