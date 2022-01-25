@@ -69,7 +69,7 @@ grpcurl
 interface Management1
    description oob_management
    vrf MGMT
-   ip address 10.73.1.118/24
+   ip address 192.0.2.118/24
 
 username arista secret 0 arista
 
@@ -87,12 +87,12 @@ QoS DSCP:           none
 DC1-L2LEAF2A#
 ```
 
-Before to use gNOI ping and traceroute, lets run these commands locally:
+Before to use gNOI ping and traceroute, let's run these commands locally:
 
 ```shell
-$ ssh arista@10.73.1.118
+$ ssh arista@192.0.2.118
 Password:
-Last login: Thu Jun  3 12:06:25 2021 from 10.73.1.3
+Last login: Thu Jun  3 12:06:25 2021 from 192.0.2.3
 DC1-L2LEAF2A>en
 DC1-L2LEAF2A#bash
 
@@ -115,7 +115,7 @@ traceroute to 172.31.255.0 (172.31.255.0), 30 hops max, 60 byte packets
 [arista@DC1-L2LEAF2A ~]$ exit
 logout
 DC1-L2LEAF2A#exit
-Connection to 10.73.1.118 closed.
+Connection to 192.0.2.118 closed.
 ```
 
 ## Use gRPCurl
@@ -250,7 +250,7 @@ gnoi.os.OS.Verify
 #### List from a gRPC server (EOS device)
 
 ```shell
-$ grpcurl --plaintext 10.73.1.105:6030 list
+$ grpcurl --plaintext 192.0.2.105:6030 list
 gnmi.gNMI
 gnoi.certificate.CertificateManagement
 gnoi.system.System
@@ -263,7 +263,7 @@ grpc.reflection.v1alpha.ServerReflection
 grpcurl -H 'username: arista'  -H 'password: arista' \
    -d '{"destination": "172.31.255.0", "count": 2, "do_not_resolve":true}' \
    -import-path ${GOPATH}/src -proto github.com/openconfig/gnoi/system/system.proto \
-   -plaintext 10.73.1.118:6030 gnoi.system.System/Ping
+   -plaintext 192.0.2.118:6030 gnoi.system.System/Ping
 ```
 
 Output:
@@ -299,7 +299,7 @@ Output:
 grpcurl -H 'username: arista'  -H 'password: arista' \
     -d '{"destination": "172.31.255.0", "max_ttl": 50, "do_not_resolve":true}' \
     -import-path ${GOPATH}/src -proto github.com/openconfig/gnoi/system/system.proto \
-    -plaintext 10.73.1.118:6030 gnoi.system.System/Traceroute
+    -plaintext 192.0.2.118:6030 gnoi.system.System/Traceroute
 ```
 
 Output:

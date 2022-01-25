@@ -104,7 +104,7 @@ Please visit [this link](../gnmi-clients/gnmic/index.md) if you need help to con
 #### Check the device configuration before
 
 ```shell
-gnmic -a 10.73.1.117:6030 --insecure -u arista -p arista get   \
+gnmic -a 192.0.2.117:6030 --insecure -u arista -p arista get   \
     --path '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp'
 ```
 
@@ -115,7 +115,7 @@ show run section bgp
 #### Use gNMIc to configure the swicth
 
 ```shell
-gnmic -a 10.73.1.117:6030 --insecure -u arista -p arista set  \
+gnmic -a 192.0.2.117:6030 --insecure -u arista -p arista set  \
     --replace-path '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp' \
     --replace-file demo.json
 ```
@@ -123,7 +123,7 @@ gnmic -a 10.73.1.117:6030 --insecure -u arista -p arista set  \
 #### Check the device configuration after
 
 ```shell
-gnmic -a 10.73.1.117:6030 --insecure -u arista -p arista get  \
+gnmic -a 192.0.2.117:6030 --insecure -u arista -p arista get  \
     --path '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp'
 ```
 
