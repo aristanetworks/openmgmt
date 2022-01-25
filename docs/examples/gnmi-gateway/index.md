@@ -55,7 +55,7 @@ The demo is dependent on the following files:
   "target": {
     "DC2-SP02": {
       "addresses": [
-        "10.20.30.22:6030"
+        "198.51.100.22:6030"
       ],
       "credentials": {
         "username": "ansible",
@@ -68,7 +68,7 @@ The demo is dependent on the following files:
     },
     "DC2-LEAF1A": {
       "addresses": [
-        "10.20.30.5:6030"
+        "198.51.100.5:6030"
       ],
       "credentials": {
         "username": "ansible",
@@ -81,7 +81,7 @@ The demo is dependent on the following files:
     },
     "DC2-LF70": {
       "addresses": [
-        "10.20.30.70:6030"
+        "198.51.100.70:6030"
       ],
       "credentials": {
         "username": "ansible",
@@ -126,12 +126,12 @@ gnmi-gateway -EnableGNMIServer -ServerTLSCert=server.crt \
 {"level":"info","time":"2021-03-19T08:47:35-04:00","message":"Starting connection manager."}
 {"level":"info","time":"2021-03-19T08:47:35-04:00","message":"Starting gNMI server on 0.0.0.0:9339."}
 {"level":"info","time":"2021-03-19T08:47:35-04:00","message":"Connection manager received a target control message: 3 inserts 0 removes"}
-{"level":"info","time":"2021-03-19T08:47:35-04:00","message":"Initializing target DC2-SP02 ([10.20.30.22:6030]) map[NoTLS:yes]."}
-{"level":"info","time":"2021-03-19T08:47:35-04:00","message":"Initializing target DC2-LEAF1A ([10.20.30.5:6030]) map[NoTLS:yes]."}
+{"level":"info","time":"2021-03-19T08:47:35-04:00","message":"Initializing target DC2-SP02 ([198.51.100.22:6030]) map[NoTLS:yes]."}
+{"level":"info","time":"2021-03-19T08:47:35-04:00","message":"Initializing target DC2-LEAF1A ([198.51.100.5:6030]) map[NoTLS:yes]."}
 {"level":"info","time":"2021-03-19T08:47:35-04:00","message":"Target DC2-SP02: Connecting"}
 {"level":"warn","time":"2021-03-19T08:47:35-04:00","message":"DEPRECATED: The 'NoTLS' target flag has been deprecated and will be removed in a future release. Please use 'NoTLSVerify' instead."}
 {"level":"info","time":"2021-03-19T08:47:35-04:00","message":"Target DC2-SP02: Subscribing"}
-{"level":"info","time":"2021-03-19T08:47:35-04:00","message":"Initializing target DC2-LF70 ([10.20.30.70:6030]) map[NoTLS:yes]."}
+{"level":"info","time":"2021-03-19T08:47:35-04:00","message":"Initializing target DC2-LF70 ([198.51.100.70:6030]) map[NoTLS:yes]."}
 {"level":"info","time":"2021-03-19T08:47:35-04:00","message":"Target DC2-LEAF1A: Connecting"}
 {"level":"warn","time":"2021-03-19T08:47:35-04:00","message":"DEPRECATED: The 'NoTLS' target flag has been deprecated and will be removed in a future release. Please use 'NoTLSVerify' instead."}
 {"level":"info","time":"2021-03-19T08:47:35-04:00","message":"Target DC2-LEAF1A: Subscribing"}
@@ -156,7 +156,7 @@ on behalf of any external gNMI client.
 ## Requesting a target managed by gNMI gateway
 
 ```shell
-gnmic subscribe -a 127.0.0.1 -u ansible -p ansible --port=9339 \
+gnmic subscribe -a 192.0.2.1 -u ansible -p ansible --port=9339 \
   --skip-verify --target=DC2-SP02 --path=/interfaces
 ```
 
@@ -164,7 +164,7 @@ gnmic subscribe -a 127.0.0.1 -u ansible -p ansible --port=9339 \
 
 ```javascript
 {
-  "source": "127.0.0.1:9339",
+  "source": "192.0.2.1:9339",
   "subscription-name": "default-1616158143",
   "timestamp": 1605208845740882713,
   "time": "2020-11-12T14:20:45.740882713-05:00",
