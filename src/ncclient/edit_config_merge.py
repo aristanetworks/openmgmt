@@ -1,10 +1,18 @@
 from ncclient import manager
-eos=manager.connect(host="10.83.28.221", port="830", timeout=30, username="arista", password="arista", hostkey_verify=False)
+
+eos = manager.connect(
+    host="198.51.100.221",
+    port="830",
+    timeout=30,
+    username="arista",
+    password="arista",
+    hostkey_verify=False,
+)
 
 # Edit the running configuration with merge operation
 # Small examples
 
-cfg_domain_name = '''
+cfg_domain_name = """
 <config>
     <system xmlns="http://openconfig.net/yang/system">
         <config>
@@ -12,10 +20,12 @@ cfg_domain_name = '''
         </config>
     </system>
 </config>
-'''
-reply = eos.edit_config(target = "running", config = cfg_domain_name, default_operation="merge")
+"""
+reply = eos.edit_config(
+    target="running", config=cfg_domain_name, default_operation="merge"
+)
 
-cfg_login_banner = '''
+cfg_login_banner = """
 <config>
     <system xmlns="http://openconfig.net/yang/system">
         <config>
@@ -23,20 +33,24 @@ cfg_login_banner = '''
         </config>
     </system>
 </config>
-'''
-reply = eos.edit_config(target = "running", config = cfg_login_banner, default_operation="merge")
+"""
+reply = eos.edit_config(
+    target="running", config=cfg_login_banner, default_operation="merge"
+)
 
-cfg_hostname = '''
+cfg_hostname = """
 <config>
     <system xmlns="http://openconfig.net/yang/system">
         <config>
             <hostname>switch1</hostname>
         </config>
     </system>
-</config>'''
-reply = eos.edit_config(target = "running", config = cfg_hostname, default_operation="merge")
+</config>"""
+reply = eos.edit_config(
+    target="running", config=cfg_hostname, default_operation="merge"
+)
 
-cfg_username = '''
+cfg_username = """
 <config>
   <system xmlns="http://openconfig.net/yang/system">
     <aaa>
@@ -55,10 +69,12 @@ cfg_username = '''
     </aaa>
   </system>
 </config>
-'''
-reply = eos.edit_config(target = "running", config = cfg_username, default_operation="merge")
+"""
+reply = eos.edit_config(
+    target="running", config=cfg_username, default_operation="merge"
+)
 
-cfg_username = '''
+cfg_username = """
 <config>
   <system xmlns="http://openconfig.net/yang/system">
     <aaa>
@@ -77,10 +93,12 @@ cfg_username = '''
     </aaa>
   </system>
 </config>
-'''
-reply = eos.edit_config(target = "running", config = cfg_username, default_operation="merge")
+"""
+reply = eos.edit_config(
+    target="running", config=cfg_username, default_operation="merge"
+)
 
-cfg_interface_ethernet3_description = '''
+cfg_interface_ethernet3_description = """
 <config>
     <interfaces xmlns="http://openconfig.net/yang/interfaces">
         <interface>
@@ -91,13 +109,17 @@ cfg_interface_ethernet3_description = '''
         </interface>
     </interfaces>
 </config>
-'''
-reply = eos.edit_config(target="running", config=cfg_interface_ethernet3_description, default_operation="merge")
+"""
+reply = eos.edit_config(
+    target="running",
+    config=cfg_interface_ethernet3_description,
+    default_operation="merge",
+)
 
 # Edit the running configuration with merge operation
 # Larger example
 
-cfg_system = '''
+cfg_system = """
 <config>
     <system xmlns="http://openconfig.net/yang/system">
         <config>
@@ -116,9 +138,9 @@ cfg_system = '''
                     </config>
                 </server>
                 <server>
-                    <address>10.83.28.52</address>
+                    <address>198.51.100.52</address>
                     <config>
-                        <address>10.83.28.52</address>
+                        <address>198.51.100.52</address>
                         <port>53</port>
                     </config>
                 </server>
@@ -126,7 +148,9 @@ cfg_system = '''
         </dns>
     </system>
 </config>
-'''
-configuration = eos.edit_config(target = "running", config = cfg_system, default_operation="merge")
+"""
+configuration = eos.edit_config(
+    target="running", config=cfg_system, default_operation="merge"
+)
 
 eos.close_session()

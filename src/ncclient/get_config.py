@@ -1,40 +1,48 @@
 from ncclient import manager
-eos=manager.connect(host="10.83.28.203", port="830", timeout=30, username="arista", password="arista", hostkey_verify=False)
+
+eos = manager.connect(
+    host="198.51.100.203",
+    port="830",
+    timeout=30,
+    username="arista",
+    password="arista",
+    hostkey_verify=False,
+)
 
 # Get running configuration
 # Using filters
 
-hostname='''
+hostname = """
 <system>
     <config>
         <hostname>
         </hostname>
     </config>
 </system>
-'''
-print (eos.get_config(source="running", filter=("subtree", hostname)))
+"""
+print(eos.get_config(source="running", filter=("subtree", hostname)))
 
-domain_name='''
+domain_name = """
 <system>
     <config>
         <domain-name>
         </domain-name>
     </config>
 </system>
-'''
-print (eos.get_config(source="running", filter=("subtree", domain_name)))
+"""
+print(eos.get_config(source="running", filter=("subtree", domain_name)))
 
-dns_servers='''
+dns_servers = """
 <system>
     <dns>
         <servers>
         </servers>
     </dns>
 </system>
-'''
-print (eos.get_config(source="running", filter=("subtree", dns_servers)))
+"""
+print(eos.get_config(source="running", filter=("subtree", dns_servers)))
 
-dns_8888='''
+dns_8888 = """
 <system>
     <dns>
         <servers>
@@ -46,19 +54,19 @@ dns_8888='''
         </servers>
     </dns>
 </system>
-'''
-print (eos.get_config(source="running", filter=("subtree", dns_8888)))
+"""
+print(eos.get_config(source="running", filter=("subtree", dns_8888)))
 
-Interface_Ethernet3='''
+Interface_Ethernet3 = """
 <interfaces>
     <interface>
         <name>Ethernet3</name>
     </interface>
 </interfaces>
-'''
+"""
 print(eos.get_config(source="running", filter=("subtree", Interface_Ethernet3)))
 
-Interface_Ethernet3_description='''
+Interface_Ethernet3_description = """
 <interfaces>
     <interface>
         <name>Ethernet3</name>
@@ -68,10 +76,14 @@ Interface_Ethernet3_description='''
     </config>
     </interface>
 </interfaces>
-'''
-print(eos.get_config(source="running", filter=("subtree", Interface_Ethernet3_description)))
+"""
+print(
+    eos.get_config(
+        source="running", filter=("subtree", Interface_Ethernet3_description)
+    )
+)
 
-system = '''
+system = """
 <system xmlns="http://openconfig.net/yang/system">
     <dns>
         <servers>
@@ -84,10 +96,10 @@ system = '''
         </hostname>
     </config>
 </system>
-'''
+"""
 print(eos.get_config(source="running", filter=("subtree", system)))
 
-conf = '''
+conf = """
 <system xmlns="http://arista.com/yang/openconfig/system/">
     <config>
         <domain-name>
@@ -110,7 +122,7 @@ conf = '''
         </authentication>
     </aaa>
 </system>
-'''
+"""
 eos.get_config(source="running", filter=("subtree", conf))
 
 
