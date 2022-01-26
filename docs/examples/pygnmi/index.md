@@ -16,7 +16,7 @@ from pygnmi.client import gNMIclient
 import json
 
 # Variables
-host = ('10.20.30.67', '6030')
+host = ('198.51.100.67', '6030')
 
 # Body
 if __name__ == '__main__':
