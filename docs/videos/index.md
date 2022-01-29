@@ -33,15 +33,18 @@ allowfullscreen></iframe>
 
 ### NETCONF and RESTCONF
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/hym-GyZPPPU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/hym-GyZPPPU" title="YouTube video player"
+frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+allowfullscreen></iframe>
 
 ### gRPC
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/PM82F6yh5fc" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/PM82F6yh5fc" title="YouTube video player"
+frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+allowfullscreen></iframe>
 
 ## Automating Peering with OpenConfig
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/chRQASTp-bM" title="YouTube video player"
 frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
 allowfullscreen></iframe>
-
