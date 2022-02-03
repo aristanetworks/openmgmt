@@ -645,7 +645,7 @@ gnmic -a 192.0.2.214:6030 -u cvpadmin -p arista --insecure --gzip subscribe --pa
 
 ```shell
 gnmic -a 192.0.2.214:6030 -u cvpadmin -p arista --insecure --gzip subscribe --path  \
-  'network-instances/network-instance[name=Tenant_A_WEB_Zone]/protocols/protocol[identifier=BGP][name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.255.251.21]/state'
+  'network-instances/network-instance[name=Tenant_A_WEB_Zone]/protocols/protocol[identifier=BGP][name=BGP]/bgp/neighbors/neighbor[neighbor-address=198.51.100.21]/state'
 ```
 
 <details><summary> Reveal output</summary>
@@ -659,7 +659,7 @@ gnmic -a 192.0.2.214:6030 -u cvpadmin -p arista --insecure --gzip subscribe --pa
   "time": "2021-07-14T23:49:51.598465536+01:00",
   "updates": [
     {
-      "Path": "network-instances/network-instance[name=Tenant_A_WEB_Zone]/protocols/protocol[identifier=BGP][name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.255.251.21]/state/last-established",
+      "Path": "network-instances/network-instance[name=Tenant_A_WEB_Zone]/protocols/protocol[identifier=BGP][name=BGP]/bgp/neighbors/neighbor[neighbor-address=198.51.100.21]/state/last-established",
       "values": {
         "network-instances/network-instance/protocols/protocol/bgp/neighbors/neighbor/state/last-established": 1626302991563603200
       }
@@ -675,7 +675,7 @@ gnmic -a 192.0.2.214:6030 -u cvpadmin -p arista --insecure --gzip subscribe --pa
 
 ```shell
 gnmic -a 192.0.2.214:6030 -u cvpadmin -p arista --insecure --gzip --sample-interval 5s --stream-mode sample subscribe --path  \
-  '/network-instances/network-instance[name=Tenant_A_WEB_Zone]/protocols/protocol[identifier=BGP][name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.255.251.21]/afi-safis/afi-safi[afi-safi-name=openconfig-bgp-types:IPV4_UNICAST]/state/prefixes/received'
+  '/network-instances/network-instance[name=Tenant_A_WEB_Zone]/protocols/protocol[identifier=BGP][name=BGP]/bgp/neighbors/neighbor[neighbor-address=198.51.100.21]/afi-safis/afi-safi[afi-safi-name=openconfig-bgp-types:IPV4_UNICAST]/state/prefixes/received'
 ```
 
 <details><summary> Reveal output</summary>
@@ -689,7 +689,7 @@ gnmic -a 192.0.2.214:6030 -u cvpadmin -p arista --insecure --gzip --sample-inter
   "time": "2021-07-14T23:52:38.135414182+01:00",
   "updates": [
     {
-      "Path": "network-instances/network-instance[name=Tenant_A_WEB_Zone]/protocols/protocol[identifier=BGP][name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.255.251.21]/afi-safis/afi-safi[afi-safi-name=IPV4_UNICAST]/state/prefixes/received",
+      "Path": "network-instances/network-instance[name=Tenant_A_WEB_Zone]/protocols/protocol[identifier=BGP][name=BGP]/bgp/neighbors/neighbor[neighbor-address=198.51.100.21]/afi-safis/afi-safi[afi-safi-name=IPV4_UNICAST]/state/prefixes/received",
       "values": {
         "network-instances/network-instance/protocols/protocol/bgp/neighbors/neighbor/afi-safis/afi-safi/state/prefixes/received": 5
       }
@@ -703,7 +703,7 @@ gnmic -a 192.0.2.214:6030 -u cvpadmin -p arista --insecure --gzip --sample-inter
   "time": "2021-07-14T23:52:38.135414182+01:00",
   "updates": [
     {
-      "Path": "network-instances/network-instance[name=Tenant_A_WEB_Zone]/protocols/protocol[identifier=BGP][name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.255.251.21]/afi-safis/afi-safi[afi-safi-name=IPV4_UNICAST]/state/prefixes/received",
+      "Path": "network-instances/network-instance[name=Tenant_A_WEB_Zone]/protocols/protocol[identifier=BGP][name=BGP]/bgp/neighbors/neighbor[neighbor-address=198.51.100.21]/afi-safis/afi-safi[afi-safi-name=IPV4_UNICAST]/state/prefixes/received",
       "values": {
         "network-instances/network-instance/protocols/protocol/bgp/neighbors/neighbor/afi-safis/afi-safi/state/prefixes/received": 5
       }
@@ -730,14 +730,14 @@ gnmic -a 192.0.2.1:6030 -u admin -p admin --insecure subscribe --path \
 
 ```shell
 gnmic -a 192.0.2.214:6030 -u cvpadmin -p arista --insecure --gzip set \
---update-path '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.100.43]' \
+--update-path '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=198.51.100.43]' \
 --update-file value.json
 ```
 
 **value.json**:
 
 ```javascript
-{"config": {"neighbor-address":"10.10.100.43", "peer-as": 123}}
+{"config": {"neighbor-address":"198.51.100.43", "peer-as": 123}}
 ```
 
 Output:
@@ -749,7 +749,7 @@ Output:
   "results": [
     {
       "operation": "UPDATE",
-      "path": "network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.100.43]"
+      "path": "network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=198.51.100.43]"
     }
   ]
 }
@@ -759,14 +759,14 @@ Output:
 
 ```shell
 gnmic -a 192.0.2.214:6030 -u cvpadmin -p arista --insecure --gzip set  \
---update-path '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.100.43]' \
+--update-path '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=198.51.100.43]' \
 --update-file value.json
 ```
 
 **value.json**:
 
 ```javascript
-{"config": {"neighbor-address":"10.10.100.43", "peer-as": 123, "enabled": true, "send-community": "EXTENDED"}}
+{"config": {"neighbor-address":"198.51.100.43", "peer-as": 123, "enabled": true, "send-community": "EXTENDED"}}
 ```
 
 Output:
@@ -778,7 +778,7 @@ Output:
   "results": [
     {
       "operation": "UPDATE",
-      "path": "network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.100.43]"
+      "path": "network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=198.51.100.43]"
     }
   ]
 }
@@ -802,7 +802,7 @@ gnmic -a 192.0.2.214:6030 -u cvpadmin -p arista --insecure --gzip set \
 
 ```shell
 gnmic -a 192.0.2.214:6030 -u cvpadmin -p arista --insecure --gzip set \
---update-path '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.100.43]/config/peer-as' \
+--update-path '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=198.51.100.43]/config/peer-as' \
 --update-value '110'
 ```
 
@@ -815,7 +815,7 @@ Output:
   "results": [
     {
       "operation": "UPDATE",
-      "path": "network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.100.43]/config/peer-as"
+      "path": "network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=198.51.100.43]/config/peer-as"
     }
   ]
 }
@@ -825,7 +825,7 @@ Output:
 
 ```shell
 gnmic -a 192.0.2.214:6030 -u cvpadmin -p arista --insecure --gzip set \
---update-path '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.100.43]/config/peer-group' \
+--update-path '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=198.51.100.43]/config/peer-group' \
 --update-value 'XYZ'
 ```
 
@@ -838,7 +838,7 @@ Output:
   "results": [
     {
       "operation": "UPDATE",
-      "path": "network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.100.43]/config/peer-as"
+      "path": "network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=198.51.100.43]/config/peer-as"
     }
   ]
 }
@@ -895,7 +895,7 @@ Output:
                   },
                   "ipv4": {
                      "config": {
-                        "destination-address": "1.2.3.4/12",
+                        "destination-address": "192.0.2.0/24",
                         "source-address": "0.0.0.0/0"
                      }
                   }
@@ -914,7 +914,7 @@ This creates
 
 ```text
 ip access-list test
-   10 deny ip any 1.0.0.0/12
+   10 deny ip any 192.0.2.0/24
 ```
 
 #### Shutdown an interface

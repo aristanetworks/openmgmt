@@ -418,7 +418,7 @@ gnmi -addr 192.0.2.139:6030 -username admin -password arista \
 #### Get an interface's description
 
 ```shell
-gnmi -addr 10.81.117.100:6030 -username admin -password arista \
+gnmi -addr 198.51.100.100:6030 -username admin -password arista \
   get 'interfaces/interface[name=Ethernet1/1]/subinterfaces/subinterface/state/description'
 ```
 
@@ -824,13 +824,13 @@ gnmi -addr 192.0.2.203 -username arista -password arista update \
 
 ```shell
 gnmi -addr 192.0.2.203:6030 -username arista -password arista \
-  update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.10.0]/config/peer-as' \
+  update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=198.51.100.0]/config/peer-as' \
   '110'
 ```
 
 ```shell
 gnmi -addr 192.0.2.203:6030 -username arista -password arista \
-  update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.10.0]' \
+  update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=198.51.100.0]' \
   '{"config": {"peer-as": 110}}'
 ```
 
