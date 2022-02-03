@@ -800,16 +800,16 @@ gnmi -addr 192.0.2.139:6030 -username admin get origin=eos_native '/Sysdb/connec
 
 ```shell
 gnmi -addr 192.0.2.139:6030 -username cvpadmin -password arista \
-  update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.100.43]' \
-  '{"config": {"neighbor-address":"10.10.100.43", "peer-as": 123}}'
+  update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=198.51.100.43]' \
+  '{"config": {"neighbor-address":"198.51.100.43", "peer-as": 123}}'
 ```
 
 ##### Configure neighbor address, peer AS and send-community
 
 ```shell
 gnmi -addr 192.0.2.203:6030 -username arista -password arista
-  update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.100.43]' \
-  '{"config": {"neighbor-address":"10.10.100.43", "peer-as": 123, "enabled": true, "send-community": "EXTENDED"}}'
+  update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=198.51.100.43]' \
+  {"config": {"neighbor-address":"198.51.100.43", "peer-as": 123, "enabled": true, "send-community": "EXTENDED"}}'
 ```
 
 #### Create peer group
@@ -838,13 +838,13 @@ gnmi -addr 192.0.2.203:6030 -username arista -password arista \
 
 ```shell
 gnmi -addr 192.0.2.203:6030 -username arista -password arista \
-  update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.100.43]/config/peer-group' \
+  update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=198.51.100.43]/config/peer-group' \
   'XYZ'
 ```
 
 ```shell
 gnmi -addr 192.0.2.203:6030 -username arista -password arista \
-  update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.10.0]' \
+  update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=198.51.100.0]' \
   '{"config": {"peer-group": "XYZ","peer-as": 143}}'
 ```
 
@@ -935,7 +935,7 @@ cat acl2.json
                   },
                   "ipv4": {
                      "config": {
-                        "destination-address": "1.2.3.4/12",
+                        "destination-address": "192.0.2.1/32",
                         "source-address": "0.0.0.0/0"
                      }
                   }
@@ -988,7 +988,7 @@ gnmi -addr 192.0.2.203 -username arista -password arista \
 
 ```shell
 gnmi -addr 192.0.2.203 -username arista -password arista \
-  subscribe '/network-instances/network-instance/protocols/protocol/bgp/neighbors/neighbor[neighbor-address=10.10.10.5]/state'
+  subscribe '/network-instances/network-instance/protocols/protocol/bgp/neighbors/neighbor[neighbor-address=198.51.100.5]/state'
 ```
 
 #### Subscribe with stream mode sample and interval
@@ -997,7 +997,7 @@ gnmi -addr 192.0.2.203 -username arista -password arista \
 gnmi -addr 192.0.2.214:6030 -username admin -password arista \
   -sample_interval 5s -stream_mode sample                     \
   subscribe                                                   \
-  '/network-instances/network-instance[name=Tenant_A_WEB_Zone]/protocols/protocol[identifier=BGP][name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.255.251.1]/afi-safis/afi-safi[afi-safi-name=openconfig-bgp-types:IPV4_UNICAST]/state/prefixes/received'
+  '/network-instances/network-instance[name=Tenant_A_WEB_Zone]/protocols/protocol[identifier=BGP][name=BGP]/bgp/neighbors/neighbor[neighbor-address=198.51.100.1]/afi-safis/afi-safi[afi-safi-name=openconfig-bgp-types:IPV4_UNICAST]/state/prefixes/received'
 ```
 
 ## CLI origin
