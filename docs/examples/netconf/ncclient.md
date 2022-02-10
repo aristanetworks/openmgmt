@@ -36,7 +36,7 @@ Server:             running on port 830, in MGMT VRF
 
 ```python
 >>> from ncclient import manager
->>> eos=manager.connect(host="10.83.28.221", port="830", timeout=30, username="arista", password="arista", hostkey_verify=False)
+>>> eos=manager.connect(host="198.51.100.221", port="830", timeout=30, username="arista", password="arista", hostkey_verify=False)
 >>>
 >>> eos.connected
 True
@@ -115,7 +115,7 @@ b'<system>\n  <dns>\n    <servers>\n      <server>\n        <address>8.8.8.8</ad
 </system>
 >>>
 >>> from ncclient import manager
->>> eos=manager.connect(host="10.83.28.221", port="830", timeout=30, username="arista", password="arista", hostkey_verify=False)
+>>> eos=manager.connect(host="198.51.100.221", port="830", timeout=30, username="arista", password="arista", hostkey_verify=False)
 >>> eos.connected
 True
 >>>

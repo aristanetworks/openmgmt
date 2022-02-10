@@ -12,13 +12,13 @@ categories:
 #### Get all information
 
 ```shell
-gnmi -addr 10.83.13.139:6030 -username admin -password arista get /
+gnmi -addr 192.0.2.139:6030 -username admin -password arista get /
 ```
 
 #### Get the BGP configuration in the default VRF
 
 ```shell
-gnmi -addr 172.28.160.219:6030 -username admin -password arista \
+gnmi -addr 198.51.100.219:6030 -username admin -password arista \
   get '/network-instances/network-instance[name=default]/protocols/protocol[identifier=BGP][name=BGP]/bgp'`
 ```
 
@@ -268,7 +268,7 @@ gnmi -addr 172.28.160.219:6030 -username admin -password arista \
 #### Get BGP neighbors
 
 ```shell
-gnmi -addr 10.83.13.139 -username admin \
+gnmi -addr 192.0.2.139 -username admin \
   get '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors'
 ```
 
@@ -405,7 +405,7 @@ gnmi -addr 10.83.13.139 -username admin \
 #### Get all interface descriptions
 
 ```shell
-gnmi -addr 10.83.13.139:6030 -username admin -password arista \
+gnmi -addr 192.0.2.139:6030 -username admin -password arista \
   get '/interfaces/interface/subinterfaces/subinterface/state/description'
 ```
 
@@ -418,7 +418,7 @@ gnmi -addr 10.83.13.139:6030 -username admin -password arista \
 #### Get an interface's description
 
 ```shell
-gnmi -addr 10.81.117.100:6030 -username admin -password arista \
+gnmi -addr 198.51.100.100:6030 -username admin -password arista \
   get 'interfaces/interface[name=Ethernet1/1]/subinterfaces/subinterface/state/description'
 ```
 
@@ -429,14 +429,14 @@ gnmi -addr 10.81.117.100:6030 -username admin -password arista \
 #### Get the operational status of all interfaces
 
 ```shell
-gnmi -addr 10.83.13.139:6030 -username admin -password arista \
+gnmi -addr 192.0.2.139:6030 -username admin -password arista \
   get 'interfaces/interface/state/oper-status'`
 ```
 
 ##### Get all states of an interface
 
 ```shell
-gnmi -addr 10.83.13.139:6030 -username cvpadmin -password arastra \
+gnmi -addr 192.0.2.139:6030 -username cvpadmin -password arista \
   get 'interfaces/interface[name=Ethernet24]/state/'`
 ```
 
@@ -483,7 +483,7 @@ gnmi -addr 10.83.13.139:6030 -username cvpadmin -password arastra \
 #### Get an interface's operational status
 
 ```shell
-gnmi -addr 10.83.13.139:6030 -username cvpadmin -password arastra \
+gnmi -addr 192.0.2.139:6030 -username cvpadmin -password arista \
   get 'interfaces/interface[name=Ethernet24]/state/oper-status'
 ```
 
@@ -496,7 +496,7 @@ gnmi -addr 10.83.13.139:6030 -username cvpadmin -password arastra \
 #### Get an interface's admin status
 
 ```shell
-gnmi -addr 10.83.13.139:6030 -username cvpadmin -password arastra \
+gnmi -addr 192.0.2.139:6030 -username cvpadmin -password arista \
   get 'interfaces/interface[name=Ethernet24]/state/admin-status'`
 ```
 
@@ -509,14 +509,14 @@ gnmi -addr 10.83.13.139:6030 -username cvpadmin -password arastra \
 ##### Get the DOM metrics of all interfaces
 
 ```shell
-gnmi -addr 10.83.13.139:6030 -username cvpadmin -password arastra \
+gnmi -addr 192.0.2.139:6030 -username cvpadmin -password arista \
   get "components/component/transceiver/physical-channels/channel/state/"
 ```
 
 #### Get the DOM metrics of an interface
 
 ```shell
-gnmi -addr 10.83.13.139:6030 -username cvpadmin -password arastra \
+gnmi -addr 192.0.2.139:6030 -username cvpadmin -password arista \
   get "components/component[name=Ethernet24  transceiver]/transceiver/physical-channels/channel/state/"
 ```
 
@@ -545,7 +545,7 @@ gnmi -addr 10.83.13.139:6030 -username cvpadmin -password arastra \
 ##### Get per core CPU utilization
 
 ```shell
-gnmi -addr 10.83.13.139:6030 -username cvpadmin -password arastra \
+gnmi -addr 192.0.2.139:6030 -username cvpadmin -password arista \
   get 'components/component/cpu'
 ```
 
@@ -617,7 +617,7 @@ gnmi -addr 10.83.13.139:6030 -username cvpadmin -password arastra \
 ##### Get the available/utilized memory
 
 ```shell
-gnmi -addr 10.83.13.139:6030 -username cvpadmin -password arastra \
+gnmi -addr 192.0.2.139:6030 -username cvpadmin -password arista \
   get 'components/component/state/memory/'
 ```
 
@@ -634,7 +634,7 @@ gnmi -addr 10.83.13.139:6030 -username cvpadmin -password arastra \
 ##### Get the system environment temperatures
 
 ```shell
-gnmi -addr 10.83.13.139:6030 -username cvpadmin -password arastra \
+gnmi -addr 192.0.2.139:6030 -username cvpadmin -password arista \
    get 'components/component/state/temperature/instant'
 ```
 
@@ -699,7 +699,7 @@ require changing the origin to `eos_native`.
 ##### Get CPU utilization
 
 ```shell
-gnmi -addr 10.83.13.130:6030 -username admin \
+gnmi -addr 192.0.2.130:6030 -username admin \
   get origin=eos_native '/Kernel/proc/cpu/utilization/total'
 ```
 
@@ -723,7 +723,7 @@ total
 ##### Get transceiver DOM temperature
 
 ```shell
-gnmi -addr 10.83.13.130:6030 -username admin  get origin=eos_native \
+gnmi -addr 192.0.2.130:6030 -username admin  get origin=eos_native \
   'Sysdb/environment/archer/temperature/status/system/DomTemperatureSensor32'`
 ```
 
@@ -754,7 +754,7 @@ gnmi -addr 10.83.13.130:6030 -username admin  get origin=eos_native \
 ##### Get connectivity monitor host stats
 
 ```shell
-gnmi -addr 10.83.13.139:6030 -username admin get origin=eos_native '/Sysdb/connectivityMonitor/status/hostStatus/'
+gnmi -addr 192.0.2.139:6030 -username admin get origin=eos_native '/Sysdb/connectivityMonitor/status/hostStatus/'
 ```
 
 <details><summary> Reveal output</summary>
@@ -772,14 +772,14 @@ gnmi -addr 10.83.13.139:6030 -username admin get origin=eos_native '/Sysdb/conne
 /Sysdb/connectivityMonitor/status/hostStatus/wls100_default/defaultStats/interfaceName:
 /Sysdb/connectivityMonitor/status/hostStatus/wls100_default/defaultStats/jitter: 0
 /Sysdb/connectivityMonitor/status/hostStatus/wls100_default/defaultStats/latency: 0
-/Sysdb/connectivityMonitor/status/hostStatus/wls100_default/ipAddr: "10.83.13.140"
+/Sysdb/connectivityMonitor/status/hostStatus/wls100_default/ipAddr: "192.0.2.140"
 /Sysdb/connectivityMonitor/status/hostStatus/ats323_management/key/hostName: ats323
 /Sysdb/connectivityMonitor/status/hostStatus/ats323_management/key/vrfName:
 {
   "value": "management"
 }
 /Sysdb/connectivityMonitor/status/hostStatus/ats323_management/name: ats323_management
-/Sysdb/connectivityMonitor/status/hostStatus/ats323_management/ipAddr: "10.83.13.138"
+/Sysdb/connectivityMonitor/status/hostStatus/ats323_management/ipAddr: "192.0.2.138"
 /Sysdb/connectivityMonitor/status/hostStatus/ats323_management/defaultStats/latency: 0.127
 /Sysdb/connectivityMonitor/status/hostStatus/ats323_management/defaultStats/jitter: 0.033
 /Sysdb/connectivityMonitor/status/hostStatus/ats323_management/defaultStats/packetLoss: 0
@@ -799,23 +799,23 @@ gnmi -addr 10.83.13.139:6030 -username admin get origin=eos_native '/Sysdb/conne
 ##### Configure neighbor address and peer AS
 
 ```shell
-gnmi -addr 10.83.13.139:6030 -username cvpadmin -password arastra \
-  update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.100.43]' \
-  '{"config": {"neighbor-address":"10.10.100.43", "peer-as": 123}}'
+gnmi -addr 192.0.2.139:6030 -username cvpadmin -password arista \
+  update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=198.51.100.43]' \
+  '{"config": {"neighbor-address":"198.51.100.43", "peer-as": 123}}'
 ```
 
 ##### Configure neighbor address, peer AS and send-community
 
 ```shell
-gnmi -addr 10.83.28.203:6030 -username arista -password arista
-  update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.100.43]' \
-  '{"config": {"neighbor-address":"10.10.100.43", "peer-as": 123, "enabled": true, "send-community": "EXTENDED"}}'
+gnmi -addr 192.0.2.203:6030 -username arista -password arista
+  update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=198.51.100.43]' \
+  {"config": {"neighbor-address":"198.51.100.43", "peer-as": 123, "enabled": true, "send-community": "EXTENDED"}}'
 ```
 
 #### Create peer group
 
 ```shell
-gnmi -addr 10.83.28.203 -username arista -password arista update \
+gnmi -addr 192.0.2.203 -username arista -password arista update \
   '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/peer-groups/peer-group[peer-group-name=XYZ]' \
   '{"config": {"peer-group-name":"XYZ", "local-as": 114}}'
 ```
@@ -823,35 +823,35 @@ gnmi -addr 10.83.28.203 -username arista -password arista update \
 #### Update the peer AS
 
 ```shell
-gnmi -addr 10.83.28.203:6030 -username arista -password arista \
-  update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.10.0]/config/peer-as' \
+gnmi -addr 192.0.2.203:6030 -username arista -password arista \
+  update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=198.51.100.0]/config/peer-as' \
   '110'
 ```
 
 ```shell
-gnmi -addr 10.83.28.203:6030 -username arista -password arista \
-  update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.10.0]' \
+gnmi -addr 192.0.2.203:6030 -username arista -password arista \
+  update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=198.51.100.0]' \
   '{"config": {"peer-as": 110}}'
 ```
 
 #### Update the peer group
 
 ```shell
-gnmi -addr 10.83.28.203:6030 -username arista -password arista \
-  update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.100.43]/config/peer-group' \
+gnmi -addr 192.0.2.203:6030 -username arista -password arista \
+  update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=198.51.100.43]/config/peer-group' \
   'XYZ'
 ```
 
 ```shell
-gnmi -addr 10.83.28.203:6030 -username arista -password arista \
-  update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.10.0]' \
+gnmi -addr 192.0.2.203:6030 -username arista -password arista \
+  update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=198.51.100.0]' \
   '{"config": {"peer-group": "XYZ","peer-as": 143}}'
 ```
 
 #### Update BGP config using json file
 
 ```shell
-gnmi -addr 10.83.28.203:6030 -username arista -password arista \
+gnmi -addr 192.0.2.203:6030 -username arista -password arista \
   update /network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp'
 ```
 
@@ -900,7 +900,7 @@ gnmi -addr 10.83.28.203:6030 -username arista -password arista \
 #### Create an ACL
 
 ```shell
-gnmi -addr 10.83.28.203:6030 -username admin -password arista \
+gnmi -addr 192.0.2.203:6030 -username admin -password arista \
   update /acl/acl-sets acl2.json
 ```
 
@@ -935,7 +935,7 @@ cat acl2.json
                   },
                   "ipv4": {
                      "config": {
-                        "destination-address": "1.2.3.4/12",
+                        "destination-address": "192.0.2.1/32",
                         "source-address": "0.0.0.0/0"
                      }
                   }
@@ -960,7 +960,7 @@ ip access-list test
 #### Shutdown an interface
 
 ```shell
-gnmi -addr 10.83.13.139:6030 -username arista -password arista  \
+gnmi -addr 192.0.2.139:6030 -username arista -password arista  \
   update '/interfaces/interface[name=Ethernet1]/config/enabled' \
   'false'
 ```
@@ -968,7 +968,7 @@ gnmi -addr 10.83.13.139:6030 -username arista -password arista  \
 #### Bring up an interface
 
 ```shell
-gnmi -addr 10.83.13.139:6030 -username arista -password arista  \
+gnmi -addr 192.0.2.139:6030 -username arista -password arista  \
   update '/interfaces/interface[name=Ethernet1]/config/enabled' \
   'true'
 ```
@@ -980,24 +980,24 @@ gnmi -addr 10.83.13.139:6030 -username arista -password arista  \
 #### Subscribe to all BGP neighbor states
 
 ```shell
-gnmi -addr 10.83.28.203 -username arista -password arista \
+gnmi -addr 192.0.2.203 -username arista -password arista \
   subscribe '/network-instances/network-instance/protocols/protocol/bgp/neighbors/neighbor/state'
 ```
 
 #### Subscribe to specific BGP neighbor state
 
 ```shell
-gnmi -addr 10.83.28.203 -username arista -password arista \
-  subscribe '/network-instances/network-instance/protocols/protocol/bgp/neighbors/neighbor[neighbor-address=10.10.10.5]/state'
+gnmi -addr 192.0.2.203 -username arista -password arista \
+  subscribe '/network-instances/network-instance/protocols/protocol/bgp/neighbors/neighbor[neighbor-address=198.51.100.5]/state'
 ```
 
 #### Subscribe with stream mode sample and interval
 
 ```shell
-gnmi -addr 10.83.13.214:6030 -username admin -password arista \
+gnmi -addr 192.0.2.214:6030 -username admin -password arista \
   -sample_interval 5s -stream_mode sample                     \
   subscribe                                                   \
-  '/network-instances/network-instance[name=Tenant_A_WEB_Zone]/protocols/protocol[identifier=BGP][name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.255.251.1]/afi-safis/afi-safi[afi-safi-name=openconfig-bgp-types:IPV4_UNICAST]/state/prefixes/received'
+  '/network-instances/network-instance[name=Tenant_A_WEB_Zone]/protocols/protocol[identifier=BGP][name=BGP]/bgp/neighbors/neighbor[neighbor-address=198.51.100.1]/afi-safis/afi-safi[afi-safi-name=openconfig-bgp-types:IPV4_UNICAST]/state/prefixes/received'
 ```
 
 ## CLI origin
@@ -1005,7 +1005,7 @@ gnmi -addr 10.83.13.214:6030 -username admin -password arista \
 ### Changing the maximum-routes for a BGP neighbor
 
 ```shell
-gnmi -addr 10.83.13.214:6030 -username arista -password arista \
+gnmi -addr 192.0.2.214:6030 -username arista -password arista \
     update origin=cli "" "router bgp 65101
     neighbor IPv4-UNDERLAY-PEERS maximum-routes 12500"
 ```
@@ -1015,7 +1015,7 @@ gnmi -addr 10.83.13.214:6030 -username arista -password arista \
 ### show version
 
 ```shell
-gnmi -addr 10.83.13.214:6030 -username cvpadmin -password arastra \
+gnmi -addr 192.0.2.214:6030 -username cvpadmin -password arista \
    get  origin=cli "show version"
 ```
 
@@ -1043,6 +1043,7 @@ gnmi -addr 10.83.13.214:6030 -username cvpadmin -password arastra \
   "uptime": 1814877.63,
   "version": "4.26.2F-23035564.riorel (engineering build)"
 }
+```
 
 </p>
 </details>

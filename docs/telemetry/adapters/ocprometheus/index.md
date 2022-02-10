@@ -72,7 +72,7 @@ scrape_configs:
       - targets: ['localhost:9090']
   - job_name: 'arista'
     static_configs:
-      - targets: ['10.83.13.139:8080']
+      - targets: ['192.0.2.139:8080']
 ```
 
 Start the Prometheus Docker container with an external configuration file:
@@ -139,10 +139,10 @@ root@tac-prometheus-ire:~# curl localhost:9090/config
 <ommited>
   static_configs:
   - targets:
-    - 10.83.13.132:8080
-    - 10.83.13.139:8080
+    - 192.0.2.132:8080
+    - 192.0.2.139:8080
     - 10.83.12.109:8080
-    - 10.83.13.138:8080
+    - 192.0.2.138:8080
 <ommited>
 ```
 
@@ -240,7 +240,7 @@ GOOS=linux GOARCH=386 go build
 3\. Copy the binary with SCP to the switch
 
 ```shell
-scp ocprometheus admin@10.83.13.139://mnt/flash
+scp ocprometheus admin@192.0.2.139://mnt/flash
 ```
 
 Since EOS has a linux kernel, the OS has to be set to linux and the architecture to 32 bit (386) with GOOS and GOARCH
@@ -285,7 +285,6 @@ downloaded from github:
 
 ```shell
 cp ~/git/goarista/cmd/ocprometheus/ocprometheus /backup/fpmbuild/
-
 cp ~/git/goarista/cmd/ocprometheus/sampleconfig_above_4.20.yml /backup/fpmbuild/ocprometheus.yml
 ```
 
@@ -523,7 +522,7 @@ You should see a similar output as below:
 $ sudo netstat -tulnap | grep :8080
 
 tcp6       0 0 :::8080                 :::* LISTEN   17200/ocprometheus
-tcp6       0 0 172.28.160.232:8080     10.83.13.78:48956 ESTABLISHED 17200/ocprometheus
+tcp6       0 0 172.28.160.232:8080     192.0.2.78:48956 ESTABLISHED 17200/ocprometheus
 ```
 
 Or in case of using a VRF:
@@ -532,7 +531,7 @@ Or in case of using a VRF:
 $ sudo ip netns exec ns-management netstat -tulnap | grep :8080
 
 tcp6       0 0 :::8080                 :::* LISTEN   12344/ocprometheus
-tcp6       0 0 10.83.13.139:8080       10.83.13.78:40820 ESTABLISHED 12344/ocprometheus
+tcp6       0 0 192.0.2.139:8080       192.0.2.78:40820 ESTABLISHED 12344/ocprometheus
 ```
 
 Don’t be confused if you see tcp6 in the output, that’s expected, as AF_INET6 works for both IPv4 and IPv6 as per RFC [3493](https://tools.ietf.org/html/rfc3493#section-3.7).
@@ -547,7 +546,7 @@ Here are some of the configuration combinations that you might have:
 ```shell
 !
 daemon TerminAttr
-  exec /usr/bin/TerminAttr -ingestgrpcurl=10.83.13.33:9910 -cvcompression=gzip -taillogs -ingestauth=key,mysecretkey -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -disableaaa
+  exec /usr/bin/TerminAttr -ingestgrpcurl=192.0.2.33:9910 -cvcompression=gzip -taillogs -ingestauth=key,mysecretkey -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -disableaaa
   no shutdown
 !
 daemon ocprometheus
@@ -575,7 +574,7 @@ daemon ocprometheus
 ```shell
 !
 daemon TerminAttr
-  exec /usr/bin/TerminAttr -ingestgrpcurl=10.83.13.79:9910 -cvcompression=gzip -taillogs -ingestvrf=management -ingestauth=key,mysecretkey -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -disableaaa -grpcaddr management/0.0.0.0:6042
+  exec /usr/bin/TerminAttr -ingestgrpcurl=192.0.2.79:9910 -cvcompression=gzip -taillogs -ingestvrf=management -ingestauth=key,mysecretkey -smashexcludes=ale,flexCounter,hardware,kni,pulse,strata -ingestexclude=/Sysdb/cell/1/agent,/Sysdb/cell/2/agent -disableaaa -grpcaddr management/0.0.0.0:6042
   no shutdown
 !
 daemon ocprometheus
@@ -617,7 +616,7 @@ daemon ocprometheus
 ```shell
 !
 daemon TerminAttr
-  exec /usr/bin/TerminAttr -disableaaa -grpcaddr management/0.0.0.0:6042 -allowed_ips=10.83.13.78/32
+  exec /usr/bin/TerminAttr -disableaaa -grpcaddr management/0.0.0.0:6042 -allowed_ips=192.0.2.78/32
   no shutdown
 !
 daemon ocprometheus
@@ -642,47 +641,47 @@ You can do this by using the following steps:
 
 1\. Go to Configuration (gear icon) / Data Sources
 
-![Grafana1](./resources/Grafana1.png)
+![Grafana1](resources/Grafana1.png)
 
 2\. Add data source and select Prometheus
 
-![Grafana2](./resources/Grafana2.png)
+![Grafana2](resources/Grafana2.png)
 
-![Grafana3](./resources/Grafana3.png)
+![Grafana3](resources/Grafana3.png)
 
 3\. Fill out the form (add the URL for the Prometheus server e.g.: `http://myprometheus.com:9090/`
 
 It should look like this:
 
-![Grafana4](./resources/Grafana4.png)
+![Grafana4](resources/Grafana4.png)
 
 4\. Save & Test
 
 5\. Now we can create our dashboard ( + button on the left)
 
-![Grafana5](./resources/Grafana5.png)
+![Grafana5](resources/Grafana5.png)
 
 6\. Add query
 
-![Grafana6](./resources/Grafana6.png)
+![Grafana6](resources/Grafana6.png)
 
 7\. Make sure you have ‘Prometheus’ selected as Data Source
 
-![Grafana7](./resources/Grafana7.png)
+![Grafana7](resources/Grafana7.png)
 
 After selecting ‘prometheus’ you will be able to add expressions like ‘intfCounter’ , ‘tempSensor’, etc. defined in
 the ocprometheus config yaml file.
 
-![Grafana8](./resources/Grafana8.png)
+![Grafana8](resources/Grafana8.png)
 
 8\. After adding ‘intfCounter’ to the query, it’ll start plotting the counters for all the interfaces and all the devices
  that Prometheus is polling
 
-![Grafana8v2](./resources/Grafana8v2.png)
+![Grafana8v2](resources/Grafana8v2.png)
 
 9\. Save the dashboard
 
-![Grafana9](./resources/Grafana9.png)
+![Grafana9](resources/Grafana9.png)
 
 Finally:
 
@@ -698,9 +697,9 @@ interface Ethernet24 I’d use the following filter:
 
 `intfCounter{intf=”Ethernet24″}`
 
-![Grafana10](./resources/Grafana10.png)
+![Grafana10](resources/Grafana10.png)
 
-![Grafana11](./resources/Grafana11.png)
+![Grafana11](resources/Grafana11.png)
 
 You can filter based on any of the labels defined in the config file (some of them are unnamed,
 but you can add a name to those capturing/non-capturing groups inside the config file on EOS).
@@ -791,7 +790,7 @@ Some of the graphs that you’ll find in this dashboard:
 - Voltage levels
 - Interface counters for individual interfaces
 
-![Grafana12](./resources/Grafana12.png)
+![Grafana12](resources/Grafana12.png)
 
 > Beware of [https://github.com/grafana/grafana/issues/6888](https://github.com/grafana/grafana/issues/6888)
 
@@ -923,7 +922,8 @@ alerting:
     - targets:
       # - alertmanager:9093
 
-# Load rules once and periodically evaluate them according to the global 'evaluation_interval'.
+# Load rules once and periodically evaluate them according to the
+# global 'evaluation_interval'.
 
 rule_files:
   # - "first_rules.yml"
@@ -931,11 +931,12 @@ rule_files:
     - "kernel_rules.yml"
 
 # A scrape configuration containing exactly one endpoint to scrape:
-
 # Here it's Prometheus itself.
 
 scrape_configs:
-  # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
+  # The job name is added as a label `job=<job_name>` to any
+  # timeseries scraped from this config.
+
   - job_name: 'prometheus'
     # metrics_path defaults to '/metrics'
     # scheme defaults to 'http'.
@@ -943,7 +944,7 @@ scrape_configs:
       - targets: ['localhost:9090']
   - job_name: 'arista'
     static_configs:
-      - targets: ['10.83.13.140:8080','10.81.116.237:8080','10.81.117.21:8080','10.83.13.132:8080','10.83.13.139:8080','10.83.12.109:8080','10.83.13.138:8080']
+      - targets: ['192.0.2.140:8080','198.51.100.21:8080','192.0.2.132:8080','192.0.2.139:8080','192.0.2.138:8080']
 ```
 
 ### Kernel_rules.yml on the server
@@ -956,7 +957,7 @@ groups:
       expr: kernelprocrss * on(pid) group_right kernelproc
 ```
 
-> Note that if you did not mount the kernel_rules.yml file when creating your docker container (as I did) you’ll need
+> Note, if you did not mount the kernel_rules.yml file when creating your docker container (as I did) you’ll need
 > to copy the file over to your container with the following command
 
 ```shell
@@ -965,16 +966,16 @@ docker cp kernel_rules.yml eager_kapitsa:/etc/prometheus/
 
 Checking on the GUI, it will give you the following results
 
-![prom13.png](./resources/prom13.png)
+![prom13.png](resources/prom13.png)
 
 You can also use the expression from the `kernel_rules.yml` directly on the GUI
 
-![prom14.png](./resources/prom14.png)
+![prom14.png](resources/prom14.png)
 
 After you create the records and update the yml files on the server, make sure you can see the rule created in
 the Status – Rules submenu
 
-![prom15.png](./resources/prom15.png)
+![prom15.png](resources/prom15.png)
 
 ## Using ocprometheus with the OpenConfig/OCTA agent (management api gnmi)
 
@@ -989,8 +990,13 @@ subscriptions:
 metrics:
      - name: intfCounter
        path: /interfaces/interface\[name=(?P<intf>[^\]]+)\]/state/counters/(?P<countertype>.+)
-OpenConfig and EOS native paths can be mixed when using OCTA and in that case the origin must be specified. Since the default origin is openconfig, the origin has to be only specified for EOS native paths under the subscriptions key, e.g.:
+```
 
+OpenConfig and EOS native paths can be mixed when using OCTA and in that case the origin must be specified. Since the
+default origin is openconfig, the origin has to be only specified for EOS native paths under the subscriptions key,
+e.g.:
+
+```yaml
 subscriptions:
    - /interfaces/interface
    - eos_native:/Kernel/proc
@@ -1028,11 +1034,11 @@ subscriptions:
 
 ### Cert-based authentification with ocprometheus
 
-1\. Follow the steps mentioned in [Certificate Authentification Configuration page](https://aristanetworks.github.io/openmgmt/configuration/mtls/).
-
-2\. Copy the client certificate and client key to the `/persist/secure/ssl` and `/persist/secure/keys` directory respectively.
-
-3\. The EOS configuration should look like the following:
+1. Follow the steps mentioned in [Certificate Authentification Configuration
+   page](https://aristanetworks.github.io/openmgmt/configuration/mtls/).
+2. Copy the client certificate and client key to the `/persist/secure/ssl` and `/persist/secure/keys` directory
+   respectively.
+3. The EOS configuration should look like the following:
 
 ```shell
 management api gnmi
@@ -1080,7 +1086,7 @@ Check TerminAttr version (After TerminAttr 1.5.1 we replaced the deprecated `gnm
 This was only changed on our OpenConfig connectors (ockafka, ocprometheus, octsdb, ocredis, etc.) after March, 2019, thus
 older ocprometheus versions will ignore the updates.
 
-The version of ocprometheus hat uses TypedValue as well was pushed to [github](https://github.com/aristanetworks/goarista/commit/22b2444f947b7d395b5c227cf0dd881d0100bdb1)
+The version of ocprometheus that uses TypedValue as well was pushed to [github](https://github.com/aristanetworks/goarista/commit/22b2444f947b7d395b5c227cf0dd881d0100bdb1)
 on March 19th. A newer commit was done
 in the beginning of June to deal with [coalesced deletes](https://github.com/aristanetworks/goarista/commit/fef20d617fa7e1c7509e958fd3bd49cf4a4af5c0),
 and it’s recommended to use the latest version.
@@ -1110,7 +1116,7 @@ I0319 13:41:11.899698    5386 collector.go:77] Ignoring incompatible update valu
 
 Make sure you’re running the latest ocprometheus and TerminAttr versions.
 
-#### Broken paths due to incorrect regexp
+#### Broken paths due to incorrect regex
 
 Some of the subscription paths in the sample config file might not work on all type of devices.
 In case of broken paths, unfortunately we won’t stream anything, and you might encounter a similar error as below when
@@ -1155,7 +1161,7 @@ You can validate your regular expression using a regexp app (e.g [www.regex101.c
 
 As you can see we are only matching `VoltageSensorX`
 
-![regex16](./resources/regex16.png)
+![regex16](resources/regex16.png)
 
 To correct the issue, we can use the following path instead:
 
@@ -1163,7 +1169,7 @@ To correct the issue, we can use the following path instead:
 
 As you can see, we are able to match on both VoltageSensorX and VoltageSensorX/Y .
 
-![regex17](./resources/regex17.png)
+![regex17](resources/regex17.png)
 
 #### Authentication failed
 
@@ -1235,18 +1241,13 @@ Commonly used paths:
 - System info: `/Kernel/sysinfo`
 - Interface counters: `/Smash/counters/ethIntf/<agent>/current/counter`
 
-For details about subscription paths and metric path structures please visit: https://eos.arista.com/understanding-subscription-paths-for-open-source-telemetry-streaming
+For details about subscription paths and metric path structures please visit: <https://eos.arista.com/understanding-subscription-paths-for-open-source-telemetry-streaming>
 
 ## Useful links
 
-[https://prometheus.io/docs/prometheus/](https://prometheus.io/docs/prometheus/)
-
-[https://grafana.com/docs/](https://grafana.com/docs/)
-
-[http://docs.grafana.org/installation/docker/](http://docs.grafana.org/installation/docker/)
-
-[https://grafana.com/dashboards](https://grafana.com/dashboards)
-
-[https://fpm.readthedocs.io/en/latest/installing.html](https://fpm.readthedocs.io/en/latest/installing.html)
-
-[https://regex101.com/](https://regex101.com/)
+- [https://prometheus.io/docs/prometheus/](https://prometheus.io/docs/prometheus/)
+- [https://grafana.com/docs/](https://grafana.com/docs/)
+- [http://docs.grafana.org/installation/docker/](http://docs.grafana.org/installation/docker/)
+- [https://grafana.com/dashboards](https://grafana.com/dashboards)
+- [https://fpm.readthedocs.io/en/latest/installing.html](https://fpm.readthedocs.io/en/latest/installing.html)
+- [https://regex101.com/](https://regex101.com/)
