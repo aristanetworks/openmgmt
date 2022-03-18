@@ -18,6 +18,8 @@ extra:
   analytics:
     provider: google
     property: G-4V8W728SS9
+markdown_extensions:
+  - pymdownx.snippets
 nav:
   - Home: index.md
   - Configuration:
