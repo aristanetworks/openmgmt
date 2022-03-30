@@ -238,12 +238,12 @@ Listen addresses: ::
 ## Configuration Persistence
 
 By default, within EOS, the application of gNMI `Set` RPCs are not persisted to the `startup-config`.  A `copy
-running-config startup-config` execution would be required in order to save configuration updates imposed via gNMI.
+running-config startup-config` execution is required in order to save configuration updates imposed via gNMI.
 
-If the operator desire to be able to save gNMI-based configuration, persistence can be enabled by adding the following
-configuration. With this option, all gnmi `Set` operations will be saved to the `startup-config`.  Note, the
-configuration is saved using Arista's EOS configuration syntax and there is no corresponding presentation of the
-OpenConfig syntax.
+As of EOS 4.28.0F, if the operator desire to be able to save gNMI-based configuration automatically, persistence can be
+enabled by adding the following configuration. With this option, all gnmi `Set` operations will be saved to the
+`startup-config`. Note, the configuration is saved using Arista's EOS configuration syntax and there is no corresponding
+presentation of the OpenConfig syntax.
 
 ```text
 management api gnmi
