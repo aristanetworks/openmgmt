@@ -228,7 +228,7 @@ QoS DSCP: none
 Authorization required: no
 Accounting requests: no
 Certificate username authentication: no
-Notification timestamp: send time  !! note timetamp mode.
+Notification timestamp: send time  !! note: timestamp mode
 Listen addresses: ::
 ```
 
@@ -265,7 +265,7 @@ default operation set persistence
 ```text
 #show management api gnmi
 Octa: enabled
-Set persistence: enabled  !! confirmation
+Set persistence: enabled  !! note: persistence state
 
 Transport: default
 Enabled: yes
