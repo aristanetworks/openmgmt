@@ -1,6 +1,6 @@
 # This file shows an example with the edit-config NETCONF operation and the candidate configuration datastore.
 
-cfg_system = '''
+cfg_system = """
 <config>
     <system xmlns="http://openconfig.net/yang/system">
         <config>
@@ -26,9 +26,9 @@ cfg_system = '''
         </dns>
     </system>
 </config>
-'''
+"""
 
-cfg_interface_ethernet3_description = '''
+cfg_interface_ethernet3_description = """
 <config>
     <interfaces xmlns="http://openconfig.net/yang/interfaces">
         <interface>
@@ -39,12 +39,25 @@ cfg_interface_ethernet3_description = '''
         </interface>
     </interfaces>
 </config>
-'''
+"""
 
 from ncclient import manager
 
-with manager.connect(host="10.83.28.221", port="830", timeout=30, username="arista", password="arista", hostkey_verify=False) as eos:
+with manager.connect(
+    host="198.51.100.221",
+    port="830",
+    timeout=30,
+    username="arista",
+    password="arista",
+    hostkey_verify=False,
+) as eos:
     with eos.locked("candidate"):
-        eos.edit_config(target = "candidate", config = cfg_system, default_operation="merge")
-        eos.edit_config(target = "candidate", config = cfg_interface_ethernet3_description, default_operation="merge")
+        eos.edit_config(
+            target="candidate", config=cfg_system, default_operation="merge"
+        )
+        eos.edit_config(
+            target="candidate",
+            config=cfg_interface_ethernet3_description,
+            default_operation="merge",
+        )
         eos.commit()

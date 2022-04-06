@@ -43,7 +43,7 @@ version : 0.0.5
 interface Management1
    description oob_management
    vrf MGMT
-   ip address 10.73.1.118/24
+   ip address 192.0.2.118/24
 
 username arista secret 0 arista
 
@@ -64,9 +64,9 @@ DC1-L2LEAF2A#
 Before to use gNOI ping and traceroute, lets run these commands locally:
 
 ```shell
-$ ssh arista@10.73.1.118
+$ ssh arista@192.0.2.118
 Password:
-Last login: Thu Jun  3 12:06:25 2021 from 10.73.1.3
+Last login: Thu Jun  3 12:06:25 2021 from 192.0.2.3
 DC1-L2LEAF2A>en
 DC1-L2LEAF2A#bash
 
@@ -89,20 +89,20 @@ traceroute to 172.31.255.0 (172.31.255.0), 30 hops max, 60 byte packets
 [arista@DC1-L2LEAF2A ~]$ exit
 logout
 DC1-L2LEAF2A#exit
-Connection to 10.73.1.118 closed.
+Connection to 192.0.2.118 closed.
 ```
 
 ## gNOI demo with Arista using gNOIc
 
 ```shell
-gnoic -a 10.73.1.118:6030 -u arista -p arista --insecure  system ping \
+gnoic -a 192.0.2.118:6030 -u arista -p arista --insecure  system ping \
    --destination 172.31.255.0 --count 2 --do-not-resolve
 ```
 
 Output:
 
 ```shell
-WARN[0000] "10.73.1.118:6030" could not lookup hostname: lookup 118.1.73.10.in-addr.arpa. on 127.0.0.53:53: no such host
+WARN[0000] "192.0.2.118:6030" could not lookup hostname: lookup 118.1.73.10.in-addr.arpa. on 127.0.0.53:53: no such host
 source: "172.31.255.0"
 time: 31200000
 bytes: 64
@@ -124,14 +124,14 @@ std_dev: 1351000
 ```
 
 ```shell
- gnoic -a 10.73.1.118:6030 -u arista -p arista --insecure  system traceroute \
+ gnoic -a 192.0.2.118:6030 -u arista -p arista --insecure  system traceroute \
     --destination 172.31.255.0 --do-not-resolve
 ```
 
 Output:
 
 ```shell
-WARN[0000] "10.73.1.118:6030" could not lookup hostname: lookup 118.1.73.10.in-addr.arpa. on 127.0.0.53:53: no such host
+WARN[0000] "192.0.2.118:6030" could not lookup hostname: lookup 118.1.73.10.in-addr.arpa. on 127.0.0.53:53: no such host
 destination_name: "172.31.255.0"
 destination_address: "172.31.255.0"
 hops: 30
@@ -157,17 +157,17 @@ rtt: 71079000
 ```
 
 ```shell
-gnoic -a 10.73.1.118:6030 -u arista -p arista --insecure cert can-generate-csr
+gnoic -a 192.0.2.118:6030 -u arista -p arista --insecure cert can-generate-csr
 ```
 
 Output:
 
 ```shell
-WARN[0000] "10.73.1.118:6030" could not lookup hostname: lookup 118.1.73.10.in-addr.arpa. on 127.0.0.53:53: no such host
-INFO[0000] "10.73.1.118:6030" key-type=KT_RSA, cert-type=CT_X509, key-size=2048: can_generate: true
+WARN[0000] "192.0.2.118:6030" could not lookup hostname: lookup 118.1.73.10.in-addr.arpa. on 127.0.0.53:53: no such host
+INFO[0000] "192.0.2.118:6030" key-type=KT_RSA, cert-type=CT_X509, key-size=2048: can_generate: true
 +------------------+------------------+
 |   Target Name    | Can Generate CSR |
 +------------------+------------------+
-| 10.73.1.118:6030 | true             |
+| 192.0.2.118:6030 | true             |
 +------------------+------------------+
 ```

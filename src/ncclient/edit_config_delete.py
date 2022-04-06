@@ -1,7 +1,15 @@
 from ncclient import manager
-eos=manager.connect(host="10.83.28.221", port="830", timeout=30, username="arista", password="arista", hostkey_verify=False)
 
-conf = '''
+eos = manager.connect(
+    host="198.51.100.221",
+    port="830",
+    timeout=30,
+    username="arista",
+    password="arista",
+    hostkey_verify=False,
+)
+
+conf = """
 <config xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0">
     <system xmlns="http://arista.com/yang/openconfig/system/">
         <config>
@@ -16,10 +24,10 @@ conf = '''
         </dns>
     </system>
 </config>
-'''
-reply = eos.edit_config(target = "running", config = conf, default_operation="none")
+"""
+reply = eos.edit_config(target="running", config=conf, default_operation="none")
 
-conf = '''
+conf = """
 <config xmlns:nc="urn:ietf:params:xml:ns:netconf:base:1.0">
     <system xmlns="http://arista.com/yang/openconfig/system/">
         <aaa>
@@ -33,7 +41,7 @@ conf = '''
         </aaa>
     </system>
 </config>
-'''
-reply = eos.edit_config(target = "running", config = conf, default_operation="none")
+"""
+reply = eos.edit_config(target="running", config=conf, default_operation="none")
 
 eos.close_session()

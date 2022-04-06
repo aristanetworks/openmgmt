@@ -70,13 +70,13 @@ this difficult so constraining excessively long lines wherever possible is usefu
 **example:** hard to read
 
 ```shell
-gnmic -a 10.83.13.214:6030 -u cvpadmin -p arastra --insecure --gzip get --path '/network-instances/network-instance[name=default]/protocols/protocol[identifier=BGP][name=BGP]/bgp'`
+gnmic -a 192.0.2.214:6030 -u cvpadmin -p arastra --insecure --gzip get --path '/network-instances/network-instance[name=default]/protocols/protocol[identifier=BGP][name=BGP]/bgp'`
 ```
 
 **example:** easier to read
 
 ```shell
-gnmic -a 10.83.13.214:6030 -u cvpadmin -p arastra --insecure --gzip get \
+gnmic -a 192.0.2.214:6030 -u cvpadmin -p arastra --insecure --gzip get \
   --path '/network-instances/network-instance[name=default]/protocols/protocol[identifier=BGP][name=BGP]/bgp'`
 ```
 
@@ -86,13 +86,13 @@ with the noun being acted on in the command.
 **example:** verb-noun coupling (preferred)
 
 ```shell
-gnmi -addr 10.83.13.139 -username admin \
+gnmi -addr 192.0.2.139 -username admin \
   get '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors'
 ```
 
 **example:** verb-noun decoupling (potentially difficult to read)
 
 ```shell
-gnmi -addr 10.83.13.139 -username admin get \
+gnmi -addr 192.0.2.139 -username admin get \
   '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors'
 ```

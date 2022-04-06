@@ -56,7 +56,7 @@ Authorization Required:No
 ```
 
 ```shell
-gnmic -a 127.0.0.1:6030 -u admin -p admin --insecure capabilities  \
+gnmic -a 192.0.2.1:6030 -u admin -p admin --insecure capabilities  \
   >> outputs/capabilities.json
 ```
 
@@ -67,34 +67,34 @@ gnmic -a 127.0.0.1:6030 -u admin -p admin --insecure capabilities  \
 #### Get all information
 
 ```shell
-gnmic -a 10.83.13.214:6030 -u cvpadmin -p arastra --insecure --gzip get --path "/"
+gnmic -a 192.0.2.214:6030 -u cvpadmin -p arista --insecure --gzip get --path "/"
 ```
 
 #### Get the BGP configuration in the default VRF
 
 ```shell
-gnmic -a 10.83.13.214:6030 -u cvpadmin -p arastra --insecure --gzip get --path  \
+gnmic -a 192.0.2.214:6030 -u cvpadmin -p arista --insecure --gzip get --path  \
   '/network-instances/network-instance[name=default]/protocols/protocol[identifier=BGP][name=BGP]/bgp'`
 ```
 
 #### Get BGP neighbors
 
 ```shell
-gnmi -addr 10.83.13.139 -username admin get \
+gnmi -addr 192.0.2.139 -username admin get \
   '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors'
 ```
 
 #### Get all interface descriptions
 
 ```shell
-gnmic -a 10.83.13.214:6030 -u cvpadmin -p arastra --insecure --gzip get --path  \
+gnmic -a 192.0.2.214:6030 -u cvpadmin -p arista --insecure --gzip get --path  \
   '/interfaces/interface/subinterfaces/subinterface/state/description'
 ```
 
 #### Get an interface's description
 
 ```shell
-gnmic -a 10.83.13.214:6030 -u cvpadmin -p arastra --insecure --gzip get --path  \
+gnmic -a 192.0.2.214:6030 -u cvpadmin -p arista --insecure --gzip get --path  \
   'interfaces/interface[name=Ethernet1]/subinterfaces/subinterface/state/description'
 ```
 
@@ -118,7 +118,7 @@ gnmic -a 10.83.13.214:6030 -u cvpadmin -p arastra --insecure --gzip get --path  
 #### Get the operational status of all interfaces
 
 ```shell
-gnmic -a 10.83.13.214:6030 -u cvpadmin -p arastra --insecure --gzip get --path  \
+gnmic -a 192.0.2.214:6030 -u cvpadmin -p arista --insecure --gzip get --path  \
   'interfaces/interface/state/oper-status'
 ```
 
@@ -190,7 +190,7 @@ gnmic -a 10.83.13.214:6030 -u cvpadmin -p arastra --insecure --gzip get --path  
 #### Get all states of an interface
 
 ```shell
-gnmic -a 10.83.13.214:6030 -u cvpadmin -p arastra --insecure --gzip get --path  \
+gnmic -a 192.0.2.214:6030 -u cvpadmin -p arista --insecure --gzip get --path  \
   'interfaces/interface[name=Ethernet1]/state/'
 ```
 
@@ -246,7 +246,7 @@ gnmic -a 10.83.13.214:6030 -u cvpadmin -p arastra --insecure --gzip get --path  
 #### Get an interface's operational status
 
 ```shell
-gnmic -a 10.83.13.214:6030 -u cvpadmin -p arastra --insecure --gzip get --path  \
+gnmic -a 192.0.2.214:6030 -u cvpadmin -p arista --insecure --gzip get --path  \
   'interfaces/interface[name=Ethernet24]/state/oper-status'
 ```
 
@@ -270,7 +270,7 @@ gnmic -a 10.83.13.214:6030 -u cvpadmin -p arastra --insecure --gzip get --path  
 #### Get an interface's admin status
 
 ```shell
-gnmic -a 10.83.13.214:6030 -u cvpadmin -p arastra --insecure --gzip get --path  \
+gnmic -a 192.0.2.214:6030 -u cvpadmin -p arista --insecure --gzip get --path  \
   'interfaces/interface[name=Ethernet1]/state/admin-status'
 ```
 
@@ -294,7 +294,7 @@ gnmic -a 10.83.13.214:6030 -u cvpadmin -p arastra --insecure --gzip get --path  
 #### Get the DOM metrics of all interfaces
 
 ```shell
-gnmic -a 10.83.13.214:6030 -u cvpadmin -p arastra --insecure --gzip get --path  \
+gnmic -a 192.0.2.214:6030 -u cvpadmin -p arista --insecure --gzip get --path  \
   "components/component/transceiver/physical-channels/channel/state/"
 ```
 
@@ -348,7 +348,7 @@ gnmic -a 10.83.13.214:6030 -u cvpadmin -p arastra --insecure --gzip get --path  
 #### Get the DOM metrics of an interface
 
 ```shell
-gnmic -a 10.83.13.214:6030 -u cvpadmin -p arastra --insecure --gzip get --path  \
+gnmic -a 192.0.2.214:6030 -u cvpadmin -p arista --insecure --gzip get --path  \
   "components/component[name=Ethernet49 transceiver]/transceiver/physical-channels/channel/state/"
 ```
 
@@ -387,7 +387,7 @@ gnmic -a 10.83.13.214:6030 -u cvpadmin -p arastra --insecure --gzip get --path  
 #### Get per core CPU utilization
 
 ```shell
-gnmic -a 10.83.13.214:6030 -u cvpadmin -p arastra --insecure --gzip get --path  \
+gnmic -a 192.0.2.214:6030 -u cvpadmin -p arista --insecure --gzip get --path  \
   'components/component/cpu'
 ```
 
@@ -448,7 +448,7 @@ gnmic -a 10.83.13.214:6030 -u cvpadmin -p arastra --insecure --gzip get --path  
 #### Get the available/utilized memory
 
 ```shell
-gnmic -a 10.83.13.214:6030 -u cvpadmin -p arastra --insecure --gzip get --path  \
+gnmic -a 192.0.2.214:6030 -u cvpadmin -p arista --insecure --gzip get --path  \
   'components/component/state/memory/'
 ```
 
@@ -475,7 +475,7 @@ gnmic -a 10.83.13.214:6030 -u cvpadmin -p arastra --insecure --gzip get --path  
 #### Get the system environment temperatures
 
 ```shell
-gnmic -a 10.83.13.214:6030 -u cvpadmin -p arastra --insecure --gzip get --path  \
+gnmic -a 192.0.2.214:6030 -u cvpadmin -p arista --insecure --gzip get --path  \
    'components/component/state/temperature/instant'
 ```
 
@@ -600,7 +600,7 @@ gnmic -a 10.83.13.214:6030 -u cvpadmin -p arastra --insecure --gzip get --path  
 #### Subscribe to all BGP neighbor states
 
 ```shell
-gnmic -a 10.83.13.214:6030 -u cvpadmin -p arastra --insecure --gzip subscribe --path  \
+gnmic -a 192.0.2.214:6030 -u cvpadmin -p arista --insecure --gzip subscribe --path  \
   '/network-instances/network-instance/protocols/protocol/bgp/neighbors/neighbor/state'
 ```
 
@@ -609,7 +609,7 @@ gnmic -a 10.83.13.214:6030 -u cvpadmin -p arastra --insecure --gzip subscribe --
 
 ```javascript
 {
-  "source": "10.83.13.214:6030",
+  "source": "192.0.2.214:6030",
   "subscription-name": "default-1626302647",
   "timestamp": 1626292010055258009,
   "time": "2021-07-14T20:46:50.055258009+01:00",
@@ -623,7 +623,7 @@ gnmic -a 10.83.13.214:6030 -u cvpadmin -p arastra --insecure --gzip subscribe --
   ]
 }
 {
-  "source": "10.83.13.214:6030",
+  "source": "192.0.2.214:6030",
   "subscription-name": "default-1626302647",
   "timestamp": 1626292008053994815,
   "time": "2021-07-14T20:46:48.053994815+01:00",
@@ -644,8 +644,8 @@ gnmic -a 10.83.13.214:6030 -u cvpadmin -p arastra --insecure --gzip subscribe --
 #### Subscribe to specific BGP neighbor state
 
 ```shell
-gnmic -a 10.83.13.214:6030 -u cvpadmin -p arastra --insecure --gzip subscribe --path  \
-  'network-instances/network-instance[name=Tenant_A_WEB_Zone]/protocols/protocol[identifier=BGP][name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.255.251.21]/state'
+gnmic -a 192.0.2.214:6030 -u cvpadmin -p arista --insecure --gzip subscribe --path  \
+  'network-instances/network-instance[name=Tenant_A_WEB_Zone]/protocols/protocol[identifier=BGP][name=BGP]/bgp/neighbors/neighbor[neighbor-address=198.51.100.21]/state'
 ```
 
 <details><summary> Reveal output</summary>
@@ -653,13 +653,13 @@ gnmic -a 10.83.13.214:6030 -u cvpadmin -p arastra --insecure --gzip subscribe --
 
 ```javascript
 {
-  "source": "10.83.13.214:6030",
+  "source": "192.0.2.214:6030",
   "subscription-name": "default-1626303017",
   "timestamp": 1626302991598465536,
   "time": "2021-07-14T23:49:51.598465536+01:00",
   "updates": [
     {
-      "Path": "network-instances/network-instance[name=Tenant_A_WEB_Zone]/protocols/protocol[identifier=BGP][name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.255.251.21]/state/last-established",
+      "Path": "network-instances/network-instance[name=Tenant_A_WEB_Zone]/protocols/protocol[identifier=BGP][name=BGP]/bgp/neighbors/neighbor[neighbor-address=198.51.100.21]/state/last-established",
       "values": {
         "network-instances/network-instance/protocols/protocol/bgp/neighbors/neighbor/state/last-established": 1626302991563603200
       }
@@ -674,8 +674,8 @@ gnmic -a 10.83.13.214:6030 -u cvpadmin -p arastra --insecure --gzip subscribe --
 #### Subscribe with stream mode sample and interval
 
 ```shell
-gnmic -a 10.83.13.214:6030 -u cvpadmin -p arastra --insecure --gzip --sample-interval 5s --stream-mode sample subscribe --path  \
-  '/network-instances/network-instance[name=Tenant_A_WEB_Zone]/protocols/protocol[identifier=BGP][name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.255.251.21]/afi-safis/afi-safi[afi-safi-name=openconfig-bgp-types:IPV4_UNICAST]/state/prefixes/received'
+gnmic -a 192.0.2.214:6030 -u cvpadmin -p arista --insecure --gzip --sample-interval 5s --stream-mode sample subscribe --path  \
+  '/network-instances/network-instance[name=Tenant_A_WEB_Zone]/protocols/protocol[identifier=BGP][name=BGP]/bgp/neighbors/neighbor[neighbor-address=198.51.100.21]/afi-safis/afi-safi[afi-safi-name=openconfig-bgp-types:IPV4_UNICAST]/state/prefixes/received'
 ```
 
 <details><summary> Reveal output</summary>
@@ -683,13 +683,13 @@ gnmic -a 10.83.13.214:6030 -u cvpadmin -p arastra --insecure --gzip --sample-int
 
 ```javascript
 {
-  "source": "10.83.13.214:6030",
+  "source": "192.0.2.214:6030",
   "subscription-name": "default-1626303393",
   "timestamp": 1626303158135414182,
   "time": "2021-07-14T23:52:38.135414182+01:00",
   "updates": [
     {
-      "Path": "network-instances/network-instance[name=Tenant_A_WEB_Zone]/protocols/protocol[identifier=BGP][name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.255.251.21]/afi-safis/afi-safi[afi-safi-name=IPV4_UNICAST]/state/prefixes/received",
+      "Path": "network-instances/network-instance[name=Tenant_A_WEB_Zone]/protocols/protocol[identifier=BGP][name=BGP]/bgp/neighbors/neighbor[neighbor-address=198.51.100.21]/afi-safis/afi-safi[afi-safi-name=IPV4_UNICAST]/state/prefixes/received",
       "values": {
         "network-instances/network-instance/protocols/protocol/bgp/neighbors/neighbor/afi-safis/afi-safi/state/prefixes/received": 5
       }
@@ -697,13 +697,13 @@ gnmic -a 10.83.13.214:6030 -u cvpadmin -p arastra --insecure --gzip --sample-int
   ]
 }
 {
-  "source": "10.83.13.214:6030",
+  "source": "192.0.2.214:6030",
   "subscription-name": "default-1626303393",
   "timestamp": 1626303158135414182,
   "time": "2021-07-14T23:52:38.135414182+01:00",
   "updates": [
     {
-      "Path": "network-instances/network-instance[name=Tenant_A_WEB_Zone]/protocols/protocol[identifier=BGP][name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.255.251.21]/afi-safis/afi-safi[afi-safi-name=IPV4_UNICAST]/state/prefixes/received",
+      "Path": "network-instances/network-instance[name=Tenant_A_WEB_Zone]/protocols/protocol[identifier=BGP][name=BGP]/bgp/neighbors/neighbor[neighbor-address=198.51.100.21]/afi-safis/afi-safi[afi-safi-name=IPV4_UNICAST]/state/prefixes/received",
       "values": {
         "network-instances/network-instance/protocols/protocol/bgp/neighbors/neighbor/afi-safis/afi-safi/state/prefixes/received": 5
       }
@@ -718,7 +718,7 @@ gnmic -a 10.83.13.214:6030 -u cvpadmin -p arastra --insecure --gzip --sample-int
 #### Subscribe to interface counters and save them to a file
 
 ```shell
-gnmic -a 127.0.0.1:6030 -u admin -p admin --insecure subscribe --path \
+gnmic -a 192.0.2.1:6030 -u admin -p admin --insecure subscribe --path \
   "/interfaces/interface/state/counters"  >> outputs/interface_state.json
 ```
 
@@ -729,15 +729,15 @@ gnmic -a 127.0.0.1:6030 -u admin -p admin --insecure subscribe --path \
 #### Configure BGP neighbor address and peer AS
 
 ```shell
-gnmic -a 10.83.13.214:6030 -u cvpadmin -p arastra --insecure --gzip set \
---update-path '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.100.43]' \
+gnmic -a 192.0.2.214:6030 -u cvpadmin -p arista --insecure --gzip set \
+--update-path '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=198.51.100.43]' \
 --update-file value.json
 ```
 
 **value.json**:
 
 ```javascript
-{"config": {"neighbor-address":"10.10.100.43", "peer-as": 123}}
+{"config": {"neighbor-address":"198.51.100.43", "peer-as": 123}}
 ```
 
 Output:
@@ -749,7 +749,7 @@ Output:
   "results": [
     {
       "operation": "UPDATE",
-      "path": "network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.100.43]"
+      "path": "network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=198.51.100.43]"
     }
   ]
 }
@@ -758,15 +758,15 @@ Output:
 #### Configure BGP neighbor address, peer AS and send-community
 
 ```shell
-gnmic -a 10.83.13.214:6030 -u cvpadmin -p arastra --insecure --gzip set  \
---update-path '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.100.43]' \
+gnmic -a 192.0.2.214:6030 -u cvpadmin -p arista --insecure --gzip set  \
+--update-path '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=198.51.100.43]' \
 --update-file value.json
 ```
 
 **value.json**:
 
 ```javascript
-{"config": {"neighbor-address":"10.10.100.43", "peer-as": 123, "enabled": true, "send-community": "EXTENDED"}}
+{"config": {"neighbor-address":"198.51.100.43", "peer-as": 123, "enabled": true, "send-community": "EXTENDED"}}
 ```
 
 Output:
@@ -778,7 +778,7 @@ Output:
   "results": [
     {
       "operation": "UPDATE",
-      "path": "network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.100.43]"
+      "path": "network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=198.51.100.43]"
     }
   ]
 }
@@ -787,7 +787,7 @@ Output:
 #### Create BGP peer group
 
 ```shell
-gnmic -a 10.83.13.214:6030 -u cvpadmin -p arastra --insecure --gzip set \
+gnmic -a 192.0.2.214:6030 -u cvpadmin -p arista --insecure --gzip set \
   --update-path '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/peer-groups/peer-group[peer-group-name=XYZ]' \
   --update-file value.json
 ```
@@ -801,8 +801,8 @@ gnmic -a 10.83.13.214:6030 -u cvpadmin -p arastra --insecure --gzip set \
 #### Update BGP peer AS
 
 ```shell
-gnmic -a 10.83.13.214:6030 -u cvpadmin -p arastra --insecure --gzip set \
---update-path '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.100.43]/config/peer-as' \
+gnmic -a 192.0.2.214:6030 -u cvpadmin -p arista --insecure --gzip set \
+--update-path '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=198.51.100.43]/config/peer-as' \
 --update-value '110'
 ```
 
@@ -815,7 +815,7 @@ Output:
   "results": [
     {
       "operation": "UPDATE",
-      "path": "network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.100.43]/config/peer-as"
+      "path": "network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=198.51.100.43]/config/peer-as"
     }
   ]
 }
@@ -824,8 +824,8 @@ Output:
 #### Update BGP peer group
 
 ```shell
-gnmic -a 10.83.13.214:6030 -u cvpadmin -p arastra --insecure --gzip set \
---update-path '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.100.43]/config/peer-group' \
+gnmic -a 192.0.2.214:6030 -u cvpadmin -p arista --insecure --gzip set \
+--update-path '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=198.51.100.43]/config/peer-group' \
 --update-value 'XYZ'
 ```
 
@@ -838,7 +838,7 @@ Output:
   "results": [
     {
       "operation": "UPDATE",
-      "path": "network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=10.10.100.43]/config/peer-as"
+      "path": "network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=198.51.100.43]/config/peer-as"
     }
   ]
 }
@@ -848,7 +848,7 @@ Output:
 
 ```shell
 
-gnmic -a 10.83.13.108:6030 -u cvpadmin -p arastra --insecure --gzip set \
+gnmic -a 192.0.2.108:6030 -u cvpadmin -p arista --insecure --gzip set \
 --update-path /acl/acl-sets \
 --update-file acl2.json
 ```
@@ -895,7 +895,7 @@ Output:
                   },
                   "ipv4": {
                      "config": {
-                        "destination-address": "1.2.3.4/12",
+                        "destination-address": "192.0.2.0/24",
                         "source-address": "0.0.0.0/0"
                      }
                   }
@@ -914,13 +914,13 @@ This creates
 
 ```text
 ip access-list test
-   10 deny ip any 1.0.0.0/12
+   10 deny ip any 192.0.2.0/24
 ```
 
 #### Shutdown an interface
 
 ```shell
-gnmic -a 10.83.13.108:6030 -u cvpadmin -p arastra --insecure --gzip set \
+gnmic -a 192.0.2.108:6030 -u cvpadmin -p arista --insecure --gzip set \
 --update-path '/interfaces/interface[name=Ethernet1]/config/enabled' \
 --update-value 'false'
 ```
@@ -941,7 +941,7 @@ gnmic -a 10.83.13.108:6030 -u cvpadmin -p arastra --insecure --gzip set \
 #### Bring up an interface
 
 ```shell
-gnmic -a 10.83.13.108:6030 -u cvpadmin -p arastra --insecure --gzip set \
+gnmic -a 192.0.2.108:6030 -u cvpadmin -p arista --insecure --gzip set \
 --update-path '/interfaces/interface[name=Ethernet1]/config/enabled' \
 --update-value 'true'
 ```
@@ -992,7 +992,7 @@ require changing the origin to `eos_native`.
 ### Get CPU utilization
 
 ```shell
- gnmic -a 10.83.13.108:6030 -u cvpadmin -p arastra --insecure --gzip get --path  \
+ gnmic -a 192.0.2.108:6030 -u cvpadmin -p arista --insecure --gzip get --path  \
   'eos_native:/Kernel/proc/cpu/utilization/total'
 ```
 
@@ -1053,14 +1053,14 @@ require changing the origin to `eos_native`.
 ### Get transceiver DOM temperature
 
 ```shell
-gnmic -a 127.0.0.1:6030 -u admin -p admin --insecure --gzip get --path \
+gnmic -a 192.0.2.1:6030 -u admin -p admin --insecure --gzip get --path \
   eos_native:/Sysdb/hardware/archer/xcvr/status >> outputs/doms.json
 ```
 
 ### Get EOS image version
 
 ```shell
-gnmic -a 127.0.0.1:6030 -u admin -p admin --insecure --gzip get \
+gnmic -a 192.0.2.1:6030 -u admin -p admin --insecure --gzip get \
   --path eos_native:/Eos/image >> outputs/eos_image.json
 ```
 
@@ -1070,14 +1070,14 @@ gnmic -a 127.0.0.1:6030 -u admin -p admin --insecure --gzip get \
 
 ```shell
 
-gnmic -a 127.0.0.1:6030 -u admin -p admin --insecure  get \
+gnmic -a 192.0.2.1:6030 -u admin -p admin --insecure  get \
   --path "cli:/show running-config" >> outputs/outputs.json
 ```
 
 ### Get the total route count
 
 ```shell
-gnmic -a 127.0.0.1:6030 -u admin -p admin --insecure  get \
+gnmic -a 192.0.2.1:6030 -u admin -p admin --insecure  get \
   --path "cli:/show ip route summary" \
   | jq '.[0].updates[0].values."show ip route summary".totalRoutes'
 ```
@@ -1092,7 +1092,7 @@ Multiple config sections can be change at a time, for instance in the below exam
 the description of Ethernet1 is changed:
 
 ```shell
- gnmic -a 10.83.13.214:6030 -u admin -p admin --insecure --gzip set \
+ gnmic -a 192.0.2.214:6030 -u admin -p admin --insecure --gzip set \
     --request-file intf.json
 ```
 
@@ -1165,7 +1165,7 @@ cat intf.json
 Changing the maximum-routes for a BGP neighbor:
 
 ```shell
-gnmic -a 10.83.13.214:6030 -u cvpadmin -p arista --insecure --gzip set \
+gnmic -a 192.0.2.214:6030 -u cvpadmin -p arista --insecure --gzip set \
    --request-file bgp.yaml
 ```
 
@@ -1211,7 +1211,7 @@ updates:
 #### Using imperative commands
 
 ```shell
-gnmic -a 10.83.13.214:6030 -u cvpadmin -p arista --insecure --gzip \
+gnmic -a 192.0.2.214:6030 -u cvpadmin -p arista --insecure --gzip \
    --encoding ASCII set \
    --update-path "cli:" \
    --update-value "router bgp 65101" \
@@ -1249,28 +1249,28 @@ Output:
 ### Save all status states to a file
 
 ```shell
-gnmic -a 127.0.0.1:6030 -u admin -p admin --insecure get \
+gnmic -a 192.0.2.1:6030 -u admin -p admin --insecure get \
   --path ".../state/..." >> outputs/states.json
 ```
 
 ### Save all config states to a file
 
 ```shell
-gnmic -a 127.0.0.1:6030 -u admin -p admin --insecure get \
+gnmic -a 192.0.2.1:6030 -u admin -p admin --insecure get \
   --path ".../config/..." >> outputs/configs.json
 ```
 
 ### Save network instance states to a file
 
 ```shell
-gnmic -a 127.0.0.1:6030 -u admin -p admin --insecure get --path \
+gnmic -a 192.0.2.1:6030 -u admin -p admin --insecure get --path \
   /network-instances/network-instance >> outputs/network-instances.json
 ```
 
 ### Save BGP states to a file
 
 ```shell
-gnmic -a 127.0.0.1:6030 -u admin -p admin --insecure get --path \
+gnmic -a 192.0.2.1:6030 -u admin -p admin --insecure get --path \
   /network-instances/network-instance[name=default]/protocols/protocol[name=BGP]\
   >> outputs/bgp.json
 ```

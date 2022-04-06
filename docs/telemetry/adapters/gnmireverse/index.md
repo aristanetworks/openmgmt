@@ -97,7 +97,7 @@ Note: The `\` elements have been added to aid readability, these should be remov
 <pre><code>daemon gnmi_reverse_client_1
    exec /mnt/flash/client -username cvpadmin -password arista         \
    <span style="color: red;">  -target_addr=management/127.0.0.1:6030                           \
-     -collector_addr=management/10.85.129.115:6000</span>                    \
+     -collector_addr=management/198.51.100.115:6000</span>                    \
      -collector_tls=false                                             \
      -target_value=gb421                                              \
      -sample /system/processes/process[pid=*]/state@15s
@@ -133,7 +133,7 @@ Note: The `\` elements have been added to aid readability, these should be remov
 <pre><code>daemon gnmi_reverse_client_1
    exec /mnt/flash/client -username cvpadmin -password arista \
    <span style="color: red;">  -target_addr=127.0.0.1:6030                              \
-     -collector_addr=10.85.129.115:6000</span> -collector_tls=false  \
+     -collector_addr=198.51.100.115:6000</span> -collector_tls=false  \
      -target_value=gb421 -sample /system/processes/process[pid=*]/state@15s
    no shutdown
 </code></pre>
@@ -154,7 +154,7 @@ The gNMIReverse client flags are explained below.
 ## Running the gNMIReverse Server
 
 ```shell
-$ ./server -tls=false -addr=10.85.129.115:6000
+$ ./server -tls=false -addr=198.51.100.115:6000
 
 [2020-12-28T10:52:17.990029143Z] (gb421) /system/processes/process[pid=1919]/state/cpu-usage-system = 89538
 [2020-12-28T10:52:27.990635976Z] (gb421) /system/processes/process[pid=1919]/state/cpu-usage-user = 312674
@@ -187,7 +187,7 @@ Note: The `\` elements have been added to aid readability, these should be remov
 <pre><code>daemon gnmi_reverse_client_1
    exec /mnt/flash/client -username cvpadmin -password arista \
      -target_addr=management/127.0.0.1:6030                   \
-     -collector_addr=management/10.85.129.115:6000            \
+     -collector_addr=management/198.51.100.115:6000            \
      -collector_tls=false -target_value=gb421                 \
      -sample /system/processes/process[pid=*]/state@30s       \
      <span style="color: red;">-origin eos_native                                       \
@@ -198,7 +198,7 @@ Note: The `\` elements have been added to aid readability, these should be remov
 On the server side we can see the updates from the same subscription path:
 
 ```shell
-$ ./server -tls=false -addr=10.85.129.115:6000
+$ ./server -tls=false -addr=198.51.100.115:6000
 
 [2020-12-29T06:55:15.29120758Z] (gb421) /Kernel/proc/meminfo/memFree = 2482671616
 [2020-12-29T06:55:15.29121703Z] (gb421) /Kernel/proc/meminfo/memAvailable = 6465200128
@@ -236,7 +236,7 @@ Note: The `\` elements have been added to aid readability, these should be remov
 <pre><code>daemon gnmi_reverse_client_1
    exec /mnt/flash/client -username cvpadmin -password arista           \
      -target_addr=management/127.0.0.1:6030                             \
-     -collector_addr=management/10.85.129.115:6000                      \
+     -collector_addr=management/198.51.100.115:6000                      \
      -collector_tls=false -target_value=gb421                           \
      -sample /system/processes/process[pid=*]/state@30s                 \
      <span style="color: red;">-origin eos_native</span>                                                 \
@@ -248,7 +248,7 @@ Note: The `\` elements have been added to aid readability, these should be remov
 On server side we can see updates as follows:
 
 ```shell
-$ ./server -tls=false -addr=10.85.129.115:6000
+$ ./server -tls=false -addr=198.51.100.115:6000
 
 [2020-12-29T07:39:33.857345257Z] (gb421) /Smash/routing/status/route/1.1.1.1\/32/storage = 4294967240
 [2020-12-29T07:39:33.857345257Z] (gb421) /Smash/routing/status/route/1.1.1.1\/32/routeType = ebgp
