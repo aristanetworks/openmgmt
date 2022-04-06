@@ -4,6 +4,13 @@ Welcome to the style guide for the OpenMgmt repo!
 
 These guidelines are specific to this repository and are not necessarily reflective of Arista style guides more broadly.
 
+- [General Notes](#general-notes)
+- [A Note Regarding Tooling](#a-note-regarding-tooling)
+- [Document Formatting](#document-formatting)
+  - [Headings](#headings)
+  - [Code Blocks](#code-blocks)
+- [Code examples](#code-examples)
+
 ## General Notes
 
 Content written for the OpenMgmt repository should use a gender-neutral, third-person voice.  There's no need to strive
@@ -12,7 +19,7 @@ will help the reader.
 
 DRY (Don't Repeat Yourself) reigns supreme.  In the interests of consistency, reference existing documentation.  This
 means examples should refer to a common suite of documentation for frequent operations.  i.e.: There's no need to
-replicate the instructions for enabling gnmi on an Arista switch when this is documented in common location.  However,
+replicate the instructions for enabling gnmi on an Arista switch when this is documented in a common location.  However,
 if there's an additional configuration requirement or a specific bit of functionality that is associated with your
 topic(s), please be sure to note this accordingly.
 
@@ -96,3 +103,11 @@ gnmi -addr 192.0.2.139 -username admin \
 gnmi -addr 192.0.2.139 -username admin get \
   '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors'
 ```
+
+## Code examples
+
+In the interests of keeping the code in the `src/` portion of the repository consistent with the text in the
+documentation, it is recommended that you use the [mkdocs snippet
+functionality](https://facelessuser.github.io/pymdown-extensions/extensions/snippets/#snippets). When using this
+functionality updates can be constrained solely to the `src/` portion of the site and immediately reflected within the
+documentation ensuring alignment.

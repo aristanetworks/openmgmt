@@ -1,20 +1,20 @@
 # OpenMgmt
 
 - [Getting Started](#getting-started)
-- [Mkdocs](#mkdocs)
+- [Style Guidelines](#style-guidelines)
+- [MkDocs](#mkdocs)
   - [Installation](#installation)
-  - [Mkdocs Material Theme Installation](#mkdocs-material-theme-installation)
+  - [MkDocs Material Theme Installation](#mkdocs-material-theme-installation)
   - [Author Your Content](#author-your-content)
   - [Build Content](#build-content)
   - [Locally View Changes](#locally-view-changes)
 - [PR submission](#pr-submission)
-- [tooling setup](#tooling-setup)
+- [Tooling Setup](#tooling-setup)
   - [markdownlint-cli](#markdownlint-cli)
-  - [pre-commit](#pre-commit)
-    - [python PIP installation](#python-pip-installation)
-    - [homebrew installation](#homebrew-installation)
-- [pre-commit setup](#pre-commit-setup)
-- [Style Guidelines](#style-guidelines)
+  - [Pre-Commit](#pre-commit)
+    - [Python PIP Installation](#python-pip-installation)
+    - [Homebrew Installation](#homebrew-installation)
+- [Pre-Commit Setup](#pre-commit-setup)
 
 ## Getting Started
 
@@ -25,6 +25,12 @@ open a pull request.
 For the most part, it's that simple.
 
 The balance of this document details the tools to setup and some things that will make your pull request a bit easier.
+
+## Style Guidelines
+
+At a high level, documentation contributions should conform to the markdown linting rules as defined in
+`.markdownline.yaml`. (more on this below)  Details regarding formating and documentation conventions can be found in
+the [content style guide](content-style-guide.md).
 
 ## MkDocs
 
@@ -85,7 +91,7 @@ looks good, you're able generate a pull request.
 
 ## PR submission
 
-If everything looks good, submit a pull request (aka PR).  A series of tests will be applied to validate the tests and
+If everything looks good, submit a pull request (aka a PR).  A series of tests will be applied to validate the tests and
 a maintainer will review the PR for incorporation into the `main` branch.  There are a few things that you can do to
 streamline the acceptance of your pull request.  Most notable here is conformance to the style guide and aligning with
 the linter.
@@ -132,9 +138,3 @@ brew install pre-commit
 
 From the root of the repository execute `pre-commit install` this will add the necessary hooks to your local git
 configuration and setup the necessary tooling in order to suport development.
-
-## Style Guidelines
-
-At a high level, documentation contributions should conform to the markdown linting rules as defined in
-`.markdownline.yaml`.  Details regarding formating and documentation conventions can be found in the [content style
-guide](content-style-guide.md).
