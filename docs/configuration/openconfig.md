@@ -139,6 +139,8 @@ management api gnmi
 Bash:
 `$ sudo killall Octa`
 
+Alternatively `agent Octa terminate` can be used from EOS CLI as well.
+
 `show management api models` will list the Smash paths enabled/disabled
 
 e.g.:
@@ -186,6 +188,9 @@ management api models
       ipv4-unicast
       ipv6-unicast
 ```
+
+> Note that prior to EOS 4.27 a restart of the gNMI agent is required, e.g.: `agent Octa terminate` or
+> `agent OpenConfig terminate` (in case the eos-native provider is not enabled).
 
 ## Telemetry Timestamps
 
