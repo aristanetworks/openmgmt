@@ -182,8 +182,9 @@ Starting in EOS `4.25.1F` it is possible to enable these mappings, for IPV4, IPV
 
 ```text
 management api models
-   ipv4-unicast
-   ipv6-unicast
+   provider aft
+      ipv4-unicast
+      ipv6-unicast
 ```
 
 ## Telemetry Timestamps
