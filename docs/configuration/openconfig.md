@@ -228,7 +228,54 @@ QoS DSCP: none
 Authorization required: no
 Accounting requests: no
 Certificate username authentication: no
-Notification timestamp: send time
+Notification timestamp: send time  !! note: timestamp mode
+Listen addresses: ::
+```
+
+</p>
+</details>
+
+## Configuration Persistence
+
+By default, within EOS, the application of gNMI `Set` RPCs are not persisted to the `startup-config`.  A `copy
+running-config startup-config` is required in order to save configuration updates imposed via gNMI.
+
+As of EOS 4.28.0F, if the operator desires to be able to save gNMI-driven configuration automatically, persistence can be
+enabled by adding the following configuration. With this option, all gnmi `Set` operations will be saved to the
+`startup-config`. Note, the configuration is saved using Arista's EOS configuration syntax and there is no corresponding
+presentation of the OpenConfig syntax.
+
+```text
+management api gnmi
+   transport grpc <NAME>
+   operation set persistence
+```
+
+If there is a need to return to the default mode of gNMI configuration non-persistence, this can be disabled using the
+following commands.
+
+```text
+no operation set persistence
+default operation set persistence
+```
+
+<details><summary>Validation</summary>
+<p>
+
+```text
+#show management api gnmi
+Octa: enabled
+Set persistence: enabled  !! note: persistence state
+
+Transport: default
+Enabled: yes
+Server: running on port 6030, in default VRF
+SSL profile: none
+QoS DSCP: none
+Authorization required: no
+Accounting requests: no
+Certificate username authentication: no
+Notification timestamp: last change time
 Listen addresses: ::
 ```
 
