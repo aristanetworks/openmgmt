@@ -18,48 +18,56 @@ sudo apt-get install curl jq -y
 
 ### GET
 
+#### Get interface description for Ethernet1
+
 ```shell
-curl -s GET 'https://10.73.1.105:6020/restconf/data/openconfig-interfaces:interfaces/interface=Ethernet1/config/description' \
+curl -s GET 'https://192.0.2.105:6020/restconf/data/openconfig-interfaces:interfaces/interface=Ethernet1/config/description' \
       --header 'Accept: application/yang-data+json' -u arista:arista  --insecure
 ```
 
-output
+Output:
 
 ```javascript
 {"openconfig-interfaces:description":"P2P_LINK_TO_DC1-SPINE1_Ethernet1"}
 ```
 
+#### Get interface stats for Ethernet1 and output the "in-octets" using jq
+
 ```shell
-curl -s GET 'https://10.73.1.105:6020/restconf/data/openconfig-interfaces:interfaces/interface=Ethernet1' \
+curl -s GET 'https://192.0.2.105:6020/restconf/data/openconfig-interfaces:interfaces/interface=Ethernet1' \
       --header 'Accept: application/yang-data+json' -u arista:arista  \
       --insecure | jq .'"openconfig-interfaces:state".counters."in-octets"'
 ```
 
-output
+Output:
 
 ```text
 "48284395"
 ```
 
+#### Get interfaces stats and output the name of the 2nd (3rd index) using jq
+
 ```shell
-curl -s GET 'https://10.73.1.105:6020/restconf/data/openconfig-interfaces:interfaces' \
+curl -s GET 'https://192.0.2.105:6020/restconf/data/openconfig-interfaces:interfaces' \
      --header 'Accept: application/yang-data+json' -u arista:arista \
      --insecure | jq .'"openconfig-interfaces:interface"[2].name'
 ```
 
-output
+Output:
 
 ```text
 "Ethernet1"
 ```
 
+#### Get the system information and parse the hostname using jq
+
 ```shell
-curl -X GET https://10.73.1.105:6020/restconf/data/system \
+curl -X GET https://192.0.2.105:6020/restconf/data/system \
     --header 'Accept: application/yang-data+json' -u arista:arista \
     --insecure | jq .'"openconfig-system:config".hostname'
 ```
 
-output
+Output:
 
 ```text
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
@@ -68,10 +76,56 @@ output
 "switch1"
 ```
 
+#### Get PfxRcd and PfxAcc stats from a BGP neighbor
+
+```shell
+ curl -s GET 'https://192.0.2.100:5900/restconf/data/network-instances/network-instance=default/protocols/protocol=BGP,BGP/bgp/neighbors/neighbor=192.0.2.21/afi-safis/afi-safi=IPV4_UNICAST' \
+    --header 'Accept: application/yang-data+json' -u cvpadmin:arastra --insecure | jq
+```
+
+Output:
+
+```shell
+{
+  "openconfig-network-instance:afi-safi-name": "openconfig-bgp-types:IPV4_UNICAST",
+  "openconfig-network-instance:config": {
+    "afi-safi-name": "openconfig-bgp-types:IPV4_UNICAST"
+  },
+  "openconfig-network-instance:state": {
+    "afi-safi-name": "openconfig-bgp-types:IPV4_UNICAST",
+    "prefixes": {
+      "arista-bgp-augments:best-ecmp-paths": 0,
+      "arista-bgp-augments:best-paths": 0,
+      "installed": 7,
+      "received": 7,
+      "sent": 7
+    }
+  }
+}
+```
+
+> NOTE: how the protocol has to have multiple keys, ie: `protocol=BGP,BGP`, in this case it's the `identifier` and
+> the `name` of the protocol, if we were to omit any of those on the switch side in the Octa/OpenConfig agent logs
+> we would see something like below:
+>
+> `handler.go:95] ERROR mismatch between number of keys in [identifier name] and values present [BGP]` or
+> if both would be omitted the error message would be:
+> `handler.go:95] ERROR failed to find key values after element "protocol" in "network-instances/network-instance=default/protocols/protocol`
+>
+> Tip: [pyang](../pyang/) can be useful to understand what keys each leaf requires, e.g:
+>
+>```shell
+> pyang openconfig-network-instance.yang -f tree --tree-depth=4 | tail -n 4
+>        |        ...
+>        +--rw protocols
+>           +--rw protocol* [identifier name]
+>                 ...
+>
+
 ### HEAD
 
 ```shell
-curl --head 'https://10.73.1.105:6020/restconf/data/openconfig-interfaces:interfaces/interface=Ethernet1' \
+curl --head 'https://192.0.2.105:6020/restconf/data/openconfig-interfaces:interfaces/interface=Ethernet1' \
     --header 'Accept: application/yang-data+json' -u arista:arista  --insecure
 ```
 
@@ -90,7 +144,7 @@ Date: Sun, 04 Jul 2021 14:20:39 GMT
 Let's check before the change
 
 ```shell
-curl -s GET 'https://10.73.1.105:6020/restconf/data/openconfig-interfaces:interfaces/interface=Ethernet4/config' \
+curl -s GET 'https://192.0.2.105:6020/restconf/data/openconfig-interfaces:interfaces/interface=Ethernet4/config' \
    --header 'Accept: application/yang-data+json' -u arista:arista  --insecure
 ```
 
@@ -113,7 +167,7 @@ output
 ```
 
 ```shell
-curl -X PUT https://10.73.1.105:6020/restconf/data/openconfig-interfaces:interfaces/interface=Ethernet4/config \
+curl -X PUT https://192.0.2.105:6020/restconf/data/openconfig-interfaces:interfaces/interface=Ethernet4/config \
    -H 'Content-Type: application/json' -u arista:arista -d @interface.json  --insecure
 ```
 
@@ -126,7 +180,7 @@ output
 Let's verify after the change
 
 ```shell
-curl -s GET 'https://10.73.1.105:6020/restconf/data/openconfig-interfaces:interfaces/interface=Ethernet4/config' \
+curl -s GET 'https://192.0.2.105:6020/restconf/data/openconfig-interfaces:interfaces/interface=Ethernet4/config' \
    --header 'Accept: application/yang-data+json' -u arista:arista  --insecure
 ```
 
@@ -137,7 +191,7 @@ output
 ```
 
 ```shell
-curl -s GET 'https://10.73.1.105:6020/restconf/data/openconfig-interfaces:interfaces/interface=Ethernet4/config' \
+curl -s GET 'https://192.0.2.105:6020/restconf/data/openconfig-interfaces:interfaces/interface=Ethernet4/config' \
    --header 'Accept: application/yang-data+json' -u arista:arista  --insecure | jq .
 ```
 
@@ -161,7 +215,7 @@ output
 Let's check before the change
 
 ```shell
-curl -X GET https://10.73.1.105:6020/restconf/data/system/config \
+curl -X GET https://192.0.2.105:6020/restconf/data/system/config \
    --header 'Accept: application/yang-data+json' -u arista:arista  --insecure
 ```
 
@@ -172,7 +226,7 @@ output
 ```
 
 ```shell
-curl -X GET https://10.73.1.105:6020/restconf/data/system \
+curl -X GET https://192.0.2.105:6020/restconf/data/system \
    --header 'Accept: application/yang-data+json' -u arista:arista \
    --insecure | jq .'"openconfig-system:config".hostname'
 ```
@@ -187,7 +241,7 @@ output
 ```
 
 ```shell
-curl -X PUT https://10.73.1.105:6020/restconf/data/system/config \
+curl -X PUT https://192.0.2.105:6020/restconf/data/system/config \
       -H 'Content-Type: application/json' -u arista:arista \
       -d '{"openconfig-system:hostname":"test"}'  --insecure
 ```
@@ -201,7 +255,7 @@ output
 Let's verify after the change
 
 ```shell
-curl -X GET https://10.73.1.105:6020/restconf/data/system/config \
+curl -X GET https://192.0.2.105:6020/restconf/data/system/config \
       --header 'Accept: application/yang-data+json' -u arista:arista  --insecure
 ```
 
@@ -218,7 +272,7 @@ output
 Let's check before the change
 
 ```shell
-curl -s GET 'https://10.73.1.105:6020/restconf/data/openconfig-interfaces:interfaces/interface=Ethernet4' \
+curl -s GET 'https://192.0.2.105:6020/restconf/data/openconfig-interfaces:interfaces/interface=Ethernet4' \
    --header 'Accept: application/yang-data+json' -u arista:arista \
    --insecure | jq .'"openconfig-interfaces:config"'
 ```
@@ -239,7 +293,7 @@ output
 ```
 
 ```shell
-curl -X POST https://10.73.1.105:6020/restconf/data/openconfig-interfaces:interfaces/interface=Ethernet4/config \
+curl -X POST https://192.0.2.105:6020/restconf/data/openconfig-interfaces:interfaces/interface=Ethernet4/config \
    -H 'Content-Type: application/json' -u arista:arista \
    -d '{"openconfig-interfaces:description":"restconf_test"}' --insecure
 ```
@@ -251,7 +305,7 @@ output
 ```
 
 ```shell
-curl -X POST https://10.73.1.105:6020/restconf/data/openconfig-interfaces:interfaces/interface=Ethernet4/config \
+curl -X POST https://192.0.2.105:6020/restconf/data/openconfig-interfaces:interfaces/interface=Ethernet4/config \
     -H 'Content-Type: application/json' -u arista:arista \
     -d '{"openconfig-interfaces:enabled":false}'  --insecure
 ```
@@ -265,7 +319,7 @@ output
 Let's verify after the change
 
 ```shell
-curl -s GET 'https://10.73.1.105:6020/restconf/data/openconfig-interfaces:interfaces/interface=Ethernet4' \
+curl -s GET 'https://192.0.2.105:6020/restconf/data/openconfig-interfaces:interfaces/interface=Ethernet4' \
    --header 'Accept: application/yang-data+json' -u arista:arista \
    --insecure | jq .'"openconfig-interfaces:config".description'
 ```
@@ -277,7 +331,7 @@ output
 ```
 
 ```shell
-curl -s GET 'https://10.73.1.105:6020/restconf/data/openconfig-interfaces:interfaces/interface=Ethernet4' \
+curl -s GET 'https://192.0.2.105:6020/restconf/data/openconfig-interfaces:interfaces/interface=Ethernet4' \
    --header 'Accept: application/yang-data+json' \
    -u arista:arista  --insecure | jq .'"openconfig-interfaces:config"'
 ```
@@ -302,7 +356,7 @@ output
 Let's check before the change
 
 ```shell
-curl -s GET 'https://10.73.1.105:6020/restconf/data/ietf-interfaces:interfaces/interface=Loopback100' \
+curl -s GET 'https://192.0.2.105:6020/restconf/data/ietf-interfaces:interfaces/interface=Loopback100' \
       --header 'Accept: application/yang-data+json' -u arista:arista  --insecure
 ```
 
@@ -313,6 +367,6 @@ output
 ```
 
 ```shell
-curl -X DELETE https://10.73.1.105:6020/restconf/data/ietf-interfaces:interfaces/interface=Loopback100 \
+curl -X DELETE https://192.0.2.105:6020/restconf/data/ietf-interfaces:interfaces/interface=Loopback100 \
     -u arista:arista  --insecure
 ```
