@@ -109,7 +109,7 @@ Output:
 > an error similar to the following would be generated:
 >
 > `handler.go:95] ERROR mismatch between number of keys in [identifier name] and values present [BGP]` or
-> if both would be omitted the error message would be:
+> if are omitted the error message would be:
 > `handler.go:95] ERROR failed to find key values after element "protocol" in "network-instances/network-instance=default/protocols/protocol`
 >
 > Tip: [pyang](../pyang/) can be useful to understand what keys each leaf requires, e.g:
