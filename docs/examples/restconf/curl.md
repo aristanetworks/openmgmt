@@ -104,9 +104,9 @@ Output:
 }
 ```
 
-> NOTE: how the protocol has to have multiple keys, ie: `protocol=BGP,BGP`, in this case it's the `identifier` and
-> the `name` of the protocol, if we were to omit any of those on the switch side in the Octa/OpenConfig agent logs
-> we would see something like below:
+> NOTE: The protocol must have multiple keys, i.e.: `protocol=BGP,BGP`, in this case, it's the `identifier` and
+> the `name` of the protocol, if either of these is omitted; on the switch side in the Octa/OpenConfig agent logs
+> an error similar to the following would be generated:
 >
 > `handler.go:95] ERROR mismatch between number of keys in [identifier name] and values present [BGP]` or
 > if both would be omitted the error message would be:
