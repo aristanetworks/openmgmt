@@ -114,8 +114,9 @@ Output:
 >
 > Tip: [pyang](../pyang/) can be useful to understand what keys each leaf requires, e.g:
 >
->```shell
+> ```shell
 > pyang openconfig-network-instance.yang -f tree --tree-depth=4 | tail -n 4
+>
 >        |        ...
 >        +--rw protocols
 >           +--rw protocol* [identifier name]
