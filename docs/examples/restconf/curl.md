@@ -113,14 +113,15 @@ Output:
 > `handler.go:95] ERROR failed to find key values after element "protocol" in "network-instances/network-instance=default/protocols/protocol`
 >
 > Tip: [pyang](../pyang/) can be useful to understand what keys each leaf requires, e.g:
->
->```shell
-> pyang openconfig-network-instance.yang -f tree --tree-depth=4 | tail -n 4
->        |        ...
->        +--rw protocols
->           +--rw protocol* [identifier name]
->                 ...
->
+
+```shell
+pyang openconfig-network-instance.yang -f tree --tree-depth=4 | tail -n 4
+
+   |        ...
+   +--rw protocols
+      +--rw protocol* [identifier name]
+            ...
+```
 
 ### HEAD
 
