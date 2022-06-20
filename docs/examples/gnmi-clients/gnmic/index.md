@@ -19,7 +19,7 @@ with the .json extension so they are easier to view within a text editor.
 To install run:
 
 ```shell
-curl -sL https://github.com/karimra/gnmic/raw/master/install.sh | sudo bash
+bash -c "$(curl -sL https://get-gnmic.kmrd.dev)"
 ```
 
 To get the version run:
