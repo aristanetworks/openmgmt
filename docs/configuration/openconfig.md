@@ -156,9 +156,9 @@ provider smash
 provider sysdb
 ```
 
-## Syslog messages with OpenConfig
+## AAA Accounting for gNMI/OpenConfig
 
-EOS configuration:
+Starting with EOS 4.27.2F `accounting requests` can be enabled to account records for gNMI/gNOI RPCs:
 
 ```text
 management api gnmi
@@ -168,6 +168,13 @@ management api gnmi
    provider eos-native
 !
 aaa accounting commands all default start-stop logging
+```
+
+we can also use these commands to log to tacacs+ or radius and syslog too
+
+```text
+aaa accounting commands all default start-stop group tacacs+
+aaa accounting commands all default start-stop group radius
 ```
 
 ```text
@@ -259,6 +266,9 @@ exit
 configure session session11521733719371 commit
 spine1#
 ```
+
+Limitations: An accounting record is limited to a maximum of 8098 characters.  
+The record will be truncated if it exceeds the maximum character length.
 
 ## gNMI per-RPC role authorizations
 
