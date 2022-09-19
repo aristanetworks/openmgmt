@@ -156,6 +156,122 @@ provider smash
 provider sysdb
 ```
 
+## AAA Accounting for gNMI/OpenConfig
+
+Starting with EOS 4.27.2F `accounting requests` can be enabled to account records for gNMI/gNOI RPCs:
+
+```text
+management api gnmi
+   transport grpc default
+      authorization requests
+      accounting requests
+   provider eos-native
+!
+aaa accounting commands all default start-stop logging
+```
+
+we can also use these commands to log to tacacs+ or radius and syslog too
+
+```text
+aaa accounting commands all default start-stop group tacacs+
+aaa accounting commands all default start-stop group radius
+```
+
+```text
+spine1# sh management api gnmi 
+Octa: enabled
+
+Transport: default
+Enabled: yes
+Server: running on port 6030, in default VRF
+SSL profile: none
+QoS DSCP: none
+Authorization required: yes
+Accounting requests: yes
+Certificate username authentication: no
+Notification timestamp: last change time
+Listen addresses: ::
+spine1#
+```
+
+Configuration change using OpenConfig and gNMI:
+
+```text
+$ gnmic -a 192.168.0.10:6030 -u arista -p arista77rx --insecure set --update-path "/interfaces/interface[name=Ethernet1]/config/description" --update-value "test"
+{
+  "source": "192.168.0.10:6030",
+  "timestamp": 1663615213475353999,
+  "time": "2022-09-19T19:20:13.475353999Z",
+  "results": [
+    {
+      "operation": "UPDATE",
+      "path": "interfaces/interface[name=Ethernet1]/config/description"
+    }
+  ]
+}
+```
+
+```text
+$ gnmic -a 192.168.0.10:6030 -u arista -p arista77rx --insecure get --path "/interfaces/interface[name=Ethernet1]/config/description"
+[
+  {
+    "source": "192.168.0.10:6030",
+    "timestamp": 1663615224964145128,
+    "time": "2022-09-19T19:20:24.964145128Z",
+    "updates": [
+      {
+        "Path": "interfaces/interface[name=Ethernet1]/config/description",
+        "values": {
+          "interfaces/interface/config/description": "test"
+        }
+      }
+    ]
+  }
+] 
+```
+
+Syslog messages on the device:
+
+```text
+spine1#sh logging last 5 minutes
+Sep 19 19:20:13 spine1 Aaa: %ACCOUNTING-6-CMD: arista unknown unknown stop task_id=34 start_time=1663615213.48 timezone=UTC service=shell priv-lvl=15 cmd=OpenConfig.Set addr=192.168.0.1:57388 rpc=/gnmi.gNMI/Set request={"update":[{"path":"/interfaces/interface[name=Ethernet1]/config/description","val":"\\"test\\""}]} <cr>
+Sep 19 19:20:13 spine1 ConfigAgent: %SYS-5-CONFIG_SESSION_ENTERED: User arista entered configuration session session11521733719371 on GNMI (192.168.0.1:57388)
+Sep 19 19:20:13 spine1 ConfigAgent: %SYS-5-CONFIG_SESSION_COMMIT_SUCCESS: User arista committed configuration session session11521733719371 successfully on GNMI (192.168.0.1:57388)
+Sep 19 19:20:13 spine1 ConfigAgent: %SYS-5-CONFIG_SESSION_EXITED: User arista exited configuration session session11521733719371 on GNMI (192.168.0.1:57388)
+Sep 19 19:20:24 spine1 Aaa: %ACCOUNTING-6-CMD: arista unknown unknown stop task_id=35 start_time=1663615224.96 timezone=UTC service=shell priv-lvl=15 cmd=OpenConfig.Get addr=192.168.0.1:57428 rpc=/gnmi.gNMI/Get request={"path":[{"path":"/interfaces/interface[name=Ethernet1]/config/description"}]} <cr>
+```
+
+```text
+spine1#trace monitor octa
+--- Monitoring /var/log/agents/Octa-3748 ---
+I0919 19:20:13.715618    3748 router.go:234] Cli commands:
+configure session session11521733719371
+interface Ethernet1
+description test
+exit
+configure session session11521733719371 commit
+^Cspine1#
+```
+
+```text
+spine1#bash ps -ef | grep Octa
+root      3748   480  2 16:51 ?        00:03:20 /usr/bin/Octa --agenttitle=Octa
+```
+
+```text
+spine1#bash  more /var/log/agents/Octa-3748 | tail -4
+interface Ethernet1
+description test
+exit
+configure session session11521733719371 commit
+spine1#
+```
+
+### Limitations
+
+An accounting record is limited to a maximum of 8098 characters.  
+The record will be truncated if it exceeds the maximum character length.
+
 ## gNMI per-RPC role authorizations
 
 Starting in EOS `4.24.1F` it is possible to perform authorization of each RPC (i.e. GET, SET, SUBSCRIBE), if
