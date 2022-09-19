@@ -267,7 +267,9 @@ configure session session11521733719371 commit
 spine1#
 ```
 
-Limitations: An accounting record is limited to a maximum of 8098 characters.  
+### Limitations
+
+An accounting record is limited to a maximum of 8098 characters.  
 The record will be truncated if it exceeds the maximum character length.
 
 ## gNMI per-RPC role authorizations
