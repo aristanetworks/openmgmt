@@ -44,6 +44,7 @@ version : 0.17.0
 
 management api gnmi
    transport grpc default
+       no shutdown
    provider eos-native
 
 ceos3#                show management api gnmi
