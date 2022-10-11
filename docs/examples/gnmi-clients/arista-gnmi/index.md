@@ -852,7 +852,11 @@ gnmi -addr 192.0.2.203:6030 -username arista -password arista \
 
 ```shell
 gnmi -addr 192.0.2.203:6030 -username arista -password arista \
-  update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP][identifier=BGP]/bgp'
+  update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP][identifier=BGP]/bgp' bgp.json
+```
+
+```shell
+cat bgp.json
 ```
 
 <details><summary> Reveal output</summary>
