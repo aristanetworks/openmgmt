@@ -800,7 +800,7 @@ gnmi -addr 192.0.2.139:6030 -username admin get origin=eos_native '/Sysdb/connec
 
 ```shell
 gnmi -addr 192.0.2.139:6030 -username cvpadmin -password arista \
-  update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=198.51.100.43]' \
+  update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP][identifier=BGP]/bgp/neighbors/neighbor[neighbor-address=198.51.100.43]' \
   '{"config": {"neighbor-address":"198.51.100.43", "peer-as": 123}}'
 ```
 
@@ -808,7 +808,7 @@ gnmi -addr 192.0.2.139:6030 -username cvpadmin -password arista \
 
 ```shell
 gnmi -addr 192.0.2.203:6030 -username arista -password arista
-  update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=198.51.100.43]' \
+  update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP][identifier=BGP]/bgp/neighbors/neighbor[neighbor-address=198.51.100.43]' \
   {"config": {"neighbor-address":"198.51.100.43", "peer-as": 123, "enabled": true, "send-community": "EXTENDED"}}'
 ```
 
@@ -816,7 +816,7 @@ gnmi -addr 192.0.2.203:6030 -username arista -password arista
 
 ```shell
 gnmi -addr 192.0.2.203 -username arista -password arista update \
-  '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/peer-groups/peer-group[peer-group-name=XYZ]' \
+  '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP][identifier=BGP]/bgp/peer-groups/peer-group[peer-group-name=XYZ]' \
   '{"config": {"peer-group-name":"XYZ", "local-as": 114}}'
 ```
 
@@ -824,13 +824,13 @@ gnmi -addr 192.0.2.203 -username arista -password arista update \
 
 ```shell
 gnmi -addr 192.0.2.203:6030 -username arista -password arista \
-  update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=198.51.100.0]/config/peer-as' \
+  update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP][identifier=BGP]/bgp/neighbors/neighbor[neighbor-address=198.51.100.0]/config/peer-as' \
   '110'
 ```
 
 ```shell
 gnmi -addr 192.0.2.203:6030 -username arista -password arista \
-  update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=198.51.100.0]' \
+  update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP][identifier=BGP]/bgp/neighbors/neighbor[neighbor-address=198.51.100.0]' \
   '{"config": {"peer-as": 110}}'
 ```
 
@@ -838,13 +838,13 @@ gnmi -addr 192.0.2.203:6030 -username arista -password arista \
 
 ```shell
 gnmi -addr 192.0.2.203:6030 -username arista -password arista \
-  update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=198.51.100.43]/config/peer-group' \
+  update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP][identifier=BGP]/bgp/neighbors/neighbor[neighbor-address=198.51.100.43]/config/peer-group' \
   'XYZ'
 ```
 
 ```shell
 gnmi -addr 192.0.2.203:6030 -username arista -password arista \
-  update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp/neighbors/neighbor[neighbor-address=198.51.100.0]' \
+  update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP][identifier=BGP]/bgp/neighbors/neighbor[neighbor-address=198.51.100.0]' \
   '{"config": {"peer-group": "XYZ","peer-as": 143}}'
 ```
 
@@ -852,7 +852,11 @@ gnmi -addr 192.0.2.203:6030 -username arista -password arista \
 
 ```shell
 gnmi -addr 192.0.2.203:6030 -username arista -password arista \
-  update /network-instances/network-instance[name=default]/protocols/protocol[name=BGP]/bgp'
+  update '/network-instances/network-instance[name=default]/protocols/protocol[name=BGP][identifier=BGP]/bgp' bgp.json
+```
+
+```shell
+cat bgp.json
 ```
 
 <details><summary> Reveal output</summary>
