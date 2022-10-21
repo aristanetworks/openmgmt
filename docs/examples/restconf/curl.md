@@ -45,7 +45,7 @@ Output:
 "48284395"
 ```
 
-#### Get interfaces stats and output the name of the 2nd (3rd index) using jq
+#### Get interfaces stats and output the name of the second (third index) using jq
 
 ```shell
 curl -s GET 'https://192.0.2.105:6020/restconf/data/openconfig-interfaces:interfaces' \

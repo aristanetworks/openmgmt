@@ -8,7 +8,7 @@ categories:
 ## Overview
 
 The following example uses the [goarista](https://pkg.go.dev/github.com/aristanetworks/goarista) go module for gNMI to
-interact with a device.  Within this very simplistic getting started example main.go will simply perform a get method to
+interact with a device. Within this very simplistic getting started example main.go will simply perform a get method to
 the device for all paths.
 
 ```golang

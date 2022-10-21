@@ -1,0 +1,76 @@
+[data-md-color-scheme="slate"] {
+    --md-hue: 210;
+}
+
+:root {
+    /* Color schema based on Arista Color Schema */
+
+    /* Primary color shades */
+    --md-primary-fg-color:               #27569B;
+    --md-primary-fg-color--light:        #FFFFFF;
+    --md-primary-fg-color--dark:         #27569B;
+    --md-primary-bg-color:               #FFFFFF;
+    --md-primary-bg-color--light:        #FFFFFF;
+
+    /* Accent color shades */
+    --md-accent-fg-color:                #27569B;
+    --md-accent-bg-color:                #27569B;
+    --md-accent-bg-color--light:         #27569B;
+
+    /* Link color */
+    --md-typeset-a-color:                #27569B;
+    --md-typeset-a-color-fg:             #FFFFFF;
+    --md-typeset-a-color-bg:             #27569B;
+
+    /* Code block color shades */
+    --md-code-bg-color:                  #E6E6E6;
+    --md-code-border-color:              #0000004f;
+    --block-code-bg-color:               #e4e4e4;
+    /* --md-code-fg-color:                  ...; */
+
+    /* font-size: 1rem; */
+    /* min-height: 100%;
+    position: relative;
+    width: 100%; */
+    font-feature-settings: "kern","liga";
+    font-family: var(--md-text-font-family,_),-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing: antialiased;
+
+}
+
+[data-md-color-scheme="slate"] {
+
+    /* Link color */
+    --md-typeset-a-color:                #75aaf8;
+    --md-typeset-a-color-fg:             #FFFFFF;
+    --md-typeset-a-color-bg:             #27569B;
+
+    /* Code block color shades */
+    /* --md-code-bg-color:                  #E6E6E6; */
+    --md-code-border-color:              #aec6db4f;
+    /* --block-code-bg-color:               #e4e4e4; */
+}
+
+[data-md-color-scheme="default"] {
+    /* Primary color shades */
+    --md-primary-fg-color:               #27569B;
+    --md-primary-fg-color--light:        #FFFFFF;
+    --md-primary-fg-color--dark:         #27569B;
+    --md-primary-bg-color:               #FFFFFF;
+    --md-primary-bg-color--light:        #FFFFFF;
+
+    /* Accent color shades */
+    --md-accent-fg-color:                #27569B;
+    --md-accent-bg-color:                #27569B;
+    --md-accent-bg-color--light:         #27569B;
+
+    /* Link color */
+    --md-typeset-a-color:                #27569B;
+    --md-typeset-a-color-fg:             #FFFFFF;
+    --md-typeset-a-color-bg:             #27569B;
+
+    /* Code block color shades */
+    --md-code-bg-color:                  #E6E6E6;
+    --md-code-border-color:              #0000004f;
+    --block-code-bg-color:               #e4e4e4;
+}

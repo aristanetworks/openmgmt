@@ -7,19 +7,37 @@ site_description: Arista Open Management repository documentation
 repo_name: openmgmt on Github
 repo_url: https://github.com/aristanetworks/openmgmt
 # Configuration
-theme: mkdocs
 theme:
   name: material
   palette:
-    scheme: slate
-    primary: blue
-    accent: orange
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/weather-night
+        name: Switch to light mode
+  favicon: _media/favicon.ico
 extra:
   analytics:
     provider: google
     property: G-4V8W728SS9
+  social:
+    - icon: fontawesome/brands/github-alt
+      link: https://github.com/aristanetworks/openmgmt
+    - icon: fontawesome/solid/globe
+      link: https://www.arista.com
 markdown_extensions:
   - pymdownx.snippets
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.superfences
+
+extra_css:
+  - stylesheets/extra.material.css
 nav:
   - Home: index.md
   - Configuration:

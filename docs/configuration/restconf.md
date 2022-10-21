@@ -15,9 +15,9 @@ The RESTCONF server is in the EOS device.
 
 ### Certificate
 
-Certificate-based authentication is required for RESTCONF to operate.  You should follow the instructions in the
+Certificate-based authentication is required for RESTCONF to operate. You should follow the instructions in the
 [Certificate Authentication](/configuration/mtls.html) section in order to generate and install a certificate to support
-RESTCONF in your environment.  Alternately, a self-signed certificate may be generated on the switch and certificate
+RESTCONF in your environment. Alternately, a self-signed certificate may be generated on the switch and certificate
 validation can be handled appropriately by remote RESTCONF clients.
 
 The following Cli command generates a self-signed cert:

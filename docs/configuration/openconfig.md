@@ -11,7 +11,7 @@ EOS supports the OpenConfig gNMI interface for device management.
 
 ### Platform compatibility
 
-All EOS flavors support OpenConfig (phyiscal, virtual, containerized, cloud).
+All EOS flavors support OpenConfig (physical, virtual, containerized, cloud).
 
 ### gNMI
 
@@ -82,8 +82,8 @@ QoS DSCP:           none
 
 The OpenConfig agent (gNMI API) can leverage the EOS state streaming agent's (TerminAttr) libraries, thus exposing EOS
 native paths. If Octa (OpenConfig + TerminAttr) is enabled then OpenConfig, in addition to accepting OpenConfig paths in
-gNMI get/subscribe requests, will also support EOS native paths (e.g. Sysdb/Smash paths). This feature was introduced in
-`4.22.1F`.
+gNMI get/subscribe requests, will also support EOS native paths (for example, Sysdb/Smash paths). This feature was
+introduced in `4.22.1F`.
 
 gNMI requests received by Octa are interpreted as either OpenConfig or TerminAttr requests, as follows.
 
@@ -178,7 +178,7 @@ aaa accounting commands all default start-stop group radius
 ```
 
 ```text
-spine1# sh management api gnmi 
+spine1# sh management api gnmi
 Octa: enabled
 
 Transport: default
@@ -227,7 +227,7 @@ $ gnmic -a 192.168.0.10:6030 -u arista -p arista77rx --insecure get --path "/int
       }
     ]
   }
-] 
+]
 ```
 
 Syslog messages on the device:
@@ -269,16 +269,16 @@ spine1#
 
 ### Limitations
 
-An accounting record is limited to a maximum of 8098 characters.  
+An accounting record is limited to a maximum of 8098 characters.
 The record will be truncated if it exceeds the maximum character length.
 
 ## gNMI per-RPC role authorizations
 
-Starting in EOS `4.24.1F` it is possible to perform authorization of each RPC (i.e. GET, SET, SUBSCRIBE), if
+Starting in EOS `4.24.1F` it is possible to perform authorization of each RPC (that is, GET, SET, SUBSCRIBE), if
 authorization requests is supplied as described above.
 
 During authorization, the OpenConfig agent will communicate with the AAA agent, allowing authorization policies or roles
-to permit or deny the new tokens OpenConfig.Get and OpenConfig.Set.
+to permit or deny the new tokens `OpenConfig.Get` and `OpenConfig.Set`.
 
 For example, a role may be defined such as:
 
@@ -311,7 +311,7 @@ management api models
 ## Telemetry Timestamps
 
 Per the GNMI specification, the default timestamp field of a notification message is set to be the time at which the
-value of the underlying data source changes or when the reported event takes place.  In order to facilitate integration
+value of the underlying data source changes or when the reported event takes place. In order to facilitate integration
 in legacy environments oriented around polling style operations, an option to support overriding the timestamp field to
 the send-time is available. (as of 4.27.0F)
 

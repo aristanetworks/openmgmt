@@ -9,7 +9,7 @@ categories:
 
 gNMIReverse is a Dial-Out gRPC service (available on our
 [Github](https://github.com/aristanetworks/goarista/tree/master/gnmireverse) page) that reverses the direction of the
-dial for gNMI Subscriptions.  The gNMIReverse client (running along with gNMI target) on the switch sends data to the
+dial for gNMI Subscriptions. The gNMIReverse client (running along with gNMI target) on the switch sends data to the
 gNMIReverse Server.
 
 This article contains steps on how to build the gNMIReverse client and server binaries and examples on how to configure,
