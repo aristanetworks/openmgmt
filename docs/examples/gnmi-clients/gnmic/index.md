@@ -74,7 +74,7 @@ gnmic -a 192.0.2.214:6030 -u cvpadmin -p arista --insecure --gzip get --path "/"
 
 ```shell
 gnmic -a 192.0.2.214:6030 -u cvpadmin -p arista --insecure --gzip get --path  \
-  '/network-instances/network-instance[name=default]/protocols/protocol[identifier=BGP][name=BGP]/bgp'`
+  '/network-instances/network-instance[name=default]/protocols/protocol[identifier=BGP][name=BGP]/bgp'
 ```
 
 #### Get BGP neighbors
