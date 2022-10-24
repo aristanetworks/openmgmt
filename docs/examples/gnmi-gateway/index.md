@@ -9,7 +9,7 @@ categories:
 
 [gNMI gateway](https://netflixtechblog.com/simple-streaming-telemetry-27447416e68f) is an opensource project created by
 Netflix. Conceptually, gNMI gateway sits as a proxy for multiple gNMI targets. A gNMI client speaks to a common gNMI
-service endpoint within the network (gNMI gateway) and specifies a gNMI target with an accompanying path.  The gNMI
+service endpoint within the network (gNMI gateway) and specifies a gNMI target with an accompanying path. The gNMI
 gateway will in turn initiate the connection to the target device and stream the contents to the originating proxy.
 
 - [gNMI gateway documentation](https://github.com/openconfig/gnmi-gateway)
@@ -23,7 +23,7 @@ The demo is dependent on the following files:
 - **gnmi-gateway** - The binary to activate gNMI gateway. This must be built for the platform that it will run on.
   Details regarding generation of the binary for the target platform can be found in the [gNMI gateway
   documentation](https://github.com/openconfig/gnmi-gateway).
-- **server.crt** / **server.key** - the certificate and key for gNMI gateway.  These can be generated through a CA.
+- **server.crt** / **server.key** - the certificate and key for gNMI gateway. These can be generated through a CA.
   Additional details may be found [here](/openmgmt/configuration/mtls/).
 - **targets.json** - This file specifies the targets.  gNMI-gateway supports hot reloading of the files. So if changes
   are made within targets.json it will reload automatically with new targets and or new paths.
@@ -102,8 +102,8 @@ The demo is dependent on the following files:
 ## EOS Configuration
 
 gNMI will need to be enabled on the target which is managed by gNMI gateway and a certificate will need to be installed
-to use TLS-based authentication.  Additional details regarding enabling gnmi on EOS devices can be found
-[here](/openmgmt/configuration/openconfig/).  Additional details regarding certificate management and configuration can
+to use TLS-based authentication. Additional details regarding enabling gnmi on EOS devices can be found
+[here](/openmgmt/configuration/openconfig/). Additional details regarding certificate management and configuration can
 be found [here](/openmgmt/configuration/mtls/).
 
 ## Start gNMI gateway

@@ -10,7 +10,7 @@ categories:
 ![#ygot](images/ygot.png?raw=true)
 
 [ygot](https://github.com/openconfig/ygot) is a collection of Go utilities that can generate Go structures based off of
-YANG modules.  In the demo we are going to generate go code based off of the [openconfig-system
+YANG modules. In the demo we are going to generate go code based off of the [openconfig-system
 model](https://github.com/openconfig/public/blob/master/release/models/system/openconfig-system.yang) using ygot.
 
 ## Demo Actions
@@ -81,7 +81,7 @@ pkg
 └── oc.go
 ```
 
-`oc.go` is the necessary go import / package for openconfig-system.  Looking at the Device struct within `pkg/oc.go`
+`oc.go` is the necessary go import / package for openconfig-system. Looking at the Device struct within `pkg/oc.go`
 
 ```go
 type Device struct {

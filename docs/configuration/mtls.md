@@ -2,13 +2,13 @@
 
 ## Overview
 
-EOS supports the use of mutual TLS (mTLS) for gRPC, RESTCONF and eAPI services.  This allows the use of certificates,
+EOS supports the use of mutual TLS (mTLS) for gRPC, RESTCONF and eAPI services. This allows the use of certificates,
 signed by a recognized and trusted CA, for authentication to gNMI and other gRPC based services.
 
-By default only certificates signed with Arista's CA are trusted.  In order to generate and sign certificates for mTLS
+By default only certificates signed with Arista's CA are trusted. In order to generate and sign certificates for mTLS
 authentication, an operator will need to install and configure a certifying authority (CA) that is used for signing
 certificates that are generated on network elements as well as the servers that will be interacting with the gRPC
-services.  The necessary certificates for establishing the chain of trust will need to be imported into the switches and
+services. The necessary certificates for establishing the chain of trust will need to be imported into the switches and
 tools interacting with the switches.
 
 This document outlines the necessary steps to generate certificate signing requests (CSR) on arista devices, sign the
@@ -16,7 +16,7 @@ certificates and import these into the switches.
 
 ## Process Overview
 
-- Setup a private certificate authority (CA).  This document uses [easy-rsa](https://github.com/OpenVPN/easy-rsa)
+- Setup a private certificate authority (CA). This document uses [easy-rsa](https://github.com/OpenVPN/easy-rsa)
 - Generate CSRs from the switch as well as for the host that will be initiating connections to the switch using mTLS as
   the authentication mechanism.
 - Sign the CSRs using the CA tools.
@@ -27,23 +27,23 @@ certificates and import these into the switches.
 ## Easy-RSA Setup
 
 The simple installation of Easy-RSA is well documented in the Easy RSA [quick start
-guide](https://github.com/OpenVPN/easy-rsa/blob/master/README.quickstart.md).  For a more durable installation you're
+guide](https://github.com/OpenVPN/easy-rsa/blob/master/README.quickstart.md). For a more durable installation you're
 encouraged to review the Easy-RSA documentation and customize the settings to your environment.
 
 ### Easy-RSA CA parameters
 
 **easy RSA version:** 3.0.8
 
-As of this writing EOS only supports RSA certificates, this differs from the default configuration of Easy-RSA.  The
+As of this writing EOS only supports RSA certificates, this differs from the default configuration of Easy-RSA. The
 following variable in the `vars` file will need to be set in order to generate the appropriate certificate type.
 
 ```bash
 set_var EASYRSA_ALGO "rsa"
 ```
 
-Use the `easyrsa build-ca` command to create the necessary certificate signing infrastructure within easyrsa.  This will
+Use the `easyrsa build-ca` command to create the necessary certificate signing infrastructure within easyrsa. This will
 generate a `ca.crt` certificate which can be imported into the PKI validation chain of the switches and other hosts in
-your PKI domain.  This can also be used in a standalone manner with most gnmi clients.
+your PKI domain. This can also be used in a standalone manner with most gnmi clients.
 
 In our case, this CA certificate resides in: `${HOME}/easy-rsa/pki/ca.crt`
 
@@ -54,7 +54,7 @@ This will need to be imported into the network elements where you're using mTLS 
 This will be used by local clients (gnmi, gnoi, gribi, etc.) connecting to the switches in order to authenticate.
 
 Note the `gnmi-client.cnf` configuration file provided in the following `openssl` command is used to create the Subject
-Alternate Name IP address entry associated with the client certificate.  This is optional and is not required for
+Alternate Name IP address entry associated with the client certificate. This is optional and is not required for
 certificates.
 
 ```text
@@ -67,7 +67,7 @@ The above commands will generate a private key as well as the Certificate Signin
 
 ### Sign the Local Client Certificate with Easy-RSA
 
-Note, that this is going to be a _client_ certificate.  As our gnmi client will be talking to the gnmi server on the
+Note, that this is going to be a _client_ certificate. As our gnmi client will be talking to the gnmi server on the
 switch.
 
 ```text
@@ -150,7 +150,7 @@ This will generate the signed certificate and place it into the easy-rsa local s
 ## Copy the Private CA Certificate to the Switch
 
 You will need to copy the `CA.crt` (commonly in `<easyrsa_root>/pki/ca.crt`) to the switch and add it to the list of
-certificates.  In the following example the file has been copied to the switch as `demo-ca.crt`.
+certificates. In the following example the file has been copied to the switch as `demo-ca.crt`.
 
 ```text
 copy flash:demo-ca.crt certificate:
@@ -170,7 +170,7 @@ management security
 
 ## gNMI Configuration
 
-The following configuration associates the gnmi service withthe associated ssl profile and enables it for use with mTLS
+The following configuration associates the gnmi service with the associated ssl profile and enables it for use with mTLS
 for authentication.
 
 ```text
@@ -196,8 +196,8 @@ This command enables you to see the state of the ssl profiles and whether there 
 
 ### Clocks and Certificate Lifetime
 
-Certificates should be created with a finite lifetime and rotated within that lifetime.  However, if the clocks on the
-switch are grossly off this may impact certificate operation.  Make sure that the clock on the switch is set correctly
+Certificates should be created with a finite lifetime and rotated within that lifetime. However, if the clocks on the
+switch are grossly off this may impact certificate operation. Make sure that the clock on the switch is set correctly
 and synchronized to a reliable time source.
 
 ## Client Examples

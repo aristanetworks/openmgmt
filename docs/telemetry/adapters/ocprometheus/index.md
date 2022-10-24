@@ -253,7 +253,7 @@ GOOS=linux GOARCH=amd64 go build
 
 #### Option 1) Using the binary
 
-From this point you can just SCP the binary to a persistent storage on the switch (e.g. `/mnt/flash/`) and
+From this point you can just SCP the binary to a persistent storage on the switch (for example, `/mnt/flash/`) and
 just configure the daemon and point it to `/mnt/flash/ocprometheus`
 
 #### Option 2) Install it as a swix
@@ -268,10 +268,10 @@ the necessary folders and your spec file, etc we can create RPMs with just one l
 
 You can download FPM from the following github page:
 
-https://github.com/jordansissel/fpm ( credit to Jordan and all the people who contributed to this project – you’ve made
- our lives easier! Thanks!)
+https://github.com/jordansissel/fpm (credit to Jordan and all who contributed to this project—you’ve made
+ our lives easier, Thank you)
 
-The following was done on a Devuan VM ( which is basically a lightweight Debian without systemd )
+The following was done on a Devuan VM (which is basically a lightweight Debian without systemd)
 using the following steps:
 
 1\. Create a new folder:
@@ -308,7 +308,7 @@ sudo fpm -s dir -t rpm -a all -n "ocprometheus-$(date +%m_%d.%H%M)" \
 | -a all | User noarch instead of x86_64|
 | -n “ocprometheus-$(date +%m_%d.%H%M)“ | the name of the RPM|
 | -v 1.5.5 | the version of the RPM will be 1.0|
-| –prefix /usr/bin/ | The files will be installed in this directory|
+| --prefix /usr/bin/ | The files will be installed in this directory|
 | -C /backup/fpmbuild/ ocprometheus ocprometheus.yml | Change directory to here before searching for files|
 
 4\. Copy the generated file to the switch and install it as a swix:
@@ -627,12 +627,12 @@ daemon ocprometheus
 
 The minimum required flags for TerminAttr are:
 
-- `disableaaa`: Disable AAA checking – all AAA requests pass (in case username/password is not used in ocprometheus)
+- `disableaaa`: Disable AAA checking—all AAA requests pass (in case username/password is not used in ocprometheus)
 - grpcaddr string
      VRF and address to listen on to serve data using the gNMI interface.
      The expected form is `[<vrf-name>/]address:port` (default `127.0.0.1:6042`)
 
-After configuring our switches we can head over to Grafana and start drawing our graphs!
+After configuring our switches we can head over to Grafana and start drawing our graphs.
 
 ## Creating dashboards in Grafana
 
@@ -687,12 +687,12 @@ Finally:
 
 - you can add as many dashboards you want
 - you can add more expression on a single graph
-- you can choose one line on the graph and it will show the graph for only that line (e.g. in interface counters you
-- can choose a specific interface to look at the counters for)
+- you can choose one line on the graph and it will show the graph for only that line (for example, in interface counters,
+you can choose a specific interface to look at the counters for)
 
 ### How to graph data only for specific interface?
 
-We can add filters to the queries in both Prometheus console or in grafana, e.g. if I want to see data for
+We can add filters to the queries in both Prometheus console or in grafana, for example, if I want to see data for
 interface Ethernet24 I’d use the following filter:
 
 `intfCounter{intf=”Ethernet24″}`
@@ -723,9 +723,9 @@ Explanation:
 
 - Named Capture Group: **direction** `(?P<direction>(?:in|out))`
   - Non-capturing group `(?:in|out)`
-    - 1st Alternative in
+    - first Alternative in
       - in matches the characters in literally (case sensitive)
-    - 2nd Alternative out
+    - second Alternative out
       - out matches the characters out literally (case sensitive)
 
 Match for inOctets will be divided like this:
@@ -762,7 +762,7 @@ know that it needs to treat it as a separate label, so it gives it a name.
 
 If you don’t want to see unnamedLabels you can add a group name similarly to the direction group.
 
-E.g. you can use the following expression: `(?P<packetType>(?:Octets|Errors|Discards))`
+For example, you can use the following expression: `(?P<packetType>(?:Octets|Errors|Discards))`
 
 Result:
 
@@ -973,7 +973,7 @@ You can also use the expression from the `kernel_rules.yml` directly on the GUI
 ![prom14.png](resources/prom14.png)
 
 After you create the records and update the yml files on the server, make sure you can see the rule created in
-the Status – Rules submenu
+the Status—Rules submenu
 
 ![prom15.png](resources/prom15.png)
 
@@ -1087,7 +1087,7 @@ This was only changed on our OpenConfig connectors (ockafka, ocprometheus, octsd
 older ocprometheus versions will ignore the updates.
 
 The version of ocprometheus that uses TypedValue as well was pushed to [github](https://github.com/aristanetworks/goarista/commit/22b2444f947b7d395b5c227cf0dd881d0100bdb1)
-on March 19th. A newer commit was done
+on March 19, 2019. A newer commit was done
 in the beginning of June to deal with [coalesced deletes](https://github.com/aristanetworks/goarista/commit/fef20d617fa7e1c7509e958fd3bd49cf4a4af5c0),
 and it’s recommended to use the latest version.
 

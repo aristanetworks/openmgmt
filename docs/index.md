@@ -8,7 +8,7 @@ categories:
 ## Welcome
 
 This site is a collection of notes, examples, and documentation regarding the use of various network management protocols
-with Arista EOS devices.  This is not a replacement for the official [Arista EOS
+with Arista EOS devices. This is not a replacement for the official [Arista EOS
 documentation](https://www.arista.com/en/support/product-documentation/) but should be considered something of a
 cookbook for getting started with the management technologies available in EOS.
 
@@ -24,5 +24,5 @@ N.B.: This is a continuous work in progress.
 - [Arista Product Documentation](https://www.arista.com/en/support/product-documentation) - EOS and Hardware
   documentation (Arista login required)
 - [Arista Software Downloads](https://www.arista.com/en/support/software-download) - EOS downloads (Arista login required)
-- [Arista TOIs](https://eos.arista.com/toi/) - Transfer of Information documents.  Release specific new feature
-  documentation. (Arista login required)
+- [Arista TOIs](https://eos.arista.com/toi/) - Transfer of Information documents. Release specific new feature documentation.
+(Arista login required)
