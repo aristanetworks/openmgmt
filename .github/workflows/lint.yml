@@ -27,17 +27,3 @@ jobs:
         with:
           files: "docs"
           config_file: ".markdownlint.yaml"
-  vale:
-    name: vale
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: errata-ai/vale-action@v1.5.0
-        with:
-          files: docs/
-          styles: |
-            https://github.com/errata-ai/Google/releases/latest/download/Google.zip
-        env:
-          # Required, set by GitHub actions automatically:
-          # https://docs.github.com/en/actions/security-guides/automatic-token-authentication#about-the-github_token-secret
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
