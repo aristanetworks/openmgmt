@@ -8,7 +8,7 @@ categories:
 ## overview
 
 The following examples are used to find openconfig paths within Arista EOS using
-the [gNMIC binary](https://gnmic.kmrd.dev/). There will be some commands which
+the [gNMIC binary](https://gnmic.openconfig.net/). There will be some commands which
 will specify one liners which will have the address of the gNMI target and some
 commands which will use the `.gnmic.yaml` file which will have the target
 information inside declared. All outputs will be redirected to the outputs file
@@ -19,7 +19,7 @@ with the .json extension so they are easier to view within a text editor.
 To install run:
 
 ```shell
-bash -c "$(curl -sL https://get-gnmic.kmrd.dev)"
+bash -c "$(curl -sL https://get-gnmic.openconfig.net)"
 ```
 
 To get the version run:
@@ -31,11 +31,11 @@ gnmi_stuff$ gnmic version
 Output:
 
 ```shell
-version : 0.17.0
- commit : 278661e
-   date : 2021-07-14T07:29:14Z
- gitURL : https://github.com/karimra/gnmic
-   docs : https://gnmic.kmrd.dev
+version : 0.27.0
+ commit : cc5759c
+   date : 2022-10-10T06:40:26Z
+ gitURL : https://github.com/openconfig/gnmic
+   docs : https://gnmic.openconfig.net
 ```
 
 ## Device config
