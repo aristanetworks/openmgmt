@@ -1065,6 +1065,209 @@ gnmic -a 192.0.2.1:6030 -u admin -p admin --insecure --gzip get \
   --path eos_native:/Eos/image >> outputs/eos_image.json
 ```
 
+### Get LANZ Data Streaming
+
+In addition to Octa, LANZ and LANZ Data Streaming also needs to be enabled on the switch.
+
+```shell
+queue-monitor length
+!
+queue-monitor streaming
+   no shutdown
+```
+
+With Octa and LANZ Data Streaming enabled, LANZ metrics can be subscribed:
+
+```shell
+gnmic -a 192.0.2.1:6030 -u admin -p admin --insecure --gzip \
+  subscribe --path 'eos_native:/LANZ'
+```
+
+<details><summary> Reveal output</summary>
+<p>
+
+```javascript
+{
+  "source": "192.0.2.1:6030",
+  "subscription-name": "default-1669906007",
+  "timestamp": 1669903438845029161,
+  "time": "2022-12-01T19:33:58.845029161+05:30",
+  "prefix": "eos_native:LANZ/config",
+  "updates": [
+    {
+      "Path": "name",
+      "values": {
+        "name": "config"
+      }
+    }
+  ]
+}
+{
+  "source": "192.0.2.1:6030",
+  "subscription-name": "default-1669906007",
+  "timestamp": 1669903438845141433,
+  "time": "2022-12-01T19:33:58.845141433+05:30",
+  "prefix": "eos_native:LANZ/globalBufferUsage",
+  "updates": [
+    {
+      "Path": "name",
+      "values": {
+        "name": "globalBufferUsage"
+      }
+    },
+    {
+      "Path": "globalBufferUsageRecord",
+      "values": {
+        "globalBufferUsageRecord": {
+          "bufferSize": 0,
+          "duration": 0,
+          "entryType": "",
+          "timestamp": 0
+        }
+      }
+    }
+  ]
+}
+{
+  "source": "192.0.2.1:6030",
+  "subscription-name": "default-1669906007",
+  "timestamp": 1669906008617947980,
+  "time": "2022-12-01T20:16:48.61794798+05:30",
+  "prefix": "eos_native:LANZ/congestion",
+  "updates": [
+    {
+      "Path": "congestionRecord",
+      "values": {
+        "congestionRecord": {
+          "entryType": "POLLING",
+          "fabricPeerIntfName": "",
+          "intfName": "Ethernet6",
+          "portID": 105,
+          "qDropCount": 0,
+          "queueSize": 1998240,
+          "switchID": 0,
+          "timeOfMaxQLen": 0,
+          "timestamp": 1669906008617720,
+          "trafficClass": 1,
+          "txLatency": 0
+        }
+      }
+    }
+  ]
+}
+{
+  "source": "192.0.2.1:6030",
+  "subscription-name": "default-1669906007",
+  "timestamp": 1669903438845107943,
+  "time": "2022-12-01T19:33:58.845107943+05:30",
+  "prefix": "eos_native:LANZ/congestion",
+  "updates": [
+    {
+      "Path": "name",
+      "values": {
+        "name": "congestion"
+      }
+    }
+  ]
+}
+{
+  "source": "192.0.2.1:6030",
+  "subscription-name": "default-1669906007",
+  "timestamp": 1669905829532672732,
+  "time": "2022-12-01T20:13:49.532672732+05:30",
+  "prefix": "eos_native:LANZ/config/portConfigRecord",
+  "updates": [
+    {
+      "Path": "Ethernet6/intfName",
+      "values": {
+        "Ethernet6/intfName": "Ethernet6"
+      }
+    },
+    {
+      "Path": "Ethernet6/switchID",
+      "values": {
+        "Ethernet6/switchID": 0
+      }
+    },
+    {
+      "Path": "Ethernet6/portID",
+      "values": {
+        "Ethernet6/portID": 105
+      }
+    },
+    {
+      "Path": "Ethernet6/internalPort",
+      "values": {
+        "Ethernet6/internalPort": false
+      }
+    },
+    {
+      "Path": "Ethernet6/highThreshold",
+      "values": {
+        "Ethernet6/highThreshold": 40962
+      }
+    },
+    {
+      "Path": "Ethernet6/lowThreshold",
+      "values": {
+        "Ethernet6/lowThreshold": 10241
+      }
+    }
+  ]
+}
+{
+  "source": "192.0.2.1:6030",
+  "subscription-name": "default-1669906007",
+  "timestamp": 1669905829532649815,
+  "time": "2022-12-01T20:13:49.532649815+05:30",
+  "prefix": "eos_native:LANZ/config",
+  "updates": [
+    {
+      "Path": "configRecord",
+      "values": {
+        "configRecord": {
+          "globalUsageHighThreshold": 0,
+          "globalUsageLowThreshold": 0,
+          "globalUsageReportingEnabled": true,
+          "lanzVersion": 1,
+          "maxQueueSize": 524288000,
+          "numOfPorts": 121,
+          "segmentSize": 16,
+          "timestamp": 1669905829532490
+        }
+      }
+    }
+  ]
+}
+{
+  "source": "192.0.2.1:6030",
+  "subscription-name": "default-1669906007",
+  "timestamp": 1669903438845176033,
+  "time": "2022-12-01T19:33:58.845176033+05:30",
+  "prefix": "eos_native:LANZ/error",
+  "updates": [
+    {
+      "Path": "name",
+      "values": {
+        "name": "error"
+      }
+    },
+    {
+      "Path": "errorRecord",
+      "values": {
+        "errorRecord": {
+          "errorMessage": "",
+          "timestamp": 0
+        }
+      }
+    }
+  ]
+}
+```
+
+</p>
+</details>
+
 ## Cli origin
 
 ### Get the running config
