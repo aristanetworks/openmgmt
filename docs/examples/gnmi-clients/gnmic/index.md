@@ -1076,7 +1076,7 @@ queue-monitor streaming
    no shutdown
 ```
 
-With Octa and LANZ Data Streaming enabled, LANZ metrics can be subscribed:
+With Octa and LANZ Data Streaming enabled, LANZ metrics can be subscribed to:
 
 ```shell
 gnmic -a 192.0.2.1:6030 -u admin -p admin --insecure --gzip \
