@@ -1157,7 +1157,7 @@ $ curl localhost:6060/rest/Sysdb/environment/archer/power/status/voltageSensor/c
     },
 ```
 
-You can validate your regular expression using a regexp app (e.g [www.regex101.com](www.regex101.com)):
+You can validate your regular expression using a regexp app (e.g [regex101](https://regex101.com/)):
 
 As you can see we are only matching `VoltageSensorX`
 
