@@ -32,5 +32,6 @@ Please refer to this [link](https://eos.arista.com/eos-4-24-2f/gnoi/) for the gN
 
 Examples:
 
-- [gnoi ping](https://eos.arista.com/eos-4-22-1f/gnoi-ping/)
-- [gnoi traceroute](https://eos.arista.com/eos-4-22-1f/gnoi-traceroute/)
+- [gNOI ping](https://eos.arista.com/eos-4-22-1f/gnoi-ping/)
+- [gNOI traceroute](https://eos.arista.com/eos-4-22-1f/gnoi-traceroute/)
+- [gNOI Support](https://www.arista.com/en/support/toi/eos-4-24-2f/14715-gnoi)
