@@ -94,6 +94,8 @@ Connection to 192.0.2.118 closed.
 
 ## gNOI demo with Arista using gNOIc
 
+### gNOI Ping
+
 ```shell
 gnoic -a 192.0.2.118:6030 -u arista -p arista --insecure  system ping \
    --destination 172.31.255.0 --count 2 --do-not-resolve
@@ -122,6 +124,8 @@ avg_time: 32590000
 max_time: 33930000
 std_dev: 1351000
 ```
+
+### gNOI Traceroute
 
 ```shell
  gnoic -a 192.0.2.118:6030 -u arista -p arista --insecure  system traceroute \
@@ -156,6 +160,8 @@ address: "172.31.255.0"
 rtt: 71079000
 ```
 
+### gNOI cert
+
 ```shell
 gnoic -a 192.0.2.118:6030 -u arista -p arista --insecure cert can-generate-csr
 ```
@@ -171,3 +177,89 @@ INFO[0000] "192.0.2.118:6030" key-type=KT_RSA, cert-type=CT_X509, key-size=2048:
 | 192.0.2.118:6030 | true             |
 +------------------+------------------+
 ```
+
+### Upgrading EOS using gNOI
+
+EOS supports gNOI OS Install/Activate/Verification (4.24.2F+) and gNOI System Reboot/Reboot/RebootStatus (4.27.0F+)
+that can be used to upload the EOS image, activate that image (set the boot-config) so that it boots with it next time,
+verify the image activation was successful and lastly to reboot the device to perform the upgrade.
+
+#### gNOI OS Install
+
+To upload an EOS SWI image to a switch we can use the `gnoi.os.OS/Installation` RPC:
+
+```shell
+gnoic -a 192.0.2.1:6030 --insecure  --gzip -u admin -p admin \
+   os install \
+   --version 4.29.1F \
+   --pkg EOS.swi
+```
+
+Output:
+
+```shell
+INFO[0000] starting install RPC
+INFO[0000] target "192.0.2.1:6030": starting Install stream
+INFO[0003] target "192.0.2.1:6030": TransferProgress bytes_received:5242880
+INFO[0003] target "192.0.2.1:6030": TransferProgress bytes_received:10485760
+...
+INFO[0411] target "192.0.2.1:6030": TransferProgress bytes_received:1030750208
+INFO[0413] target "192.0.2.1:6030": sending TransferEnd
+INFO[0413] target "192.0.2.1:6030": TransferProgress bytes_received:1035993088
+INFO[0413] target "192.0.2.1:6030": TransferContent done...
+```
+
+#### gNOI OS Activate
+
+To activate the new EOS image (equivalent to running `boot system flash:EOS.swi` on the CLI) we can use  the
+`/gnoi.os.OS/Activation` RPC:
+
+```shell
+gnoic -a 192.0.2.1:6030 --insecure  --gzip -u admin -p admin \
+   os activate \
+   --version 4.29.1F \
+   --no-reboot
+```
+
+Output:
+
+```shell
+INFO[0034] target "192.0.2.1:6030" activate response "activate_ok:{}"
+```
+
+#### gNOI OS Verify
+
+```shell
+gnoic -a 192.0.2.1:6030 --insecure  --gzip -u admin -p admin os verify
+```
+
+Output:
+
+```shell
++-------------------+---------+---------------------+
+|    Target Name    | Version | Activation Fail Msg |
++-------------------+---------+---------------------+
+| 192.0.2.1:6030 | 4.29.1F |                     |
++-------------------+---------+---------------------+
+```
+
+#### gNOI System Reboot
+
+To reboot the device we can use `gnoi.system.System/Reboot` RPC and the `COLD` method:
+
+```shell
+gnoic -a 192.0.2.1:6030 --insecure  --gzip -u admin -p admin \
+   system reboot \
+   --method COLD
+```
+
+> Note on older EOS versions you may get the following error message:
+
+```shell
+ERRO[0009] "192.0.2.1:6030" System Reboot failed: rpc error: code = Unavailable desc = error reading from server: EOF
+Error: there was 1 error(s)
+```
+
+## References
+
+[gNOI Support](https://www.arista.com/en/support/toi/eos-4-24-2f/14715-gnoi)
