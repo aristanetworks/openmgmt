@@ -634,6 +634,43 @@ The minimum required flags for TerminAttr are:
 
 After configuring our switches we can head over to Grafana and start drawing our graphs.
 
+### Fix for multilane interfaces (EOS-native paths)
+
+If interface statistics streamed using eos-native paths, then backslash would be part of the
+interface names:
+![Multilane interface names](resources/multilane-before.png)
+
+Use the following metric_relabel_configs configuration to remove the backslash in interface names:
+
+```shell
+scrape_configs:
+  # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
+  - job_name: 'prometheus'
+
+    # metrics_path defaults to '/metrics'
+    # scheme defaults to 'http'.
+    static_configs:
+      - targets: ['localhost:9090']
+  - job_name: 'arista'
+    static_configs:
+    - targets: ['172.28.161.187:8080']
+    metric_relabel_configs:
+    - action: replace
+      source_labels: [intf]
+      target_label: intf
+      regex: '(.*)\\(.*)'
+      replacement: '${1}${2}'
+    - action: replace
+      source_labels: [intf]
+      target_label: intf
+      regex: '(.*)\\(.*)\\(.*)'
+      replacement: '${1}${2}${3}'
+```
+
+Applying this configuration will result in:
+
+![Multilane interface names](resources/multilane-after.png)
+
 ## Creating dashboards in Grafana
 
 First you’ll need to add Prometheus as a data source, to be able to graph streamed data to Prometheus.
