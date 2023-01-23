@@ -1,2 +1,5 @@
+*.pyc
+*.pyo
+.DS_Store
 site
 venv/
