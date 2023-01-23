@@ -640,7 +640,7 @@ If interface statistics streamed using eos-native paths, then backslash would be
 interface names:
 ![Multilane interface names](resources/multilane-before.png)
 
-Use following metric_relabel_configs configuration to remove backslash in interface names:
+Use the following metric_relabel_configs configuration to remove the backslash in interface names:
 
 ```shell
 scrape_configs:
