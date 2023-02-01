@@ -6,6 +6,7 @@ site_description: Arista Open Management repository documentation
 # Repository information
 repo_name: openmgmt on Github
 repo_url: https://github.com/aristanetworks/openmgmt
+edit_uri: edit/main/docs
 # Configuration
 theme:
   name: material
@@ -21,6 +22,9 @@ theme:
         icon: material/weather-night
         name: Switch to light mode
   favicon: _media/favicon.ico
+  features:
+    - content.action.edit
+    - content.code.copy
 extra:
   analytics:
     provider: google
@@ -31,10 +35,14 @@ extra:
     - icon: fontawesome/solid/globe
       link: https://www.arista.com
 markdown_extensions:
-  - pymdownx.snippets
+  - admonition
+  - pymdownx.details
   - pymdownx.highlight:
       anchor_linenums: true
+  - pymdownx.snippets
   - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
 
 extra_css:
   - stylesheets/extra.material.css
