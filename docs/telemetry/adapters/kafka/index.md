@@ -99,8 +99,8 @@ docker logs clab-kafka-telegraf-server
 2023-02-01T17:16:24Z I! Loaded outputs: kafka
 2023-02-01T17:16:24Z I! Tags enabled: host=telegraf-server
 2023-02-01T17:16:24Z I! [agent] Config: Interval:10s, Quiet:false, Hostname:"telegraf-server", Flush Interval:10s
-2023-02-01T17:16:29Z E! [inputs.gnmi] Error in plugin: failed to setup subscription: rpc error: code = Unavailable desc 
-2023-02-01T17:16:29Z E! [inputs.gnmi] Error in plugin: failed to setup subscription: rpc error: code = Unavailable desc 
+2023-02-01T17:16:29Z E! [inputs.gnmi] Error in plugin: failed to setup subscription: rpc error: code = Unavailable desc
+2023-02-01T17:16:29Z E! [inputs.gnmi] Error in plugin: failed to setup subscription: rpc error: code = Unavailable desc
 ```
 
 </p>
@@ -110,7 +110,7 @@ This is okay it reconnects but never tells you it is reconnecting.
 
 ### Binary for testing
 
-Since all of our devices are accessable within the same machine there is a small binary that can subscribe to the 
+Since all of our devices are accessable within the same machine there is a small binary that can subscribe to the
 same telegraf topic and display information.  
 Within the /bin directory it is compiled for either darwin or linux/amd64.
 
@@ -147,7 +147,7 @@ neighbors/neighbor/afi_safis/afi_safi/config/afi_safi_name="openconfig-bgp-types
 
 ## Lab Cleanup
 
-```
+```bash
 containerlab -t initial.yaml destroy
 ```
 
@@ -167,3 +167,4 @@ INFO[0001] Removing containerlab host entries from /etc/hosts file
 
 </p>
 </details>
+<br></br>
