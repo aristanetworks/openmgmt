@@ -167,4 +167,4 @@ INFO[0001] Removing containerlab host entries from /etc/hosts file
 
 </p>
 </details>
-<br></br>
+The environment should be back to the way it was previously after deletion.
