@@ -7,9 +7,11 @@ categories:
 
 ## Introduction
 
-Kafka is a popular message bus system that allows applications to communicate over a pub/sub bus as either a publisher or a consumer.  A popular method of distributing streaming telemetry is to take the telemetry data and output it to a kafka topic so it can be further reacted upon.
+Kafka is a popular message bus system that allows applications to communicate over a pub/sub bus as either a publisher or a consumer.  
+A popular method of distributing streaming telemetry is to take the telemetry data and output it to a kafka topic so it can be further reacted upon.
 
-This lab will leverage the telegraf container to take streaming telemetry from two cEOS lab devices from their gNMI interfaces and output the data to a kafka topic.
+This lab will leverage the telegraf container to take streaming telemetry.  
+from two cEOS lab devices from their gNMI interfaces and output the data to a kafka topic.
 
 ## Prerequisite
 
@@ -17,7 +19,8 @@ This lab will leverage the telegraf container to take streaming telemetry from t
 - [docker](https://www.docker.com/)
 - [ceos](https://containerlab.dev/manual/kinds/ceos/)
 
-cEOS lab will need to be downloaded from the arista software downloads page and imported into docker as ceoslab and a tag of 4.29.2F before proceeding.
+cEOS lab will need to be downloaded from the arista software downloads 
+and imported via docker with a tag of 4.29.2F
 
 ## Environment
 
@@ -40,13 +43,17 @@ Looking at the telegraf.conf file
 ```bash
 --8<-- "src/kafka-telegraf/telegraf.conf"
 ```
-
+<br>
 </p>
 </details>
-We can see that we are going to have telegraf use the [gnmi input plugin](https://github.com/influxdata/telegraf/tree/master/plugins/inputs/gnmi) which will simply connect to the two ceos nodes and start to stream their interface counters and bgp statistics.  On the outputs portion we can see that we are going to take this gNMI data and send it to the kafka broker on the subject of telegraf.  So any application that connects to the same kafka broker will also be able to see this data.
-
+We can see that we are going to have telegraf use the 
+[gnmi input plugin](https://github.com/influxdata/telegraf/tree/master/plugins/inputs/gnmi) 
+which will simply connect to the two ceos nodes and start to stream their interface counters and bgp statistics.  
+On the outputs portion we can see that we are going to take this gNMI data and send it to the kafka broker on the subject of telegraf.  
+So any application that connects to the same kafka broker will also be able to see this data.
+<br>
 This containerlab file will consist of the following Docker containers
-
+<br>
 - cEOS (2) each running gNMI interface
 - Kafka container 
 - Zookeeper 
@@ -55,13 +62,14 @@ This containerlab file will consist of the following Docker containers
 
 ### Running the lab 
 
-```text
+```bash
 cd src/kafka-telegraf/
 containerlab -t initial.yaml deploy
 ```
 
 Our environment should look as the following
-```text
+
+```bash
 +---+-----------------------------+--------------+------------------------+-------+---------+------------------+----------------------+
 | # |            Name             | Container ID |         Image          | Kind  |  State  |   IPv4 Address   |     IPv6 Address     |
 +---+-----------------------------+--------------+------------------------+-------+---------+------------------+----------------------+
@@ -78,7 +86,7 @@ Our environment should look as the following
 docker logs clab-kafka-telegraf-server
 <details><summary>Reveal output</summary>
 <p>
-```text
+```bash
 2023-02-01T17:16:24Z I! Using config file: /etc/telegraf/telegraf.conf
 2023-02-01T17:16:24Z I! Starting Telegraf 1.25.0
 2023-02-01T17:16:24Z I! Available plugins: 228 inputs, 9 aggregators, 26 processors, 21 parsers, 57 outputs, 2 secret-stores
@@ -100,16 +108,17 @@ This is okay it reconnects but never tells you it is reconnecting.
 
 ### Binary for testing
 
-Since all of our devices are accessable within the same machine there is a small binary that can subscribe to the same telegraf topic and display information.  Within the /bin directory it is compiled for either darwin or linux/amd64.
+Since all of our devices are accessable within the same machine there is a small binary that can subscribe to the same telegraf topic and display information.  
+Within the /bin directory it is compiled for either darwin or linux/amd64.
 
-```text
+```bash
 cd /bin
 ./kafakconsumer --kafka-brokers 172.20.20.103:9092 -kafka-topic telegraf
 ```
 
 <details><summary>Reveal output</summary>
 <p>
-```text
+```bash
 message at topic/partition/offset telegraf/0/0: ifcounters,host=telegraf-server,name=Management0,path=openconfig:/interfaces/interface/state/counters,source=clab-kafka-ceos1 in_broadcast_pkts=0i,in_discards=0i,in_errors=0i,in_fcs_errors=0i,in_multicast_pkts=0i,out_broadcast_pkts=0i,out_discards=0i,out_errors=0i,out_multicast_pkts=0i 1675272643699038728
 
 message at topic/partition/offset telegraf/0/1: ifcounters,host=telegraf-server,name=Management0,path=openconfig:/interfaces/interface/state/counters,source=clab-kafka-ceos1 in_octets=6886i,in_pkts=65i,in_unicast_pkts=65i,out_octets=2273i,out_pkts=25i,out_unicast_pkts=25i 1675272646690338017
@@ -132,7 +141,7 @@ containerlab -t initial.yaml destroy
 
 <details><summary>Reveal output</summary>
 <p>
-```text
+```bash
 INFO[0000] Parsing & checking topology file: initial.yaml 
 INFO[0000] Destroying lab: kafka                        
 INFO[0000] Removed container: clab-kafka-telegraf-server 
