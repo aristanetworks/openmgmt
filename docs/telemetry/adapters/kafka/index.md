@@ -7,8 +7,10 @@ categories:
 
 ## Introduction
 
-Kafka is a popular message bus system that allows applications to communicate over a pub/sub bus as either a publisher or a consumer.  
-A popular method of distributing streaming telemetry is to take the telemetry data and output it to a kafka topic so it can be further reacted upon.
+Kafka is a popular message bus system that allows applications to communicate over a pub/sub bus 
+as either a publisher or a consumer.  
+A popular method of distributing streaming telemetry is to take the telemetry data and output it 
+to a kafka topic so it can be further reacted upon.
 
 This lab will leverage the telegraf container to take streaming telemetry.  
 from two cEOS lab devices from their gNMI interfaces and output the data to a kafka topic.
@@ -19,7 +21,7 @@ from two cEOS lab devices from their gNMI interfaces and output the data to a ka
 - [docker](https://www.docker.com/)
 - [ceos](https://containerlab.dev/manual/kinds/ceos/)
 
-cEOS lab will need to be downloaded from the arista software downloads 
+cEOS lab will need to be downloaded from the arista software downloads
 and imported via docker with a tag of 4.29.2F
 
 ## Environment
@@ -43,23 +45,23 @@ Looking at the telegraf.conf file
 ```bash
 --8<-- "src/kafka-telegraf/telegraf.conf"
 ```
-<br>
+
 </p>
 </details>
-We can see that we are going to have telegraf use the 
-[gnmi input plugin](https://github.com/influxdata/telegraf/tree/master/plugins/inputs/gnmi) 
+We can see that we are going to have telegraf use the
+[gnmi input plugin](https://github.com/influxdata/telegraf/tree/master/plugins/inputs/gnmi)
 which will simply connect to the two ceos nodes and start to stream their interface counters and bgp statistics.  
-On the outputs portion we can see that we are going to take this gNMI data and send it to the kafka broker on the subject of telegraf.  
+On the outputs portion we can see that we are going to take this gNMI data and send it to the 
+kafka broker on the subject of telegraf.  
 So any application that connects to the same kafka broker will also be able to see this data.
-<br>
 This containerlab file will consist of the following Docker containers
-<br>
 - cEOS (2) each running gNMI interface
 - Kafka container 
 - Zookeeper 
 - Telegraf 
 - Binary for testing purposes
-
+<br>
+</br>
 ### Running the lab 
 
 ```bash
@@ -118,17 +120,25 @@ cd /bin
 
 <details><summary>Reveal output</summary>
 <p>
+
 ```bash
-message at topic/partition/offset telegraf/0/0: ifcounters,host=telegraf-server,name=Management0,path=openconfig:/interfaces/interface/state/counters,source=clab-kafka-ceos1 in_broadcast_pkts=0i,in_discards=0i,in_errors=0i,in_fcs_errors=0i,in_multicast_pkts=0i,out_broadcast_pkts=0i,out_discards=0i,out_errors=0i,out_multicast_pkts=0i 1675272643699038728
+ifcounters,host=telegraf-server,name=Management0,path=openconfig:/interfaces/interface/state/counters,source=clab-kafka-ceos1 
+in_broadcast_pkts=0i,in_discards=0i,in_errors=0i,in_fcs_errors=0i,
+in_multicast_pkts=0i,out_broadcast_pkts=0i,out_discards=0i,out_errors=0i,out_multicast_pkts=0i 1675272643699038728
 
-message at topic/partition/offset telegraf/0/1: ifcounters,host=telegraf-server,name=Management0,path=openconfig:/interfaces/interface/state/counters,source=clab-kafka-ceos1 in_octets=6886i,in_pkts=65i,in_unicast_pkts=65i,out_octets=2273i,out_pkts=25i,out_unicast_pkts=25i 1675272646690338017
+ifcounters,host=telegraf-server,name=Management0,path=openconfig:/interfaces/interface/state/counters,source=clab-kafka-ceos1 
+in_octets=6886i,in_pkts=65i,in_unicast_pkts=65i,out_octets=2273i,out_pkts=25i,out_unicast_pkts=25i 1675272646690338017
 
-message at topic/partition/offset telegraf/0/7: openconfig_bgp,/network-instances/network-instance/protocols/protocol/name=BGP,host=telegraf-server,identifier=BGP,name=default,source=clab-kafka-ceos2 global/state/router_id="2.2.2.2" 1675271796987568362
+openconfig_bgp,/network-instances/network-instance/protocols/protocol/name=BGP,host=telegraf-server,identifier=BGP,
+name=default,source=clab-kafka-ceos2 global/state/router_id="2.2.2.2" 1675271796987568362
 
-message at topic/partition/offset telegraf/0/8: openconfig_bgp,/network-instances/network-instance/protocols/protocol/name=BGP,afi_safi_name=IPV4_UNICAST,host=telegraf-server,identifier=BGP,name=default,neighbor_address=10.0.0.1,source=clab-kafka-ceos2 neighbors/neighbor/afi_safis/afi_safi/afi_safi_name="openconfig-bgp-types:IPV4_UNICAST" 1675271796630909428
+openconfig_bgp,/network-instances/network-instance/protocols/protocol/name=BGP,afi_safi_name=IPV4_UNICAST,host=telegraf-server,
+identifier=BGP,name=default,neighbor_address=10.0.0.1,source=clab-kafka-ceos2 
+neighbors/neighbor/afi_safis/afi_safi/afi_safi_name="openconfig-bgp-types:IPV4_UNICAST" 1675271796630909428
 
-message at topic/partition/offset telegraf/0/9: openconfig_bgp,/network-instances/network-instance/protocols/protocol/name=BGP,afi_safi_name=IPV4_UNICAST,host=telegraf-server,identifier=BGP,name=default,neighbor_address=10.0.0.1,source=clab-kafka-ceos2 neighbors/neighbor/afi_safis/afi_safi/config/afi_safi_name="openconfig-bgp-types:IPV4_UNICAST" 1675271796630909428
-
+openconfig_bgp,/network-instances/network-instance/protocols/protocol/name=BGP,afi_safi_name=IPV4_UNICAST,host=telegraf-server,
+identifier=BGP,name=default,neighbor_address=10.0.0.1,source=clab-kafka-ceos2 
+neighbors/neighbor/afi_safis/afi_safi/config/afi_safi_name="openconfig-bgp-types:IPV4_UNICAST" 1675271796630909428
 ```
 </p>
 </details>
@@ -141,6 +151,7 @@ containerlab -t initial.yaml destroy
 
 <details><summary>Reveal output</summary>
 <p>
+
 ```bash
 INFO[0000] Parsing & checking topology file: initial.yaml 
 INFO[0000] Destroying lab: kafka                        
@@ -151,5 +162,6 @@ INFO[0001] Removed container: clab-kafka-ceos2
 INFO[0001] Removed container: clab-kafka-ceos1          
 INFO[0001] Removing containerlab host entries from /etc/hosts file 
 ```
+
 </p>
 </details>
