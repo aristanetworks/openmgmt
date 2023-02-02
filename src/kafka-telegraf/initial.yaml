@@ -1,0 +1,68 @@
+name: kafka
+
+topology:
+  defaults:
+    env:
+      ETBA: 4
+  nodes:
+    ceos1:
+      kind: ceos
+      image: ceoslab:4.29.2F
+      ports:
+      - 4001:6030
+      - 4444:443
+      - 888:80
+      - 6040:6040
+      startup-config: configs/ceos1.conf
+      mgmt_ipv4: 172.20.20.101
+      publish:
+        - tcp/4001
+
+    ceos2:
+      kind: ceos
+      image: ceoslab:4.29.2F
+      ports:
+      - 4002:6030
+      - 4445:443
+      - 889:80
+      - 6041:6040
+      startup-config: configs/ceos2.conf
+      mgmt_ipv4: 172.20.20.102
+      publish:
+        - tcp/4002
+    
+    kafka-server:
+      kind: linux
+      image: bitnami/kafka:latest
+      mgmt_ipv4: 172.20.20.103
+      ports:
+        - 9092:9092
+        - 9000:9000
+      env:
+        KAFKA_CFG_ADVERTISED_LISTENERS: PLAINTEXT://clab-kafka-kafka-server:9092
+        ALLOW_PLAINTEXT_LISTENER: "yes"
+        JMX_PORT: 9000
+        KAFKA_ADVERTISED_HOST_NAME: localhost
+        KAFKA_ZOOKEEPER_CONNECT: clab-kafka-zookeeper-server:2181
+
+    zookeeper-server:
+      kind: linux
+      image: wurstmeister/zookeeper
+      mgmt_ipv4: 172.20.20.104
+      ports:
+        - 2181:2181
+      env:
+        KAFKA_CFG_ADVERTISED_LISTENERS: PLAINTEXT://clab-kafka-kafka-server:9092
+        ALLOW_PLAINTEXT_LISTENER: "yes"
+        JMX_PORT: 9000
+    
+    telegraf-server:
+      kind: linux
+      image: telegraf:latest
+      mgmt_ipv4: 172.20.20.105
+      binds:
+        - telegraf.conf:/etc/telegraf/telegraf.conf
+
+
+  links:
+    - endpoints: ["ceos1:eth1", "ceos2:eth1"]

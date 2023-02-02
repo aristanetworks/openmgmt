@@ -82,5 +82,6 @@ nav:
   - Telemetry:
     - gNMIReverse: telemetry/adapters/gnmireverse/index.md
     - ocprometheus: telemetry/adapters/ocprometheus/index.md
+    - kafka-telegraf: telemetry/adapters/kafka/index.md
   - Models: models/index.md
   - Videos: videos/index.md
