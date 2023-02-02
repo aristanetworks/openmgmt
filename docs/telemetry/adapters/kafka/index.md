@@ -17,7 +17,7 @@ from two cEOS lab devices from their gNMI interfaces and output the data to a Ka
 
 ## Prerequisite
 
-- [containerlab](https://containerlab.dev/)
+- [Containerlab](https://containerlab.dev/)
 - [Docker](https://www.docker.com/)
 - [ceos](https://containerlab.dev/manual/kinds/ceos/)
 
