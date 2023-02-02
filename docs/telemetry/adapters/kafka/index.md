@@ -8,7 +8,7 @@ categories:
 ## Introduction
 
 Kafka is a popular message bus system that allows applications to communicate over a pub/sub bus
-as either a publisher or a consumer.  
+as either a publisher or a consumer.
 A popular method of distributing streaming telemetry is to take the telemetry data and output it
 to a Kafka topic so it can be further reacted upon.
 
