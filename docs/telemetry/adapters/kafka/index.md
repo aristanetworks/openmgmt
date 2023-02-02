@@ -18,7 +18,7 @@ from two cEOS lab devices from their gNMI interfaces and output the data to a Ka
 ## Prerequisite
 
 - [containerlab](https://containerlab.dev/)
-- [docker](https://www.docker.com/)
+- [Docker](https://www.docker.com/)
 - [ceos](https://containerlab.dev/manual/kinds/ceos/)
 
 cEOS lab will need to be downloaded from the arista software downloads
