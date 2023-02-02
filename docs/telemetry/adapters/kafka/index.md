@@ -83,7 +83,7 @@ Our environment should look as the following
 +---+-----------------------------+--------------+------------------------+-------+---------+------------------+----------------------+
 ```
 
-### Checking telegraf
+### Checking Telegraf
 
 docker logs clab-kafka-telegraf-server
 <details><summary>Reveal output</summary>
