@@ -54,7 +54,7 @@ which will simply connect to the two cEOS nodes and start to stream their interf
 On the outputs portion we can see that we are going to take this gNMI data and send it to the
 Kafka broker on the subject of Telegraf.
 So any application that connects to the same Kafka broker will also be able to see this data.
-This containerlab file will consist of the following Docker containers
+This Containerlab file will consist of the following Docker containers
 
 - cEOS (2) each running gNMI interface
 - Kafka container
