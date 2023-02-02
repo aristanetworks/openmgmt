@@ -12,7 +12,7 @@ as either a publisher or a consumer.
 A popular method of distributing streaming telemetry is to take the telemetry data and output it
 to a Kafka topic so it can be further reacted upon.
 
-This lab will leverage the telegraf container to take streaming telemetry.  
+This lab will leverage the Telegraf container to take streaming telemetry
 from two cEOS lab devices from their gNMI interfaces and output the data to a Kafka topic.
 
 ## Prerequisite
