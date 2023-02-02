@@ -61,8 +61,7 @@ This containerlab file will consist of the following Docker containers
 - Zookeeper
 - Telegraf
 - Binary for testing purposes
-<br>
-</br>
+
 ### Running the lab
 
 ```bash
