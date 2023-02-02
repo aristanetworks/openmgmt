@@ -61,7 +61,7 @@ topology:
       image: telegraf:latest
       mgmt_ipv4: 172.20.20.105
       binds:
-        - $PWD/telegraf.conf:/etc/telegraf/telegraf.conf
+        - telegraf.conf:/etc/telegraf/telegraf.conf
 
 
   links:

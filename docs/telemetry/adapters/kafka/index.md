@@ -10,10 +10,10 @@ categories:
 Kafka is a popular message bus system that allows applications to communicate over a pub/sub bus
 as either a publisher or a consumer.  
 A popular method of distributing streaming telemetry is to take the telemetry data and output it
-to a kafka topic so it can be further reacted upon.
+to a Kafka topic so it can be further reacted upon.
 
 This lab will leverage the telegraf container to take streaming telemetry.  
-from two cEOS lab devices from their gNMI interfaces and output the data to a kafka topic.
+from two cEOS lab devices from their gNMI interfaces and output the data to a Kafka topic.
 
 ## Prerequisite
 
@@ -50,11 +50,12 @@ Looking at the telegraf.conf file
 </details>
 We can see that we are going to have telegraf use the
 [gnmi input plugin](https://github.com/influxdata/telegraf/tree/master/plugins/inputs/gnmi)
-which will simply connect to the two ceos nodes and start to stream their interface counters and bgp statistics.  
+which will simply connect to the two cEOS nodes and start to stream their interface counters and BGP statistics.  
 On the outputs portion we can see that we are going to take this gNMI data and send it to the
-kafka broker on the subject of telegraf.
-So any application that connects to the same kafka broker will also be able to see this data.
+Kafka broker on the subject of telegraf.
+So any application that connects to the same Kafka broker will also be able to see this data.
 This containerlab file will consist of the following Docker containers
+
 - cEOS (2) each running gNMI interface
 - Kafka container
 - Zookeeper
