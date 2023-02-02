@@ -111,7 +111,7 @@ This is okay it reconnects but never tells you it is reconnecting.
 ### Binary for testing
 
 Since all of our devices are accessible within the same machine there is a small binary that can subscribe to the
-same telegraf topic and display information.  
+same Telegraf topic and display information.  
 Within the `/bin` directory it is compiled for either darwin or linux/amd64.
 
 ```bash
