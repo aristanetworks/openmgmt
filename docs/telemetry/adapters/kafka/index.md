@@ -30,7 +30,7 @@ The containerlab file
 <details><summary>Reveal output</summary>
 <p>
 
-```bash
+```yaml
 --8<-- "src/kafka-telegraf/initial.yaml"
 ```
 
