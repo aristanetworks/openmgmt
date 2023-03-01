@@ -1052,7 +1052,7 @@ subscriptions:
       provider eos-native
    !
    daemon ocprometheus
-      exec /mnt/flash/ocprometheus -config /mnt/flash/ocprometheus.yml -addr localhost:6030 -username admin
+      exec /mnt/flash/ocprometheus -config /mnt/flash/ocprometheus.yml -addr localhost:6030 -username arista -password arista
        no shutdown
 ```
 
@@ -1065,9 +1065,11 @@ subscriptions:
       provider eos-native
       !
    daemon ocprometheus
-      exec /sbin/ip netns exec ns-management /mnt/flash/ocprometheus -config /mnt/flash/ocprometheus.yml -addr localhost:6030 -username admin
+      exec /sbin/ip netns exec ns-management /mnt/flash/ocprometheus -config /mnt/flash/ocprometheus.yml -addr localhost:6030 -username arista -password arista
       no shutdown
 ```
+
+> Note it's recommended to use certificate based authentication in production.
 
 ### Cert-based authentification with ocprometheus
 
