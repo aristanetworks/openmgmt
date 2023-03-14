@@ -50,7 +50,7 @@ Looking at the telegraf.conf file
 </details>
 We can see that we are going to have Telegraf use the
 [gnmi input plugin](https://github.com/influxdata/telegraf/tree/master/plugins/inputs/gnmi)
-which will simply connect to the two cEOS nodes and start to stream their interface counters and BGP statistics.  
+which will simply connect to the two cEOS nodes and start to stream their interface counters and BGP statistics.
 On the outputs portion we can see that we are going to take this gNMI data and send it to the
 Kafka broker on the subject of Telegraf.
 So any application that connects to the same Kafka broker will also be able to see this data.
@@ -85,7 +85,10 @@ Our environment should look as the following
 
 ### Checking Telegraf
 
+```shell
 docker logs clab-kafka-telegraf-server
+```
+
 <details><summary>Reveal output</summary>
 <p>
 ```bash
@@ -111,7 +114,7 @@ This is okay it reconnects but never tells you it is reconnecting.
 ### Binary for testing
 
 Since all of our devices are accessible within the same machine there is a small binary that can subscribe to the
-same Telegraf topic and display information.  
+same Telegraf topic and display information.
 Within the `/bin` directory it is compiled for either darwin or linux/amd64.
 
 ```bash
@@ -123,22 +126,22 @@ cd /bin
 <p>
 
 ```bash
-ifcounters,host=telegraf-server,name=Management0,path=openconfig:/interfaces/interface/state/counters,source=clab-kafka-ceos1 
+ifcounters,host=telegraf-server,name=Management0,path=openconfig:/interfaces/interface/state/counters,source=clab-kafka-ceos1
 in_broadcast_pkts=0i,in_discards=0i,in_errors=0i,in_fcs_errors=0i,
 in_multicast_pkts=0i,out_broadcast_pkts=0i,out_discards=0i,out_errors=0i,out_multicast_pkts=0i 1675272643699038728
 
-ifcounters,host=telegraf-server,name=Management0,path=openconfig:/interfaces/interface/state/counters,source=clab-kafka-ceos1 
+ifcounters,host=telegraf-server,name=Management0,path=openconfig:/interfaces/interface/state/counters,source=clab-kafka-ceos1
 in_octets=6886i,in_pkts=65i,in_unicast_pkts=65i,out_octets=2273i,out_pkts=25i,out_unicast_pkts=25i 1675272646690338017
 
 openconfig_bgp,/network-instances/network-instance/protocols/protocol/name=BGP,host=telegraf-server,identifier=BGP,
 name=default,source=clab-kafka-ceos2 global/state/router_id="2.2.2.2" 1675271796987568362
 
 openconfig_bgp,/network-instances/network-instance/protocols/protocol/name=BGP,afi_safi_name=IPV4_UNICAST,host=telegraf-server,
-identifier=BGP,name=default,neighbor_address=10.0.0.1,source=clab-kafka-ceos2 
+identifier=BGP,name=default,neighbor_address=10.0.0.1,source=clab-kafka-ceos2
 neighbors/neighbor/afi_safis/afi_safi/afi_safi_name="openconfig-bgp-types:IPV4_UNICAST" 1675271796630909428
 
 openconfig_bgp,/network-instances/network-instance/protocols/protocol/name=BGP,afi_safi_name=IPV4_UNICAST,host=telegraf-server,
-identifier=BGP,name=default,neighbor_address=10.0.0.1,source=clab-kafka-ceos2 
+identifier=BGP,name=default,neighbor_address=10.0.0.1,source=clab-kafka-ceos2
 neighbors/neighbor/afi_safis/afi_safi/config/afi_safi_name="openconfig-bgp-types:IPV4_UNICAST" 1675271796630909428
 ```
 
@@ -155,14 +158,14 @@ containerlab -t initial.yaml destroy
 <p>
 
 ```bash
-INFO[0000] Parsing & checking topology file: initial.yaml 
-INFO[0000] Destroying lab: kafka                        
-INFO[0000] Removed container: clab-kafka-telegraf-server 
-INFO[0000] Removed container: clab-kafka-zookeeper-server 
-INFO[0001] Removed container: clab-kafka-kafka-server   
-INFO[0001] Removed container: clab-kafka-ceos2          
-INFO[0001] Removed container: clab-kafka-ceos1          
-INFO[0001] Removing containerlab host entries from /etc/hosts file 
+INFO[0000] Parsing & checking topology file: initial.yaml
+INFO[0000] Destroying lab: kafka
+INFO[0000] Removed container: clab-kafka-telegraf-server
+INFO[0000] Removed container: clab-kafka-zookeeper-server
+INFO[0001] Removed container: clab-kafka-kafka-server
+INFO[0001] Removed container: clab-kafka-ceos2
+INFO[0001] Removed container: clab-kafka-ceos1
+INFO[0001] Removing containerlab host entries from /etc/hosts file
 ```
 
 </p>
