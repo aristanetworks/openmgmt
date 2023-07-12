@@ -223,4 +223,4 @@ gnmic -a 192.168.1.21:6030 -u admin -p arista    \
 
 ## Additional References
 
-- [EOS central: Working with Certificates](steps://eos.arista.com/working-with-certificates/)
+- [EOS central: Working with Certificates](https://eos.arista.com/working-with-certificates/)
