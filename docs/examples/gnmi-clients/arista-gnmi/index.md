@@ -1051,3 +1051,43 @@ gnmi -addr 192.0.2.214:6030 -username cvpadmin -password arista \
 
 </p>
 </details>
+
+### Running unconverted show commands that use 'text' format
+
+To run show commands that are not converted to JSON and require `format="text"` the `ASCII` encoding can be used
+
+#### show platform fap interrupts
+
+```shell
+gnmi -addr 192.0.2.214:6030 -username cvpadmin -password arista get encoding=ascii origin=cli "show platform fap interrupts"
+```
+
+<details><summary> Reveal output</summary>
+<p>
+
+```javascript
+/show platform fap interrupts:
+ Jericho0
+ --------------------------------------------------------------------------------------------------------------
+ | Interrupt Bit                                                         | Count | First Occurrence    | Last Occurrence     |
+ --------------------------------------------------------------------------------------------------------------
+ | NBIH_LINK_STATUS_CHANGE_LinkStatusChangeInterruptRegister_12[0]       |    55 | 2023-10-05 00:02:22 | 2023-10-20 10:29:21 |
+ | NBIH_LINK_STATUS_CHANGE_LinkStatusChangeInterruptRegister_13[0]       |    39 | 2023-10-05 00:02:21 | 2023-10-16 19:00:15 |
+ | NBIH_LINK_STATUS_CHANGE_LinkStatusChangeInterruptRegister_14[0]       |    39 | 2023-10-05 00:02:23 | 2023-10-16 19:00:15 |
+ | NBIH_LINK_STATUS_CHANGE_LinkStatusChangeInterruptRegister_15[0]       |    39 | 2023-10-05 00:02:22 | 2023-10-16 19:00:15 |
+ | NBIH_LINK_STATUS_CHANGE_LinkStatusChangeInterruptRegister_20[0]       |    67 | 2023-10-05 00:02:26 | 2023-10-24 00:44:24 |
+ | NBIH_LINK_STATUS_CHANGE_LinkStatusChangeInterruptRegister_21[0]       |    56 | 2023-10-05 00:02:25 | 2023-10-24 00:44:24 |
+ | NBIH_LINK_STATUS_CHANGE_LinkStatusChangeInterruptRegister_22[0]       |    53 | 2023-10-05 00:02:25 | 2023-10-24 00:45:15 |
+ | NBIH_LINK_STATUS_CHANGE_LinkStatusChangeInterruptRegister_23[0]       |    55 | 2023-10-05 00:02:24 | 2023-10-24 00:45:15 |
+ | IPS_QueueEnteredDel[1]                                                |     6 | 2023-10-11 14:00:20 | 2023-10-11 14:12:02 |
+ | EPNI_PP_NewDaErr[0]                                                   | 255206 | 2023-10-05 15:06:43 | 2023-10-25 21:42:04 |
+ | EPNI_PP_VsiMembershipDeny[1]                                          |     2 | 2023-10-11 02:27:16 | 2023-10-11 14:11:46 |
+ | EPNI_PP_EesLastActionNotAc[0]                                         | 255206 | 2023-10-05 15:06:43 | 2023-10-25 21:42:04 |
+ | EPNI_PP_EesLastActionNotAc[1]                                         | 47299 | 2023-10-05 13:33:12 | 2023-10-23 16:16:04 |
+ | FMAC_FMAC_2_RxLostOfSync_0[32]                                        | 883547 | 2023-10-05 00:02:34 | 2023-10-25 21:42:08 |
+<ommitted>
+}
+```
+
+</p>
+</details>

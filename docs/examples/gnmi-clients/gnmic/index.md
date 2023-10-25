@@ -1448,6 +1448,61 @@ Output:
 </p>
 </details>
 
+### Running unconverted show commands that use 'text' format
+
+To run show commands that are not converted to JSON and require `format="text"` the `ASCII` encoding can be used
+
+#### show platform fap interrupts
+
+```shell
+gnmic -a 192.0.2.1:6030 -u admin -p admin --insecure get --gzip --encoding ASCII --path "cli:/show platform fap interrupts"
+```
+
+Output:
+
+<details><summary> Reveal output</summary>
+<p>
+
+```json
+[
+  {
+    "source": "10.81.117.21:6030",
+    "timestamp": 1698270415643755294,
+    "time": "2023-10-25T22:46:55.643755294+01:00",
+    "updates": [
+      {
+        "Path": "cli:show platform fap interrupts",
+        "values": {
+          "show platform fap interrupts": " Jericho0\n -------------------------------------------------------------------------------------------------------------- \n
+          | Interrupt Bit                                                         | Count | First Occurrence    | Last Occurrence     |\n -------------------------------------------------------------------------------------------------------------- \n
+          | NBIH_LINK_STATUS_CHANGE_LinkStatusChangeInterruptRegister_12[0]       |    55 | 2023-10-05 00:02:22 | 2023-10-20 10:29:21 |\n
+          | NBIH_LINK_STATUS_CHANGE_LinkStatusChangeInterruptRegister_13[0]       |    39 | 2023-10-05 00:02:21 | 2023-10-16 19:00:15 |\n
+          | NBIH_LINK_STATUS_CHANGE_LinkStatusChangeInterruptRegister_14[0]       |    39 | 2023-10-05 00:02:23 | 2023-10-16 19:00:15 |\n
+          | NBIH_LINK_STATUS_CHANGE_LinkStatusChangeInterruptRegister_15[0]       |    39 | 2023-10-05 00:02:22 | 2023-10-16 19:00:15 |\n
+          | NBIH_LINK_STATUS_CHANGE_LinkStatusChangeInterruptRegister_20[0]       |    67 | 2023-10-05 00:02:26 | 2023-10-24 00:44:24 |\n
+          | NBIH_LINK_STATUS_CHANGE_LinkStatusChangeInterruptRegister_21[0]       |    56 | 2023-10-05 00:02:25 | 2023-10-24 00:44:24 |\n
+          | NBIH_LINK_STATUS_CHANGE_LinkStatusChangeInterruptRegister_22[0]       |    53 | 2023-10-05 00:02:25 | 2023-10-24 00:45:15 |\n
+          | NBIH_LINK_STATUS_CHANGE_LinkStatusChangeInterruptRegister_23[0]       |    55 | 2023-10-05 00:02:24 | 2023-10-24 00:45:15 |\n
+          | IPS_QueueEnteredDel[1]                                                |     6 | 2023-10-11 14:00:20 | 2023-10-11 14:12:02 |\n
+          | EPNI_PP_NewDaErr[0]                                                   | 255279 | 2023-10-05 15:06:43 | 2023-10-25 21:46:52 |\n
+          | EPNI_PP_VsiMembershipDeny[1]                                          |     2 | 2023-10-11 02:27:16 | 2023-10-11 14:11:46 |\n
+          | EPNI_PP_EesLastActionNotAc[0]                                         | 255279 | 2023-10-05 15:06:43 | 2023-10-25 21:46:52 |\n
+          | EPNI_PP_EesLastActionNotAc[1]                                         | 47299 | 2023-10-05 13:33:12 | 2023-10-23 16:16:04 |\n
+          | FMAC_FMAC_2_RxLostOfSync_0[32]                                        | 883687 | 2023-10-05 00:02:34 | 2023-10-25 21:46:54 |\n
+          | FMAC_FMAC_2_RxLostOfSync_1[33]
+          <ommitted>
+          \n"
+        }
+      }
+    ]
+  }
+]
+
+```
+
+</p>
+</details>
+
 ## Misc
 
 ### Save all status states to a file
