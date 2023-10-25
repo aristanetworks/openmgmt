@@ -1054,7 +1054,8 @@ gnmi -addr 192.0.2.214:6030 -username cvpadmin -password arista \
 
 ### Running unconverted show commands that use 'text' format
 
-To run show commands that are not converted to JSON and require `format="text"` the `ASCII` encoding can be used
+To run show commands that are not converted to JSON and require `format="text"` the `ASCII` encoding
+can be used from EOS 4.29.2F or newer.
 
 #### show platform fap interrupts
 
