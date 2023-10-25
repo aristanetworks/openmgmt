@@ -1,0 +1,130 @@
+gNMI version: 0.7.0
+supported models:
+  - arista-lldp-deviations, Arista Networks, Inc.,
+  - arista-exp-eos-mlag, Arista Networks <http://arista.com/>,
+  - arista-exp-eos-multicast, Arista Networks <http://arista.com/>,
+  - openconfig-packet-match, OpenConfig working group, 1.1.1
+  - openconfig-system-management, OpenConfig working group, 0.1.2
+  - openconfig-segment-routing, OpenConfig working group, 0.0.4
+  - arista-exp-eos-qos-acl-config, Arista Networks <http://arista.com/>,
+  - openconfig-platform-port, OpenConfig working group, 0.3.2
+  - arista-netinst-deviations, Arista Networks, Inc.,
+  - arista-mpls-deviations, Arista Networks, Inc.,
+  - arista-bgp-deviations, Arista Networks, Inc.,
+  - openconfig-network-instance-types, OpenConfig working group, 0.8.2
+  - arista-vlan-augments, Arista Networks <http://arista.com/>,
+  - openconfig-platform, OpenConfig working group, 0.12.2
+  - arista-exp-eos-qos-config, Arista Networks <http://arista.com/>,
+  - openconfig-system-logging, OpenConfig working group, 0.3.1
+  - openconfig-acl, OpenConfig working group, 1.0.2
+  - ietf-inet-types, IETF NETMOD (NETCONF Data Modeling Language) Working Group,
+  - arista-isis-deviations, Arista Networks, Inc.,
+  - openconfig-platform-types, OpenConfig working group, 1.0.0
+  - openconfig-policy-forwarding, OpenConfig working group, 0.2.1
+  - openconfig-mpls-types, OpenConfig working group, 3.1.0
+  - openconfig-hercules-interfaces, OpenConfig Hercules Working Group, 0.2.0
+  - openconfig-lldp, OpenConfig working group, 0.2.1
+  - openconfig-aft, OpenConfig working group, 0.3.3
+  - openconfig-relay-agent, OpenConfig working group, 0.1.1
+  - arista-rpol-augments, Arista Networks <http://arista.com/>,
+  - openconfig-procmon, OpenConfig working group, 0.4.0
+  - openconfig-isis, OpenConfig working group, 0.4.2
+  - arista-qos-augments, Arista Networks, Inc.,
+  - openconfig-extensions, OpenConfig working group,
+  - vlan-translation, Arista Networks,
+  - openconfig-if-aggregate, OpenConfig working group, 2.4.2
+  - arista-lacp-augments, Arista Networks <http://arista.com/>,
+  - openconfig-isis-types, OpenConfig working group, 0.4.2
+  - arista-aft-augments, Arista Networks, Inc.,
+  - arista-relay-agent-deviations, Arista Networks <http://arista.com/>,
+  - arista-exp-eos-varp-net-inst, Arista Networks <http://arista.com/>,
+  - openconfig-if-types, OpenConfig working group, 0.2.1
+  - openconfig-vlan, OpenConfig working group, 3.2.0
+  - openconfig-ospfv2, OpenConfig working group, 0.2.0
+  - arista-mpls-augments, Arista Networks <http://arista.com/>,
+  - openconfig-lacp, OpenConfig working group, 1.1.1
+  - arista-exp-eos-evpn, Arista Networks, Inc.,
+  - arista-system-augments, Arista Networks, Inc.,
+  - openconfig-messages, OpenConfig working group, 0.0.1
+  - openconfig-network-instance, OpenConfig working group, 0.13.0
+  - openconfig-aaa-types, OpenConfig working group, 0.4.1
+  - openconfig-mpls, OpenConfig working group, 3.1.0
+  - openconfig-lldp-types, OpenConfig working group, 0.1.1
+  - openconfig-if-ethernet, OpenConfig working group, 2.7.2
+  - openconfig-bgp, OpenConfig working group, 6.0.0
+  - arista-intf-deviations, Arista Networks, Inc.,
+  - openconfig-ospf-types, OpenConfig working group, 0.1.3
+  - arista-intf-augments, Arista Networks <http://arista.com/>,
+  - openconfig-pf-srte, OpenConfig working group, 0.1.1
+  - openconfig-pim-types, OpenConfig working group, 0.1.1
+  - arista-exp-eos-igmpsnooping, Arista Networks <http://arista.com/>,
+  - arista-local-routing-deviations, Arista Networks, Inc.,
+  - openconfig-platform-psu, OpenConfig working group, 0.2.1
+  - openconfig-rib-bgp-types, OpenConfig working group, 0.5.0
+  - ietf-netconf-monitoring, IETF NETCONF (Network Configuration) Working Group,
+  - arista-lacp-deviations, Arista Networks, Inc.,
+  - arista-exp-eos-vxlan-config, Arista Networks <http://arista.com/>,
+  - openconfig-aft-types, OpenConfig Working Group, 0.3.3
+  - openconfig-routing-policy, OpenConfig working group, 3.1.1
+  - arista-gnoi-cert, Arista Networks, Inc.,
+  - arista-lldp-augments, Arista Networks, Inc.,
+  - openconfig-system-terminal, OpenConfig working group, 0.3.1
+  - openconfig-mpls-rsvp, OpenConfig working group, 3.0.1
+  - arista-vlan-deviations, Arista Networks <http://arista.com/>,
+  - arista-rpc-netconf, Arista Networks, Inc.,
+  - openconfig-yang-types, OpenConfig working group, 0.2.1
+  - openconfig-types, OpenConfig working group, 0.6.0
+  - openconfig-alarms, OpenConfig working group, 0.3.2
+  - openconfig-mpls-ldp, OpenConfig working group, 3.0.2
+  - openconfig-platform-cpu, OpenConfig working group, 0.1.1
+  - ietf-netconf, IETF NETCONF (Network Configuration) Working Group,
+  - openconfig-if-ip, OpenConfig working group, 3.0.0
+  - openconfig-isis-lsdb-types, OpenConfig working group, 0.4.2
+  - openconfig-platform-fan, OpenConfig working group, 0.1.1
+  - openconfig-policy-types, OpenConfig working group, 3.1.1
+  - arista-system-deviations, Arista Networks, Inc.,
+  - openconfig-bgp-types, OpenConfig working group, 5.0.2
+  - ietf-interfaces, IETF NETMOD (Network Modeling) Working Group,
+  - openconfig-interfaces, OpenConfig working group, 2.4.2
+  - arista-bgp-augments, Arista Networks, Inc.,
+  - openconfig-bfd, OpenConfig working group, 0.1.1
+  - openconfig-alarm-types, OpenConfig working group, 0.2.1
+  - openconfig-igmp, OpenConfig working group, 0.2.0
+  - arista-bfd-deviations, Arista Networks, Inc.,
+  - openconfig-hercules-qos, OpenConfig Hercules Working Group, 0.1.0
+  - openconfig-system, OpenConfig working group, 0.8.0
+  - openconfig-inet-types, OpenConfig working group, 0.3.3
+  - arista-exp-eos, Arista Networks <http://arista.com/>,
+  - arista-exp-eos-vxlan, Arista Networks <http://arista.com/>,
+  - openconfig-mpls-sr, OpenConfig working group, 3.0.1
+  - iana-if-type, IANA,
+  - openconfig-ospf-policy, OpenConfig working group, 0.1.3
+  - openconfig-vlan-types, OpenConfig working group, 3.1.0
+  - ietf-yang-types, IETF NETMOD (NETCONF Data Modeling Language) Working Group,
+  - openconfig-rib-bgp, OpenConfig working group, 0.6.0
+  - arista-bfd-augments, Arista Networks <http://arista.com/>,
+  - arista-eos-types, Arista Networks <http://arista.com/>,
+  - arista-srte-deviations, Arista Networks, Inc.,
+  - openconfig-igmp-types, OpenConfig working group, 0.1.1
+  - openconfig-bgp-policy, OpenConfig working group, 6.0.0
+  - openconfig-network-instance-l3, OpenConfig working group, 0.11.1
+  - openconfig-if-tunnel, OpenConfig working group, 0.1.1
+  - openconfig-hercules-platform, OpenConfig Hercules Working Group, 0.2.0
+  - openconfig-packet-match-types, OpenConfig working group, 1.0.2
+  - openconfig-platform-linecard, OpenConfig working group, 0.1.1
+  - arista-isis-augments, Arista Networks, Inc.,
+  - arista-srte-augments, Arista Networks, Inc.,
+  - arista-exp-eos-varp-intf, Arista Networks <http://arista.com/>,
+  - arista-exp-eos-qos, Arista Networks <http://arista.com/>,
+  - openconfig-qos-types, OpenConfig working group, 0.2.1
+  - openconfig-qos, OpenConfig working group, 0.2.2
+  - openconfig-local-routing, OpenConfig working group, 1.0.2
+  - openconfig-aaa, OpenConfig working group, 0.4.2
+  - openconfig-pim, OpenConfig working group, 0.2.0
+  - arista-pim-augments, Arista Networks <http://arista.com/>,
+  - arista-rpol-deviations, Arista Networks, Inc.,
+  - arista-acl-deviations, Arista Networks, Inc.,
+supported encodings:
+  - JSON
+  - JSON_IETF
+  - ASCII

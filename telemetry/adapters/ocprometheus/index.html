@@ -1,0 +1,2834 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Arista Open Management repository documentation">
+      
+      
+        <meta name="author" content="Arista Networks">
+      
+      
+        <link rel="canonical" href="https://aristanetworks.github.io/openmgmt/telemetry/adapters/ocprometheus/">
+      
+      
+        <link rel="prev" href="../gnmireverse/">
+      
+      
+        <link rel="next" href="../kafka/">
+      
+      <link rel="icon" href="../../../_media/favicon.ico">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.0.9">
+    
+    
+      
+        <title>Streaming EOS telemetry states to Prometheus - Open Management</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.0d440cfe.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.2505c338.min.css">
+      
+      
+
+    
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.material.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+  
+
+
+  
+  
+
+
+  <script id="__analytics">function __md_analytics(){function n(){dataLayer.push(arguments)}window.dataLayer=window.dataLayer||[],n("js",new Date),n("config","G-4V8W728SS9"),document.addEventListener("DOMContentLoaded",function(){document.forms.search&&document.forms.search.query.addEventListener("blur",function(){this.value&&n("event","search",{search_term:this.value})}),document$.subscribe(function(){var a=document.forms.feedback;if(void 0!==a)for(var e of a.querySelectorAll("[type=submit]"))e.addEventListener("click",function(e){e.preventDefault();var t=document.location.pathname,e=this.getAttribute("data-md-value");n("event","feedback",{page:t,data:e}),a.firstElementChild.disabled=!0;e=a.querySelector(".md-feedback__note [data-md-value='"+e+"']");e&&(e.hidden=!1)}),a.hidden=!1}),location$.subscribe(function(e){n("config","G-4V8W728SS9",{page_path:e.pathname})})});var e=document.createElement("script");e.async=!0,e.src="https://www.googletagmanager.com/gtag/js?id=G-4V8W728SS9",document.getElementById("__analytics").insertAdjacentElement("afterEnd",e)}</script>
+
+  
+    <script>"undefined"!=typeof __md_analytics&&__md_analytics()</script>
+  
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent="">
+  
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&"object"==typeof palette.color)for(var key of Object.keys(palette.color))document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#introduction" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="Open Management" class="md-header__button md-logo" aria-label="Open Management" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Open Management
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Streaming EOS telemetry states to Prometheus
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22Z"/></svg>
+            </label>
+          
+        
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="" data-md-color-accent=""  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+          
+            <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31Z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/aristanetworks/openmgmt" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    openmgmt on Github
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="Open Management" class="md-nav__button md-logo" aria-label="Open Management" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    Open Management
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/aristanetworks/openmgmt" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    openmgmt on Github
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        Home
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+          Configuration
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_2">
+          <span class="md-nav__icon md-icon"></span>
+          Configuration
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../configuration/openconfig/" class="md-nav__link">
+        OpenConfig
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../configuration/netconf/" class="md-nav__link">
+        NETCONF
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../configuration/restconf/" class="md-nav__link">
+        RESTCONF
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../configuration/mtls/" class="md-nav__link">
+        Certificate Authentication
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../configuration/security/" class="md-nav__link">
+        Security Configuration
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+          Examples
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Examples
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/ansible/" class="md-nav__link">
+        Ansible
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+          gNMI clients
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_3_2">
+          <span class="md-nav__icon md-icon"></span>
+          gNMI clients
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/gnmi-clients/arista-gnmi/" class="md-nav__link">
+        gnmi (Arista)
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/gnmi-clients/gnmic/" class="md-nav__link">
+        gnmic
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/gnmi-gateway/" class="md-nav__link">
+        gNMI gateway
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_4" id="__nav_3_4_label" tabindex="0">
+          gNOI
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_4_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_3_4">
+          <span class="md-nav__icon md-icon"></span>
+          gNOI
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/gnoi/" class="md-nav__link">
+        About gNOI
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/gnoi/gnoic/" class="md-nav__link">
+        gNOIc
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/gnoi/grpcurl/" class="md-nav__link">
+        gRPCurl
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/gnoi/gnoicode/" class="md-nav__link">
+        gNOI in Golang
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/golang/" class="md-nav__link">
+        Go Lang
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_6" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_6" id="__nav_3_6_label" tabindex="0">
+          NETCONF
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_6_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_3_6">
+          <span class="md-nav__icon md-icon"></span>
+          NETCONF
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/netconf/" class="md-nav__link">
+        About NETCONF
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/netconf/ncclient/" class="md-nav__link">
+        ncclient
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/netconf/netconf_over_ssh/" class="md-nav__link">
+        NETCONF over SSH
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/pygnmi/" class="md-nav__link">
+        Pygnmi
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/pyang/" class="md-nav__link">
+        Pyang
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/pyangbind/" class="md-nav__link">
+        Pyangbind
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_10" >
+      
+      
+      
+        <label class="md-nav__link" for="__nav_3_10" id="__nav_3_10_label" tabindex="0">
+          RESTCONF
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_10_label" aria-expanded="false">
+        <label class="md-nav__title" for="__nav_3_10">
+          <span class="md-nav__icon md-icon"></span>
+          RESTCONF
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/restconf/" class="md-nav__link">
+        About RESTCONF
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/restconf/curl/" class="md-nav__link">
+        cURL
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/restconf/python/" class="md-nav__link">
+        Python
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/ygot/" class="md-nav__link">
+        ygot
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../examples/WiFi/" class="md-nav__link">
+        WiFi
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+      
+      
+      <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+      
+      
+      
+        <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+          Telemetry
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Telemetry
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../gnmireverse/" class="md-nav__link">
+        gNMIReverse
+      </a>
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          ocprometheus
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        ocprometheus
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    Prerequisites
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#installing-prometheus-and-grafana" class="md-nav__link">
+    Installing Prometheus and Grafana
+  </a>
+  
+    <nav class="md-nav" aria-label="Installing Prometheus and Grafana">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#installing-prometheus" class="md-nav__link">
+    Installing Prometheus
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#add-new-targets" class="md-nav__link">
+    Add new targets
+  </a>
+  
+    <nav class="md-nav" aria-label="Add new targets">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#option-1" class="md-nav__link">
+    Option 1
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-2" class="md-nav__link">
+    Option 2
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-3" class="md-nav__link">
+    Option 3
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#installing-grafana" class="md-nav__link">
+    Installing Grafana
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#installing-and-configuring-ocprometheus" class="md-nav__link">
+    Installing and configuring ocprometheus
+  </a>
+  
+    <nav class="md-nav" aria-label="Installing and configuring ocprometheus">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#git-clone-the-arista-go-library" class="md-nav__link">
+    Git Clone the Arista GO library
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compile-ocprometheus-in-go" class="md-nav__link">
+    Compile ocprometheus in GO
+  </a>
+  
+    <nav class="md-nav" aria-label="Compile ocprometheus in GO">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#option-1-using-the-binary" class="md-nav__link">
+    Option 1) Using the binary
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-2-install-it-as-a-swix" class="md-nav__link">
+    Option 2) Install it as a swix
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flags-cheat-sheet" class="md-nav__link">
+    Flags cheat sheet
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sample-eos-configuration" class="md-nav__link">
+    Sample EOS Configuration
+  </a>
+  
+    <nav class="md-nav" aria-label="Sample EOS Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#no-vrf-and-streaming-to-both-cvp-and-prometheus" class="md-nav__link">
+    No VRF and streaming to both CVP and Prometheus
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#no-vrf-and-only-prometheus" class="md-nav__link">
+    No VRF and only Prometheus
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vrf-management-and-streaming-to-both-cvp-and-prometheus" class="md-nav__link">
+    VRF management and streaming to both CVP and Prometheus
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vrf-and-only-prometheus" class="md-nav__link">
+    VRF and only Prometheus
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vrf-and-only-prometheus-using-authentication" class="md-nav__link">
+    VRF and only Prometheus using authentication
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pdp-vrf-and-only-prometheus" class="md-nav__link">
+    PDP: VRF and only Prometheus
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fix-for-multilane-interfaces-eos-native-paths" class="md-nav__link">
+    Fix for multilane interfaces (EOS-native paths)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creating-dashboards-in-grafana" class="md-nav__link">
+    Creating dashboards in Grafana
+  </a>
+  
+    <nav class="md-nav" aria-label="Creating dashboards in Grafana">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-to-graph-data-only-for-specific-interface" class="md-nav__link">
+    How to graph data only for specific interface?
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pre-defined-dashboard" class="md-nav__link">
+    Pre-defined dashboard
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-rule-records-in-prometheus-for-eos-paths" class="md-nav__link">
+    Using rule records in Prometheus for EOS paths
+  </a>
+  
+    <nav class="md-nav" aria-label="Using rule records in Prometheus for EOS paths">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ocprometheusyml-on-eos" class="md-nav__link">
+    Ocprometheus.yml on EOS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prometheusyml-on-the-server" class="md-nav__link">
+    Prometheus.yml on the server
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kernel_rulesyml-on-the-server" class="md-nav__link">
+    Kernel_rules.yml on the server
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-ocprometheus-with-the-openconfigocta-agent-management-api-gnmi" class="md-nav__link">
+    Using ocprometheus with the OpenConfig/OCTA agent (management api gnmi)
+  </a>
+  
+    <nav class="md-nav" aria-label="Using ocprometheus with the OpenConfig/OCTA agent (management api gnmi)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-configurations" class="md-nav__link">
+    Example configurations
+  </a>
+  
+    <nav class="md-nav" aria-label="Example configurations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#no-vrf-gnmiocta-ocprometheus" class="md-nav__link">
+    No VRF - gnmi/OCTA + ocprometheus
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vrf-gnmiocta-ocprometheus" class="md-nav__link">
+    VRF - gnmi/OCTA + ocprometheus
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cert-based-authentification-with-ocprometheus" class="md-nav__link">
+    Cert-based authentification with ocprometheus
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting-tips" class="md-nav__link">
+    Troubleshooting tips
+  </a>
+  
+    <nav class="md-nav" aria-label="Troubleshooting tips">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#checking-logs-and-troubleshooting" class="md-nav__link">
+    Checking Logs and troubleshooting
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#common-issues" class="md-nav__link">
+    Common issues
+  </a>
+  
+    <nav class="md-nav" aria-label="Common issues">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#context_deadline_exceeded" class="md-nav__link">
+    Context_deadline_exceeded
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#not-seeing-any-streams-on-prometheus" class="md-nav__link">
+    Not seeing any streams on Prometheus
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#broken-paths-due-to-incorrect-regex" class="md-nav__link">
+    Broken paths due to incorrect regex
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#authentication-failed" class="md-nav__link">
+    Authentication failed
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#connection-refused" class="md-nav__link">
+    Connection refused
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#subscription-paths" class="md-nav__link">
+    Subscription paths
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#useful-links" class="md-nav__link">
+    Useful links
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+            
+          
+            
+              
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../kafka/" class="md-nav__link">
+        kafka-telegraf
+      </a>
+    </li>
+  
+
+            
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../models/" class="md-nav__link">
+        Models
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../videos/" class="md-nav__link">
+        Videos
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction" class="md-nav__link">
+    Introduction
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    Prerequisites
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#installing-prometheus-and-grafana" class="md-nav__link">
+    Installing Prometheus and Grafana
+  </a>
+  
+    <nav class="md-nav" aria-label="Installing Prometheus and Grafana">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#installing-prometheus" class="md-nav__link">
+    Installing Prometheus
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#add-new-targets" class="md-nav__link">
+    Add new targets
+  </a>
+  
+    <nav class="md-nav" aria-label="Add new targets">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#option-1" class="md-nav__link">
+    Option 1
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-2" class="md-nav__link">
+    Option 2
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-3" class="md-nav__link">
+    Option 3
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#installing-grafana" class="md-nav__link">
+    Installing Grafana
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#installing-and-configuring-ocprometheus" class="md-nav__link">
+    Installing and configuring ocprometheus
+  </a>
+  
+    <nav class="md-nav" aria-label="Installing and configuring ocprometheus">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#git-clone-the-arista-go-library" class="md-nav__link">
+    Git Clone the Arista GO library
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compile-ocprometheus-in-go" class="md-nav__link">
+    Compile ocprometheus in GO
+  </a>
+  
+    <nav class="md-nav" aria-label="Compile ocprometheus in GO">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#option-1-using-the-binary" class="md-nav__link">
+    Option 1) Using the binary
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-2-install-it-as-a-swix" class="md-nav__link">
+    Option 2) Install it as a swix
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#flags-cheat-sheet" class="md-nav__link">
+    Flags cheat sheet
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sample-eos-configuration" class="md-nav__link">
+    Sample EOS Configuration
+  </a>
+  
+    <nav class="md-nav" aria-label="Sample EOS Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#no-vrf-and-streaming-to-both-cvp-and-prometheus" class="md-nav__link">
+    No VRF and streaming to both CVP and Prometheus
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#no-vrf-and-only-prometheus" class="md-nav__link">
+    No VRF and only Prometheus
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vrf-management-and-streaming-to-both-cvp-and-prometheus" class="md-nav__link">
+    VRF management and streaming to both CVP and Prometheus
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vrf-and-only-prometheus" class="md-nav__link">
+    VRF and only Prometheus
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vrf-and-only-prometheus-using-authentication" class="md-nav__link">
+    VRF and only Prometheus using authentication
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pdp-vrf-and-only-prometheus" class="md-nav__link">
+    PDP: VRF and only Prometheus
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fix-for-multilane-interfaces-eos-native-paths" class="md-nav__link">
+    Fix for multilane interfaces (EOS-native paths)
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#creating-dashboards-in-grafana" class="md-nav__link">
+    Creating dashboards in Grafana
+  </a>
+  
+    <nav class="md-nav" aria-label="Creating dashboards in Grafana">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-to-graph-data-only-for-specific-interface" class="md-nav__link">
+    How to graph data only for specific interface?
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pre-defined-dashboard" class="md-nav__link">
+    Pre-defined dashboard
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-rule-records-in-prometheus-for-eos-paths" class="md-nav__link">
+    Using rule records in Prometheus for EOS paths
+  </a>
+  
+    <nav class="md-nav" aria-label="Using rule records in Prometheus for EOS paths">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ocprometheusyml-on-eos" class="md-nav__link">
+    Ocprometheus.yml on EOS
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prometheusyml-on-the-server" class="md-nav__link">
+    Prometheus.yml on the server
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kernel_rulesyml-on-the-server" class="md-nav__link">
+    Kernel_rules.yml on the server
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-ocprometheus-with-the-openconfigocta-agent-management-api-gnmi" class="md-nav__link">
+    Using ocprometheus with the OpenConfig/OCTA agent (management api gnmi)
+  </a>
+  
+    <nav class="md-nav" aria-label="Using ocprometheus with the OpenConfig/OCTA agent (management api gnmi)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-configurations" class="md-nav__link">
+    Example configurations
+  </a>
+  
+    <nav class="md-nav" aria-label="Example configurations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#no-vrf-gnmiocta-ocprometheus" class="md-nav__link">
+    No VRF - gnmi/OCTA + ocprometheus
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vrf-gnmiocta-ocprometheus" class="md-nav__link">
+    VRF - gnmi/OCTA + ocprometheus
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cert-based-authentification-with-ocprometheus" class="md-nav__link">
+    Cert-based authentification with ocprometheus
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#troubleshooting-tips" class="md-nav__link">
+    Troubleshooting tips
+  </a>
+  
+    <nav class="md-nav" aria-label="Troubleshooting tips">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#checking-logs-and-troubleshooting" class="md-nav__link">
+    Checking Logs and troubleshooting
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#common-issues" class="md-nav__link">
+    Common issues
+  </a>
+  
+    <nav class="md-nav" aria-label="Common issues">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#context_deadline_exceeded" class="md-nav__link">
+    Context_deadline_exceeded
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#not-seeing-any-streams-on-prometheus" class="md-nav__link">
+    Not seeing any streams on Prometheus
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#broken-paths-due-to-incorrect-regex" class="md-nav__link">
+    Broken paths due to incorrect regex
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#authentication-failed" class="md-nav__link">
+    Authentication failed
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#connection-refused" class="md-nav__link">
+    Connection refused
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#subscription-paths" class="md-nav__link">
+    Subscription paths
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#useful-links" class="md-nav__link">
+    Useful links
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/aristanetworks/openmgmt/edit/main/docs/telemetry/adapters/ocprometheus/index.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4v-2m10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1 2.1 2.1Z"/></svg>
+    </a>
+  
+  
+
+
+
+  <h1>ocprometheus</h1>
+
+<h2 id="introduction">Introduction</h2>
+<p>Prometheus is one of the most popular open-source monitoring and alerting systems, which scrapes and stores numeric
+time series data over HTTP. It has a very flexible query language, can send alerts via alertmanager to various platform
+ and can be integrated easily with many open-source tools. For more details and use cases, please visit <a href="https://prometheus.io/docs/introduction/overview/">https://prometheus.io/docs/introduction/overview/</a>.</p>
+<p>The purpose of this article is to show how easy it is to deploy and configure Prometheus and Grafana and
+configure Arista switches to send telemetry states to Prometheus using TerminAttr ( EOS streaming telemetry agent )
+and one of the OpenConfig connectors that you can find on our official github page.</p>
+<blockquote>
+<p>Please note, that these apps were written as proof-of-concept and are supported on a best-effort basis.
+The projects can be forked and modified to suit your needs. Feedbacks are always welcomed and issues can be filed
+like for any other projects on github.</p>
+</blockquote>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>The following tools will be necessary to be able to install Prometheus and Grafana, clone our project from github
+and compile ocprometheus.</p>
+<ul>
+<li><a href="https://brew.sh/">Homebrew</a> (for macOS users)</li>
+<li><a href="https://golang.org/doc/install">Go</a></li>
+<li><a href="https://www.atlassian.com/git/tutorials/install-git">Git</a></li>
+<li><a href="https://docs.docker.com/install/">docker</a></li>
+</ul>
+<h2 id="installing-prometheus-and-grafana">Installing Prometheus and Grafana</h2>
+<p>There are several ways to install Prometheus and Grafana, the docker approach being the most popular and easiest.</p>
+<h3 id="installing-prometheus">Installing Prometheus</h3>
+<p>First, create a minimal Prometheus configuration file on the host filesystem at <code>~/prometheus.yml</code>:</p>
+<p><code>vi ~/prometheus.yml</code></p>
+<p>Add your targets (network devices IP/hostname + port number) to the ‘scrape configs’ session</p>
+<p>Example<code>prometheus.yml</code></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># my global config</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nt">global</span><span class="p">:</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span><span class="nt">scrape_interval</span><span class="p">:</span><span class="w">     </span><span class="l l-Scalar l-Scalar-Plain">15s</span><span class="w"> </span><span class="c1"># Set the scrape interval to every 15 seconds. Default is every 1 minute.</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">  </span><span class="nt">evaluation_interval</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">15s</span><span class="w"> </span><span class="c1"># Evaluate rules every 15 seconds. The default is every 1 minute.</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">  </span><span class="c1"># scrape_timeout is set to the global default (10s).</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="c1"># Alertmanager configuration</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="nt">alerting</span><span class="p">:</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">  </span><span class="nt">alertmanagers</span><span class="p">:</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">static_configs</span><span class="p">:</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">targets</span><span class="p">:</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">      </span><span class="c1"># - alertmanager:9093</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="c1"># Load rules once and periodically evaluate them according to the global &#39;evaluation_interval&#39;.</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="nt">rule_files</span><span class="p">:</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="w">  </span><span class="c1"># - &quot;first_rules.yml&quot;</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="w">  </span><span class="c1"># - &quot;second_rules.yml&quot;</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="c1"># A scrape configuration containing exactly one endpoint to scrape:</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="c1"># Here it&#39;s Prometheus itself.</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="nt">scrape_configs</span><span class="p">:</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="w">  </span><span class="c1"># The job name is added as a label `job=&lt;job_name&gt;` to any timeseries scraped from this config.</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">job_name</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;prometheus&#39;</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a><span class="w">    </span><span class="c1"># metrics_path defaults to &#39;/metrics&#39;</span>
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="w">    </span><span class="c1"># scheme defaults to &#39;http&#39;.</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a><span class="w">    </span><span class="nt">static_configs</span><span class="p">:</span>
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">targets</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&#39;localhost:9090&#39;</span><span class="p p-Indicator">]</span>
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a><span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">job_name</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;arista&#39;</span>
+<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a><span class="w">    </span><span class="nt">static_configs</span><span class="p">:</span>
+<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a><span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">targets</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&#39;192.0.2.139:8080&#39;</span><span class="p p-Indicator">]</span>
+</code></pre></div>
+<p>Start the Prometheus Docker container with an external configuration file:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>docker<span class="w"> </span>run<span class="w"> </span>-d<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">     </span>-p<span class="w"> </span><span class="m">9090</span>:9090<span class="w"> </span>-v<span class="w"> </span>~/prometheus.yml:/etc/prometheus/prometheus.yml<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">     </span>prom/prometheus<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">     </span>-config.file<span class="o">=</span>/etc/prometheus/prometheus.yml
+</code></pre></div>
+<p>If the above doesn’t work, check the latest docker command on the <a href="https://prometheus.io/docs/prometheus/latest/installation/">official Prometheus website</a>.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>docker<span class="w"> </span>run<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">    </span>-p<span class="w"> </span><span class="m">9090</span>:9090<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span>-v<span class="w"> </span>/tmp/prometheus.yml:/etc/prometheus/prometheus.yml<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">    </span>prom/prometheus
+</code></pre></div>
+<h3 id="add-new-targets">Add new targets</h3>
+<p>In our case, targets are switches, but a target can be any type of device. By default if you are adding new targets by
+editing the <code>prometheus.yml</code> file on the host, it won’t update the config file in the Docker VM, that is because
+every time you insert new characters with VIM and save the file, the inode will change.</p>
+<h4 id="option-1">Option 1</h4>
+<p>Change the file permission to <code>664</code> (<code>rw-rw-r–</code>)</p>
+<p><code>chmod 664 prometheus.yml</code></p>
+<p>Check if the permissions have been changed</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>ls<span class="w"> </span>-l<span class="w"> </span>prometheus.yml
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>-rw-rw-r--<span class="w">  </span><span class="m">1</span><span class="w"> </span>root<span class="w"> </span>root<span class="w"> </span><span class="m">1076</span><span class="w"> </span>May<span class="w"> </span><span class="m">14</span><span class="w"> </span><span class="m">12</span>:25<span class="w"> </span>prometheus.yml
+</code></pre></div>
+<p>This will modify the file in your docker VM as well, but the configuration won’t be updated until you restart the
+service, which you can do with a one-liner:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>sudo<span class="w"> </span>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-i<span class="w"> </span>-t<span class="w"> </span>eager_kapitsa<span class="w"> </span><span class="nb">kill</span><span class="w"> </span>-HUP<span class="w"> </span><span class="m">1</span>
+</code></pre></div>
+<p>Where eager_kapitsa is the name of the container, which you can find out with the docker ps command:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>root@tac-prometheus-ire:~#<span class="w"> </span>docker<span class="w"> </span>ps
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>CONTAINER<span class="w"> </span>ID<span class="w">        </span>IMAGE<span class="w"> </span>COMMAND<span class="w">                  </span>CREATED<span class="w"> </span>STATUS<span class="w"> </span>PORTS<span class="w">                    </span>NAMES
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>47f52778b492<span class="w">        </span>prom/prometheus<span class="w"> </span><span class="s2">&quot;/bin/prometheus --c…&quot;</span><span class="w">   </span><span class="m">13</span><span class="w"> </span>days<span class="w"> </span>ago<span class="w"> </span>Up<span class="w"> </span><span class="m">6</span><span class="w"> </span>minutes<span class="w"> </span><span class="m">0</span>.0.0.0:9090-&gt;9090/tcp<span class="w">   </span>eager_kapitsa
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>3e880f9a951e<span class="w">        </span>grafana/grafana<span class="w"> </span><span class="s2">&quot;/run.sh&quot;</span><span class="w">                </span><span class="m">3</span><span class="w"> </span>weeks<span class="w"> </span>ago<span class="w"> </span>Up<span class="w"> </span><span class="m">3</span><span class="w"> </span>weeks<span class="w"> </span><span class="m">0</span>.0.0.0:3000-&gt;3000/tcp<span class="w">   </span>grafana
+</code></pre></div>
+<p>You can always check if the configuration has been updated with the following curl command:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>root@tac-prometheus-ire:~#<span class="w"> </span>curl<span class="w"> </span>localhost:9090/config
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>&lt;ommited&gt;
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">  </span>static_configs:
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">  </span>-<span class="w"> </span>targets:
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">    </span>-<span class="w"> </span><span class="m">192</span>.0.2.132:8080
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">    </span>-<span class="w"> </span><span class="m">192</span>.0.2.139:8080
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="w">    </span>-<span class="w"> </span><span class="m">10</span>.83.12.109:8080
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="w">    </span>-<span class="w"> </span><span class="m">192</span>.0.2.138:8080
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>&lt;ommited&gt;
+</code></pre></div>
+<p>Forum that explains this <a href="https://forums.docker.com/t/modify-a-file-which-mount-as-a-data-volume-but-it-didnt-change-in-container/2813/13">behavior</a>.</p>
+<h4 id="option-2">Option 2</h4>
+<blockquote>
+<p>NOTE If you don’t want to change the file permission, you can use the <code>:set backupcopy=yes</code> option in VIM, which will make
+sure to not change the inode of the file when saving it.</p>
+</blockquote>
+<p>And restart the service again:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>sudo<span class="w"> </span>docker<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>-i<span class="w"> </span>-t<span class="w"> </span>eager_kapitsa<span class="w"> </span><span class="nb">kill</span><span class="w"> </span>-HUP<span class="w"> </span><span class="m">1</span>
+</code></pre></div>
+<h4 id="option-3">Option 3</h4>
+<p>Use the <code>–web.enable-lifecycle</code> flag when running the container.</p>
+<h3 id="installing-grafana">Installing Grafana</h3>
+<p>You can use the following docker command to deploy Grafana in couple of seconds:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>$<span class="w"> </span>docker<span class="w"> </span>run<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">  </span>-d<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">  </span>-p<span class="w"> </span><span class="m">3000</span>:3000<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="w">  </span>--name<span class="o">=</span>grafana<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="w">  </span>-e<span class="w"> </span><span class="s2">&quot;GF_SERVER_ROOT_URL=http://grafana.server.name&quot;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="w">  </span>-e<span class="w"> </span><span class="s2">&quot;GF_SECURITY_ADMIN_PASSWORD=secret&quot;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="w">  </span>grafana/grafana
+</code></pre></div>
+<blockquote>
+<p>Note: In newer versions of Grafana there are no more implicit volumes for</p>
+</blockquote>
+<ul>
+<li>/var/lib/grafana</li>
+<li>/var/log/grafana</li>
+<li>/etc/grafana</li>
+</ul>
+<p>For more details see what’s new in <a href="https://grafana.com/docs/grafana/latest/installation/docker/#migration-from-a-previous-version-of-the-docker-container-to-5-1-or-later">Grafana 5.1 and later</a>
+ and recommended steps to migrate from older releases.</p>
+<p>There’s also a ready-to-go combo of Prometheus/Grafana/docker-stack which you can find at
+https://github.com/vegasbrianc/prometheus (credit to Brian Christner)</p>
+<p>Now that we have Prometheus and Grafana running, we’re ready to configure our switches and start drawing nice graphs from
+ the queried data.</p>
+<h2 id="installing-and-configuring-ocprometheus">Installing and configuring ocprometheus</h2>
+<p>There are a couple of ways to install ocprometheus, and all require for you to compile it with GO.</p>
+<h3 id="git-clone-the-arista-go-library">Git Clone the Arista GO library</h3>
+<p>First you’ll need to git clone the goarista repository.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>tamas:~<span class="w"> </span>tamas$<span class="w"> </span>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/aristanetworks/goarista.git
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>Cloning<span class="w"> </span>into<span class="w"> </span><span class="s1">&#39;goarista&#39;</span>...
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>remote:<span class="w"> </span>Counting<span class="w"> </span>objects:<span class="w"> </span><span class="m">2584</span>,<span class="w"> </span><span class="k">done</span>.
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>remote:<span class="w"> </span>Compressing<span class="w"> </span>objects:<span class="w"> </span><span class="m">100</span>%<span class="w"> </span><span class="o">(</span><span class="m">10</span>/10<span class="o">)</span>,<span class="w"> </span><span class="k">done</span>.
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>remote:<span class="w"> </span>Total<span class="w"> </span><span class="m">2584</span><span class="w"> </span><span class="o">(</span>delta<span class="w"> </span><span class="m">1</span><span class="o">)</span>,<span class="w"> </span>reused<span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="o">(</span>delta<span class="w"> </span><span class="m">0</span><span class="o">)</span>,<span class="w"> </span>pack-reused<span class="w"> </span><span class="m">2574</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>Receiving<span class="w"> </span>objects:<span class="w"> </span><span class="m">100</span>%<span class="w"> </span><span class="o">(</span><span class="m">2584</span>/2584<span class="o">)</span>,<span class="w"> </span><span class="m">945</span>.38<span class="w"> </span>KiB<span class="w"> </span><span class="p">|</span><span class="w"> </span><span class="m">767</span>.00<span class="w"> </span>KiB/s,<span class="w"> </span><span class="k">done</span>.
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>Resolving<span class="w"> </span>deltas:<span class="w"> </span><span class="m">100</span>%<span class="w"> </span><span class="o">(</span><span class="m">1529</span>/1529<span class="o">)</span>,<span class="w"> </span><span class="k">done</span>.
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>Checking<span class="w"> </span>connectivity...<span class="w"> </span><span class="k">done</span>.
+</code></pre></div>
+<p>This will download all the files from that github page and we can then go ahead and compile ocprometheus.</p>
+<blockquote>
+<p>LPT In case the project you’ve cloned has dependencies on other git project
+you can use the <code>–recurse-submodules</code> flag while cloning which will also clone the submodules.</p>
+</blockquote>
+<p>E.g.:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>git<span class="w"> </span>clone<span class="w"> </span>--recurse-submodules<span class="w"> </span>-j8<span class="w"> </span>git://github.com/foo/bar.git
+</code></pre></div>
+<h3 id="compile-ocprometheus-in-go">Compile ocprometheus in GO</h3>
+<p>1. Go to your ocprometheus folder on your PC/laptop/server</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="nb">cd</span><span class="w"> </span>git/goarista/cmd/ocprometheus
+</code></pre></div>
+<p>2. Compile ocprometheus with the following paramethers:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="nv">GOOS</span><span class="o">=</span>linux<span class="w"> </span><span class="nv">GOARCH</span><span class="o">=</span><span class="m">386</span><span class="w"> </span>go<span class="w"> </span>build
+</code></pre></div>
+<p>3. Copy the binary with SCP to the switch</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>scp<span class="w"> </span>ocprometheus<span class="w"> </span>admin@192.0.2.139://mnt/flash
+</code></pre></div>
+<p>Since EOS has a linux kernel, the OS has to be set to linux and the architecture to 32 bit (386) with GOOS and GOARCH
+variables respectively. Starting 4.22.0 we’ve introduced a 64-bit EOS () and you can also compile ocprometheus for
+64-bit architecture with the following command:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="nv">GOOS</span><span class="o">=</span>linux<span class="w"> </span><span class="nv">GOARCH</span><span class="o">=</span>amd64<span class="w"> </span>go<span class="w"> </span>build
+</code></pre></div>
+<h4 id="option-1-using-the-binary">Option 1) Using the binary</h4>
+<p>From this point you can just SCP the binary to a persistent storage on the switch (for example, <code>/mnt/flash/</code>) and
+just configure the daemon and point it to <code>/mnt/flash/ocprometheus</code></p>
+<h4 id="option-2-install-it-as-a-swix">Option 2) Install it as a swix</h4>
+<p>You can also install it as a swix, which requires a bit more effort, however it’s easier to manage swix packages,
+and you’ll be able to see the ocprometheus extension in the <code>show extensions</code> output.</p>
+<p>In order to create a swix file, we first have to compile this binary as an RPM. Building RPMs can be tedious, especially
+for networking guys, who are not used to doing things like this.
+There are various tutorials online on how to use rpmbuild, but instead of wasting half an hour to create all
+the necessary folders and your spec file, etc we can create RPMs with just one line, using FPM (Effing Package Management).</p>
+<p>You can download FPM from the following github page:</p>
+<p>https://github.com/jordansissel/fpm (credit to Jordan and all who contributed to this project—you’ve made
+ our lives easier, Thank you)</p>
+<p>The following was done on a Devuan VM (which is basically a lightweight Debian without systemd)
+using the following steps:</p>
+<p>1. Create a new folder:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>mkdir<span class="w"> </span>fpmbuild
+</code></pre></div>
+<p>2. Copy the compiled <code>ocprometheus</code> and the <code>sampleconfig.yml</code> (in this example it was renamed to <code>ocprometheus.yml</code>)
+downloaded from github:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>cp<span class="w"> </span>~/git/goarista/cmd/ocprometheus/ocprometheus<span class="w"> </span>/backup/fpmbuild/
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>cp<span class="w"> </span>~/git/goarista/cmd/ocprometheus/sampleconfig_above_4.20.yml<span class="w"> </span>/backup/fpmbuild/ocprometheus.yml
+</code></pre></div>
+<p>3. Compile it with fpm:</p>
+<p>This one liner will create the RPM package without the need to create all the folders and specs that you’d need to do
+with the usual rpmbuild:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>sudo<span class="w"> </span>fpm<span class="w"> </span>-s<span class="w"> </span>dir<span class="w"> </span>-t<span class="w"> </span>rpm<span class="w"> </span>-a<span class="w"> </span>all<span class="w"> </span>-n<span class="w"> </span><span class="s2">&quot;ocprometheus-</span><span class="k">$(</span>date<span class="w"> </span>+%m_%d.%H%M<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="w">   </span>-v1.5.6<span class="w"> </span>--prefix<span class="w"> </span>/usr/bin/<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="w">   </span>-C<span class="w"> </span>/backup/fpmbuild/<span class="w"> </span>ocprometheus<span class="w"> </span>ocprometheus.yml
+</code></pre></div>
+<h4 id="flags-cheat-sheet">Flags cheat sheet</h4>
+<table>
+<thead>
+<tr>
+<th>Flag</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-s dir</td>
+<td>Source is a directory</td>
+</tr>
+<tr>
+<td>-t rpm</td>
+<td>Target is an RPM file</td>
+</tr>
+<tr>
+<td>-a all</td>
+<td>User noarch instead of x86_64</td>
+</tr>
+<tr>
+<td>-n “ocprometheus-$(date +%m_%d.%H%M)“</td>
+<td>the name of the RPM</td>
+</tr>
+<tr>
+<td>-v 1.5.5</td>
+<td>the version of the RPM will be 1.0</td>
+</tr>
+<tr>
+<td>--prefix /usr/bin/</td>
+<td>The files will be installed in this directory</td>
+</tr>
+<tr>
+<td>-C /backup/fpmbuild/ ocprometheus ocprometheus.yml</td>
+<td>Change directory to here before searching for files</td>
+</tr>
+</tbody>
+</table>
+<p>4. Copy the generated file to the switch and install it as a swix:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>root@devuan:/backup#<span class="w"> </span>ls<span class="w"> </span>-al<span class="w"> </span>ocpr*
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>-rw-r--r--<span class="w">  </span><span class="m">1</span><span class="w"> </span>root<span class="w"> </span>root<span class="w"> </span><span class="m">6462872</span><span class="w"> </span>Jun<span class="w"> </span><span class="m">17</span><span class="w"> </span><span class="m">22</span>:55<span class="w"> </span>oocprometheus-06_17.2255-1.5.6-1.noarch.rpm
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>root@devuan:/backup#<span class="w"> </span>scp<span class="w"> </span>ocprom*<span class="w"> </span>admin@ats323://mnt/flash/
+</code></pre></div>
+<p>4.1. SSH to the switch and create the swix, e.g.:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>ssh<span class="w"> </span>admin@ats323
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>ats323...16:13:36#<span class="w"> </span>bash
+<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>
+<a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>Arista<span class="w"> </span>Networks<span class="w"> </span>EOS<span class="w"> </span>shell
+<a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a>
+<a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a><span class="o">[</span>admin@ats323<span class="w"> </span>~<span class="o">]</span>$<span class="w"> </span><span class="nb">cd</span><span class="w"> </span>/mnt/flash
+<a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a>
+<a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a>
+<a id="__codelineno-19-10" name="__codelineno-19-10" href="#__codelineno-19-10"></a><span class="o">[</span>admin@ats323<span class="w"> </span>flash<span class="o">]</span>$<span class="w"> </span>swix<span class="w"> </span>create<span class="w"> </span>ocprometheus-1.5.6.swix<span class="w"> </span>ocprometheus-06_17.2255-1.5.6-1.noarch.rpm
+<a id="__codelineno-19-11" name="__codelineno-19-11" href="#__codelineno-19-11"></a>
+<a id="__codelineno-19-12" name="__codelineno-19-12" href="#__codelineno-19-12"></a><span class="w">  </span>adding:<span class="w"> </span>manifest.txt<span class="w"> </span><span class="o">(</span>stored<span class="w"> </span><span class="m">0</span>%<span class="o">)</span>
+<a id="__codelineno-19-13" name="__codelineno-19-13" href="#__codelineno-19-13"></a>
+<a id="__codelineno-19-14" name="__codelineno-19-14" href="#__codelineno-19-14"></a><span class="w">  </span>adding:<span class="w"> </span>ocprometheus-06_17.2255-1.5.6-1.noarch.rpm<span class="w"> </span><span class="o">(</span>stored<span class="w"> </span><span class="m">0</span>%<span class="o">)</span>
+</code></pre></div>
+<p>4.2. Install it as a swix extension</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>copy<span class="w"> </span>flash:ocprometheus-1.5.6.swix<span class="w"> </span>extension:
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>extension<span class="w"> </span>ocprometheus-1.5.6.swix
+</code></pre></div>
+<p>4.3. Make it persistent across reloads</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>copy<span class="w"> </span>installed-extensions<span class="w"> </span>boot-extensions
+</code></pre></div>
+<p>4.4. Check your extensions</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>show<span class="w"> </span>extensions
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>
+<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>Name<span class="w">                            </span>Version/Release<span class="w"> </span>Status<span class="w"> </span>Extension
+<a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>-------------------------------<span class="w"> </span>--------------------<span class="w"> </span>-----------<span class="w"> </span>---------
+<a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>
+<a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a>TerminAttr-1.5.5-1.swix<span class="w">         </span>v1.5.5/1<span class="w"> </span>A,<span class="w"> </span>I<span class="w"> </span><span class="m">25</span>
+<a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a>ocprometheus-1.5.6.swix<span class="w">         </span><span class="m">1</span>.5.6/1<span class="w"> </span>A,<span class="w"> </span>I<span class="w"> </span><span class="m">1</span>
+<a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a>
+<a id="__codelineno-22-9" name="__codelineno-22-9" href="#__codelineno-22-9"></a>
+<a id="__codelineno-22-10" name="__codelineno-22-10" href="#__codelineno-22-10"></a>A:<span class="w"> </span>available<span class="w"> </span><span class="p">|</span><span class="w"> </span>NA:<span class="w"> </span>not<span class="w"> </span>available<span class="w"> </span><span class="p">|</span><span class="w"> </span>I:<span class="w"> </span>installed<span class="w"> </span><span class="p">|</span><span class="w"> </span>NI:<span class="w"> </span>not<span class="w"> </span>installed<span class="w"> </span><span class="p">|</span><span class="w"> </span>F:<span class="w"> </span>forced
+</code></pre></div>
+<p>Finally you’ll need to copy the configuration file, which contains the subscription paths.
+You’ll find the yaml file on our github page. You can find more details about subscriptions/metrics and
+how they are constructed in <a href="https://eos.arista.com/understanding-subscription-paths-for-open-source-telemetry-streaming">https://eos.arista.com/understanding-subscription-paths-for-open-source-telemetry-streaming</a></p>
+<p>For macOS it’ll be similar with few modifications (tested on macOS Mojave and newer):</p>
+<p>1. Install FPM and RPM</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>brew<span class="w"> </span>install<span class="w"> </span>gnu-tar
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>gem<span class="w"> </span>install<span class="w"> </span>--no-ri<span class="w"> </span>--no-rdoc<span class="w"> </span>fpm
+<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>brew<span class="w"> </span>install<span class="w"> </span>rpm
+</code></pre></div>
+<blockquote>
+<p>Note: on macOS Catalina you might need to use <code>–user-install</code> when installing gem packages, and instead of <code>–no-rdoc</code>
+use <code>–no-document</code> .</p>
+</blockquote>
+<p>Xcode might need to be reinstalled if you’ve upgraded from Mojave.</p>
+<p>e.g.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>gem<span class="w"> </span>install<span class="w"> </span>--no-document<span class="w"> </span>fpm<span class="w"> </span>--user-install
+</code></pre></div>
+<p>2. Similarly as before, create a folder from where you’ll build your package and copy the compiled binary there</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>mkdir<span class="w"> </span>fpmbuild
+<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>
+<a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>cp<span class="w"> </span>~/git/goarista/cmd/ocprometheus/ocprometheus<span class="w"> </span>~/backup/fpmbuild/
+<a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a>
+<a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a>cp<span class="w"> </span>~/git/goarista/cmd/ocprometheus/sampleconfig_above_4.20.yml<span class="w"> </span>~/backup/fpmbuild/ocprometheus.yml
+</code></pre></div>
+<p>3. Build the rpm with fpm using the following command</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>sudo<span class="w"> </span>fpm<span class="w"> </span>-s<span class="w"> </span>dir<span class="w"> </span>-t<span class="w"> </span>rpm<span class="w"> </span>-a<span class="w"> </span>noarch<span class="w"> </span>--rpm-os<span class="w"> </span>linux<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a><span class="w">   </span>-n<span class="w"> </span><span class="s2">&quot;ocprometheus-</span><span class="k">$(</span>date<span class="w"> </span>+%m_%d.%H%M<span class="k">)</span><span class="s2">&quot;</span><span class="w"> </span>-v1.5.6<span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a><span class="w">   </span>--prefix<span class="w"> </span>/usr/bin/<span class="w"> </span>-C<span class="w"> </span>~/backup/fpmbuild/<span class="w"> </span>ocprometheus<span class="w"> </span>ocprometheus.yml
+</code></pre></div>
+<p>The only difference when using macOS to build your rpm using fpm is that you’ll need to add the <code>–rpm-os</code> linux flag,
+otherwise it’ll build the rpm for OSX.</p>
+<blockquote>
+<p>Note: If you are using CVP and maintain your images and extensions with Image bundles, you’ll have to
+add your ocprometheus.swix to Image bundles, otherwise they’ll get removed during an image push operation.</p>
+</blockquote>
+<p>Now it’s time to configure TerminAttr and ocprometheus.</p>
+<h3 id="sample-eos-configuration">Sample EOS Configuration</h3>
+<p>Here’s a sample config for pre EOS-4.19 and post EOS-4.20.7M (CP-ACL) when using VRF MGMT</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a>!
+<a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>
+<a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a>vrf<span class="w"> </span>instance<span class="w"> </span>MGMT
+<a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a>!
+<a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a>interface<span class="w"> </span>Management1
+<a id="__codelineno-27-6" name="__codelineno-27-6" href="#__codelineno-27-6"></a><span class="w">   </span>vrf<span class="w"> </span>forwarding<span class="w"> </span>MGMT
+<a id="__codelineno-27-7" name="__codelineno-27-7" href="#__codelineno-27-7"></a><span class="w">   </span>ip<span class="w"> </span>address<span class="w"> </span><span class="m">192</span>.168.58.16/24
+<a id="__codelineno-27-8" name="__codelineno-27-8" href="#__codelineno-27-8"></a>!
+<a id="__codelineno-27-9" name="__codelineno-27-9" href="#__codelineno-27-9"></a>system<span class="w"> </span>control-plane
+<a id="__codelineno-27-10" name="__codelineno-27-10" href="#__codelineno-27-10"></a><span class="w">   </span>ip<span class="w"> </span>access-group<span class="w"> </span>def2<span class="w"> </span><span class="k">in</span>
+<a id="__codelineno-27-11" name="__codelineno-27-11" href="#__codelineno-27-11"></a><span class="w">   </span>ip<span class="w"> </span>access-group<span class="w"> </span>def2<span class="w"> </span>vrf<span class="w"> </span>MGMT<span class="w"> </span><span class="k">in</span>
+<a id="__codelineno-27-12" name="__codelineno-27-12" href="#__codelineno-27-12"></a>!
+<a id="__codelineno-27-13" name="__codelineno-27-13" href="#__codelineno-27-13"></a>daemon<span class="w"> </span>TerminAttr
+<a id="__codelineno-27-14" name="__codelineno-27-14" href="#__codelineno-27-14"></a><span class="w">   </span><span class="nb">exec</span><span class="w"> </span>/usr/bin/TerminAttr<span class="w"> </span>-disableaaa<span class="w"> </span>-grpcaddr<span class="w"> </span>MGMT/0.0.0.0:6042
+<a id="__codelineno-27-15" name="__codelineno-27-15" href="#__codelineno-27-15"></a><span class="w">   </span>no<span class="w"> </span>shutdown
+<a id="__codelineno-27-16" name="__codelineno-27-16" href="#__codelineno-27-16"></a>!
+<a id="__codelineno-27-17" name="__codelineno-27-17" href="#__codelineno-27-17"></a>daemon<span class="w"> </span>ocprometheus
+<a id="__codelineno-27-18" name="__codelineno-27-18" href="#__codelineno-27-18"></a><span class="w">   </span><span class="nb">exec</span><span class="w"> </span>/sbin/ip<span class="w"> </span>netns<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>ns-MGMT<span class="w"> </span>/usr/bin/ocprometheus<span class="w"> </span>-config<span class="w"> </span>/usr/bin/ocprometheus.yml<span class="w"> </span>-addr<span class="w"> </span>localhost:6042
+<a id="__codelineno-27-19" name="__codelineno-27-19" href="#__codelineno-27-19"></a><span class="w">   </span>no<span class="w"> </span>shutdown
+<a id="__codelineno-27-20" name="__codelineno-27-20" href="#__codelineno-27-20"></a>!
+</code></pre></div>
+<p>You’ll need at least 3 things to configure ocprometheus:</p>
+<ul>
+<li>Location of the binary</li>
+<li>Location of the config file, configured by the -config flag</li>
+<li>gNMI socket of TerminAttr, which can be specified by the <code>-addr</code> flag</li>
+</ul>
+<p>TerminAttr is running a gRPC server locally on TCP <code>6042</code>, which you can check by looking at the logs:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>bash<span class="w"> </span>cat<span class="w"> </span>/var/log/agents/TerminAttr-<span class="sb">`</span>pidof<span class="w"> </span>TerminAttr<span class="sb">`</span>
+</code></pre></div>
+<blockquote>
+<p>NOTE: when installing ocprometheus as a swix file, the binary will be put in <code>/usr/bin</code> directory by default
+(you can change that in the RPM making process).</p>
+</blockquote>
+<p>If you compile it in go and copy it to flash you can just change that daemon config to refer to that path
+(this way it won’t be installed as a swix).</p>
+<p>e.g.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>daemon<span class="w"> </span>ocprometheus
+<a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a><span class="w">   </span><span class="nb">exec</span><span class="w"> </span>/sbin/ip<span class="w"> </span>netns<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>ns-MGMT<span class="w"> </span>/usr/bin/ocprometheus<span class="w"> </span>-config<span class="w"> </span>/usr/bin/ocprometheus.yml<span class="w"> </span>-addr<span class="w"> </span>localhost:6042
+<a id="__codelineno-29-3" name="__codelineno-29-3" href="#__codelineno-29-3"></a><span class="w">   </span>no<span class="w"> </span>shutdown
+</code></pre></div>
+<p>By default in EOS versions that have control-plane ACL we need to permit TCP port 8080 (default), or
+whichever port you decide to use to send data to the Prometheus server (defined in the targets list in <code>prometheus.yml</code>)</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a><span class="w"> </span>ip<span class="w"> </span>access-list<span class="w"> </span>def2
+<a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>
+<a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a><span class="w">  </span><span class="m">9</span><span class="w"> </span>permit<span class="w"> </span>tcp<span class="w"> </span>any<span class="w"> </span>any<span class="w"> </span>eq<span class="w"> </span><span class="m">8080</span>
+<a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a><span class="w">  </span><span class="m">10</span><span class="w"> </span>permit<span class="w"> </span>icmp<span class="w"> </span>any<span class="w"> </span>any
+<a id="__codelineno-30-5" name="__codelineno-30-5" href="#__codelineno-30-5"></a><span class="w">  </span><span class="m">20</span><span class="w"> </span>permit<span class="w"> </span>ip<span class="w"> </span>any<span class="w"> </span>any<span class="w"> </span>tracked
+<a id="__codelineno-30-6" name="__codelineno-30-6" href="#__codelineno-30-6"></a><span class="w">  </span><span class="m">30</span><span class="w"> </span>permit<span class="w"> </span>udp<span class="w"> </span>any<span class="w"> </span>any<span class="w"> </span>eq<span class="w"> </span>bfd<span class="w"> </span>ttl<span class="w"> </span>eq<span class="w"> </span><span class="m">255</span>
+<a id="__codelineno-30-7" name="__codelineno-30-7" href="#__codelineno-30-7"></a><span class="w">  </span><span class="m">40</span><span class="w"> </span>permit<span class="w"> </span>udp<span class="w"> </span>any<span class="w"> </span>any<span class="w"> </span>eq<span class="w"> </span>bfd-echo<span class="w"> </span>ttl<span class="w"> </span>eq<span class="w"> </span><span class="m">254</span>
+<a id="__codelineno-30-8" name="__codelineno-30-8" href="#__codelineno-30-8"></a><span class="w">  </span><span class="m">50</span><span class="w"> </span>permit<span class="w"> </span>udp<span class="w"> </span>any<span class="w"> </span>any<span class="w"> </span>eq<span class="w"> </span>multihop-bfd
+<a id="__codelineno-30-9" name="__codelineno-30-9" href="#__codelineno-30-9"></a><span class="w">  </span><span class="m">60</span><span class="w"> </span>permit<span class="w"> </span>udp<span class="w"> </span>any<span class="w"> </span>any<span class="w"> </span>eq<span class="w"> </span>micro-bfd
+<a id="__codelineno-30-10" name="__codelineno-30-10" href="#__codelineno-30-10"></a><span class="w">  </span><span class="m">70</span><span class="w"> </span>permit<span class="w"> </span>ospf<span class="w"> </span>any<span class="w"> </span>any
+<a id="__codelineno-30-11" name="__codelineno-30-11" href="#__codelineno-30-11"></a><span class="w">  </span><span class="m">80</span><span class="w"> </span>permit<span class="w"> </span>tcp<span class="w"> </span>any<span class="w"> </span>any<span class="w"> </span>eq<span class="w"> </span>ssh<span class="w"> </span>telnet<span class="w"> </span>www<span class="w"> </span>snmp<span class="w"> </span>bgp<span class="w"> </span>https<span class="w"> </span>msdp<span class="w"> </span>ldp<span class="w"> </span>netconf-ssh<span class="w"> </span>gnmi
+<a id="__codelineno-30-12" name="__codelineno-30-12" href="#__codelineno-30-12"></a><span class="w">  </span><span class="m">90</span><span class="w"> </span>permit<span class="w"> </span>udp<span class="w"> </span>any<span class="w"> </span>any<span class="w"> </span>eq<span class="w"> </span>bootps<span class="w"> </span>bootpc<span class="w"> </span>snmp<span class="w"> </span>rip<span class="w"> </span>ntp<span class="w"> </span>ldp
+<a id="__codelineno-30-13" name="__codelineno-30-13" href="#__codelineno-30-13"></a><span class="w">  </span><span class="m">100</span><span class="w"> </span>permit<span class="w"> </span>tcp<span class="w"> </span>any<span class="w"> </span>any<span class="w"> </span>eq<span class="w"> </span>mlag<span class="w"> </span>ttl<span class="w"> </span>eq<span class="w"> </span><span class="m">255</span>
+<a id="__codelineno-30-14" name="__codelineno-30-14" href="#__codelineno-30-14"></a><span class="w">  </span><span class="m">110</span><span class="w"> </span>permit<span class="w"> </span>udp<span class="w"> </span>any<span class="w"> </span>any<span class="w"> </span>eq<span class="w"> </span>mlag<span class="w"> </span>ttl<span class="w"> </span>eq<span class="w"> </span><span class="m">255</span>
+<a id="__codelineno-30-15" name="__codelineno-30-15" href="#__codelineno-30-15"></a><span class="w">  </span><span class="m">120</span><span class="w"> </span>permit<span class="w"> </span>vrrp<span class="w"> </span>any<span class="w"> </span>any
+<a id="__codelineno-30-16" name="__codelineno-30-16" href="#__codelineno-30-16"></a><span class="w">  </span><span class="m">130</span><span class="w"> </span>permit<span class="w"> </span>ahp<span class="w"> </span>any<span class="w"> </span>any
+<a id="__codelineno-30-17" name="__codelineno-30-17" href="#__codelineno-30-17"></a><span class="w">  </span><span class="m">140</span><span class="w"> </span>permit<span class="w"> </span>pim<span class="w"> </span>any<span class="w"> </span>any
+<a id="__codelineno-30-18" name="__codelineno-30-18" href="#__codelineno-30-18"></a><span class="w">  </span><span class="m">150</span><span class="w"> </span>permit<span class="w"> </span>igmp<span class="w"> </span>any<span class="w"> </span>any
+<a id="__codelineno-30-19" name="__codelineno-30-19" href="#__codelineno-30-19"></a><span class="w">  </span><span class="m">160</span><span class="w"> </span>permit<span class="w"> </span>tcp<span class="w"> </span>any<span class="w"> </span>any<span class="w"> </span>range<span class="w"> </span><span class="m">5900</span><span class="w"> </span><span class="m">5910</span>
+<a id="__codelineno-30-20" name="__codelineno-30-20" href="#__codelineno-30-20"></a><span class="w">  </span><span class="m">170</span><span class="w"> </span>permit<span class="w"> </span>tcp<span class="w"> </span>any<span class="w"> </span>any<span class="w"> </span>range<span class="w"> </span><span class="m">50000</span><span class="w"> </span><span class="m">50100</span>
+<a id="__codelineno-30-21" name="__codelineno-30-21" href="#__codelineno-30-21"></a><span class="w">  </span><span class="m">180</span><span class="w"> </span>permit<span class="w"> </span>udp<span class="w"> </span>any<span class="w"> </span>any<span class="w"> </span>range<span class="w"> </span><span class="m">51000</span><span class="w"> </span><span class="m">51100</span>
+<a id="__codelineno-30-22" name="__codelineno-30-22" href="#__codelineno-30-22"></a><span class="w">  </span><span class="m">190</span><span class="w"> </span>permit<span class="w"> </span>tcp<span class="w"> </span>any<span class="w"> </span>any<span class="w"> </span>eq<span class="w"> </span><span class="m">3333</span>
+<a id="__codelineno-30-23" name="__codelineno-30-23" href="#__codelineno-30-23"></a><span class="w">  </span><span class="m">200</span><span class="w"> </span>permit<span class="w"> </span>tcp<span class="w"> </span>any<span class="w"> </span>any<span class="w"> </span>eq<span class="w"> </span>nat<span class="w"> </span>ttl<span class="w"> </span>eq<span class="w"> </span><span class="m">255</span>
+<a id="__codelineno-30-24" name="__codelineno-30-24" href="#__codelineno-30-24"></a><span class="w">  </span><span class="m">210</span><span class="w"> </span>permit<span class="w"> </span>tcp<span class="w"> </span>any<span class="w"> </span>eq<span class="w"> </span>bgp<span class="w"> </span>any
+<a id="__codelineno-30-25" name="__codelineno-30-25" href="#__codelineno-30-25"></a><span class="w">  </span><span class="m">220</span><span class="w"> </span>permit<span class="w"> </span>rsvp<span class="w"> </span>any<span class="w"> </span>any
+</code></pre></div>
+<p>To check if the port is open you can use <code>netstat</code>, e.g.:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a>netstat<span class="w"> </span>-an<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>:8080
+</code></pre></div>
+<p>Or the network namespace command if VRF is used</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a>sudo<span class="w"> </span>ip<span class="w"> </span>netns<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>ns-MGMT<span class="w"> </span>netstat<span class="w"> </span>-an<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>:8080
+</code></pre></div>
+<p>You should see a similar output as below:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a>$<span class="w"> </span>sudo<span class="w"> </span>netstat<span class="w"> </span>-tulnap<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>:8080
+<a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a>
+<a id="__codelineno-33-3" name="__codelineno-33-3" href="#__codelineno-33-3"></a>tcp6<span class="w">       </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span>:::8080<span class="w">                 </span>:::*<span class="w"> </span>LISTEN<span class="w">   </span><span class="m">17200</span>/ocprometheus
+<a id="__codelineno-33-4" name="__codelineno-33-4" href="#__codelineno-33-4"></a>tcp6<span class="w">       </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">172</span>.28.160.232:8080<span class="w">     </span><span class="m">192</span>.0.2.78:48956<span class="w"> </span>ESTABLISHED<span class="w"> </span><span class="m">17200</span>/ocprometheus
+</code></pre></div>
+<p>Or in case of using a VRF:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>$<span class="w"> </span>sudo<span class="w"> </span>ip<span class="w"> </span>netns<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>ns-management<span class="w"> </span>netstat<span class="w"> </span>-tulnap<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>:8080
+<a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a>
+<a id="__codelineno-34-3" name="__codelineno-34-3" href="#__codelineno-34-3"></a>tcp6<span class="w">       </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span>:::8080<span class="w">                 </span>:::*<span class="w"> </span>LISTEN<span class="w">   </span><span class="m">12344</span>/ocprometheus
+<a id="__codelineno-34-4" name="__codelineno-34-4" href="#__codelineno-34-4"></a>tcp6<span class="w">       </span><span class="m">0</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="m">192</span>.0.2.139:8080<span class="w">       </span><span class="m">192</span>.0.2.78:40820<span class="w"> </span>ESTABLISHED<span class="w"> </span><span class="m">12344</span>/ocprometheus
+</code></pre></div>
+<p>Don’t be confused if you see tcp6 in the output, that’s expected, as AF_INET6 works for both IPv4 and IPv6 as per RFC <a href="https://tools.ietf.org/html/rfc3493#section-3.7">3493</a>.</p>
+<blockquote>
+<p>Note: The same configuration is used but no control-plane ACL for 4.20.7M &gt; EOS &gt;4.19 or in newer releases
+where EOS-PDP.swi is used, and you’ll need to allow the Prometheus server IP using <code>-allowed_ips=&lt;IP/subnet&gt;</code></p>
+</blockquote>
+<p>Here are some of the configuration combinations that you might have:</p>
+<h4 id="no-vrf-and-streaming-to-both-cvp-and-prometheus">No VRF and streaming to both CVP and Prometheus</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-35-1" name="__codelineno-35-1" href="#__codelineno-35-1"></a>!
+<a id="__codelineno-35-2" name="__codelineno-35-2" href="#__codelineno-35-2"></a>daemon<span class="w"> </span>TerminAttr
+<a id="__codelineno-35-3" name="__codelineno-35-3" href="#__codelineno-35-3"></a><span class="w">  </span><span class="nb">exec</span><span class="w"> </span>/usr/bin/TerminAttr<span class="w"> </span>-ingestgrpcurl<span class="o">=</span><span class="m">192</span>.0.2.33:9910<span class="w"> </span>-cvcompression<span class="o">=</span>gzip<span class="w"> </span>-taillogs<span class="w"> </span>-ingestauth<span class="o">=</span>key,mysecretkey<span class="w"> </span>-smashexcludes<span class="o">=</span>ale,flexCounter,hardware,kni,pulse,strata<span class="w"> </span>-ingestexclude<span class="o">=</span>/Sysdb/cell/1/agent,/Sysdb/cell/2/agent<span class="w"> </span>-disableaaa
+<a id="__codelineno-35-4" name="__codelineno-35-4" href="#__codelineno-35-4"></a><span class="w">  </span>no<span class="w"> </span>shutdown
+<a id="__codelineno-35-5" name="__codelineno-35-5" href="#__codelineno-35-5"></a>!
+<a id="__codelineno-35-6" name="__codelineno-35-6" href="#__codelineno-35-6"></a>daemon<span class="w"> </span>ocprometheus
+<a id="__codelineno-35-7" name="__codelineno-35-7" href="#__codelineno-35-7"></a><span class="w">  </span><span class="nb">exec</span><span class="w"> </span>/usr/bin/ocprometheus<span class="w"> </span>-config<span class="w"> </span>/usr/bin/ocprometheus.yml<span class="w"> </span>-addr<span class="w"> </span>localhost:6042
+<a id="__codelineno-35-8" name="__codelineno-35-8" href="#__codelineno-35-8"></a><span class="w">  </span>no<span class="w"> </span>shutdown
+<a id="__codelineno-35-9" name="__codelineno-35-9" href="#__codelineno-35-9"></a>!
+</code></pre></div>
+<h4 id="no-vrf-and-only-prometheus">No VRF and only Prometheus</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-36-1" name="__codelineno-36-1" href="#__codelineno-36-1"></a>!
+<a id="__codelineno-36-2" name="__codelineno-36-2" href="#__codelineno-36-2"></a>daemon<span class="w"> </span>TerminAttr
+<a id="__codelineno-36-3" name="__codelineno-36-3" href="#__codelineno-36-3"></a><span class="w">  </span><span class="nb">exec</span><span class="w"> </span>/usr/bin/TerminAttr<span class="w"> </span>-disableaaa
+<a id="__codelineno-36-4" name="__codelineno-36-4" href="#__codelineno-36-4"></a><span class="w">  </span>no<span class="w"> </span>shutdown
+<a id="__codelineno-36-5" name="__codelineno-36-5" href="#__codelineno-36-5"></a>!
+<a id="__codelineno-36-6" name="__codelineno-36-6" href="#__codelineno-36-6"></a>daemon<span class="w"> </span>ocprometheus
+<a id="__codelineno-36-7" name="__codelineno-36-7" href="#__codelineno-36-7"></a><span class="w">  </span><span class="nb">exec</span><span class="w"> </span>/usr/bin/ocprometheus<span class="w"> </span>-config<span class="w"> </span>/usr/bin/ocprometheus.yml<span class="w"> </span>-addr<span class="w"> </span>localhost:6042
+<a id="__codelineno-36-8" name="__codelineno-36-8" href="#__codelineno-36-8"></a><span class="w">  </span>no<span class="w"> </span>shutdown
+<a id="__codelineno-36-9" name="__codelineno-36-9" href="#__codelineno-36-9"></a>!
+</code></pre></div>
+<h4 id="vrf-management-and-streaming-to-both-cvp-and-prometheus">VRF management and streaming to both CVP and Prometheus</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-37-1" name="__codelineno-37-1" href="#__codelineno-37-1"></a>!
+<a id="__codelineno-37-2" name="__codelineno-37-2" href="#__codelineno-37-2"></a>daemon<span class="w"> </span>TerminAttr
+<a id="__codelineno-37-3" name="__codelineno-37-3" href="#__codelineno-37-3"></a><span class="w">  </span><span class="nb">exec</span><span class="w"> </span>/usr/bin/TerminAttr<span class="w"> </span>-ingestgrpcurl<span class="o">=</span><span class="m">192</span>.0.2.79:9910<span class="w"> </span>-cvcompression<span class="o">=</span>gzip<span class="w"> </span>-taillogs<span class="w"> </span>-ingestvrf<span class="o">=</span>management<span class="w"> </span>-ingestauth<span class="o">=</span>key,mysecretkey<span class="w"> </span>-smashexcludes<span class="o">=</span>ale,flexCounter,hardware,kni,pulse,strata<span class="w"> </span>-ingestexclude<span class="o">=</span>/Sysdb/cell/1/agent,/Sysdb/cell/2/agent<span class="w"> </span>-disableaaa<span class="w"> </span>-grpcaddr<span class="w"> </span>management/0.0.0.0:6042
+<a id="__codelineno-37-4" name="__codelineno-37-4" href="#__codelineno-37-4"></a><span class="w">  </span>no<span class="w"> </span>shutdown
+<a id="__codelineno-37-5" name="__codelineno-37-5" href="#__codelineno-37-5"></a>!
+<a id="__codelineno-37-6" name="__codelineno-37-6" href="#__codelineno-37-6"></a>daemon<span class="w"> </span>ocprometheus
+<a id="__codelineno-37-7" name="__codelineno-37-7" href="#__codelineno-37-7"></a><span class="w">  </span><span class="nb">exec</span><span class="w"> </span>/sbin/ip<span class="w"> </span>netns<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>ns-management<span class="w"> </span>/usr/bin/ocprometheus<span class="w"> </span>-config<span class="w"> </span>/usr/bin/ocprometheus.yml<span class="w"> </span>-addr<span class="w"> </span>localhost:6042
+<a id="__codelineno-37-8" name="__codelineno-37-8" href="#__codelineno-37-8"></a><span class="w">  </span>no<span class="w"> </span>shutdown
+<a id="__codelineno-37-9" name="__codelineno-37-9" href="#__codelineno-37-9"></a>!
+</code></pre></div>
+<h4 id="vrf-and-only-prometheus">VRF and only Prometheus</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-38-1" name="__codelineno-38-1" href="#__codelineno-38-1"></a>!
+<a id="__codelineno-38-2" name="__codelineno-38-2" href="#__codelineno-38-2"></a>daemon<span class="w"> </span>TerminAttr
+<a id="__codelineno-38-3" name="__codelineno-38-3" href="#__codelineno-38-3"></a><span class="w">  </span><span class="nb">exec</span><span class="w"> </span>/usr/bin/TerminAttr<span class="w"> </span>-disableaaa<span class="w"> </span>-grpcaddr<span class="w"> </span>management/0.0.0.0:6042
+<a id="__codelineno-38-4" name="__codelineno-38-4" href="#__codelineno-38-4"></a><span class="w">  </span>no<span class="w"> </span>shutdown
+<a id="__codelineno-38-5" name="__codelineno-38-5" href="#__codelineno-38-5"></a>!
+<a id="__codelineno-38-6" name="__codelineno-38-6" href="#__codelineno-38-6"></a>daemon<span class="w"> </span>ocprometheus
+<a id="__codelineno-38-7" name="__codelineno-38-7" href="#__codelineno-38-7"></a><span class="w">  </span><span class="nb">exec</span><span class="w"> </span>/sbin/ip<span class="w"> </span>netns<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>ns-management<span class="w"> </span>/usr/bin/ocprometheus<span class="w"> </span>-config<span class="w"> </span>/usr/bin/ocprometheus.yml<span class="w"> </span>-addr<span class="w"> </span>localhost:6042
+<a id="__codelineno-38-8" name="__codelineno-38-8" href="#__codelineno-38-8"></a><span class="w">  </span>no<span class="w"> </span>shutdown
+<a id="__codelineno-38-9" name="__codelineno-38-9" href="#__codelineno-38-9"></a>!
+</code></pre></div>
+<h4 id="vrf-and-only-prometheus-using-authentication">VRF and only Prometheus using authentication</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-39-1" name="__codelineno-39-1" href="#__codelineno-39-1"></a>!
+<a id="__codelineno-39-2" name="__codelineno-39-2" href="#__codelineno-39-2"></a>daemon<span class="w"> </span>TerminAttr
+<a id="__codelineno-39-3" name="__codelineno-39-3" href="#__codelineno-39-3"></a><span class="w">  </span><span class="nb">exec</span><span class="w"> </span>/usr/bin/TerminAttr<span class="w"> </span>-grpcaddr<span class="w"> </span>management/0.0.0.0:6042
+<a id="__codelineno-39-4" name="__codelineno-39-4" href="#__codelineno-39-4"></a><span class="w">  </span>no<span class="w"> </span>shutdown
+<a id="__codelineno-39-5" name="__codelineno-39-5" href="#__codelineno-39-5"></a>!
+<a id="__codelineno-39-6" name="__codelineno-39-6" href="#__codelineno-39-6"></a>daemon<span class="w"> </span>ocprometheus
+<a id="__codelineno-39-7" name="__codelineno-39-7" href="#__codelineno-39-7"></a><span class="w">  </span><span class="nb">exec</span><span class="w"> </span>/sbin/ip<span class="w"> </span>netns<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>ns-management<span class="w"> </span>/usr/bin/ocprometheus<span class="w"> </span>-config<span class="w"> </span>/usr/bin/ocprometheus.yml<span class="w"> </span>-addr<span class="w"> </span>localhost:6042<span class="w"> </span>-username<span class="o">=</span>cvpadmin<span class="w"> </span>-password<span class="o">=</span>arista
+<a id="__codelineno-39-8" name="__codelineno-39-8" href="#__codelineno-39-8"></a><span class="w">  </span>no<span class="w"> </span>shutdown
+<a id="__codelineno-39-9" name="__codelineno-39-9" href="#__codelineno-39-9"></a>!
+</code></pre></div>
+<h3 id="pdp-vrf-and-only-prometheus">PDP: VRF and only Prometheus</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-40-1" name="__codelineno-40-1" href="#__codelineno-40-1"></a>!
+<a id="__codelineno-40-2" name="__codelineno-40-2" href="#__codelineno-40-2"></a>daemon<span class="w"> </span>TerminAttr
+<a id="__codelineno-40-3" name="__codelineno-40-3" href="#__codelineno-40-3"></a><span class="w">  </span><span class="nb">exec</span><span class="w"> </span>/usr/bin/TerminAttr<span class="w"> </span>-disableaaa<span class="w"> </span>-grpcaddr<span class="w"> </span>management/0.0.0.0:6042<span class="w"> </span>-allowed_ips<span class="o">=</span><span class="m">192</span>.0.2.78/32
+<a id="__codelineno-40-4" name="__codelineno-40-4" href="#__codelineno-40-4"></a><span class="w">  </span>no<span class="w"> </span>shutdown
+<a id="__codelineno-40-5" name="__codelineno-40-5" href="#__codelineno-40-5"></a>!
+<a id="__codelineno-40-6" name="__codelineno-40-6" href="#__codelineno-40-6"></a>daemon<span class="w"> </span>ocprometheus
+<a id="__codelineno-40-7" name="__codelineno-40-7" href="#__codelineno-40-7"></a><span class="w">  </span><span class="nb">exec</span><span class="w"> </span>/sbin/ip<span class="w"> </span>netns<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>ns-management<span class="w"> </span>/usr/bin/ocprometheus<span class="w"> </span>-config<span class="w"> </span>/usr/bin/ocprometheus.yml<span class="w"> </span>-addr<span class="w"> </span>localhost:6042
+<a id="__codelineno-40-8" name="__codelineno-40-8" href="#__codelineno-40-8"></a><span class="w">  </span>no<span class="w"> </span>shutdown
+<a id="__codelineno-40-9" name="__codelineno-40-9" href="#__codelineno-40-9"></a>!
+</code></pre></div>
+<p>The minimum required flags for TerminAttr are:</p>
+<ul>
+<li><code>disableaaa</code>: Disable AAA checking—all AAA requests pass (in case username/password is not used in ocprometheus)</li>
+<li>grpcaddr string
+     VRF and address to listen on to serve data using the gNMI interface.
+     The expected form is <code>[&lt;vrf-name&gt;/]address:port</code> (default <code>127.0.0.1:6042</code>)</li>
+</ul>
+<p>After configuring our switches we can head over to Grafana and start drawing our graphs.</p>
+<h3 id="fix-for-multilane-interfaces-eos-native-paths">Fix for multilane interfaces (EOS-native paths)</h3>
+<p>If interface statistics streamed using eos-native paths, then backslash would be part of the
+interface names:
+<img alt="Multilane interface names" src="resources/multilane-before.png" /></p>
+<p>Use the following metric_relabel_configs configuration to remove the backslash in interface names:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-41-1" name="__codelineno-41-1" href="#__codelineno-41-1"></a>scrape_configs:
+<a id="__codelineno-41-2" name="__codelineno-41-2" href="#__codelineno-41-2"></a><span class="w">  </span><span class="c1"># The job name is added as a label `job=&lt;job_name&gt;` to any timeseries scraped from this config.</span>
+<a id="__codelineno-41-3" name="__codelineno-41-3" href="#__codelineno-41-3"></a><span class="w">  </span>-<span class="w"> </span>job_name:<span class="w"> </span><span class="s1">&#39;prometheus&#39;</span>
+<a id="__codelineno-41-4" name="__codelineno-41-4" href="#__codelineno-41-4"></a>
+<a id="__codelineno-41-5" name="__codelineno-41-5" href="#__codelineno-41-5"></a><span class="w">    </span><span class="c1"># metrics_path defaults to &#39;/metrics&#39;</span>
+<a id="__codelineno-41-6" name="__codelineno-41-6" href="#__codelineno-41-6"></a><span class="w">    </span><span class="c1"># scheme defaults to &#39;http&#39;.</span>
+<a id="__codelineno-41-7" name="__codelineno-41-7" href="#__codelineno-41-7"></a><span class="w">    </span>static_configs:
+<a id="__codelineno-41-8" name="__codelineno-41-8" href="#__codelineno-41-8"></a><span class="w">      </span>-<span class="w"> </span>targets:<span class="w"> </span><span class="o">[</span><span class="s1">&#39;localhost:9090&#39;</span><span class="o">]</span>
+<a id="__codelineno-41-9" name="__codelineno-41-9" href="#__codelineno-41-9"></a><span class="w">  </span>-<span class="w"> </span>job_name:<span class="w"> </span><span class="s1">&#39;arista&#39;</span>
+<a id="__codelineno-41-10" name="__codelineno-41-10" href="#__codelineno-41-10"></a><span class="w">    </span>static_configs:
+<a id="__codelineno-41-11" name="__codelineno-41-11" href="#__codelineno-41-11"></a><span class="w">    </span>-<span class="w"> </span>targets:<span class="w"> </span><span class="o">[</span><span class="s1">&#39;172.28.161.187:8080&#39;</span><span class="o">]</span>
+<a id="__codelineno-41-12" name="__codelineno-41-12" href="#__codelineno-41-12"></a><span class="w">    </span>metric_relabel_configs:
+<a id="__codelineno-41-13" name="__codelineno-41-13" href="#__codelineno-41-13"></a><span class="w">    </span>-<span class="w"> </span>action:<span class="w"> </span>replace
+<a id="__codelineno-41-14" name="__codelineno-41-14" href="#__codelineno-41-14"></a><span class="w">      </span>source_labels:<span class="w"> </span><span class="o">[</span>intf<span class="o">]</span>
+<a id="__codelineno-41-15" name="__codelineno-41-15" href="#__codelineno-41-15"></a><span class="w">      </span>target_label:<span class="w"> </span>intf
+<a id="__codelineno-41-16" name="__codelineno-41-16" href="#__codelineno-41-16"></a><span class="w">      </span>regex:<span class="w"> </span><span class="s1">&#39;(.*)\\(.*)&#39;</span>
+<a id="__codelineno-41-17" name="__codelineno-41-17" href="#__codelineno-41-17"></a><span class="w">      </span>replacement:<span class="w"> </span><span class="s1">&#39;${1}${2}&#39;</span>
+<a id="__codelineno-41-18" name="__codelineno-41-18" href="#__codelineno-41-18"></a><span class="w">    </span>-<span class="w"> </span>action:<span class="w"> </span>replace
+<a id="__codelineno-41-19" name="__codelineno-41-19" href="#__codelineno-41-19"></a><span class="w">      </span>source_labels:<span class="w"> </span><span class="o">[</span>intf<span class="o">]</span>
+<a id="__codelineno-41-20" name="__codelineno-41-20" href="#__codelineno-41-20"></a><span class="w">      </span>target_label:<span class="w"> </span>intf
+<a id="__codelineno-41-21" name="__codelineno-41-21" href="#__codelineno-41-21"></a><span class="w">      </span>regex:<span class="w"> </span><span class="s1">&#39;(.*)\\(.*)\\(.*)&#39;</span>
+<a id="__codelineno-41-22" name="__codelineno-41-22" href="#__codelineno-41-22"></a><span class="w">      </span>replacement:<span class="w"> </span><span class="s1">&#39;${1}${2}${3}&#39;</span>
+</code></pre></div>
+<p>Applying this configuration will result in:</p>
+<p><img alt="Multilane interface names" src="resources/multilane-after.png" /></p>
+<h2 id="creating-dashboards-in-grafana">Creating dashboards in Grafana</h2>
+<p>First you’ll need to add Prometheus as a data source, to be able to graph streamed data to Prometheus.
+You can do this by using the following steps:</p>
+<p>1. Go to Configuration (gear icon) / Data Sources</p>
+<p><img alt="Grafana1" src="resources/Grafana1.png" /></p>
+<p>2. Add data source and select Prometheus</p>
+<p><img alt="Grafana2" src="resources/Grafana2.png" /></p>
+<p><img alt="Grafana3" src="resources/Grafana3.png" /></p>
+<p>3. Fill out the form (add the URL for the Prometheus server e.g.: <code>http://myprometheus.com:9090/</code></p>
+<p>It should look like this:</p>
+<p><img alt="Grafana4" src="resources/Grafana4.png" /></p>
+<p>4. Save &amp; Test</p>
+<p>5. Now we can create our dashboard ( + button on the left)</p>
+<p><img alt="Grafana5" src="resources/Grafana5.png" /></p>
+<p>6. Add query</p>
+<p><img alt="Grafana6" src="resources/Grafana6.png" /></p>
+<p>7. Make sure you have ‘Prometheus’ selected as Data Source</p>
+<p><img alt="Grafana7" src="resources/Grafana7.png" /></p>
+<p>After selecting ‘prometheus’ you will be able to add expressions like ‘intfCounter’ , ‘tempSensor’, etc. defined in
+the ocprometheus config yaml file.</p>
+<p><img alt="Grafana8" src="resources/Grafana8.png" /></p>
+<p>8. After adding ‘intfCounter’ to the query, it’ll start plotting the counters for all the interfaces and all the devices
+ that Prometheus is polling</p>
+<p><img alt="Grafana8v2" src="resources/Grafana8v2.png" /></p>
+<p>9. Save the dashboard</p>
+<p><img alt="Grafana9" src="resources/Grafana9.png" /></p>
+<p>Finally:</p>
+<ul>
+<li>you can add as many dashboards you want</li>
+<li>you can add more expression on a single graph</li>
+<li>you can choose one line on the graph and it will show the graph for only that line (for example, in interface counters,
+you can choose a specific interface to look at the counters for)</li>
+</ul>
+<h3 id="how-to-graph-data-only-for-specific-interface">How to graph data only for specific interface?</h3>
+<p>We can add filters to the queries in both Prometheus console or in grafana, for example, if I want to see data for
+interface Ethernet24 I’d use the following filter:</p>
+<p><code>intfCounter{intf=”Ethernet24″}</code></p>
+<p><img alt="Grafana10" src="resources/Grafana10.png" /></p>
+<p><img alt="Grafana11" src="resources/Grafana11.png" /></p>
+<p>You can filter based on any of the labels defined in the config file (some of them are unnamed,
+but you can add a name to those capturing/non-capturing groups inside the config file on EOS).</p>
+<p>Some of the paths contains capturing groups that are not named, and Prometheus will give them a name in the following
+format: <code>unnamedLabelX</code></p>
+<p>For example, for interface counters on a 7160 device I have the following path:</p>
+<p><code>/Smash/counters/ethIntf/XpCounters/current/(counter)/(?P&lt;intf&gt;.+)/statistics/(?P&lt;direction&gt;(?:in|out))(Octets|Errors|Discards)</code></p>
+<p>From the above path you can see for example that the direction of the packets is captured in a named capturing group
+that also contains a non-capturing group: <code>(?P&lt;direction&gt;(?:in|out))</code></p>
+<p>Named capturing groups can be created with <code>?P&lt;name&gt;</code>.</p>
+<p>We don’t need to capture a separate group for in|out as we already do it with the named capturing group of direction,
+so we can use a non-capturing group with ?:</p>
+<p>Explanation:</p>
+<ul>
+<li>Named Capture Group: <strong>direction</strong> <code>(?P&lt;direction&gt;(?:in|out))</code></li>
+<li>Non-capturing group <code>(?:in|out)</code><ul>
+<li>first Alternative in</li>
+<li>in matches the characters in literally (case sensitive)</li>
+<li>second Alternative out</li>
+<li>out matches the characters out literally (case sensitive)</li>
+</ul>
+</li>
+</ul>
+<p>Match for inOctets will be divided like this:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-42-1" name="__codelineno-42-1" href="#__codelineno-42-1"></a>Match<span class="w"> </span><span class="m">1</span>
+<a id="__codelineno-42-2" name="__codelineno-42-2" href="#__codelineno-42-2"></a>Full<span class="w"> </span>match<span class="w">            </span><span class="m">0</span>-8<span class="w"> </span>inOctets
+<a id="__codelineno-42-3" name="__codelineno-42-3" href="#__codelineno-42-3"></a>Group<span class="w"> </span><span class="sb">`</span>direction<span class="sb">`</span><span class="w">     </span><span class="m">0</span>-2<span class="w">   </span><span class="k">in</span>
+<a id="__codelineno-42-4" name="__codelineno-42-4" href="#__codelineno-42-4"></a>Group<span class="w"> </span><span class="m">2</span>.<span class="w">              </span><span class="m">2</span>-8<span class="w"> </span>Octets
+</code></pre></div>
+<p>If we wouldn’t use non-capturing group for in|out the result will be the following</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-43-1" name="__codelineno-43-1" href="#__codelineno-43-1"></a>Match<span class="w"> </span><span class="m">1</span>
+<a id="__codelineno-43-2" name="__codelineno-43-2" href="#__codelineno-43-2"></a>Full<span class="w"> </span>match<span class="w">         </span><span class="m">0</span>-8<span class="w"> </span>inOctets
+<a id="__codelineno-43-3" name="__codelineno-43-3" href="#__codelineno-43-3"></a>Group<span class="w"> </span><span class="sb">`</span>direction<span class="sb">`</span><span class="w">  </span><span class="m">0</span>-2<span class="w"> </span><span class="k">in</span>
+<a id="__codelineno-43-4" name="__codelineno-43-4" href="#__codelineno-43-4"></a>Group<span class="w"> </span><span class="m">2</span>.<span class="w">           </span><span class="m">0</span>-2<span class="w"> </span><span class="k">in</span>
+<a id="__codelineno-43-5" name="__codelineno-43-5" href="#__codelineno-43-5"></a>Group<span class="w"> </span><span class="m">3</span>.<span class="w">           </span><span class="m">2</span>-8<span class="w"> </span>Octets
+</code></pre></div>
+<p>Notice the extra group for matching <code>in</code>.</p>
+<p>Now for <code>(Octets|Errors|Discards)</code> there is no name defined, so the result will be</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-44-1" name="__codelineno-44-1" href="#__codelineno-44-1"></a>Match<span class="w"> </span><span class="m">1</span>
+<a id="__codelineno-44-2" name="__codelineno-44-2" href="#__codelineno-44-2"></a>Full<span class="w"> </span>match<span class="w">   </span><span class="m">2</span>-8<span class="w"> </span>Octets
+<a id="__codelineno-44-3" name="__codelineno-44-3" href="#__codelineno-44-3"></a>Group<span class="w"> </span><span class="m">1</span>.<span class="w">     </span><span class="m">2</span>-8<span class="w"> </span>Octets
+</code></pre></div>
+<p>In this case since we used a capturing group by putting our strings/expression in a parenthesis, Prometheus will
+know that it needs to treat it as a separate label, so it gives it a name.</p>
+<p>If you don’t want to see unnamedLabels you can add a group name similarly to the direction group.</p>
+<p>For example, you can use the following expression: <code>(?P&lt;packetType&gt;(?:Octets|Errors|Discards))</code></p>
+<p>Result:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-45-1" name="__codelineno-45-1" href="#__codelineno-45-1"></a>Match<span class="w"> </span><span class="m">1</span>
+<a id="__codelineno-45-2" name="__codelineno-45-2" href="#__codelineno-45-2"></a>Full<span class="w"> </span>match<span class="w">          </span><span class="m">2</span>-8<span class="w"> </span>Octets
+<a id="__codelineno-45-3" name="__codelineno-45-3" href="#__codelineno-45-3"></a>Group<span class="w"> </span><span class="sb">`</span>packetType<span class="sb">`</span><span class="w">  </span><span class="m">2</span>-8<span class="w"> </span>Octets
+</code></pre></div>
+<h3 id="pre-defined-dashboard">Pre-defined dashboard</h3>
+<p>The open-source community is really helpful and thanks to Be Smart Be Open and Vista Technology we have a pre-defined
+grafana dashboard for Arista devices which you can find here:</p>
+<p><a href="https://grafana.com/dashboards/10222">https://grafana.com/dashboards/10222</a></p>
+<p>You can download the dashboard as a JSON file and then import it in Grafana.</p>
+<p>Some of the graphs that you’ll find in this dashboard:</p>
+<ul>
+<li>Aggregated traffic</li>
+<li>Traffic by interface</li>
+<li>CPU &amp; Temperature</li>
+<li>Power levels</li>
+<li>Voltage levels</li>
+<li>Interface counters for individual interfaces</li>
+</ul>
+<p><img alt="Grafana12" src="resources/Grafana12.png" /></p>
+<blockquote>
+<p>Beware of <a href="https://github.com/grafana/grafana/issues/6888">https://github.com/grafana/grafana/issues/6888</a></p>
+</blockquote>
+<p>In case you have modular devices or multilane interfaces, you cannot use a variable to match those interfaces
+for example with <code>intf="$interface"</code> because Grafana will escape special characters, even if they were
+already escaped by Prometheus (it’ll escape it again). So instead of <code>Ethernet3\\/2</code> you’ll have <code>Ethernet3\\\\/2</code> and
+no data will be plotted.</p>
+<p>The workaround is to use regex matching by putting the tilda (<code>~</code>) character after the equal sign.</p>
+<p><code>rate(intfCounter{job="$deviceType",instance="$device",intf=~"$interface",type="Octets"}[1m])*8</code></p>
+<p>You can also use regex matching like below</p>
+<p><code>rate(intfCounter{job="$deviceType",instance="$device",intf=~"Ethernet(.*\\/.*)?(.*)?",type="Octets"}[1m])*8</code></p>
+<h2 id="using-rule-records-in-prometheus-for-eos-paths">Using rule records in Prometheus for EOS paths</h2>
+<p>Rule records allow you to precompute frequently needed expressions and save the result as a new set of time series.
+Querying this result will be much faster then executing the original expression and very useful for dashboards,
+which need to query the same expression repeatedly.
+One example would be to use the <code>/Kernel/proc/stat/&lt;pid&gt;/comm</code> as a value label and store the metrics in a new time
+series for the other items under that path.</p>
+<p>For more details on rule records, please visit the best practices and the configuration section on the official
+Prometheus website.</p>
+<p>In my example I’ve recorded a rule for the <code>rss</code> key under <code>/Kernel/proc/stat/&lt;pid&gt;/</code></p>
+<p>Here’s what TerminAttr is streaming under <code>/Kernel/proc/stat</code></p>
+<p><code>curl localhost:6060/rest/Kernel/proc/stat/1</code></p>
+<p>Output:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-46-1" name="__codelineno-46-1" href="#__codelineno-46-1"></a><span class="o">{</span>
+<a id="__codelineno-46-2" name="__codelineno-46-2" href="#__codelineno-46-2"></a><span class="w">    </span><span class="s2">&quot;cguestTime&quot;</span>:<span class="w"> </span><span class="m">0</span>,
+<a id="__codelineno-46-3" name="__codelineno-46-3" href="#__codelineno-46-3"></a><span class="w">    </span><span class="s2">&quot;cmajflt&quot;</span>:<span class="w"> </span><span class="m">4399</span>,
+<a id="__codelineno-46-4" name="__codelineno-46-4" href="#__codelineno-46-4"></a><span class="w">    </span><span class="s2">&quot;cmdline&quot;</span>:<span class="w"> </span><span class="s2">&quot;/sbin/init&quot;</span>,
+<a id="__codelineno-46-5" name="__codelineno-46-5" href="#__codelineno-46-5"></a><span class="w">    </span><span class="s2">&quot;cminflt&quot;</span>:<span class="w"> </span><span class="m">511393</span>,
+<a id="__codelineno-46-6" name="__codelineno-46-6" href="#__codelineno-46-6"></a><span class="w">    </span><span class="s2">&quot;comm&quot;</span>:<span class="w"> </span><span class="s2">&quot;systemd&quot;</span>,
+<a id="__codelineno-46-7" name="__codelineno-46-7" href="#__codelineno-46-7"></a><span class="w">    </span><span class="s2">&quot;cstime&quot;</span>:<span class="w"> </span><span class="m">3802</span>,
+<a id="__codelineno-46-8" name="__codelineno-46-8" href="#__codelineno-46-8"></a><span class="w">    </span><span class="s2">&quot;cutime&quot;</span>:<span class="w"> </span><span class="m">10380</span>,
+<a id="__codelineno-46-9" name="__codelineno-46-9" href="#__codelineno-46-9"></a><span class="w">    </span><span class="s2">&quot;delayacctBlkioTicks&quot;</span>:<span class="w"> </span><span class="m">0</span>,
+<a id="__codelineno-46-10" name="__codelineno-46-10" href="#__codelineno-46-10"></a><span class="w">    </span><span class="s2">&quot;endcode&quot;</span>:<span class="w"> </span><span class="m">135520894</span>,
+<a id="__codelineno-46-11" name="__codelineno-46-11" href="#__codelineno-46-11"></a><span class="w">    </span><span class="s2">&quot;exitSignal&quot;</span>:<span class="w"> </span><span class="m">17</span>,
+<a id="__codelineno-46-12" name="__codelineno-46-12" href="#__codelineno-46-12"></a><span class="w">    </span><span class="s2">&quot;flags&quot;</span>:<span class="w"> </span><span class="m">4219136</span>,
+<a id="__codelineno-46-13" name="__codelineno-46-13" href="#__codelineno-46-13"></a><span class="w">    </span><span class="s2">&quot;guestTime&quot;</span>:<span class="w"> </span><span class="m">0</span>,
+<a id="__codelineno-46-14" name="__codelineno-46-14" href="#__codelineno-46-14"></a><span class="w">    </span><span class="s2">&quot;kstkeip&quot;</span>:<span class="w"> </span><span class="m">4151638626</span>,
+<a id="__codelineno-46-15" name="__codelineno-46-15" href="#__codelineno-46-15"></a><span class="w">    </span><span class="s2">&quot;kstkesp&quot;</span>:<span class="w"> </span><span class="m">4292454672</span>,
+<a id="__codelineno-46-16" name="__codelineno-46-16" href="#__codelineno-46-16"></a><span class="w">    </span><span class="s2">&quot;majflt&quot;</span>:<span class="w"> </span><span class="m">31</span>,
+<a id="__codelineno-46-17" name="__codelineno-46-17" href="#__codelineno-46-17"></a><span class="w">    </span><span class="s2">&quot;minflt&quot;</span>:<span class="w"> </span><span class="m">10592</span>,
+<a id="__codelineno-46-18" name="__codelineno-46-18" href="#__codelineno-46-18"></a><span class="w">    </span><span class="s2">&quot;name&quot;</span>:<span class="w"> </span><span class="s2">&quot;1&quot;</span>,
+<a id="__codelineno-46-19" name="__codelineno-46-19" href="#__codelineno-46-19"></a><span class="w">    </span><span class="s2">&quot;nice&quot;</span>:<span class="w"> </span><span class="m">0</span>,
+<a id="__codelineno-46-20" name="__codelineno-46-20" href="#__codelineno-46-20"></a><span class="w">    </span><span class="s2">&quot;numThreads&quot;</span>:<span class="w"> </span><span class="m">1</span>,
+<a id="__codelineno-46-21" name="__codelineno-46-21" href="#__codelineno-46-21"></a><span class="w">    </span><span class="s2">&quot;pgrp&quot;</span>:<span class="w"> </span><span class="m">1</span>,
+<a id="__codelineno-46-22" name="__codelineno-46-22" href="#__codelineno-46-22"></a><span class="w">    </span><span class="s2">&quot;policy&quot;</span>:<span class="w"> </span><span class="m">0</span>,
+<a id="__codelineno-46-23" name="__codelineno-46-23" href="#__codelineno-46-23"></a><span class="w">    </span><span class="s2">&quot;ppid&quot;</span>:<span class="w"> </span><span class="m">0</span>,
+<a id="__codelineno-46-24" name="__codelineno-46-24" href="#__codelineno-46-24"></a><span class="w">    </span><span class="s2">&quot;priority&quot;</span>:<span class="w"> </span><span class="m">20</span>,
+<a id="__codelineno-46-25" name="__codelineno-46-25" href="#__codelineno-46-25"></a><span class="w">    </span><span class="s2">&quot;processor&quot;</span>:<span class="w"> </span><span class="m">3</span>,
+<a id="__codelineno-46-26" name="__codelineno-46-26" href="#__codelineno-46-26"></a><span class="w">    </span><span class="s2">&quot;rlim&quot;</span>:<span class="w"> </span><span class="m">18446744073709551615</span>,
+<a id="__codelineno-46-27" name="__codelineno-46-27" href="#__codelineno-46-27"></a><span class="w">    </span><span class="s2">&quot;rss&quot;</span>:<span class="w"> </span><span class="m">1553</span>,
+<a id="__codelineno-46-28" name="__codelineno-46-28" href="#__codelineno-46-28"></a><span class="w">    </span><span class="s2">&quot;rtPriority&quot;</span>:<span class="w"> </span><span class="m">0</span>,
+<a id="__codelineno-46-29" name="__codelineno-46-29" href="#__codelineno-46-29"></a><span class="w">    </span><span class="s2">&quot;session&quot;</span>:<span class="w"> </span><span class="m">1</span>,
+<a id="__codelineno-46-30" name="__codelineno-46-30" href="#__codelineno-46-30"></a><span class="w">    </span><span class="s2">&quot;startcode&quot;</span>:<span class="w"> </span><span class="m">134512640</span>,
+<a id="__codelineno-46-31" name="__codelineno-46-31" href="#__codelineno-46-31"></a><span class="w">    </span><span class="s2">&quot;startstack&quot;</span>:<span class="w"> </span><span class="m">4292456144</span>,
+<a id="__codelineno-46-32" name="__codelineno-46-32" href="#__codelineno-46-32"></a><span class="w">    </span><span class="s2">&quot;starttime&quot;</span>:<span class="w"> </span><span class="m">2</span>,
+<a id="__codelineno-46-33" name="__codelineno-46-33" href="#__codelineno-46-33"></a><span class="w">    </span><span class="s2">&quot;state&quot;</span>:<span class="w"> </span><span class="m">83</span>,
+<a id="__codelineno-46-34" name="__codelineno-46-34" href="#__codelineno-46-34"></a><span class="w">    </span><span class="s2">&quot;stime&quot;</span>:<span class="w"> </span><span class="m">374</span>,
+<a id="__codelineno-46-35" name="__codelineno-46-35" href="#__codelineno-46-35"></a><span class="w">    </span><span class="s2">&quot;tpgid&quot;</span>:<span class="w"> </span>-1,
+<a id="__codelineno-46-36" name="__codelineno-46-36" href="#__codelineno-46-36"></a><span class="w">    </span><span class="s2">&quot;ttyNr&quot;</span>:<span class="w"> </span><span class="m">0</span>,
+<a id="__codelineno-46-37" name="__codelineno-46-37" href="#__codelineno-46-37"></a><span class="w">    </span><span class="s2">&quot;utime&quot;</span>:<span class="w"> </span><span class="m">601</span>,
+<a id="__codelineno-46-38" name="__codelineno-46-38" href="#__codelineno-46-38"></a><span class="w">    </span><span class="s2">&quot;vsize&quot;</span>:<span class="w"> </span><span class="m">8925184</span>,
+<a id="__codelineno-46-39" name="__codelineno-46-39" href="#__codelineno-46-39"></a><span class="w">    </span><span class="s2">&quot;wchan&quot;</span>:<span class="w"> </span><span class="m">18446744071580351996</span>
+<a id="__codelineno-46-40" name="__codelineno-46-40" href="#__codelineno-46-40"></a><span class="o">}</span>
+</code></pre></div>
+<p>In my example I’ve used the ‘rss’ key and similarly you can create a record for each key.</p>
+<p>Here’s how the sample config looks like:</p>
+<h3 id="ocprometheusyml-on-eos">Ocprometheus.yml on EOS</h3>
+<p>On the switch, the yml file should look like this (note that I’ve deleted the other paths just for testing purposes).</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-47-1" name="__codelineno-47-1" href="#__codelineno-47-1"></a><span class="c1"># Subscriptions to OpenConfig paths.</span>
+<a id="__codelineno-47-2" name="__codelineno-47-2" href="#__codelineno-47-2"></a>subscriptions:
+<a id="__codelineno-47-3" name="__codelineno-47-3" href="#__codelineno-47-3"></a><span class="w">        </span>-<span class="w"> </span>/Kernel/proc
+<a id="__codelineno-47-4" name="__codelineno-47-4" href="#__codelineno-47-4"></a><span class="c1"># Prometheus metrics configuration.</span>
+<a id="__codelineno-47-5" name="__codelineno-47-5" href="#__codelineno-47-5"></a><span class="c1"># If you use named capture groups in the path, they will be extracted into labels with the same name.</span>
+<a id="__codelineno-47-6" name="__codelineno-47-6" href="#__codelineno-47-6"></a><span class="c1"># All fields are mandatory.</span>
+<a id="__codelineno-47-7" name="__codelineno-47-7" href="#__codelineno-47-7"></a>
+<a id="__codelineno-47-8" name="__codelineno-47-8" href="#__codelineno-47-8"></a>metrics:
+<a id="__codelineno-47-9" name="__codelineno-47-9" href="#__codelineno-47-9"></a><span class="w">        </span>-<span class="w"> </span>name:<span class="w"> </span>kernelprocrss
+<a id="__codelineno-47-10" name="__codelineno-47-10" href="#__codelineno-47-10"></a><span class="w">          </span>path:<span class="w"> </span>/Kernel/proc/stat/<span class="o">(</span>?P&lt;pid&gt;.+<span class="o">)</span>/rss
+<a id="__codelineno-47-11" name="__codelineno-47-11" href="#__codelineno-47-11"></a><span class="w">          </span>help:<span class="w"> </span>KernelProcRSS
+<a id="__codelineno-47-12" name="__codelineno-47-12" href="#__codelineno-47-12"></a><span class="w">        </span>-<span class="w"> </span>name:<span class="w"> </span>kernelproc
+<a id="__codelineno-47-13" name="__codelineno-47-13" href="#__codelineno-47-13"></a><span class="w">          </span>path:<span class="w"> </span>/Kernel/proc/stat/<span class="o">(</span>?P&lt;pid&gt;.+<span class="o">)</span>/comm
+<a id="__codelineno-47-14" name="__codelineno-47-14" href="#__codelineno-47-14"></a><span class="w">          </span>help:<span class="w"> </span>KernelProcStat
+<a id="__codelineno-47-15" name="__codelineno-47-15" href="#__codelineno-47-15"></a><span class="w">          </span>valuelabel:<span class="w"> </span><span class="nb">command</span>
+<a id="__codelineno-47-16" name="__codelineno-47-16" href="#__codelineno-47-16"></a><span class="w">          </span>defaultvalue:<span class="w"> </span><span class="m">1</span>
+</code></pre></div>
+<p>On the Prometheus server, you’ll need to add a rules file and edit your prometheus.yml to specify the path to that file.</p>
+<h3 id="prometheusyml-on-the-server">Prometheus.yml on the server</h3>
+<p>You’ll need to create another yml file for the rules and mention it in the prometheus.yml file under the rule_files key.</p>
+<p><code>cat prometheus.yml</code></p>
+<p>Output:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-48-1" name="__codelineno-48-1" href="#__codelineno-48-1"></a><span class="c1"># my global config</span>
+<a id="__codelineno-48-2" name="__codelineno-48-2" href="#__codelineno-48-2"></a>
+<a id="__codelineno-48-3" name="__codelineno-48-3" href="#__codelineno-48-3"></a>global:
+<a id="__codelineno-48-4" name="__codelineno-48-4" href="#__codelineno-48-4"></a><span class="w">  </span>scrape_interval:<span class="w">     </span>15s<span class="w"> </span><span class="c1"># Set the scrape interval to every 15 seconds. Default is every 1 minute.</span>
+<a id="__codelineno-48-5" name="__codelineno-48-5" href="#__codelineno-48-5"></a><span class="w">  </span>evaluation_interval:<span class="w"> </span>15s<span class="w"> </span><span class="c1"># Evaluate rules every 15 seconds. The default is every 1 minute.</span>
+<a id="__codelineno-48-6" name="__codelineno-48-6" href="#__codelineno-48-6"></a><span class="w">  </span><span class="c1"># scrape_timeout is set to the global default (10s).</span>
+<a id="__codelineno-48-7" name="__codelineno-48-7" href="#__codelineno-48-7"></a>
+<a id="__codelineno-48-8" name="__codelineno-48-8" href="#__codelineno-48-8"></a><span class="c1"># Alertmanager configuration</span>
+<a id="__codelineno-48-9" name="__codelineno-48-9" href="#__codelineno-48-9"></a>
+<a id="__codelineno-48-10" name="__codelineno-48-10" href="#__codelineno-48-10"></a>alerting:
+<a id="__codelineno-48-11" name="__codelineno-48-11" href="#__codelineno-48-11"></a><span class="w">  </span>alertmanagers:
+<a id="__codelineno-48-12" name="__codelineno-48-12" href="#__codelineno-48-12"></a><span class="w">  </span>-<span class="w"> </span>static_configs:
+<a id="__codelineno-48-13" name="__codelineno-48-13" href="#__codelineno-48-13"></a><span class="w">    </span>-<span class="w"> </span>targets:
+<a id="__codelineno-48-14" name="__codelineno-48-14" href="#__codelineno-48-14"></a><span class="w">      </span><span class="c1"># - alertmanager:9093</span>
+<a id="__codelineno-48-15" name="__codelineno-48-15" href="#__codelineno-48-15"></a>
+<a id="__codelineno-48-16" name="__codelineno-48-16" href="#__codelineno-48-16"></a><span class="c1"># Load rules once and periodically evaluate them according to the</span>
+<a id="__codelineno-48-17" name="__codelineno-48-17" href="#__codelineno-48-17"></a><span class="c1"># global &#39;evaluation_interval&#39;.</span>
+<a id="__codelineno-48-18" name="__codelineno-48-18" href="#__codelineno-48-18"></a>
+<a id="__codelineno-48-19" name="__codelineno-48-19" href="#__codelineno-48-19"></a>rule_files:
+<a id="__codelineno-48-20" name="__codelineno-48-20" href="#__codelineno-48-20"></a><span class="w">  </span><span class="c1"># - &quot;first_rules.yml&quot;</span>
+<a id="__codelineno-48-21" name="__codelineno-48-21" href="#__codelineno-48-21"></a><span class="w">  </span><span class="c1"># - &quot;second_rules.yml&quot;</span>
+<a id="__codelineno-48-22" name="__codelineno-48-22" href="#__codelineno-48-22"></a><span class="w">    </span>-<span class="w"> </span><span class="s2">&quot;kernel_rules.yml&quot;</span>
+<a id="__codelineno-48-23" name="__codelineno-48-23" href="#__codelineno-48-23"></a>
+<a id="__codelineno-48-24" name="__codelineno-48-24" href="#__codelineno-48-24"></a><span class="c1"># A scrape configuration containing exactly one endpoint to scrape:</span>
+<a id="__codelineno-48-25" name="__codelineno-48-25" href="#__codelineno-48-25"></a><span class="c1"># Here it&#39;s Prometheus itself.</span>
+<a id="__codelineno-48-26" name="__codelineno-48-26" href="#__codelineno-48-26"></a>
+<a id="__codelineno-48-27" name="__codelineno-48-27" href="#__codelineno-48-27"></a>scrape_configs:
+<a id="__codelineno-48-28" name="__codelineno-48-28" href="#__codelineno-48-28"></a><span class="w">  </span><span class="c1"># The job name is added as a label `job=&lt;job_name&gt;` to any</span>
+<a id="__codelineno-48-29" name="__codelineno-48-29" href="#__codelineno-48-29"></a><span class="w">  </span><span class="c1"># timeseries scraped from this config.</span>
+<a id="__codelineno-48-30" name="__codelineno-48-30" href="#__codelineno-48-30"></a>
+<a id="__codelineno-48-31" name="__codelineno-48-31" href="#__codelineno-48-31"></a><span class="w">  </span>-<span class="w"> </span>job_name:<span class="w"> </span><span class="s1">&#39;prometheus&#39;</span>
+<a id="__codelineno-48-32" name="__codelineno-48-32" href="#__codelineno-48-32"></a><span class="w">    </span><span class="c1"># metrics_path defaults to &#39;/metrics&#39;</span>
+<a id="__codelineno-48-33" name="__codelineno-48-33" href="#__codelineno-48-33"></a><span class="w">    </span><span class="c1"># scheme defaults to &#39;http&#39;.</span>
+<a id="__codelineno-48-34" name="__codelineno-48-34" href="#__codelineno-48-34"></a><span class="w">    </span>static_configs:
+<a id="__codelineno-48-35" name="__codelineno-48-35" href="#__codelineno-48-35"></a><span class="w">      </span>-<span class="w"> </span>targets:<span class="w"> </span><span class="o">[</span><span class="s1">&#39;localhost:9090&#39;</span><span class="o">]</span>
+<a id="__codelineno-48-36" name="__codelineno-48-36" href="#__codelineno-48-36"></a><span class="w">  </span>-<span class="w"> </span>job_name:<span class="w"> </span><span class="s1">&#39;arista&#39;</span>
+<a id="__codelineno-48-37" name="__codelineno-48-37" href="#__codelineno-48-37"></a><span class="w">    </span>static_configs:
+<a id="__codelineno-48-38" name="__codelineno-48-38" href="#__codelineno-48-38"></a><span class="w">      </span>-<span class="w"> </span>targets:<span class="w"> </span><span class="o">[</span><span class="s1">&#39;192.0.2.140:8080&#39;</span>,<span class="s1">&#39;198.51.100.21:8080&#39;</span>,<span class="s1">&#39;192.0.2.132:8080&#39;</span>,<span class="s1">&#39;192.0.2.139:8080&#39;</span>,<span class="s1">&#39;192.0.2.138:8080&#39;</span><span class="o">]</span>
+</code></pre></div>
+<h3 id="kernel_rulesyml-on-the-server">Kernel_rules.yml on the server</h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-49-1" name="__codelineno-49-1" href="#__codelineno-49-1"></a>groups:
+<a id="__codelineno-49-2" name="__codelineno-49-2" href="#__codelineno-49-2"></a><span class="w"> </span>-<span class="w"> </span>name:<span class="w"> </span><span class="nb">test</span>
+<a id="__codelineno-49-3" name="__codelineno-49-3" href="#__codelineno-49-3"></a><span class="w">   </span>rules:
+<a id="__codelineno-49-4" name="__codelineno-49-4" href="#__codelineno-49-4"></a><span class="w">    </span>-<span class="w"> </span>record:<span class="w"> </span>kernelprocrsswithcommand
+<a id="__codelineno-49-5" name="__codelineno-49-5" href="#__codelineno-49-5"></a><span class="w">      </span>expr:<span class="w"> </span>kernelprocrss<span class="w"> </span>*<span class="w"> </span>on<span class="o">(</span>pid<span class="o">)</span><span class="w"> </span>group_right<span class="w"> </span>kernelproc
+</code></pre></div>
+<blockquote>
+<p>Note, if you did not mount the kernel_rules.yml file when creating your docker container (as I did) you’ll need
+to copy the file over to your container with the following command</p>
+</blockquote>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-50-1" name="__codelineno-50-1" href="#__codelineno-50-1"></a>docker<span class="w"> </span>cp<span class="w"> </span>kernel_rules.yml<span class="w"> </span>eager_kapitsa:/etc/prometheus/
+</code></pre></div>
+<p>Checking on the GUI, it will give you the following results</p>
+<p><img alt="prom13.png" src="resources/prom13.png" /></p>
+<p>You can also use the expression from the <code>kernel_rules.yml</code> directly on the GUI</p>
+<p><img alt="prom14.png" src="resources/prom14.png" /></p>
+<p>After you create the records and update the yml files on the server, make sure you can see the rule created in
+the Status—Rules submenu</p>
+<p><img alt="prom15.png" src="resources/prom15.png" /></p>
+<h2 id="using-ocprometheus-with-the-openconfigocta-agent-management-api-gnmi">Using ocprometheus with the OpenConfig/OCTA agent (management api gnmi)</h2>
+<p>While ocprometheus can subscribe to EOS native paths provided by TerminAttr’s gNMI server on TCP <code>6042</code>
+(default, can be changed), it can also subscribe to OpenConfig paths provided by the OpenConfig/OCTA agent’s gnmi server
+on TCP <code>6030</code> (default, can be changed). For example to subscribe to interface counters the subscription and
+the metric path would look like below:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-51-1" name="__codelineno-51-1" href="#__codelineno-51-1"></a><span class="nt">subscriptions</span><span class="p">:</span>
+<a id="__codelineno-51-2" name="__codelineno-51-2" href="#__codelineno-51-2"></a><span class="w">     </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/interfaces/interface</span>
+<a id="__codelineno-51-3" name="__codelineno-51-3" href="#__codelineno-51-3"></a><span class="nt">metrics</span><span class="p">:</span>
+<a id="__codelineno-51-4" name="__codelineno-51-4" href="#__codelineno-51-4"></a><span class="w">     </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">intfCounter</span>
+<a id="__codelineno-51-5" name="__codelineno-51-5" href="#__codelineno-51-5"></a><span class="w">       </span><span class="nt">path</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/interfaces/interface\[name=(?P&lt;intf&gt;[^\]]+)\]/state/counters/(?P&lt;countertype&gt;.+)</span>
+</code></pre></div>
+<p>OpenConfig and EOS native paths can be mixed when using OCTA and in that case the origin must be specified. Since the
+default origin is openconfig, the origin has to be only specified for EOS native paths under the subscriptions key,
+e.g.:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-52-1" name="__codelineno-52-1" href="#__codelineno-52-1"></a><span class="nt">subscriptions</span><span class="p">:</span>
+<a id="__codelineno-52-2" name="__codelineno-52-2" href="#__codelineno-52-2"></a><span class="w">   </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">/interfaces/interface</span>
+<a id="__codelineno-52-3" name="__codelineno-52-3" href="#__codelineno-52-3"></a><span class="w">   </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">eos_native:/Kernel/proc</span>
+</code></pre></div>
+<blockquote>
+<p>Note On EOS 4.23+ it's highly recommended to use OCTA with ocprometheus and only use <code>eos-native</code> paths where
+an openconfig model does not exist.</p>
+</blockquote>
+<h3 id="example-configurations">Example configurations</h3>
+<h4 id="no-vrf-gnmiocta-ocprometheus">No VRF - gnmi/OCTA + ocprometheus</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-53-1" name="__codelineno-53-1" href="#__codelineno-53-1"></a><span class="w">   </span>management<span class="w"> </span>api<span class="w"> </span>gnmi
+<a id="__codelineno-53-2" name="__codelineno-53-2" href="#__codelineno-53-2"></a><span class="w">      </span>transport<span class="w"> </span>grpc<span class="w"> </span>def
+<a id="__codelineno-53-3" name="__codelineno-53-3" href="#__codelineno-53-3"></a><span class="w">      </span>provider<span class="w"> </span>eos-native
+<a id="__codelineno-53-4" name="__codelineno-53-4" href="#__codelineno-53-4"></a><span class="w">   </span>!
+<a id="__codelineno-53-5" name="__codelineno-53-5" href="#__codelineno-53-5"></a><span class="w">   </span>daemon<span class="w"> </span>ocprometheus
+<a id="__codelineno-53-6" name="__codelineno-53-6" href="#__codelineno-53-6"></a><span class="w">      </span><span class="nb">exec</span><span class="w"> </span>/mnt/flash/ocprometheus<span class="w"> </span>-config<span class="w"> </span>/mnt/flash/ocprometheus.yml<span class="w"> </span>-addr<span class="w"> </span>localhost:6030<span class="w"> </span>-username<span class="w"> </span>arista<span class="w"> </span>-password<span class="w"> </span>arista
+<a id="__codelineno-53-7" name="__codelineno-53-7" href="#__codelineno-53-7"></a><span class="w">       </span>no<span class="w"> </span>shutdown
+</code></pre></div>
+<h4 id="vrf-gnmiocta-ocprometheus">VRF - gnmi/OCTA + ocprometheus</h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-54-1" name="__codelineno-54-1" href="#__codelineno-54-1"></a><span class="w">   </span>management<span class="w"> </span>api<span class="w"> </span>gnmi
+<a id="__codelineno-54-2" name="__codelineno-54-2" href="#__codelineno-54-2"></a><span class="w">      </span>transport<span class="w"> </span>grpc<span class="w"> </span>def
+<a id="__codelineno-54-3" name="__codelineno-54-3" href="#__codelineno-54-3"></a><span class="w">         </span>vrf<span class="w"> </span>management
+<a id="__codelineno-54-4" name="__codelineno-54-4" href="#__codelineno-54-4"></a><span class="w">      </span>provider<span class="w"> </span>eos-native
+<a id="__codelineno-54-5" name="__codelineno-54-5" href="#__codelineno-54-5"></a><span class="w">      </span>!
+<a id="__codelineno-54-6" name="__codelineno-54-6" href="#__codelineno-54-6"></a><span class="w">   </span>daemon<span class="w"> </span>ocprometheus
+<a id="__codelineno-54-7" name="__codelineno-54-7" href="#__codelineno-54-7"></a><span class="w">      </span><span class="nb">exec</span><span class="w"> </span>/sbin/ip<span class="w"> </span>netns<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>ns-management<span class="w"> </span>/mnt/flash/ocprometheus<span class="w"> </span>-config<span class="w"> </span>/mnt/flash/ocprometheus.yml<span class="w"> </span>-addr<span class="w"> </span>localhost:6030<span class="w"> </span>-username<span class="w"> </span>arista<span class="w"> </span>-password<span class="w"> </span>arista
+<a id="__codelineno-54-8" name="__codelineno-54-8" href="#__codelineno-54-8"></a><span class="w">      </span>no<span class="w"> </span>shutdown
+</code></pre></div>
+<blockquote>
+<p>Note it's recommended to use certificate based authentication in production.</p>
+</blockquote>
+<h3 id="cert-based-authentification-with-ocprometheus">Cert-based authentification with ocprometheus</h3>
+<ol>
+<li>Follow the steps mentioned in <a href="https://aristanetworks.github.io/openmgmt/configuration/mtls/">Certificate Authentification Configuration
+   page</a>.</li>
+<li>Copy the client certificate and client key to the <code>/persist/secure/ssl</code> and <code>/persist/secure/keys</code> directory
+   respectively.</li>
+<li>The EOS configuration should look like the following:</li>
+</ol>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-55-1" name="__codelineno-55-1" href="#__codelineno-55-1"></a>management<span class="w"> </span>api<span class="w"> </span>gnmi
+<a id="__codelineno-55-2" name="__codelineno-55-2" href="#__codelineno-55-2"></a><span class="w">   </span>transport<span class="w"> </span>grpc<span class="w"> </span>def
+<a id="__codelineno-55-3" name="__codelineno-55-3" href="#__codelineno-55-3"></a><span class="w">      </span>ssl<span class="w"> </span>profile<span class="w"> </span>test-arista
+<a id="__codelineno-55-4" name="__codelineno-55-4" href="#__codelineno-55-4"></a><span class="w">      </span>vrf<span class="w"> </span>MGMT
+<a id="__codelineno-55-5" name="__codelineno-55-5" href="#__codelineno-55-5"></a><span class="w">   </span>provider<span class="w"> </span>eos-native
+<a id="__codelineno-55-6" name="__codelineno-55-6" href="#__codelineno-55-6"></a>!
+<a id="__codelineno-55-7" name="__codelineno-55-7" href="#__codelineno-55-7"></a>management<span class="w"> </span>security
+<a id="__codelineno-55-8" name="__codelineno-55-8" href="#__codelineno-55-8"></a><span class="w">   </span>ssl<span class="w"> </span>profile<span class="w"> </span>server
+<a id="__codelineno-55-9" name="__codelineno-55-9" href="#__codelineno-55-9"></a><span class="w">      </span>certificate<span class="w"> </span>v1.crt<span class="w"> </span>key<span class="w"> </span>v1.key
+<a id="__codelineno-55-10" name="__codelineno-55-10" href="#__codelineno-55-10"></a><span class="w">      </span>trust<span class="w"> </span>certificate<span class="w"> </span>demo-ca.crt
+<a id="__codelineno-55-11" name="__codelineno-55-11" href="#__codelineno-55-11"></a>!
+<a id="__codelineno-55-12" name="__codelineno-55-12" href="#__codelineno-55-12"></a>daemon<span class="w"> </span>ocprometheus
+<a id="__codelineno-55-13" name="__codelineno-55-13" href="#__codelineno-55-13"></a><span class="w">   </span><span class="nb">exec</span><span class="w"> </span>/sbin/ip<span class="w"> </span>netns<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>ns-MGMT<span class="w"> </span>/usr/bin/ocprometheus<span class="w"> </span>-config<span class="w"> </span>/usr/bin/ocprometheus.yml<span class="w"> </span>-addr<span class="w"> </span>localhost:6030<span class="w"> </span>-certfile<span class="w"> </span>/persist/secure/ssl/certs/gnmi-client.crt<span class="w"> </span>-keyfile<span class="w"> </span>/persist/secure/ssl/keys/gnmi-client.key<span class="w"> </span>-cafile<span class="w"> </span>/persist/secure/ssl/certs/demo-ca.crt
+<a id="__codelineno-55-14" name="__codelineno-55-14" href="#__codelineno-55-14"></a><span class="w">   </span>no<span class="w"> </span>shutdown
+<a id="__codelineno-55-15" name="__codelineno-55-15" href="#__codelineno-55-15"></a>!
+</code></pre></div>
+<h2 id="troubleshooting-tips">Troubleshooting tips</h2>
+<h3 id="checking-logs-and-troubleshooting">Checking Logs and troubleshooting</h3>
+<p>As any daemon/agent, logs are saved in /var/log/agents/ so we can either read those in bash with cat/more/less/vi/nano
+or from the CLI using the show agent <agent_name> logs command.</p>
+<h3 id="common-issues">Common issues</h3>
+<h4 id="context_deadline_exceeded">Context_deadline_exceeded</h4>
+<p>Seeing context_deadline_exceeded in the Targets section of the Prometheus GUI.
+This means connectivity is not established between the switch and the Prometheus server, which can be due to several reasons:</p>
+<ul>
+<li>TerminAttr and/or ocprometheus is not running</li>
+<li>TerminAttr and/or prometheus are not configured in the correct namespace/vrf</li>
+<li>Port 8080, which is used by default is not open on the switch (please check with <code>netstat -an | grep 8080</code>
+  or <code>sudo ip netns exec ns-&lt;vrf_name&gt; netstat -an | grep 8080</code> if using a vrf; make sure the control plane ACL is
+  updated and applied to vrf default or the specific vrf when using EOS version with CoPP</li>
+<li>Make sure TerminAttr is communicating with ocprometheus</li>
+<li>TerminAttr should have the -disableaaa flag added</li>
+</ul>
+<h4 id="not-seeing-any-streams-on-prometheus">Not seeing any streams on Prometheus</h4>
+<p>Check TerminAttr version (After TerminAttr 1.5.1 we replaced the deprecated <code>gnmi.Value</code> with <code>gnmi.TypedValue</code>).
+This was only changed on our OpenConfig connectors (ockafka, ocprometheus, octsdb, ocredis, etc.) after March, 2019, thus
+older ocprometheus versions will ignore the updates.</p>
+<p>The version of ocprometheus that uses TypedValue as well was pushed to <a href="https://github.com/aristanetworks/goarista/commit/22b2444f947b7d395b5c227cf0dd881d0100bdb1">github</a>
+on March 19, 2019. A newer commit was done
+in the beginning of June to deal with <a href="https://github.com/aristanetworks/goarista/commit/fef20d617fa7e1c7509e958fd3bd49cf4a4af5c0">coalesced deletes</a>,
+and it’s recommended to use the latest version.</p>
+<p>The best way to check if you are hitting any issues is to enable verbosity for ocprometheus with <code>-v 9</code></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-56-1" name="__codelineno-56-1" href="#__codelineno-56-1"></a>!
+<a id="__codelineno-56-2" name="__codelineno-56-2" href="#__codelineno-56-2"></a>daemon<span class="w"> </span>ocprometheus
+<a id="__codelineno-56-3" name="__codelineno-56-3" href="#__codelineno-56-3"></a><span class="w">   </span><span class="nb">exec</span><span class="w"> </span>/sbin/ip<span class="w"> </span>netns<span class="w"> </span><span class="nb">exec</span><span class="w"> </span>ns-management<span class="w"> </span>/mnt/flash/ocprometheus<span class="w"> </span>-config<span class="w"> </span>/mnt/flash/ocprometheus20190319.yml<span class="w"> </span>-addr<span class="w"> </span>localhost:6042<span class="w"> </span>-v<span class="w"> </span><span class="m">9</span>
+<a id="__codelineno-56-4" name="__codelineno-56-4" href="#__codelineno-56-4"></a><span class="w">   </span>no<span class="w"> </span>shutdown
+<a id="__codelineno-56-5" name="__codelineno-56-5" href="#__codelineno-56-5"></a>!
+</code></pre></div>
+<p>In <code>/var/log/agents/ocprometheus-&lt;pid&gt;</code> you’ll see error messages like below  ( Ignoring incompatible update value ) :</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-57-1" name="__codelineno-57-1" href="#__codelineno-57-1"></a>I0319<span class="w"> </span><span class="m">13</span>:41:11.899488<span class="w">    </span><span class="m">5386</span><span class="w"> </span>collector.go:77<span class="o">]</span><span class="w"> </span>Ignoring<span class="w"> </span>incompatible<span class="w"> </span>update<span class="w"> </span>value<span class="w"> </span><span class="k">in</span><span class="w"> </span>path:&lt;elem:&lt;name:<span class="s2">&quot;vsize&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>&gt;<span class="w"> </span>val:&lt;json_val:<span class="s2">&quot;4505600&quot;</span><span class="w"> </span>&gt;
+<a id="__codelineno-57-2" name="__codelineno-57-2" href="#__codelineno-57-2"></a>I0319<span class="w"> </span><span class="m">13</span>:41:11.899518<span class="w">    </span><span class="m">5386</span><span class="w"> </span>collector.go:77<span class="o">]</span><span class="w"> </span>Ignoring<span class="w"> </span>incompatible<span class="w"> </span>update<span class="w"> </span>value<span class="w"> </span><span class="k">in</span><span class="w"> </span>path:&lt;elem:&lt;name:<span class="s2">&quot;startstack&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>&gt;<span class="w"> </span>val:&lt;json_val:<span class="s2">&quot;4289154048&quot;</span><span class="w"> </span>&gt;
+<a id="__codelineno-57-3" name="__codelineno-57-3" href="#__codelineno-57-3"></a>I0319<span class="w"> </span><span class="m">13</span>:41:11.899548<span class="w">    </span><span class="m">5386</span><span class="w"> </span>collector.go:77<span class="o">]</span><span class="w"> </span>Ignoring<span class="w"> </span>incompatible<span class="w"> </span>update<span class="w"> </span>value<span class="w"> </span><span class="k">in</span><span class="w"> </span>path:&lt;elem:&lt;name:<span class="s2">&quot;kstkesp&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>&gt;<span class="w"> </span>val:&lt;json_val:<span class="s2">&quot;0&quot;</span><span class="w"> </span>&gt;
+<a id="__codelineno-57-4" name="__codelineno-57-4" href="#__codelineno-57-4"></a>I0319<span class="w"> </span><span class="m">13</span>:41:11.899578<span class="w">    </span><span class="m">5386</span><span class="w"> </span>collector.go:77<span class="o">]</span><span class="w"> </span>Ignoring<span class="w"> </span>incompatible<span class="w"> </span>update<span class="w"> </span>value<span class="w"> </span><span class="k">in</span><span class="w"> </span>path:&lt;elem:&lt;name:<span class="s2">&quot;exitSignal&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>&gt;<span class="w"> </span>val:&lt;json_val:<span class="s2">&quot;17&quot;</span><span class="w"> </span>&gt;
+<a id="__codelineno-57-5" name="__codelineno-57-5" href="#__codelineno-57-5"></a>I0319<span class="w"> </span><span class="m">13</span>:41:11.899608<span class="w">    </span><span class="m">5386</span><span class="w"> </span>collector.go:77<span class="o">]</span><span class="w"> </span>Ignoring<span class="w"> </span>incompatible<span class="w"> </span>update<span class="w"> </span>value<span class="w"> </span><span class="k">in</span><span class="w"> </span>path:&lt;elem:&lt;name:<span class="s2">&quot;state&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>&gt;<span class="w"> </span>val:&lt;json_val:<span class="s2">&quot;83&quot;</span><span class="w"> </span>&gt;
+<a id="__codelineno-57-6" name="__codelineno-57-6" href="#__codelineno-57-6"></a>I0319<span class="w"> </span><span class="m">13</span>:41:11.899638<span class="w">    </span><span class="m">5386</span><span class="w"> </span>collector.go:77<span class="o">]</span><span class="w"> </span>Ignoring<span class="w"> </span>incompatible<span class="w"> </span>update<span class="w"> </span>value<span class="w"> </span><span class="k">in</span><span class="w"> </span>path:&lt;elem:&lt;name:<span class="s2">&quot;cmajflt&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>&gt;<span class="w"> </span>val:&lt;json_val:<span class="s2">&quot;0&quot;</span><span class="w"> </span>&gt;
+<a id="__codelineno-57-7" name="__codelineno-57-7" href="#__codelineno-57-7"></a>I0319<span class="w"> </span><span class="m">13</span>:41:11.899668<span class="w">    </span><span class="m">5386</span><span class="w"> </span>collector.go:77<span class="o">]</span><span class="w"> </span>Ignoring<span class="w"> </span>incompatible<span class="w"> </span>update<span class="w"> </span>value<span class="w"> </span><span class="k">in</span><span class="w"> </span>path:&lt;elem:&lt;name:<span class="s2">&quot;priority&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>&gt;<span class="w"> </span>val:&lt;json_val:<span class="s2">&quot;20&quot;</span><span class="w"> </span>&gt;
+<a id="__codelineno-57-8" name="__codelineno-57-8" href="#__codelineno-57-8"></a>I0319<span class="w"> </span><span class="m">13</span>:41:11.899698<span class="w">    </span><span class="m">5386</span><span class="w"> </span>collector.go:77<span class="o">]</span><span class="w"> </span>Ignoring<span class="w"> </span>incompatible<span class="w"> </span>update<span class="w"> </span>value<span class="w"> </span><span class="k">in</span><span class="w"> </span>path:&lt;elem:&lt;name:<span class="s2">&quot;delayacctBlkioTicks&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>&gt;<span class="w"> </span>val:&lt;json_val:<span class="s2">&quot;0&quot;</span><span class="w"> </span>&gt;
+</code></pre></div>
+<p>Make sure you’re running the latest ocprometheus and TerminAttr versions.</p>
+<h4 id="broken-paths-due-to-incorrect-regex">Broken paths due to incorrect regex</h4>
+<p>Some of the subscription paths in the sample config file might not work on all type of devices.
+In case of broken paths, unfortunately we won’t stream anything, and you might encounter a similar error as below when
+checking the metrics URL (http://x.x.x.x:8080/metrics) of a modular device:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-58-1" name="__codelineno-58-1" href="#__codelineno-58-1"></a>An<span class="w"> </span>error<span class="w"> </span>has<span class="w"> </span>occurred<span class="w"> </span>during<span class="w"> </span>metrics<span class="w"> </span>gathering:
+<a id="__codelineno-58-2" name="__codelineno-58-2" href="#__codelineno-58-2"></a>
+<a id="__codelineno-58-3" name="__codelineno-58-3" href="#__codelineno-58-3"></a>
+<a id="__codelineno-58-4" name="__codelineno-58-4" href="#__codelineno-58-4"></a><span class="m">17</span><span class="w"> </span>error<span class="o">(</span>s<span class="o">)</span><span class="w"> </span>occurred:
+<a id="__codelineno-58-5" name="__codelineno-58-5" href="#__codelineno-58-5"></a>
+<a id="__codelineno-58-6" name="__codelineno-58-6" href="#__codelineno-58-6"></a>*<span class="w"> </span>collected<span class="w"> </span>metric<span class="w"> </span>voltageSensor<span class="w"> </span>label:&lt;name:<span class="s2">&quot;sensor&quot;</span><span class="w"> </span>value:<span class="s2">&quot;21&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>label:&lt;name:<span class="s2">&quot;unnamedLabel2&quot;</span><span class="w"> </span>value:<span class="s2">&quot;voltage&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>gauge:&lt;value:1.040771484375<span class="w"> </span>&gt;<span class="w">  </span>was<span class="w"> </span>collected<span class="w"> </span>before<span class="w"> </span>with<span class="w"> </span>the<span class="w"> </span>same<span class="w"> </span>name<span class="w"> </span>and<span class="w"> </span>label<span class="w"> </span>values
+<a id="__codelineno-58-7" name="__codelineno-58-7" href="#__codelineno-58-7"></a>
+<a id="__codelineno-58-8" name="__codelineno-58-8" href="#__codelineno-58-8"></a>*<span class="w"> </span>collected<span class="w"> </span>metric<span class="w"> </span>voltageSensor<span class="w"> </span>label:&lt;name:<span class="s2">&quot;sensor&quot;</span><span class="w"> </span>value:<span class="s2">&quot;22&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>label:&lt;name:<span class="s2">&quot;unnamedLabel2&quot;</span><span class="w"> </span>value:<span class="s2">&quot;voltage&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>gauge:&lt;value:0.996826171875<span class="w"> </span>&gt;<span class="w">  </span>was<span class="w"> </span>collected<span class="w"> </span>before<span class="w"> </span>with<span class="w"> </span>the<span class="w"> </span>same<span class="w"> </span>name<span class="w"> </span>and<span class="w"> </span>label<span class="w"> </span>values
+<a id="__codelineno-58-9" name="__codelineno-58-9" href="#__codelineno-58-9"></a>
+<a id="__codelineno-58-10" name="__codelineno-58-10" href="#__codelineno-58-10"></a>*<span class="w"> </span>collected<span class="w"> </span>metric<span class="w"> </span>voltageSensor<span class="w"> </span>label:&lt;name:<span class="s2">&quot;sensor&quot;</span><span class="w"> </span>value:<span class="s2">&quot;12&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>label:&lt;name:<span class="s2">&quot;unnamedLabel2&quot;</span><span class="w"> </span>value:<span class="s2">&quot;voltage&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>gauge:&lt;value:11.93359375<span class="w"> </span>&gt;<span class="w">  </span>was<span class="w"> </span>collected<span class="w"> </span>before<span class="w"> </span>with<span class="w"> </span>the<span class="w"> </span>same<span class="w"> </span>name<span class="w"> </span>and<span class="w"> </span>label<span class="w"> </span>values
+</code></pre></div>
+<p>This can happen if the regexp matching is incorrect. The regexp path in question is:</p>
+<p><code>/Sysdb/environment/archer/power/status/voltageSensor/(?:cell/.+|system)/(?P&lt;sensor&gt;.+)/(voltage)</code></p>
+<p>This would match on <code>VoltageSensorX</code>, however if you check the list of voltage sensors using curl, you’ll see that the
+sensors have the following format: <code>VoltageSensorX/Y</code></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-59-1" name="__codelineno-59-1" href="#__codelineno-59-1"></a>$<span class="w"> </span>curl<span class="w"> </span>localhost:6060/rest/Sysdb/environment/archer/power/status/voltageSensor/cell/1/
+<a id="__codelineno-59-2" name="__codelineno-59-2" href="#__codelineno-59-2"></a>
+<a id="__codelineno-59-3" name="__codelineno-59-3" href="#__codelineno-59-3"></a><span class="o">{</span>
+<a id="__codelineno-59-4" name="__codelineno-59-4" href="#__codelineno-59-4"></a><span class="w">    </span><span class="s2">&quot;VoltageSensor1/12&quot;</span>:<span class="w"> </span><span class="o">{</span>
+<a id="__codelineno-59-5" name="__codelineno-59-5" href="#__codelineno-59-5"></a><span class="w">        </span><span class="s2">&quot;_ptr&quot;</span>:<span class="w"> </span><span class="s2">&quot;/Sysdb/environment/archer/power/status/voltageSensor/cell/1/VoltageSensor1/12&quot;</span>
+<a id="__codelineno-59-6" name="__codelineno-59-6" href="#__codelineno-59-6"></a><span class="w">    </span><span class="o">}</span>,
+<a id="__codelineno-59-7" name="__codelineno-59-7" href="#__codelineno-59-7"></a><span class="w">    </span><span class="s2">&quot;VoltageSensor1/13&quot;</span>:<span class="w"> </span><span class="o">{</span>
+<a id="__codelineno-59-8" name="__codelineno-59-8" href="#__codelineno-59-8"></a><span class="w">        </span><span class="s2">&quot;_ptr&quot;</span>:<span class="w"> </span><span class="s2">&quot;/Sysdb/environment/archer/power/status/voltageSensor/cell/1/VoltageSensor1/13&quot;</span>
+<a id="__codelineno-59-9" name="__codelineno-59-9" href="#__codelineno-59-9"></a><span class="w">    </span><span class="o">}</span>,
+<a id="__codelineno-59-10" name="__codelineno-59-10" href="#__codelineno-59-10"></a><span class="w">    </span><span class="s2">&quot;VoltageSensor1/14&quot;</span>:<span class="w"> </span><span class="o">{</span>
+<a id="__codelineno-59-11" name="__codelineno-59-11" href="#__codelineno-59-11"></a><span class="w">        </span><span class="s2">&quot;_ptr&quot;</span>:<span class="w"> </span><span class="s2">&quot;/Sysdb/environment/archer/power/status/voltageSensor/cell/1/VoltageSensor1/14&quot;</span>
+<a id="__codelineno-59-12" name="__codelineno-59-12" href="#__codelineno-59-12"></a><span class="w">    </span><span class="o">}</span>,
+</code></pre></div>
+<p>You can validate your regular expression using a regexp app (e.g <a href="https://regex101.com/">regex101</a>):</p>
+<p>As you can see we are only matching <code>VoltageSensorX</code></p>
+<p><img alt="regex16" src="resources/regex16.png" /></p>
+<p>To correct the issue, we can use the following path instead:</p>
+<p><code>/Sysdb/environment/archer/power/status/voltageSensor/(?:cell/.+|system)/(?P&lt;sensor&gt;VoltageSensor.+)/(voltage)</code></p>
+<p>As you can see, we are able to match on both VoltageSensorX and VoltageSensorX/Y .</p>
+<p><img alt="regex17" src="resources/regex17.png" /></p>
+<h4 id="authentication-failed">Authentication failed</h4>
+<p>When you see the following message, it means that ocprometheus is not able to connect to the gRPC server that
+TerminAttr/OpenConfig/OCTA is serving, either because the <code>disableaaa</code> flag is not specified in the TerminAttr
+config (in case of using TerminAttr) or the username and password strings are incorrect in the ocprometheus config.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-60-1" name="__codelineno-60-1" href="#__codelineno-60-1"></a>cat<span class="w"> </span>ocprometheus-11069
+<a id="__codelineno-60-2" name="__codelineno-60-2" href="#__codelineno-60-2"></a>
+<a id="__codelineno-60-3" name="__codelineno-60-3" href="#__codelineno-60-3"></a><span class="o">=====</span><span class="w"> </span>Output<span class="w"> </span>from<span class="w"> </span>/sbin/ip<span class="w"> </span><span class="o">[</span><span class="s1">&#39;netns&#39;</span>,<span class="w"> </span><span class="s1">&#39;exec&#39;</span>,<span class="w"> </span><span class="s1">&#39;ns-management&#39;</span>,<span class="w"> </span><span class="s1">&#39;/mnt/flash/ocprometheus&#39;</span>,<span class="w"> </span><span class="s1">&#39;-config&#39;</span>,<span class="w"> </span><span class="s1">&#39;/mnt/flash/ocprometheus.yml&#39;</span>,<span class="w"> </span><span class="s1">&#39;-addr&#39;</span>,<span class="w"> </span><span class="s1">&#39;localhost:6042&#39;</span><span class="o">]</span><span class="w"> </span><span class="o">(</span><span class="nv">PID</span><span class="o">=</span><span class="m">11069</span><span class="o">)</span><span class="w"> </span>started<span class="w"> </span>Jun<span class="w"> </span><span class="m">17</span><span class="w"> </span><span class="m">11</span>:27:35.313690<span class="w"> </span><span class="o">===</span>
+<a id="__codelineno-60-4" name="__codelineno-60-4" href="#__codelineno-60-4"></a>
+<a id="__codelineno-60-5" name="__codelineno-60-5" href="#__codelineno-60-5"></a>F0617<span class="w"> </span><span class="m">11</span>:27:35.449652<span class="w">   </span><span class="m">11069</span><span class="w"> </span>main.go:90<span class="o">]</span><span class="w"> </span>rpc<span class="w"> </span>error:<span class="w"> </span><span class="nv">code</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>Unauthenticated<span class="w"> </span><span class="nv">desc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>Authentication<span class="w"> </span>failed
+</code></pre></div>
+<h4 id="connection-refused">Connection refused</h4>
+<p>You might see the following error:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-61-1" name="__codelineno-61-1" href="#__codelineno-61-1"></a>cat<span class="w"> </span>ocprometheus-10314
+<a id="__codelineno-61-2" name="__codelineno-61-2" href="#__codelineno-61-2"></a>
+<a id="__codelineno-61-3" name="__codelineno-61-3" href="#__codelineno-61-3"></a><span class="o">=====</span><span class="w"> </span>Output<span class="w"> </span>from<span class="w"> </span>/sbin/ip<span class="w"> </span><span class="o">[</span><span class="s1">&#39;netns&#39;</span>,<span class="w"> </span><span class="s1">&#39;exec&#39;</span>,<span class="w"> </span><span class="s1">&#39;ns-management&#39;</span>,<span class="w"> </span><span class="s1">&#39;/mnt/flash/ocprometheus&#39;</span>,<span class="w"> </span><span class="s1">&#39;-config&#39;</span>,<span class="w"> </span><span class="s1">&#39;/mnt/flash/ocprometheus.yml&#39;</span>,<span class="w"> </span><span class="s1">&#39;-addr&#39;</span>,<span class="w"> </span><span class="s1">&#39;localhost:6042&#39;</span><span class="o">]</span><span class="w"> </span><span class="o">(</span><span class="nv">PID</span><span class="o">=</span><span class="m">10314</span><span class="o">)</span><span class="w"> </span>started<span class="w"> </span>Jun<span class="w"> </span><span class="m">17</span><span class="w"> </span><span class="m">11</span>:21:05.494319<span class="w"> </span><span class="o">===</span>
+<a id="__codelineno-61-4" name="__codelineno-61-4" href="#__codelineno-61-4"></a>
+<a id="__codelineno-61-5" name="__codelineno-61-5" href="#__codelineno-61-5"></a>F0617<span class="w"> </span><span class="m">11</span>:21:05.533516<span class="w">   </span><span class="m">10314</span><span class="w"> </span>main.go:90<span class="o">]</span><span class="w"> </span>rpc<span class="w"> </span>error:<span class="w"> </span><span class="nv">code</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>Unavailable<span class="w"> </span><span class="nv">desc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>all<span class="w"> </span>SubConns<span class="w"> </span>are<span class="w"> </span><span class="k">in</span><span class="w"> </span>TransientFailure,<span class="w"> </span>latest<span class="w"> </span>connection<span class="w"> </span>error:<span class="w"> </span>connection<span class="w"> </span>error:<span class="w"> </span><span class="nv">desc</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;transport: Error while dialing dial tcp 127.0.0.1:6042: connect: connection refused&quot;</span>
+</code></pre></div>
+<p>When you get connection refused, it means that the gRPC server is not reachable. In this case ocprometheus is executed
+in the management VRF, however TerminAttr is running in the default VRF and the gRPC server by default is running in
+the default VRF too. To fix it you can configure the gRPC server in the correct VRF:</p>
+<ul>
+<li>in case of TerminAttr using <code>-grpcaddr &lt;vrf&gt;/&lt;IP&gt;:&lt;port&gt;</code>:</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-62-1" name="__codelineno-62-1" href="#__codelineno-62-1"></a>-grpcaddr<span class="w"> </span>management/0.0.0.0:6042
+</code></pre></div>
+<ul>
+<li>in case of using OpenConfig/OCTA:</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-63-1" name="__codelineno-63-1" href="#__codelineno-63-1"></a>management<span class="w"> </span>api<span class="w"> </span>gnmi
+<a id="__codelineno-63-2" name="__codelineno-63-2" href="#__codelineno-63-2"></a><span class="w">  </span>transport<span class="w"> </span>grpc<span class="w"> </span>management
+<a id="__codelineno-63-3" name="__codelineno-63-3" href="#__codelineno-63-3"></a><span class="w">     </span>vrf<span class="w"> </span>management
+<a id="__codelineno-63-4" name="__codelineno-63-4" href="#__codelineno-63-4"></a><span class="w">  </span>provider<span class="w"> </span>eos-native
+</code></pre></div>
+<h2 id="subscription-paths">Subscription paths</h2>
+<p>You can find sample configuration files on our github page in the <a href="https://github.com/aristanetworks/goarista/tree/master/cmd/ocprometheus/sample_configs">sample_configs</a>
+directory, which contains per-platform EOS-native path examples but also OpenConfig path examples which are standard
+across all platforms in the <a href="https://github.com/aristanetworks/goarista/blob/master/cmd/ocprometheus/sample_configs/ocprometheus_gnmi_4.23.yaml">ocprometheus_gnmi_4.23.yaml</a></p>
+<p>In this file, which is referred with the <code>-config /mnt/flash/ocprometheus.yml</code> flag and config file in the daemon
+ocprometheus configuration, you can add your desired Sysdb paths</p>
+<p>More examples (per platform + gnmi paths) can be found in the sample_configs folder.</p>
+<p>Commonly used paths:</p>
+<ul>
+<li>MAC table: <code>/Smash/bridging/status/smashFdbStatus</code></li>
+<li>ARP table: <code>/Smash/arp/status/arpEntry</code></li>
+<li>Neighbor table: <code>/Smash/arp/status/neighborEntry</code></li>
+<li>IPv4 RIB: <code>/Smash/routing/status/route</code></li>
+<li>IPv6 RIB: <code>/Smash/routing6/status/route</code></li>
+<li>IPv4 next-hop table: <code>/Smash/routing/status/nexthop</code></li>
+<li>IPv6 next-hop table: <code>/Smash/routing6/status/nexthop</code></li>
+<li>CPU info: <code>/Kernel/proc/cpu</code></li>
+<li>Process statistics: <code>/Kernel/proc/stat</code></li>
+<li>System info: <code>/Kernel/sysinfo</code></li>
+<li>Interface counters: <code>/Smash/counters/ethIntf/&lt;agent&gt;/current/counter</code></li>
+</ul>
+<p>For details about subscription paths and metric path structures please visit: <a href="https://eos.arista.com/understanding-subscription-paths-for-open-source-telemetry-streaming">https://eos.arista.com/understanding-subscription-paths-for-open-source-telemetry-streaming</a></p>
+<h2 id="useful-links">Useful links</h2>
+<ul>
+<li><a href="https://prometheus.io/docs/prometheus/">https://prometheus.io/docs/prometheus/</a></li>
+<li><a href="https://grafana.com/docs/">https://grafana.com/docs/</a></li>
+<li><a href="http://docs.grafana.org/installation/docker/">http://docs.grafana.org/installation/docker/</a></li>
+<li><a href="https://grafana.com/dashboards">https://grafana.com/dashboards</a></li>
+<li><a href="https://fpm.readthedocs.io/en/latest/installing.html">https://fpm.readthedocs.io/en/latest/installing.html</a></li>
+<li><a href="https://regex101.com/">https://regex101.com/</a></li>
+</ul>
+
+
+  
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+      
+      
+    
+    <a href="https://github.com/aristanetworks/openmgmt" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M186.1 328.7c0 20.9-10.9 55.1-36.7 55.1s-36.7-34.2-36.7-55.1 10.9-55.1 36.7-55.1 36.7 34.2 36.7 55.1zM480 278.2c0 31.9-3.2 65.7-17.5 95-37.9 76.6-142.1 74.8-216.7 74.8-75.8 0-186.2 2.7-225.6-74.8-14.6-29-20.2-63.1-20.2-95 0-41.9 13.9-81.5 41.5-113.6-5.2-15.8-7.7-32.4-7.7-48.8 0-21.5 4.9-32.3 14.6-51.8 45.3 0 74.3 9 108.8 36 29-6.9 58.8-10 88.7-10 27 0 54.2 2.9 80.4 9.2 34-26.7 63-35.2 107.8-35.2 9.8 19.5 14.6 30.3 14.6 51.8 0 16.4-2.6 32.7-7.7 48.2 27.5 32.4 39 72.3 39 114.2zm-64.3 50.5c0-43.9-26.7-82.6-73.5-82.6-18.9 0-37 3.4-56 6-14.9 2.3-29.8 3.2-45.1 3.2-15.2 0-30.1-.9-45.1-3.2-18.7-2.6-37-6-56-6-46.8 0-73.5 38.7-73.5 82.6 0 87.8 80.4 101.3 150.4 101.3h48.2c70.3 0 150.6-13.4 150.6-101.3zm-82.6-55.1c-25.8 0-36.7 34.2-36.7 55.1s10.9 55.1 36.7 55.1 36.7-34.2 36.7-55.1-10.9-55.1-36.7-55.1z"/></svg>
+    </a>
+  
+    
+    
+      
+      
+    
+    <a href="https://www.arista.com" target="_blank" rel="noopener" title="www.arista.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc.--><path d="M352 256c0 22.2-1.2 43.6-3.3 64H163.3c-2.2-20.4-3.3-41.8-3.3-64s1.2-43.6 3.3-64h185.4c2.2 20.4 3.3 41.8 3.3 64zm28.8-64h123.1c5.3 20.5 8.1 41.9 8.1 64s-2.8 43.5-8.1 64H380.8c2.1-20.6 3.2-42 3.2-64s-1.1-43.4-3.2-64zm112.6-32H376.7c-10-63.9-29.8-117.4-55.3-151.6 78.3 20.7 142 77.5 171.9 151.6zm-149.1 0H167.7c6.1-36.4 15.5-68.6 27-94.7 10.5-23.6 22.2-40.7 33.5-51.5C239.4 3.2 248.7 0 256 0s16.6 3.2 27.8 13.8c11.3 10.8 23 27.9 33.5 51.5 11.6 26 21 58.2 27 94.7zm-209 0H18.6c30-74.1 93.6-130.9 172-151.6-25.5 34.2-45.3 87.7-55.3 151.6zM8.1 192h123.1c-2.1 20.6-3.2 42-3.2 64s1.1 43.4 3.2 64H8.1C2.8 299.5 0 278.1 0 256s2.8-43.5 8.1-64zm186.6 254.6c-11.6-26-20.9-58.2-27-94.6h176.6c-6.1 36.4-15.5 68.6-27 94.6-10.5 23.6-22.2 40.7-33.5 51.5-11.2 10.7-20.5 13.9-27.8 13.9s-16.6-3.2-27.8-13.8c-11.3-10.8-23-27.9-33.5-51.5zM135.3 352c10 63.9 29.8 117.4 55.3 151.6-78.4-20.7-142-77.5-172-151.6h116.7zm358.1 0c-30 74.1-93.6 130.9-171.9 151.6 25.5-34.2 45.2-87.7 55.3-151.6h116.6z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["content.action.edit", "content.code.copy"], "search": "../../../assets/javascripts/workers/search.db81ec45.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.a00a7c5e.min.js"></script>
+      
+    
+  </body>
+</html>
