@@ -594,6 +594,89 @@ gnmic -a 192.0.2.214:6030 -u cvpadmin -p arista --insecure --gzip get --path  \
 </p>
 </details>
 
+#### Get the information about connected gNMI clients
+
+```shell
+gnmic -a 192.0.2.214:6030 -u cvpadmin -p arista --insecure --gzip get --path \
+  '/telemetry-system/subscriptions'
+```
+
+<details><summary> Reveal output</summary>
+<p>
+
+```javascript
+[
+  {
+    "source": "192.0.2.214:6030",
+    "timestamp": 1723202310565051604,
+    "time": "2024-08-09T16:48:30.565051604+05:30",
+    "updates": [
+      {
+        "Path": "telemetry-system/subscriptions",
+        "values": {
+          "telemetry-system/subscriptions": {
+            "openconfig-telemetry:dynamic-subscriptions": {
+              "dynamic-subscription": [
+                {
+                  "id": "2",
+                  "sensor-paths": {
+                    "sensor-path": [
+                      {
+                        "path": "/components/component/state/memory",
+                        "state": {
+                          "path": "/components/component/state/memory"
+                        }
+                      },
+                      {
+                        "path": "/Kernel/proc/cpu/utilization/total",
+                        "state": {
+                          "path": "/Kernel/proc/cpu/utilization/total"
+                        }
+                      }
+                    ]
+                  },
+                  "state": {
+                    "destination-address": "192.0.2.139",
+                    "destination-port": 51478,
+                    "encoding": "openconfig-telemetry-types:ENC_PROTO3",
+                    "id": "2",
+                    "protocol": "openconfig-telemetry-types:STREAM_GRPC"
+                  }
+                },
+                {
+                  "id": "3",
+                  "sensor-paths": {
+                    "sensor-path": [
+                      {
+                        "path": "/components/component/transceiver/physical-channels/channel/state",
+                        "state": {
+                          "path": "/components/component/transceiver/physical-channels/channel/state"
+                        }
+                      }
+                    ]
+                  },
+                  "state": {
+                    "destination-address": "192.168.3.2",
+                    "destination-port": 57928,
+                    "encoding": "openconfig-telemetry-types:ENC_PROTO3",
+                    "id": "3",
+                    "protocol": "openconfig-telemetry-types:STREAM_GRPC"
+                  }
+                }
+              ]
+            }
+          }
+        }
+      }
+    ]
+  }
+]
+
+```
+
+</p>
+</details>
+
 ## gNMI SUBSCRIBE RPC Examples
 
 ### OpenConfig paths
