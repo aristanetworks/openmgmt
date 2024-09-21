@@ -1,0 +1,197 @@
+hostname: om-spine2
+is_deployed: true
+router_bgp:
+  as: '65001'
+  router_id: 192.168.255.2
+  distance:
+    external_routes: 20
+    internal_routes: 200
+    local_routes: 200
+  bgp:
+    default:
+      ipv4_unicast: false
+  maximum_paths:
+    paths: 4
+    ecmp: 4
+  peer_groups:
+  - name: IPv4-UNDERLAY-PEERS
+    type: ipv4
+    password: AQQvKeimxJu+uGQ/yYvv9w==
+    maximum_routes: 12000
+    send_community: all
+  - name: EVPN-OVERLAY-PEERS
+    type: evpn
+    update_source: Loopback0
+    bfd: true
+    password: q+VNViP5i4rVjW1cxFv2wA==
+    send_community: all
+    maximum_routes: 0
+    ebgp_multihop: 3
+    next_hop_unchanged: true
+  address_family_ipv4:
+    peer_groups:
+    - name: IPv4-UNDERLAY-PEERS
+      activate: true
+    - name: EVPN-OVERLAY-PEERS
+      activate: false
+  redistribute_routes:
+  - source_protocol: connected
+    route_map: RM-CONN-2-BGP
+  neighbors:
+  - ip_address: 172.31.255.3
+    peer_group: IPv4-UNDERLAY-PEERS
+    remote_as: '65101'
+    peer: om-pe11
+    description: om-pe11_Ethernet2
+  - ip_address: 172.31.255.7
+    peer_group: IPv4-UNDERLAY-PEERS
+    remote_as: '65102'
+    peer: om-pe12
+    description: om-pe12_Ethernet2
+  - ip_address: 172.31.255.11
+    peer_group: IPv4-UNDERLAY-PEERS
+    remote_as: '65103'
+    peer: om-pe21
+    description: om-pe21_Ethernet2
+  - ip_address: 172.31.255.15
+    peer_group: IPv4-UNDERLAY-PEERS
+    remote_as: '65104'
+    peer: om-pe22
+    description: om-pe22_Ethernet2
+  - ip_address: 192.168.255.3
+    peer_group: EVPN-OVERLAY-PEERS
+    peer: om-pe11
+    description: om-pe11
+    remote_as: '65101'
+  - ip_address: 192.168.255.4
+    peer_group: EVPN-OVERLAY-PEERS
+    peer: om-pe12
+    description: om-pe12
+    remote_as: '65102'
+  - ip_address: 192.168.255.5
+    peer_group: EVPN-OVERLAY-PEERS
+    peer: om-pe21
+    description: om-pe21
+    remote_as: '65103'
+  - ip_address: 192.168.255.6
+    peer_group: EVPN-OVERLAY-PEERS
+    peer: om-pe22
+    description: om-pe22
+    remote_as: '65104'
+  address_family_evpn:
+    peer_groups:
+    - name: EVPN-OVERLAY-PEERS
+      activate: true
+  address_family_rtc:
+    peer_groups:
+    - name: EVPN-OVERLAY-PEERS
+      activate: true
+      default_route_target:
+        only: true
+static_routes:
+- vrf: MGMT
+  destination_address_prefix: 0.0.0.0/0
+  gateway: 172.144.100.1
+service_routing_protocols_model: multi-agent
+ip_routing: true
+vlan_internal_order:
+  allocation: ascending
+  range:
+    beginning: 1006
+    ending: 1199
+ip_name_servers:
+- ip_address: 1.1.1.1
+  vrf: MGMT
+- ip_address: 8.8.8.8
+  vrf: MGMT
+spanning_tree:
+  mode: mstp
+local_users:
+- name: admin
+  privilege: 15
+  role: network-admin
+  sha512_password: $6$7GTxsrRjnwheeKfR$zhJ8qycVjAJz41rf5JRSfWIzp93IL5WL7sMS/Taz1yfShz.MAnoajCf7R2n1/EZW7PN5QA3Huayl0lVQesBYN1
+vrfs:
+- name: MGMT
+  ip_routing: false
+management_interfaces:
+- name: Management0
+  description: oob_management
+  shutdown: false
+  vrf: MGMT
+  ip_address: 172.144.100.3/24
+  gateway: 172.144.100.1
+  type: oob
+management_api_http:
+  enable_vrfs:
+  - name: MGMT
+  enable_https: true
+  https_ssl_profile: eAPI
+ethernet_interfaces:
+- name: Ethernet1
+  peer: om-pe11
+  peer_interface: Ethernet2
+  peer_type: l3leaf
+  description: P2P_LINK_TO_OM-PE11_Ethernet2
+  shutdown: false
+  mtu: 9214
+  type: routed
+  ip_address: 172.31.255.2/31
+- name: Ethernet2
+  peer: om-pe12
+  peer_interface: Ethernet2
+  peer_type: l3leaf
+  description: P2P_LINK_TO_OM-PE12_Ethernet2
+  shutdown: false
+  mtu: 9214
+  type: routed
+  ip_address: 172.31.255.6/31
+- name: Ethernet3
+  peer: om-pe21
+  peer_interface: Ethernet2
+  peer_type: l3leaf
+  description: P2P_LINK_TO_OM-PE21_Ethernet2
+  shutdown: false
+  mtu: 9214
+  type: routed
+  ip_address: 172.31.255.10/31
+- name: Ethernet4
+  peer: om-pe22
+  peer_interface: Ethernet2
+  peer_type: l3leaf
+  description: P2P_LINK_TO_OM-PE22_Ethernet2
+  shutdown: false
+  mtu: 9214
+  type: routed
+  ip_address: 172.31.255.14/31
+loopback_interfaces:
+- name: Loopback0
+  description: EVPN_Overlay_Peering
+  shutdown: false
+  ip_address: 192.168.255.2/32
+prefix_lists:
+- name: PL-LOOPBACKS-EVPN-OVERLAY
+  sequence_numbers:
+  - sequence: 10
+    action: permit 192.168.255.0/24 eq 32
+route_maps:
+- name: RM-CONN-2-BGP
+  sequence_numbers:
+  - sequence: 10
+    type: permit
+    match:
+    - ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY
+router_bfd:
+  multihop:
+    interval: 300
+    min_rx: 300
+    multiplier: 3
+metadata:
+  platform: cEOS-LAB
+management_security:
+  ssl_profiles:
+  - name: eAPI
+    certificate:
+      file: eAPI.crt
+      key: eAPI.key
+    cipher_list: HIGH:!eNULL:!aNULL:!MD5:!ADH:!ANULL

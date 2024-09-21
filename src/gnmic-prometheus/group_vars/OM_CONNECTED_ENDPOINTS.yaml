@@ -1,0 +1,82 @@
+---
+port_profiles:
+  - profile: Tenant_A_pod1_clientA
+    mode: trunk
+    vlans: '110'
+  - profile: Tenant_A_pod1_clientB
+    mode: trunk
+    vlans: '111'
+
+servers:
+  - name: server01
+    rack: rack01
+    adapters:
+      - endpoint_ports:
+          - Eth1
+          - Eth2
+        switch_ports:
+          - Ethernet3
+          - Ethernet3
+        switches:
+          - om-pe11
+          - om-pe12
+        profile: Tenant_A_pod1_clientA
+        spanning_tree_portfast: edge
+        port_channel:
+          description: PortChannel3
+          mode: active
+          short_esi: 0101:0102:0033
+  - name: server02
+    rack: rack01
+    adapters:
+      - endpoint_ports:
+          - Eth1
+          - Eth2
+        switch_ports:
+          - Ethernet4
+          - Ethernet4
+        switches:
+          - om-pe11
+          - om-pe12
+        profile: Tenant_A_pod1_clientB
+        spanning_tree_portfast: edge
+        port_channel:
+          description: PortChannel4
+          mode: active
+          short_esi: 0101:0102:0044
+  - name: server03
+    rack: rack02
+    adapters:
+      - endpoint_ports:
+          - Eth1
+          - Eth2
+        switch_ports:
+          - Ethernet3
+          - Ethernet3
+        switches:
+          - om-pe21
+          - om-pe22
+        profile: Tenant_A_pod1_clientA
+        spanning_tree_portfast: edge
+        port_channel:
+          description: PortChannel3
+          mode: active
+          short_esi: 0201:0202:0033
+  - name: server04
+    rack: rack02
+    adapters:
+      - endpoint_ports:
+          - Eth1
+          - Eth2
+        switch_ports:
+          - Ethernet4
+          - Ethernet4
+        switches:
+          - om-pe21
+          - om-pe22
+        profile: Tenant_A_pod1_clientB
+        spanning_tree_portfast: edge
+        port_channel:
+          description: PortChannel4
+          mode: active
+          short_esi: 0201:0202:0044

@@ -1,0 +1,21 @@
+Last table change time   : 0:16:21 ago
+Number of table inserts  : 13
+Number of table deletes  : 0
+Number of table drops    : 0
+Number of table age-outs : 0
+
+Port          Neighbor Device ID       Neighbor Port ID    TTL
+---------- ------------------------ ---------------------- ---
+Et1           om-pe11                  Ethernet1           120
+Et2           om-pe12                  Ethernet1           120
+Et3           om-pe21                  Ethernet1           120
+Et4           om-pe22                  Ethernet1           120
+Ma0           client1                  0242.ac90.6408      120
+Ma0           client4                  0242.ac90.640b      120
+Ma0           client2                  0242.ac90.6409      120
+Ma0           client3                  0242.ac90.640a      120
+Ma0           om-pe22                  Management0         120
+Ma0           om-spine2                Management0         120
+Ma0           om-pe12                  Management0         120
+Ma0           om-pe21                  Management0         120
+Ma0           om-pe11                  Management0         120

@@ -1,0 +1,73 @@
+! Command: show running-config
+! device: om-pe12 (cEOSLab, EOS-4.32.2F-38195967.4322F (engineering build))
+!
+no aaa root
+!
+username admin privilege 15 role network-admin secret sha512 $6$eVal52wrZpFm0aik$FqnoVntRPxvrSU0TiFEktXCoLVRHSfN/qnw87qFm.6OEnOCPuiZgP7NZR3rR61N6GwsNtIf5o4x1xD9Yz2hYe0
+!
+management api http-commands
+   protocol https ssl profile eAPI
+   no shutdown
+   !
+   vrf MGMT
+      no shutdown
+!
+no service interface inactive port-id allocation disabled
+!
+transceiver qsfp default-mode 4x10G
+!
+service routing protocols model multi-agent
+!
+hostname om-pe12
+!
+spanning-tree mode mstp
+!
+system l1
+   unsupported speed action error
+   unsupported error-correction action error
+!
+vrf instance MGMT
+!
+management api gnmi
+   transport grpc MGMT
+      vrf MGMT
+      notification timestamp send-time
+   !
+   transport grpc default
+      notification timestamp send-time
+   provider eos-native
+!
+management security
+   ssl profile eAPI
+      cipher-list HIGH:!eNULL:!aNULL:!MD5:!ADH:!ANULL
+      certificate eAPI.crt key eAPI.key
+!
+interface Ethernet1
+!
+interface Ethernet2
+!
+interface Ethernet3
+!
+interface Ethernet4
+!
+interface Management0
+   description oob_management
+   vrf MGMT
+   ip address 172.144.100.5/24
+   ipv6 address 2001:172:144:100::4/80
+!
+no ip routing
+no ip routing vrf MGMT
+!
+ip route vrf MGMT 0.0.0.0/0 172.144.100.1
+!
+ipv6 route vrf MGMT ::/0 2001:172:144:100::1
+!
+router multicast
+   ipv4
+      software-forwarding kernel
+   !
+   ipv6
+      software-forwarding kernel
+!
+end

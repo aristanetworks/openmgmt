@@ -1,0 +1,10 @@
+apiVersion: 1
+
+providers:
+  - name: ArGNMI
+    type: file
+    updateIntervalSeconds: 10
+    allowUiUpdates: false
+    options:
+      path: /etc/grafana/provisioning/dashboards
+      foldersFromFilesStructure: true

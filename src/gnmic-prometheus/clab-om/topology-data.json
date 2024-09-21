@@ -1,0 +1,677 @@
+{
+  "name": "om",
+  "type": "clab",
+  "clab": {
+    "config": {
+      "prefix": "clab",
+      "mgmt": {
+        "network": "om_clab",
+        "bridge": "br-dd88b7339e6a",
+        "ipv4-subnet": "172.144.100.0/24",
+        "ipv4-gw": "172.144.100.1",
+        "ipv6-subnet": "2001:172:144:100::/80",
+        "ipv6-gw": "2001:172:144:100::1",
+        "mtu": 1500,
+        "external-access": true
+      }
+    }
+  },
+  "nodes": {
+    "avd": {
+      "index": "0",
+      "shortname": "avd",
+      "longname": "clab-om-avd",
+      "fqdn": "avd.om.io",
+      "group": "gpromg",
+      "labdir": "/data/openmgmt/src/gnmic-prometheus/clab-om/avd",
+      "kind": "linux",
+      "image": "ghcr.io/aristanetworks/avd/universal:python3.12-avd-v4.10.2",
+      "mgmt-net": "",
+      "mgmt-intf": "",
+      "mgmt-ipv4-address": "172.144.100.230",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "2001:172:144:100::7",
+      "mgmt-ipv6-prefix-length": 80,
+      "mac-address": "",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-dd88b7339e6a",
+        "clab-node-group": "gpromg",
+        "clab-node-kind": "linux",
+        "clab-node-lab-dir": "/data/openmgmt/src/gnmic-prometheus/clab-om/avd",
+        "clab-node-name": "avd",
+        "clab-node-type": "",
+        "clab-topo-file": "/data/openmgmt/src/gnmic-prometheus/topology.yaml",
+        "containerlab": "om"
+      },
+      "port-bindings": [
+      ]
+    },
+    "client1": {
+      "index": "1",
+      "shortname": "client1",
+      "longname": "clab-om-client1",
+      "fqdn": "client1.om.io",
+      "group": "",
+      "labdir": "/data/openmgmt/src/gnmic-prometheus/clab-om/client1",
+      "kind": "linux",
+      "image": "alpine-host",
+      "mgmt-net": "",
+      "mgmt-intf": "",
+      "mgmt-ipv4-address": "172.144.100.8",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "2001:172:144:100::8",
+      "mgmt-ipv6-prefix-length": 80,
+      "mac-address": "",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-dd88b7339e6a",
+        "clab-node-group": "",
+        "clab-node-kind": "linux",
+        "clab-node-lab-dir": "/data/openmgmt/src/gnmic-prometheus/clab-om/client1",
+        "clab-node-name": "client1",
+        "clab-node-type": "",
+        "clab-topo-file": "/data/openmgmt/src/gnmic-prometheus/topology.yaml",
+        "containerlab": "om"
+      },
+      "port-bindings": [
+      ]
+    },
+    "client2": {
+      "index": "2",
+      "shortname": "client2",
+      "longname": "clab-om-client2",
+      "fqdn": "client2.om.io",
+      "group": "",
+      "labdir": "/data/openmgmt/src/gnmic-prometheus/clab-om/client2",
+      "kind": "linux",
+      "image": "alpine-host",
+      "mgmt-net": "",
+      "mgmt-intf": "",
+      "mgmt-ipv4-address": "172.144.100.9",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "2001:172:144:100::9",
+      "mgmt-ipv6-prefix-length": 80,
+      "mac-address": "",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-dd88b7339e6a",
+        "clab-node-group": "",
+        "clab-node-kind": "linux",
+        "clab-node-lab-dir": "/data/openmgmt/src/gnmic-prometheus/clab-om/client2",
+        "clab-node-name": "client2",
+        "clab-node-type": "",
+        "clab-topo-file": "/data/openmgmt/src/gnmic-prometheus/topology.yaml",
+        "containerlab": "om"
+      },
+      "port-bindings": [
+      ]
+    },
+    "client3": {
+      "index": "3",
+      "shortname": "client3",
+      "longname": "clab-om-client3",
+      "fqdn": "client3.om.io",
+      "group": "",
+      "labdir": "/data/openmgmt/src/gnmic-prometheus/clab-om/client3",
+      "kind": "linux",
+      "image": "alpine-host",
+      "mgmt-net": "",
+      "mgmt-intf": "",
+      "mgmt-ipv4-address": "172.144.100.10",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "2001:172:144:100::a",
+      "mgmt-ipv6-prefix-length": 80,
+      "mac-address": "",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-dd88b7339e6a",
+        "clab-node-group": "",
+        "clab-node-kind": "linux",
+        "clab-node-lab-dir": "/data/openmgmt/src/gnmic-prometheus/clab-om/client3",
+        "clab-node-name": "client3",
+        "clab-node-type": "",
+        "clab-topo-file": "/data/openmgmt/src/gnmic-prometheus/topology.yaml",
+        "containerlab": "om"
+      },
+      "port-bindings": [
+      ]
+    },
+    "client4": {
+      "index": "4",
+      "shortname": "client4",
+      "longname": "clab-om-client4",
+      "fqdn": "client4.om.io",
+      "group": "",
+      "labdir": "/data/openmgmt/src/gnmic-prometheus/clab-om/client4",
+      "kind": "linux",
+      "image": "alpine-host",
+      "mgmt-net": "",
+      "mgmt-intf": "",
+      "mgmt-ipv4-address": "172.144.100.11",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "2001:172:144:100::c",
+      "mgmt-ipv6-prefix-length": 80,
+      "mac-address": "",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-dd88b7339e6a",
+        "clab-node-group": "",
+        "clab-node-kind": "linux",
+        "clab-node-lab-dir": "/data/openmgmt/src/gnmic-prometheus/clab-om/client4",
+        "clab-node-name": "client4",
+        "clab-node-type": "",
+        "clab-topo-file": "/data/openmgmt/src/gnmic-prometheus/topology.yaml",
+        "containerlab": "om"
+      },
+      "port-bindings": [
+      ]
+    },
+    "gnmic": {
+      "index": "5",
+      "shortname": "gnmic",
+      "longname": "clab-om-gnmic",
+      "fqdn": "gnmic.om.io",
+      "group": "gpromg",
+      "labdir": "/data/openmgmt/src/gnmic-prometheus/clab-om/gnmic",
+      "kind": "linux",
+      "image": "ghcr.io/openconfig/gnmic:0.38.2",
+      "mgmt-net": "",
+      "mgmt-intf": "",
+      "mgmt-ipv4-address": "172.144.100.200",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "2001:172:144:100::2",
+      "mgmt-ipv6-prefix-length": 80,
+      "mac-address": "",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-dd88b7339e6a",
+        "clab-node-group": "gpromg",
+        "clab-node-kind": "linux",
+        "clab-node-lab-dir": "/data/openmgmt/src/gnmic-prometheus/clab-om/gnmic",
+        "clab-node-name": "gnmic",
+        "clab-node-type": "",
+        "clab-topo-file": "/data/openmgmt/src/gnmic-prometheus/topology.yaml",
+        "containerlab": "om"
+      },
+      "port-bindings": [
+      ]
+    },
+    "grafana": {
+      "index": "6",
+      "shortname": "grafana",
+      "longname": "clab-om-grafana",
+      "fqdn": "grafana.om.io",
+      "group": "gpromg",
+      "labdir": "/data/openmgmt/src/gnmic-prometheus/clab-om/grafana",
+      "kind": "linux",
+      "image": "grafana/grafana:11.2.0",
+      "mgmt-net": "",
+      "mgmt-intf": "",
+      "mgmt-ipv4-address": "172.144.100.220",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "2001:172:144:100::d",
+      "mgmt-ipv6-prefix-length": 80,
+      "mac-address": "",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-dd88b7339e6a",
+        "clab-node-group": "gpromg",
+        "clab-node-kind": "linux",
+        "clab-node-lab-dir": "/data/openmgmt/src/gnmic-prometheus/clab-om/grafana",
+        "clab-node-name": "grafana",
+        "clab-node-type": "",
+        "clab-topo-file": "/data/openmgmt/src/gnmic-prometheus/topology.yaml",
+        "containerlab": "om"
+      },
+      "port-bindings": [
+        {
+          "host-ip": "0.0.0.0",
+          "host-port": 3001,
+          "port": 3000,
+          "protocol": "tcp"
+        },
+        {
+          "host-ip": "::",
+          "host-port": 3001,
+          "port": 3000,
+          "protocol": "tcp"
+        }
+      ]
+    },
+    "om-pe11": {
+      "index": "7",
+      "shortname": "om-pe11",
+      "longname": "clab-om-om-pe11",
+      "fqdn": "om-pe11.om.io",
+      "group": "",
+      "labdir": "/data/openmgmt/src/gnmic-prometheus/clab-om/om-pe11",
+      "kind": "ceos",
+      "image": "ceosimage:4.32.2F",
+      "mgmt-net": "",
+      "mgmt-intf": "Management0",
+      "mgmt-ipv4-address": "172.144.100.4",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "2001:172:144:100::4",
+      "mgmt-ipv6-prefix-length": 80,
+      "mac-address": "00:1c:73:c1:05:bc",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-dd88b7339e6a",
+        "clab-node-group": "",
+        "clab-node-kind": "ceos",
+        "clab-node-lab-dir": "/data/openmgmt/src/gnmic-prometheus/clab-om/om-pe11",
+        "clab-node-name": "om-pe11",
+        "clab-node-type": "",
+        "clab-topo-file": "/data/openmgmt/src/gnmic-prometheus/topology.yaml",
+        "containerlab": "om"
+      },
+      "port-bindings": [
+      ]
+    },
+    "om-pe12": {
+      "index": "8",
+      "shortname": "om-pe12",
+      "longname": "clab-om-om-pe12",
+      "fqdn": "om-pe12.om.io",
+      "group": "",
+      "labdir": "/data/openmgmt/src/gnmic-prometheus/clab-om/om-pe12",
+      "kind": "ceos",
+      "image": "ceosimage:4.32.2F",
+      "mgmt-net": "",
+      "mgmt-intf": "Management0",
+      "mgmt-ipv4-address": "172.144.100.5",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "2001:172:144:100::b",
+      "mgmt-ipv6-prefix-length": 80,
+      "mac-address": "00:1c:73:63:bf:f8",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-dd88b7339e6a",
+        "clab-node-group": "",
+        "clab-node-kind": "ceos",
+        "clab-node-lab-dir": "/data/openmgmt/src/gnmic-prometheus/clab-om/om-pe12",
+        "clab-node-name": "om-pe12",
+        "clab-node-type": "",
+        "clab-topo-file": "/data/openmgmt/src/gnmic-prometheus/topology.yaml",
+        "containerlab": "om"
+      },
+      "port-bindings": [
+      ]
+    },
+    "om-pe21": {
+      "index": "9",
+      "shortname": "om-pe21",
+      "longname": "clab-om-om-pe21",
+      "fqdn": "om-pe21.om.io",
+      "group": "",
+      "labdir": "/data/openmgmt/src/gnmic-prometheus/clab-om/om-pe21",
+      "kind": "ceos",
+      "image": "ceosimage:4.32.2F",
+      "mgmt-net": "",
+      "mgmt-intf": "Management0",
+      "mgmt-ipv4-address": "172.144.100.6",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "2001:172:144:100::3",
+      "mgmt-ipv6-prefix-length": 80,
+      "mac-address": "00:1c:73:0f:28:74",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-dd88b7339e6a",
+        "clab-node-group": "",
+        "clab-node-kind": "ceos",
+        "clab-node-lab-dir": "/data/openmgmt/src/gnmic-prometheus/clab-om/om-pe21",
+        "clab-node-name": "om-pe21",
+        "clab-node-type": "",
+        "clab-topo-file": "/data/openmgmt/src/gnmic-prometheus/topology.yaml",
+        "containerlab": "om"
+      },
+      "port-bindings": [
+      ]
+    },
+    "om-pe22": {
+      "index": "10",
+      "shortname": "om-pe22",
+      "longname": "clab-om-om-pe22",
+      "fqdn": "om-pe22.om.io",
+      "group": "",
+      "labdir": "/data/openmgmt/src/gnmic-prometheus/clab-om/om-pe22",
+      "kind": "ceos",
+      "image": "ceosimage:4.32.2F",
+      "mgmt-net": "",
+      "mgmt-intf": "Management0",
+      "mgmt-ipv4-address": "172.144.100.7",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "2001:172:144:100::f",
+      "mgmt-ipv6-prefix-length": 80,
+      "mac-address": "00:1c:73:99:a5:a2",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-dd88b7339e6a",
+        "clab-node-group": "",
+        "clab-node-kind": "ceos",
+        "clab-node-lab-dir": "/data/openmgmt/src/gnmic-prometheus/clab-om/om-pe22",
+        "clab-node-name": "om-pe22",
+        "clab-node-type": "",
+        "clab-topo-file": "/data/openmgmt/src/gnmic-prometheus/topology.yaml",
+        "containerlab": "om"
+      },
+      "port-bindings": [
+      ]
+    },
+    "om-spine1": {
+      "index": "11",
+      "shortname": "om-spine1",
+      "longname": "clab-om-om-spine1",
+      "fqdn": "om-spine1.om.io",
+      "group": "",
+      "labdir": "/data/openmgmt/src/gnmic-prometheus/clab-om/om-spine1",
+      "kind": "ceos",
+      "image": "ceosimage:4.32.2F",
+      "mgmt-net": "",
+      "mgmt-intf": "Management0",
+      "mgmt-ipv4-address": "172.144.100.2",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "2001:172:144:100::5",
+      "mgmt-ipv6-prefix-length": 80,
+      "mac-address": "00:1c:73:38:c6:4e",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-dd88b7339e6a",
+        "clab-node-group": "",
+        "clab-node-kind": "ceos",
+        "clab-node-lab-dir": "/data/openmgmt/src/gnmic-prometheus/clab-om/om-spine1",
+        "clab-node-name": "om-spine1",
+        "clab-node-type": "",
+        "clab-topo-file": "/data/openmgmt/src/gnmic-prometheus/topology.yaml",
+        "containerlab": "om"
+      },
+      "port-bindings": [
+      ]
+    },
+    "om-spine2": {
+      "index": "12",
+      "shortname": "om-spine2",
+      "longname": "clab-om-om-spine2",
+      "fqdn": "om-spine2.om.io",
+      "group": "",
+      "labdir": "/data/openmgmt/src/gnmic-prometheus/clab-om/om-spine2",
+      "kind": "ceos",
+      "image": "ceosimage:4.32.2F",
+      "mgmt-net": "",
+      "mgmt-intf": "Management0",
+      "mgmt-ipv4-address": "172.144.100.3",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "2001:172:144:100::6",
+      "mgmt-ipv6-prefix-length": 80,
+      "mac-address": "00:1c:73:bc:bb:2f",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-dd88b7339e6a",
+        "clab-node-group": "",
+        "clab-node-kind": "ceos",
+        "clab-node-lab-dir": "/data/openmgmt/src/gnmic-prometheus/clab-om/om-spine2",
+        "clab-node-name": "om-spine2",
+        "clab-node-type": "",
+        "clab-topo-file": "/data/openmgmt/src/gnmic-prometheus/topology.yaml",
+        "containerlab": "om"
+      },
+      "port-bindings": [
+      ]
+    },
+    "prometheus": {
+      "index": "13",
+      "shortname": "prometheus",
+      "longname": "clab-om-prometheus",
+      "fqdn": "prometheus.om.io",
+      "group": "gpromg",
+      "labdir": "/data/openmgmt/src/gnmic-prometheus/clab-om/prometheus",
+      "kind": "linux",
+      "image": "prom/prometheus:v2.54.1",
+      "mgmt-net": "",
+      "mgmt-intf": "",
+      "mgmt-ipv4-address": "172.144.100.210",
+      "mgmt-ipv4-prefix-length": 24,
+      "mgmt-ipv6-address": "2001:172:144:100::e",
+      "mgmt-ipv6-prefix-length": 80,
+      "mac-address": "",
+      "labels": {
+        "clab-mgmt-net-bridge": "br-dd88b7339e6a",
+        "clab-node-group": "gpromg",
+        "clab-node-kind": "linux",
+        "clab-node-lab-dir": "/data/openmgmt/src/gnmic-prometheus/clab-om/prometheus",
+        "clab-node-name": "prometheus",
+        "clab-node-type": "",
+        "clab-topo-file": "/data/openmgmt/src/gnmic-prometheus/topology.yaml",
+        "containerlab": "om"
+      },
+      "port-bindings": [
+        {
+          "host-ip": "0.0.0.0",
+          "host-port": 9090,
+          "port": 9090,
+          "protocol": "tcp"
+        },
+        {
+          "host-ip": "::",
+          "host-port": 9090,
+          "port": 9090,
+          "protocol": "tcp"
+        }
+      ]
+    }
+  },
+  "links": [
+    {
+      "a": {
+        "node": "om-pe11",
+        "interface": "eth1",
+        "mac": "aa:c1:ab:71:60:f2",
+        "peer": "z"
+      },
+      "z": {
+        "node": "om-spine1",
+        "interface": "eth1",
+        "mac": "aa:c1:ab:d6:59:0c",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "om-pe12",
+        "interface": "eth1",
+        "mac": "aa:c1:ab:8d:d5:d2",
+        "peer": "z"
+      },
+      "z": {
+        "node": "om-spine1",
+        "interface": "eth2",
+        "mac": "aa:c1:ab:ef:11:b4",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "om-pe21",
+        "interface": "eth1",
+        "mac": "aa:c1:ab:c3:9d:2e",
+        "peer": "z"
+      },
+      "z": {
+        "node": "om-spine1",
+        "interface": "eth3",
+        "mac": "aa:c1:ab:77:ff:2a",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "om-pe22",
+        "interface": "eth1",
+        "mac": "aa:c1:ab:49:75:a5",
+        "peer": "z"
+      },
+      "z": {
+        "node": "om-spine1",
+        "interface": "eth4",
+        "mac": "aa:c1:ab:e0:d4:40",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "om-pe11",
+        "interface": "eth2",
+        "mac": "aa:c1:ab:92:ef:a7",
+        "peer": "z"
+      },
+      "z": {
+        "node": "om-spine2",
+        "interface": "eth1",
+        "mac": "aa:c1:ab:60:34:03",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "om-pe12",
+        "interface": "eth2",
+        "mac": "aa:c1:ab:9f:84:ab",
+        "peer": "z"
+      },
+      "z": {
+        "node": "om-spine2",
+        "interface": "eth2",
+        "mac": "aa:c1:ab:43:17:08",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "om-pe21",
+        "interface": "eth2",
+        "mac": "aa:c1:ab:32:ff:7a",
+        "peer": "z"
+      },
+      "z": {
+        "node": "om-spine2",
+        "interface": "eth3",
+        "mac": "aa:c1:ab:ae:81:e1",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "om-pe22",
+        "interface": "eth2",
+        "mac": "aa:c1:ab:ef:5c:ba",
+        "peer": "z"
+      },
+      "z": {
+        "node": "om-spine2",
+        "interface": "eth4",
+        "mac": "aa:c1:ab:bf:40:1e",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "om-pe11",
+        "interface": "eth3",
+        "mac": "aa:c1:ab:c4:45:a5",
+        "peer": "z"
+      },
+      "z": {
+        "node": "client1",
+        "interface": "eth1",
+        "mac": "aa:c1:ab:99:4e:63",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "om-pe12",
+        "interface": "eth3",
+        "mac": "aa:c1:ab:10:3b:f8",
+        "peer": "z"
+      },
+      "z": {
+        "node": "client1",
+        "interface": "eth2",
+        "mac": "aa:c1:ab:23:53:76",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "om-pe11",
+        "interface": "eth4",
+        "mac": "aa:c1:ab:b0:d0:c1",
+        "peer": "z"
+      },
+      "z": {
+        "node": "client2",
+        "interface": "eth1",
+        "mac": "aa:c1:ab:3d:82:cf",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "om-pe12",
+        "interface": "eth4",
+        "mac": "aa:c1:ab:92:58:38",
+        "peer": "z"
+      },
+      "z": {
+        "node": "client2",
+        "interface": "eth2",
+        "mac": "aa:c1:ab:28:fb:6b",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "om-pe21",
+        "interface": "eth3",
+        "mac": "aa:c1:ab:6b:62:79",
+        "peer": "z"
+      },
+      "z": {
+        "node": "client3",
+        "interface": "eth1",
+        "mac": "aa:c1:ab:5b:77:8c",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "om-pe22",
+        "interface": "eth3",
+        "mac": "aa:c1:ab:fd:a1:ee",
+        "peer": "z"
+      },
+      "z": {
+        "node": "client3",
+        "interface": "eth2",
+        "mac": "aa:c1:ab:fe:97:1c",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "om-pe21",
+        "interface": "eth4",
+        "mac": "aa:c1:ab:79:cd:33",
+        "peer": "z"
+      },
+      "z": {
+        "node": "client4",
+        "interface": "eth1",
+        "mac": "aa:c1:ab:9b:4c:66",
+        "peer": "a"
+      }
+    },
+    {
+      "a": {
+        "node": "om-pe22",
+        "interface": "eth4",
+        "mac": "aa:c1:ab:a8:28:ec",
+        "peer": "z"
+      },
+      "z": {
+        "node": "client4",
+        "interface": "eth2",
+        "mac": "aa:c1:ab:8e:b0:8e",
+        "peer": "a"
+      }
+    }
+  ]
+}

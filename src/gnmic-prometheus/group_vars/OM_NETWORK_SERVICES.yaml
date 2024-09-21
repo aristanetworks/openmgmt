@@ -1,0 +1,14 @@
+---
+tenants:
+  # Tenant A VRFs / VLANs
+  - name: Tenant_A
+    mac_vrf_vni_base: 10000
+    l2vlans:
+      - id: 110
+        name: Tenant_A_OP_Zone_1
+        tags:
+          - opzone_pod1
+      - id: 111
+        name: Tenant_A_OP_Zone_2
+        tags:
+          - opzone_pod1

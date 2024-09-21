@@ -1,0 +1,257 @@
+hostname: om_pe12
+is_deployed: true
+router_bgp:
+  as: '65102'
+  router_id: 192.168.255.4
+  distance:
+    external_routes: 20
+    internal_routes: 200
+    local_routes: 200
+  bgp:
+    default:
+      ipv4_unicast: false
+  maximum_paths:
+    paths: 4
+    ecmp: 4
+  peer_groups:
+  - name: IPv4-UNDERLAY-PEERS
+    type: ipv4
+    password: AQQvKeimxJu+uGQ/yYvv9w==
+    maximum_routes: 12000
+    send_community: all
+  - name: EVPN-OVERLAY-PEERS
+    type: evpn
+    update_source: Loopback0
+    bfd: true
+    password: q+VNViP5i4rVjW1cxFv2wA==
+    send_community: all
+    maximum_routes: 0
+    ebgp_multihop: 3
+  address_family_ipv4:
+    peer_groups:
+    - name: IPv4-UNDERLAY-PEERS
+      activate: true
+    - name: EVPN-OVERLAY-PEERS
+      activate: false
+  redistribute_routes:
+  - source_protocol: connected
+    route_map: RM-CONN-2-BGP
+  neighbors:
+  - ip_address: 172.31.255.4
+    peer_group: IPv4-UNDERLAY-PEERS
+    remote_as: '65001'
+    peer: om_spine1
+    description: om_spine1_Ethernet2
+  - ip_address: 172.31.255.6
+    peer_group: IPv4-UNDERLAY-PEERS
+    remote_as: '65001'
+    peer: om_spine2
+    description: om_spine2_Ethernet2
+  - ip_address: 192.168.255.1
+    peer_group: EVPN-OVERLAY-PEERS
+    peer: om_spine1
+    description: om_spine1
+    remote_as: '65001'
+  - ip_address: 192.168.255.2
+    peer_group: EVPN-OVERLAY-PEERS
+    peer: om_spine2
+    description: om_spine2
+    remote_as: '65001'
+  address_family_evpn:
+    peer_groups:
+    - name: EVPN-OVERLAY-PEERS
+      activate: true
+  address_family_rtc:
+    peer_groups:
+    - name: EVPN-OVERLAY-PEERS
+      activate: true
+  vlans:
+  - id: 110
+    tenant: Tenant_A
+    rd: 192.168.255.4:10110
+    route_targets:
+      both:
+      - 10110:10110
+    redistribute_routes:
+    - learned
+  - id: 111
+    tenant: Tenant_A
+    rd: 192.168.255.4:10111
+    route_targets:
+      both:
+      - 10111:10111
+    redistribute_routes:
+    - learned
+static_routes:
+- vrf: MGMT
+  destination_address_prefix: 0.0.0.0/0
+  gateway: 172.144.100.1
+service_routing_protocols_model: multi-agent
+ip_routing: true
+vlan_internal_order:
+  allocation: ascending
+  range:
+    beginning: 1006
+    ending: 1199
+ip_name_servers:
+- ip_address: 1.1.1.1
+  vrf: MGMT
+- ip_address: 8.8.8.8
+  vrf: MGMT
+spanning_tree:
+  mode: mstp
+  mst_instances:
+  - id: '0'
+    priority: 4096
+local_users:
+- name: admin
+  privilege: 15
+  role: network-admin
+  sha512_password: $6$7GTxsrRjnwheeKfR$zhJ8qycVjAJz41rf5JRSfWIzp93IL5WL7sMS/Taz1yfShz.MAnoajCf7R2n1/EZW7PN5QA3Huayl0lVQesBYN1
+vrfs:
+- name: MGMT
+  ip_routing: false
+management_interfaces:
+- name: Management0
+  description: oob_management
+  shutdown: false
+  vrf: MGMT
+  ip_address: 172.144.100.5/24
+  gateway: 172.144.100.1
+  type: oob
+management_api_http:
+  enable_vrfs:
+  - name: MGMT
+  enable_https: true
+  https_ssl_profile: eAPI
+ethernet_interfaces:
+- name: Ethernet1
+  peer: om_spine1
+  peer_interface: Ethernet2
+  peer_type: spine
+  description: P2P_LINK_TO_OM_SPINE1_Ethernet2
+  shutdown: false
+  mtu: 9214
+  type: routed
+  ip_address: 172.31.255.5/31
+- name: Ethernet2
+  peer: om_spine2
+  peer_interface: Ethernet2
+  peer_type: spine
+  description: P2P_LINK_TO_OM_SPINE2_Ethernet2
+  shutdown: false
+  mtu: 9214
+  type: routed
+  ip_address: 172.31.255.7/31
+- name: Ethernet3
+  peer: server01
+  peer_interface: Eth2
+  peer_type: server
+  port_profile: Tenant_A_pod1_clientA
+  description: server01_Eth2
+  shutdown: false
+  type: port-channel-member
+  channel_group:
+    id: 3
+    mode: active
+- name: Ethernet4
+  peer: server02
+  peer_interface: Eth2
+  peer_type: server
+  port_profile: Tenant_A_pod1_clientB
+  description: server02_Eth2
+  shutdown: false
+  type: port-channel-member
+  channel_group:
+    id: 4
+    mode: active
+loopback_interfaces:
+- name: Loopback0
+  description: EVPN_Overlay_Peering
+  shutdown: false
+  ip_address: 192.168.255.4/32
+- name: Loopback1
+  description: VTEP_VXLAN_Tunnel_Source
+  shutdown: false
+  ip_address: 192.168.254.4/32
+prefix_lists:
+- name: PL-LOOPBACKS-EVPN-OVERLAY
+  sequence_numbers:
+  - sequence: 10
+    action: permit 192.168.255.0/24 eq 32
+  - sequence: 20
+    action: permit 192.168.254.0/24 eq 32
+route_maps:
+- name: RM-CONN-2-BGP
+  sequence_numbers:
+  - sequence: 10
+    type: permit
+    match:
+    - ip address prefix-list PL-LOOPBACKS-EVPN-OVERLAY
+router_bfd:
+  multihop:
+    interval: 300
+    min_rx: 300
+    multiplier: 3
+vlans:
+- id: 110
+  name: Tenant_A_OP_Zone_1
+  tenant: Tenant_A
+- id: 111
+  name: Tenant_A_OP_Zone_2
+  tenant: Tenant_A
+ip_igmp_snooping:
+  globally_enabled: true
+vxlan_interface:
+  Vxlan1:
+    description: om_pe12_VTEP
+    vxlan:
+      udp_port: 4789
+      source_interface: Loopback1
+      vlans:
+      - id: 110
+        vni: 10110
+      - id: 111
+        vni: 10111
+port_channel_interfaces:
+- name: Port-Channel3
+  description: server01_PortChannel3
+  type: switched
+  shutdown: false
+  mode: trunk
+  vlans: '110'
+  spanning_tree_portfast: edge
+  evpn_ethernet_segment:
+    identifier: 0000:0000:0101:0102:0033
+    route_target: 01:01:01:02:00:33
+  lacp_id: 0101.0102.0033
+- name: Port-Channel4
+  description: server02_PortChannel4
+  type: switched
+  shutdown: false
+  mode: trunk
+  vlans: '111'
+  spanning_tree_portfast: edge
+  evpn_ethernet_segment:
+    identifier: 0000:0000:0101:0102:0044
+    route_target: 01:01:01:02:00:44
+  lacp_id: 0101.0102.0044
+metadata:
+  platform: cEOS-LAB
+management_security:
+  ssl_profiles:
+  - name: eAPI
+    certificate:
+      file: eAPI.crt
+      key: eAPI.key
+    cipher_list: HIGH:!eNULL:!aNULL:!MD5:!ADH:!ANULL
+vlan_interfaces:
+- name: Vlan110
+  description: Tenant_A_OP_Zone_1
+  shutdown: false
+  ip_address_virtual: 10.1.10.1/24
+- name: Vlan111
+  description: Tenant_A_OP_Zone_2
+  shutdown: false
+  ip_address_virtual: 10.1.11.1/24
+ip_virtual_router_mac_address: 00:00:00:00:00:01
