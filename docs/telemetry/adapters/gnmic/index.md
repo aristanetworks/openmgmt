@@ -97,3 +97,11 @@ docker exec -it clab-om-avd zsh
 cd project
 ansible-playbook playbooks/fabric-deploy-config.yaml -i inventory.yaml
 ```
+
+> NOTE You might need to create the avd user on the host if it doesn't exist, otherwise the container won't be able to create files.
+
+```
+useradd avd
+usermod -aG wheel avd
+chown -R avd:avd ./
+```
