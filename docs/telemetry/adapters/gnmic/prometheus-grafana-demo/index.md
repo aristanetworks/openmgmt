@@ -99,15 +99,17 @@ Our environment should look as the following:
 
 Now we're ready to access Grafana at http://myserver:3001 (arista/arista)
 
-To add configurations to the switches, such as configuring EVPN, we can use the clab-om-avd container and run the Ansible playbook inside.:
+To add configurations to the switches, such as configuring EVPN, we can use the clab-om-avd
+container and run the Ansible playbook inside.:
 
-```
+```shell
 docker exec -it clab-om-avd zsh
 cd project
 ansible-playbook playbooks/fabric-deploy-config.yaml -i inventory.yaml
 ```
 
-> NOTE You might need to create the avd user on the host if it doesn't exist, otherwise the container won't be able to create files.
+> NOTE You might need to create the avd user on the host if it doesn't exist, otherwise the
+container won't be able to create files.
 
 ```shell
 useradd avd
