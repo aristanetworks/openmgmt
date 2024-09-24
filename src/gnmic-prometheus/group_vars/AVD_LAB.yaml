@@ -1,0 +1,64 @@
+---
+local_users:
+  - name: admin
+    privilege: 15
+    role: network-admin
+    sha512_password: "$6$7GTxsrRjnwheeKfR$zhJ8qycVjAJz41rf5JRSfWIzp93IL5WL7sMS/Taz1yfShz.MAnoajCf7R2n1/EZW7PN5QA3Huayl0lVQesBYN1"
+
+name_servers:
+  - 1.1.1.1
+  - 8.8.8.8
+
+ntp:
+  servers:
+  - name: time.google.com
+    preferred: true
+    vrf: MGMT
+    iburst: true
+
+service_routing_protocols_model: multi-agent
+
+custom_structured_configuration_spanning_tree:
+  mode: mstp
+
+ip_routing: true
+
+# hardcoding management0 for cEOS lab compatibility (default: Management1)
+mgmt_interface: Management0
+mgmt_gateway: 172.144.100.1
+mgmt_interface_vrf: MGMT
+
+# Management eAPI | Required for this Lab
+custom_structured_configuration_management_api_http:
+  https_ssl_profile: eAPI
+
+# Management security required for SSL profile with strong ciphers
+custom_structured_configuration_management_security:
+  ssl_profiles:
+    - name: eAPI
+      certificate:
+        file: eAPI.crt
+        key: eAPI.key
+      cipher_list: 'HIGH:!eNULL:!aNULL:!MD5:!ADH:!ANULL'
+
+# Management GNMI | Optional
+management_api_gnmi:
+  provider: "eos-native"
+  transport:
+    grpc:
+    - name: MGMT
+      vrf: MGMT
+      notification_timestamp: "send-time"
+    - name: default
+      notification_timestamp: "send-time"
+
+# daemon_terminattr:
+#   cvaddrs: # For single cluster
+#       - 10.100.169.53:9910
+#   cvvrf: MGMT
+#   cvauth:
+#     method: "token"
+#     token_file: "/mnt/flash/token"
+#   ingestexclude: "/Sysdb/cell/1/agent,/Sysdb/cell/2/agent"
+#   smashexcludes: "ale,flexCounter,hardware,kni,pulse,strata"
+#   disable_aaa: true
