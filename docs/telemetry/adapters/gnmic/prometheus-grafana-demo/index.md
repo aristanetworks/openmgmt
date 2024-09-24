@@ -7,11 +7,19 @@ categories:
 
 ## Introduction
 
-Prometheus is an open-source monitoring and alerting toolkit designed primarily for cloud-native environments, including Kubernetes. Developed by SoundCloud in 2012, it has gained popularity due to its ability to collect and store metrics as time-series data, which includes timestamps and optional key-value pairs known as labels. (1) // --> TODO add citation
+Prometheus is an open-source monitoring and alerting toolkit designed primarily for cloud-native
+environments, including Kubernetes. Developed by SoundCloud in 2012, it has gained popularity due
+to its ability to collect and store metrics as time-series data, which includes timestamps and
+optional key-value pairs known as labels. (1) // --> TODO add citation
 
-Prometheus operates on a pull-based model, where it scrapes metrics from HTTP endpoints exposed by monitored services, storing this data in a time-series database. Users can query this data using PromQL, a powerful query language, to generate alerts and visualize metrics through tools like Grafana. (2) // --> TODO add citation
+Prometheus operates on a pull-based model, where it scrapes metrics from HTTP endpoints exposed
+by monitored services, storing this data in a time-series database. Users can query this data
+using PromQL, a powerful query language, to generate alerts and visualize metrics through tools
+like Grafana. (2) // --> TODO add citation
 
-Since joining the Cloud Native Computing Foundation in 2016, Prometheus has become a cornerstone in the monitoring landscape, particularly suited for dynamic service-oriented architectures and microservices. (3) // --> TODO add citation
+Since joining the Cloud Native Computing Foundation in 2016, Prometheus has become a cornerstone
+ in the monitoring landscape, particularly suited for dynamic service-oriented architectures and
+  microservices. (3) // --> TODO add citation
 
 ## Prerequisite
 
@@ -47,8 +55,9 @@ Looking at the `gnmic.yml` file
 --8<-- "src/gnmic-prometheus/gnmic.yml"
 ```
 
-We can see that we're going to use `gnmic` to subscribe to several OpenConfig and EOS native paths and write the data into
-Prometheus either in their raw states or modifying them with [processors](https://gnmic.openconfig.net/user_guide/event_processors/intro/), which
+We can see that we're going to use `gnmic` to subscribe to several OpenConfig and EOS native paths
+and write the data into Prometheus either in their raw states or modifying them
+with [processors](https://gnmic.openconfig.net/user_guide/event_processors/intro/), which
 are needed due to Prometheus only accepting numerical values.
 
 </p>
@@ -67,7 +76,7 @@ or
 
 Our environment should look as the following:
 
-```
+```shell
 +----+--------------------+--------------+-------------------------------------------------------------+-------+---------+--------------------+------------------------+
 | #  |        Name        | Container ID |                            Image                            | Kind  |  State  |    IPv4 Address    |      IPv6 Address      |
 +----+--------------------+--------------+-------------------------------------------------------------+-------+---------+--------------------+------------------------+
@@ -100,7 +109,7 @@ ansible-playbook playbooks/fabric-deploy-config.yaml -i inventory.yaml
 
 > NOTE You might need to create the avd user on the host if it doesn't exist, otherwise the container won't be able to create files.
 
-```
+```shell
 useradd avd
 usermod -aG wheel avd
 chown -R avd:avd ./
