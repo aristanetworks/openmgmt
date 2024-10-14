@@ -7,7 +7,10 @@ categories:
 
 ## Introduction
 
-This lab deploys a small cEOS-lab topology using containerlab and uses [gNMIc](https://gnmic.openconfig.net/) to subscribe and collect telemetry states and output them into [Prometheus](https://prometheus.io/docs/prometheus/latest/getting_started/) and visualize the data in [Grafana](https://grafana.com/).
+This lab deploys a small cEOS-lab topology using containerlab and
+uses [gNMIc](https://gnmic.openconfig.net/) to subscribe and collect telemetry states and output
+them into [Prometheus](https://prometheus.io/docs/prometheus/latest/getting_started/) and visualize
+the data in [Grafana](https://grafana.com/).
 
 ## Prerequisite
 
@@ -28,12 +31,16 @@ Check for more details on the prerequisites on the [Arista Community Labs QuickS
 ### Running the lab
 
 The lab can be run in multiple ways:
+
  - codespaces
+
  - locally using devcontainer (either on local PC/laptop or using Remote SSH to a server via vscode)
 
 To run it codespaces please press the button below and follow:
 
+<!-- markdownlint-disable-next-line MD013 -->
 [Start :octicons-play-16: gNMIc-Prometheus-Grafana Lab :octicons-mark-github-24:](https://codespaces.new/aristanetworks/aclabs/tree/main?quickstart=1&devcontainer_path=.devcontainer%2Fgnmic-prometheus-grafana%2Fdevcontainer.json){ .md-button .md-button--primary target=_blank}
+<!-- markdownlint-enable MD013 -->
 
 After the lab is deployed, the containerlab topology will automatically start and Codespaces
 will send a notification and reveal the `Open in Browser` button where Grafana can be accessed.
