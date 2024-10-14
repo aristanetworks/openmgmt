@@ -12,7 +12,9 @@ This lab deploys a small cEOS-lab topology using containerlab and uses [gNMIc](h
 ## Prerequisite
 
 - github account
+
 - laptop or server with [Docker](https://www.docker.com/) and [git](https://git-scm.com/downloads) installed
+
 - [arista.com] account to download cEOS-lab
 
 cEOS-lab is autodownloaded using the arista.com token in either codespaces or the devcontainer examples.
@@ -33,7 +35,8 @@ To run it codespaces please press the button below and follow:
 
 [Start :octicons-play-16: gNMIc-Prometheus-Grafana Lab :octicons-mark-github-24:](https://codespaces.new/aristanetworks/aclabs/tree/main?quickstart=1&devcontainer_path=.devcontainer%2Fgnmic-prometheus-grafana%2Fdevcontainer.json){ .md-button .md-button--primary target=_blank}
 
-After the lab is deployed, the containerlab topology will automatically start and Codespaces will send a notification and reveal the `Open in Browser` button where Grafana can be accessed.
+After the lab is deployed, the containerlab topology will automatically start and Codespaces
+will send a notification and reveal the `Open in Browser` button where Grafana can be accessed.
 
 ![grafana1](_media/aclabs-telemetryA-grafana-ex1.png)
 
@@ -41,4 +44,5 @@ After the lab is deployed, the containerlab topology will automatically start an
 
 ![grafana3](assets/img/aclabs-telemetryA-grafana-ex3.png)
 
-For more details and to run it in devcontainer please check the [Arista Community Labs](https://aclabs.arista.com/telemetry) site.
+For more details and to run it in devcontainer please check the
+[Arista Community Labs](https://aclabs.arista.com/telemetry) site.
