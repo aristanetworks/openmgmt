@@ -32,9 +32,9 @@ Check for more details on the prerequisites on the [Arista Community Labs QuickS
 
 The lab can be run in multiple ways:
 
-  - codespaces
+- codespaces
 
-  - locally using devcontainer (either on local PC/laptop or using Remote SSH to a server via vscode)
+- locally using devcontainer (either on local PC/laptop or using Remote SSH to a server via vscode)
 
 To run it codespaces please press the button below and follow:
 
