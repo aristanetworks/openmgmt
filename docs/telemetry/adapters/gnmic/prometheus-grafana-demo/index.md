@@ -36,7 +36,7 @@ The lab can be run in multiple ways:
 
 - locally using devcontainer (either on local PC/laptop or using Remote SSH to a server via vscode)
 
-To run it codespaces please press the button below and follow:
+To run it in codespaces, please press the button below and follow:
 
 <!-- markdownlint-disable -->
 [Start :octicons-play-16: gNMIc-Prometheus-Grafana Lab :octicons-mark-github-24:](https://codespaces.new/aristanetworks/aclabs/tree/main?quickstart=1&devcontainer_path=.devcontainer%2Fgnmic-prometheus-grafana%2Fdevcontainer.json){ .md-button .md-button--primary target=_blank}
