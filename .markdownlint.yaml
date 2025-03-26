@@ -24,7 +24,7 @@ MD007:
 
 # line length
 MD013:
-  line_length: 120
+  line_length: 140
   code_block_line_length: 450
   tables: false
 
