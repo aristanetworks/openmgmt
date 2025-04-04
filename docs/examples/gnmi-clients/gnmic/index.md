@@ -385,6 +385,84 @@ gnmic -a 192.0.2.214:6030 -u cvpadmin -p arista --insecure --gzip get --path  \
 </p>
 </details>
 
+#### Get macsec interface counters
+
+??? warning "Configuration required! :hammer:"
+    Macsec counters are not available by default.
+    Please configure the provider under `management api models` as mentioned
+    in the [configuration](../../../configuration/openconfig.md#enabling-macsec-provider) section.
+
+```shell
+gnmic -a 192.0.2.214:6030 -u arista -p arista --gzip --insecure \
+  get --path 'macsec/interfaces/interface/state/counters'
+```
+
+<details><summary> Reveal output</summary>
+<p>
+
+```javascript
+[
+  {
+    "source": "192.0.2.214:6030",
+    "timestamp": 1743781404358927161,
+    "time": "2025-04-04T16:43:24.358927161+01:00",
+    "updates": [
+      {
+        "Path": "macsec/interfaces/interface[name=Ethernet1/1]/state/counters",
+        "values": {
+          "macsec/interfaces/interface/state/counters": {
+            "openconfig-macsec:tx-untagged-pkts": "55"
+          }
+        }
+      },
+      {
+        "Path": "macsec/interfaces/interface[name=Ethernet1/1]/state/counters",
+        "values": {
+          "macsec/interfaces/interface/state/counters": {
+            "openconfig-macsec:rx-untagged-pkts": "23"
+          }
+        }
+      },
+      {
+        "Path": "macsec/interfaces/interface[name=Ethernet1/1]/state/counters",
+        "values": {
+          "macsec/interfaces/interface/state/counters": {
+            "openconfig-macsec:rx-badtag-pkts": "1"
+          }
+        }
+      },
+      {
+        "Path": "macsec/interfaces/interface[name=Ethernet1/1]/state/counters",
+        "values": {
+          "macsec/interfaces/interface/state/counters": {
+            "openconfig-macsec:rx-unknownsci-pkts": "2"
+          }
+        }
+      },
+      {
+        "Path": "macsec/interfaces/interface[name=Ethernet1/1]/state/counters",
+        "values": {
+          "macsec/interfaces/interface/state/counters": {
+            "openconfig-macsec:rx-nosci-pkts": "0"
+          }
+        }
+      },
+      {
+        "Path": "macsec/interfaces/interface[name=Ethernet1/1]/state/counters",
+        "values": {
+          "macsec/interfaces/interface/state/counters": {
+            "openconfig-macsec:rx-late-pkts": "10"
+          }
+        }
+      }
+    ]
+  }
+]
+```
+
+</p>
+</details>
+
 #### Get per core CPU utilization
 
 ```shell
