@@ -25,6 +25,17 @@ theme:
   features:
     - content.action.edit
     - content.code.copy
+    - content.code.annotate
+    - content.tooltips
+    - search.highlight
+    - search.share
+    - search.suggest
+    - toc.follow
+
+  icon:
+    repo: fontawesome/brands/github
+    logo: fontawesome/solid/gears
+    annotation: material/plus-circle
 extra:
   analytics:
     provider: google
@@ -35,14 +46,32 @@ extra:
     - icon: fontawesome/solid/globe
       link: https://www.arista.com
 markdown_extensions:
+  - attr_list
   - admonition
+  - footnotes
   - pymdownx.details
   - pymdownx.highlight:
       anchor_linenums: true
   - pymdownx.snippets
+  - pymdownx.critic
+  - pymdownx.caret
+  - pymdownx.keys
+  - pymdownx.mark
   - pymdownx.superfences
+  - pymdownx.tilde
   - pymdownx.tabbed:
       alternate_style: true
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+    # allows list ident with 2 spaces
+  - mdx_truly_sane_lists
+  - md_in_html #Enable the use of captioned images via techniques shown here: https://squidfunk.github.io/mkdocs-material/reference/images/
 
 extra_css:
   - stylesheets/extra.material.css

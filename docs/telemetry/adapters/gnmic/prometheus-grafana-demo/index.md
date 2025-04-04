@@ -39,17 +39,17 @@ The lab can be run in multiple ways:
 To run it in codespaces, please press the button below and follow:
 
 <!-- markdownlint-disable -->
-[Start :octicons-play-16: gNMIc-Prometheus-Grafana Lab :octicons-mark-github-24:](https://codespaces.new/aristanetworks/aclabs/tree/main?quickstart=1&devcontainer_path=.devcontainer%2Fgnmic-prometheus-grafana%2Fdevcontainer.json){ .md-button .md-button--primary target=_blank}
+[Start :octicons-play-16: gNMIc-Prometheus-Grafana Lab :octicons-mark-github-16:](https://codespaces.new/aristanetworks/aclabs/tree/main?quickstart=1&devcontainer_path=.devcontainer%2Fgnmic-prometheus-grafana%2Fdevcontainer.json){ .md-button .md-button--primary target=_blank}
 <!-- markdownlint-enable -->
 
 After the lab is deployed, the containerlab topology will automatically start and Codespaces
 will send a notification and reveal the `Open in Browser` button where Grafana can be accessed.
 
-![grafana1](_media/aclabs-telemetryA-grafana-ex1.png)
+![grafana1](../../../../_media/aclabs-telemetryA-grafana-ex1.png)
 
-![grafana2](assets/img/aclabs-telemetryA-grafana-ex2.png)
+![grafana2](../../../../_media/aclabs-telemetryA-grafana-ex2.png)
 
-![grafana3](assets/img/aclabs-telemetryA-grafana-ex3.png)
+![grafana3](../../../../_media/aclabs-telemetryA-grafana-ex3.png)
 
 For more details and to run it in devcontainer please check the
 [Arista Community Labs](https://aclabs.arista.com/telemetry) site.

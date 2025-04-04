@@ -308,6 +308,23 @@ management api models
 > Note that prior to EOS 4.27 a restart of the gNMI agent is required, e.g.: `agent Octa terminate` or
 > `agent OpenConfig terminate` (in case the eos-native provider is not enabled).
 
+## Enabling macsec provider
+
+Starting in EOS `4.30.0F` it is possible to configure a macsec provider for the Octa agent.
+In the `openconfig-macsec` model, there are primarily two paths:
+
+- interfaces
+- mka
+
+The configuration knob under provider macsec enables the respective path streaming:
+
+```text
+management api models
+   provider macsec
+      [no] interfaces
+      [no] mka
+```
+
 ## Telemetry Timestamps
 
 Per the GNMI specification, the default timestamp field of a notification message is set to be the time at which the

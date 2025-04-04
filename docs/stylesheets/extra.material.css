@@ -35,6 +35,9 @@
     font-feature-settings: "kern","liga";
     font-family: var(--md-text-font-family,_),-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif;
     -webkit-font-smoothing: antialiased;
+    a.md-button.md-button--primary {
+        background-color: #16325B !important;
+    }
 
 }
 
