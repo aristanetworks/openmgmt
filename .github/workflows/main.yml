@@ -25,6 +25,12 @@ jobs:
       - uses: actions/setup-python@v4
         with:
           python-version: 3.x
-      - run: pip install mkdocs-material==9.0.9
-      - run: pip install mkdocs-material-extensions
-      - run: mkdocs gh-deploy --force
+      - name: Build MkDocs Site
+        run: |
+          pip install mkdocs-material
+          pip install mkdocs-macros-plugin
+          pip install mdx_truly_sane_lists
+          pip install mkdocs-glightbox
+          mkdocs build
+          mkdocs gh-deploy --force
+
