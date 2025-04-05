@@ -1,0 +1,145 @@
+
+received signal 'interrupt'. terminating...
+[
+  {
+    "time": "1969-12-31T19:00:00-05:00",
+    "updates": [
+      {
+        "Path": "network-instances/network-instance[name=default]/protocols/protocol[identifier=BGP][name=BGP]",
+        "values": {
+          "network-instances/network-instance/protocols/protocol": {
+            "openconfig-network-instance:bgp": {
+              "global": {
+                "afi-safis": {
+                  "afi-safi": [
+                    {
+                      "add-paths": {
+                        "config": {
+                          "receive": false,
+                          "send": false
+                        },
+                        "state": {
+                          "receive": false,
+                          "send": false
+                        }
+                      },
+                      "afi-safi-name": "openconfig-bgp-types:IPV4_UNICAST",
+                      "config": {
+                        "afi-safi-name": "openconfig-bgp-types:IPV4_UNICAST"
+                      },
+                      "graceful-restart": {
+                        "config": {
+                          "enabled": false
+                        },
+                        "state": {
+                          "enabled": false
+                        }
+                      },
+                      "route-selection-options": {
+                        "config": {
+                          "advertise-inactive-routes": false,
+                          "always-compare-med": false,
+                          "enable-aigp": false,
+                          "external-compare-router-id": true,
+                          "ignore-as-path-length": false,
+                          "ignore-next-hop-igp-metric": false
+                        },
+                        "state": {
+                          "advertise-inactive-routes": false,
+                          "always-compare-med": false,
+                          "enable-aigp": false,
+                          "external-compare-router-id": true,
+                          "ignore-as-path-length": false,
+                          "ignore-next-hop-igp-metric": false
+                        }
+                      },
+                      "state": {
+                        "afi-safi-name": "openconfig-bgp-types:IPV4_UNICAST"
+                      }
+                    },
+                    {
+                      "add-paths": {
+                        "config": {
+                          "receive": false,
+                          "send": false
+                        },
+                        "state": {
+                          "receive": false,
+                          "send": false
+                        }
+                      },
+                      "afi-safi-name": "openconfig-bgp-types:IPV6_UNICAST",
+                      "config": {
+                        "afi-safi-name": "openconfig-bgp-types:IPV6_UNICAST"
+                      },
+                      "graceful-restart": {
+                        "config": {
+                          "enabled": false
+                        },
+                        "state": {
+                          "enabled": false
+                        }
+                      },
+                      "route-selection-options": {
+                        "config": {
+                          "advertise-inactive-routes": false,
+                          "always-compare-med": false,
+                          "enable-aigp": false,
+                          "external-compare-router-id": true,
+                          "ignore-as-path-length": false,
+                          "ignore-next-hop-igp-metric": false
+                        },
+                        "state": {
+                          "advertise-inactive-routes": false,
+                          "always-compare-med": false,
+                          "enable-aigp": false,
+                          "external-compare-router-id": true,
+                          "ignore-as-path-length": false,
+                          "ignore-next-hop-igp-metric": false
+                        }
+                      },
+                      "state": {
+                        "afi-safi-name": "openconfig-bgp-types:IPV6_UNICAST"
+                      }
+                    }
+                  ]
+                },
+                "confederation": {
+                  "config": {}
+                },
+                "config": {},
+                "default-route-distance": {
+                  "config": {}
+                },
+                "graceful-restart": {
+                  "config": {}
+                },
+                "route-selection-options": {},
+                "use-multiple-paths": {
+                  "config": {
+                    "enabled": true
+                  },
+                  "ebgp": {},
+                  "ibgp": {
+                    "state": {
+                      "maximum-paths": 1
+                    }
+                  },
+                  "state": {
+                    "enabled": true
+                  }
+                }
+              }
+            },
+            "openconfig-network-instance:config": {
+              "identifier": "openconfig-policy-types:BGP",
+              "name": "BGP"
+            },
+            "openconfig-network-instance:identifier": "openconfig-policy-types:BGP",
+            "openconfig-network-instance:name": "BGP"
+          }
+        }
+      }
+    ]
+  }
+]
