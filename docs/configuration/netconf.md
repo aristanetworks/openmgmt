@@ -32,7 +32,7 @@ management api netconf
       vrf management
 ```
 
-Changing the port:
+### Changing the port
 
 ```text
 management api netconf
@@ -40,17 +40,28 @@ management api netconf
       port 830
 ```
 
-Apply ACL
+### Restricting access
+
+<!-- markdownlint-disable MD046 -->
+!!! tip "Applying ACLs on NETCONF"
+
+    NETCONF ACLs are configured in the management ssh mode with the commands:
+    `ip|ipv6 access-group <vrf> in`
+<!-- markdownlint-enable MD046 -->
 
 ```text
-management api netconf
-   transport ssh test
-      ip access-group ACCESS_GROUP
+management ssh
+   ip access-group netdevops_admins vrf MGMT in
+   ip access-group netdevops_admins in
 ```
 
-Note The ACL should be a standard ACL allowing hosts or subnets.
+<!-- markdownlint-disable MD046 -->
+!!! note
 
-Status check:
+    The ACL should be a standard ACL allowing hosts or subnets.
+<!-- markdownlint-enable MD046 -->
+
+### Status check
 
 ```text
 #show management api netconf
