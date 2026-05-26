@@ -1,0 +1,63 @@
+[
+  {
+    "timestamp": 1615393858985301159,
+    "time": "2021-03-10T11:30:58.985301159-05:00",
+    "prefix": "Eos/image",
+    "updates": [
+      {
+        "Path": "version",
+        "values": {
+          "version": "4.23.4M"
+        }
+      },
+      {
+        "Path": "flavor",
+        "values": {
+          "flavor": "DEFAULT"
+        }
+      },
+      {
+        "Path": "variant",
+        "values": {
+          "variant": "US"
+        }
+      },
+      {
+        "Path": "serialNum",
+        "values": {
+          "serialNum": "9e39a518-ca8b-4211-a440-88201ae5601b"
+        }
+      },
+      {
+        "Path": "release",
+        "values": {
+          "release": "17319532.4234M"
+        }
+      },
+      {
+        "Path": "buildTime",
+        "values": {
+          "buildTime": 1591676231000000000
+        }
+      },
+      {
+        "Path": "buildHost",
+        "values": {
+          "buildHost": "dhcp-242-144-105.sjc.aristanetworks.com"
+        }
+      },
+      {
+        "Path": "blessed",
+        "values": {
+          "blessed": true
+        }
+      },
+      {
+        "Path": "name",
+        "values": {
+          "name": "image"
+        }
+      }
+    ]
+  }
+]

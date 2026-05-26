@@ -1,0 +1,36 @@
+{
+    "openconfig-bgp:global": {
+        "config": {
+            "as": 65002
+        }
+    },
+    "openconfig-bgp:neighbors": {
+        "neighbor": [
+            {
+                "neighbor-address": "10.10.10.154",
+                "config": {
+                    "peer-group": "XYZ",
+                    "neighbor-address": "10.10.10.154"
+                }
+            },
+            {
+                "neighbor-address": "10.10.10.157",
+                "config": {
+                    "peer-group": "XYZ",
+                    "neighbor-address": "10.10.10.157"
+                }
+            }
+        ]
+    },
+    "openconfig-bgp:peer-groups": {
+        "peer-group": [
+            {
+                "peer-group-name": "XYZ",
+                "config": {
+                    "peer-group-name": "XYZ",
+                    "peer-as": 65002
+                }
+            }
+        ]
+    }
+}
